@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+import path from 'path';
 import tasksPlugin from 'lila-tasks';
 import webpackPlugin from 'lila-webpack';
 import webpackConfigPlugin from 'lila-webpack-config';
@@ -16,5 +17,8 @@ export default lila => {
         { source: 'build/index.html', target: `build/${entry}.html` },
       ],
     ],
+    alias: {
+      '@': path.join(__dirname, 'src'),
+    },
   });
 };
