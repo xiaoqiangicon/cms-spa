@@ -1,11 +1,13 @@
 <template>
   <div>
-    404
+    <!--error code-->
+    {{ a.a }}
+    <!--error code-->
   </div>
 </template>
 
 <script>
 export default {
-  name: '404',
+  name: 'ErrorTestA'
 }
 </script>
