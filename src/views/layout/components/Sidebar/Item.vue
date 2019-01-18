@@ -2,7 +2,7 @@
   <span>
     <!--<svg-icon v-if="icon" :icon-class="icon"/>-->
     <i class="el-icon-remove-outline"></i>
-    <span v-if="title" slot="title">{{title}}</span>
+    <span v-if="title" slot="title">{{ title }}</span>
   </span>
 </template>
 <script>
@@ -11,12 +11,12 @@ export default {
   props: {
     icon: {
       type: String,
-      default: ''
+      default: '',
     },
     title: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
-}
+};
 </script>
