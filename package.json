@@ -15,7 +15,8 @@
     "eslint:vue:fix": "eslint \"./**/*.vue\" -c .eslintrc.vue.js --fix",
     "stylelint": "stylelint \"./**/*.{css,less,scss,sass,vue}\"",
     "stylelint:fix": "stylelint \"./**/*.{css,less,scss,sass,vue}\" --fix",
-    "test": "jest test"
+    "test": "jest test",
+    "dev": "lila dev"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
@@ -75,6 +76,7 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
+    "@senntyou/shortcut.css": "^0.1.0",
     "element-ui": "^2.4.11",
     "js-cookie": "^2.2.0",
     "normalize.css": "^8.0.1",

@@ -1,10 +1,11 @@
 import 'normalize.css/normalize.css';
+import '@senntyou/shortcut.css';
 import 'element-ui/lib/theme-chalk/index.css';
 
 import Vue from 'vue';
 import Element from 'element-ui';
 
-import './styles/index.scss';
+import './style.less';
 
 import App from './App';
 import router from './router';
