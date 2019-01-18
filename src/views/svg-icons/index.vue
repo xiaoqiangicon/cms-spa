@@ -4,7 +4,8 @@
       <a
         href="https://panjiachen.github.io/vue-element-admin-site/guide/advanced/icon.html"
         target="_blank"
-        >Add and use
+      >
+        Add and use
       </a>
     </p>
     <div class="icons-wrapper">

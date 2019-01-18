@@ -60,7 +60,7 @@ export default {
       }
       this.position = 'fixed';
       this.active = true;
-      this.width = this.width + 'px';
+      this.width = `${this.width}px`;
       this.isSticky = true;
     },
     reset() {
@@ -83,7 +83,7 @@ export default {
     },
     handleReize() {
       if (this.isSticky) {
-        this.width = this.$el.getBoundingClientRect().width + 'px';
+        this.width = `${this.$el.getBoundingClientRect().width}px`;
       }
     },
   },

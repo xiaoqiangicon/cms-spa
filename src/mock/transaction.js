@@ -16,10 +16,8 @@ for (let i = 0; i < count; i++) {
 }
 
 export default {
-  getList: () => {
-    return {
-      total: List.length,
-      items: List,
-    };
-  },
+  getList: () => ({
+    total: List.length,
+    items: List,
+  }),
 };

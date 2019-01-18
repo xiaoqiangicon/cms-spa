@@ -4,20 +4,23 @@
       class="document-btn"
       target="_blank"
       href="https://panjiachen.github.io/vue-element-admin-site/"
-      >{{ $t('documentation.documentation') }}</a
     >
+      {{ $t('documentation.documentation') }}
+    </a>
     <a
       class="document-btn"
       target="_blank"
       href="https://github.com/PanJiaChen/vue-element-admin/"
-      >{{ $t('documentation.github') }}</a
     >
+      {{ $t('documentation.github') }}
+    </a>
     <a
       class="document-btn"
       target="_blank"
       href="https://panjiachen.gitee.io/vue-element-admin-site/zh/"
-      >国内文档</a
     >
+      国内文档
+    </a>
     <dropdown-menu
       :items="articleList"
       style="float:left;margin-left:50px;"

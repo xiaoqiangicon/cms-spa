@@ -4,9 +4,9 @@
       <router-link
         v-for="tag in visitedViews"
         ref="tag"
+        :key="tag.path"
         :class="isActive(tag) ? 'active' : ''"
         :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
-        :key="tag.path"
         tag="span"
         class="tags-view-item"
         @click.middle.native="closeSelectedTag(tag)"
@@ -103,7 +103,7 @@ export default {
         const { fullPath } = view;
         this.$nextTick(() => {
           this.$router.replace({
-            path: '/redirect' + fullPath,
+            path: `/redirect${fullPath}`,
           });
         });
       });
@@ -234,7 +234,7 @@ export default {
       text-align: center;
       transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       transform-origin: 100% 50%;
-      &:before {
+      &::before {
         transform: scale(0.6);
         display: inline-block;
         vertical-align: -3px;

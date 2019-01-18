@@ -4,8 +4,8 @@
   background: $color;
   &:hover {
     color: $color;
-    &:before,
-    &:after {
+    &::before,
+    &::after {
       background: $color;
     }
   }
@@ -51,14 +51,14 @@
   display: inline-block;
   &:hover {
     background: #fff;
-    &:before,
-    &:after {
+    &::before,
+    &::after {
       width: 100%;
       transition: 600ms ease all;
     }
   }
-  &:before,
-  &:after {
+  &::before,
+  &::after {
     content: '';
     position: absolute;
     top: 0;

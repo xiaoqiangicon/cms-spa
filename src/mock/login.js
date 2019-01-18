@@ -28,9 +28,8 @@ export default {
     const { token } = param2Obj(config.url);
     if (userMap[token]) {
       return userMap[token];
-    } else {
-      return false;
     }
+    return false;
   },
   logout: () => 'success',
 };

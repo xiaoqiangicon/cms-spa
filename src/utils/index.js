@@ -11,7 +11,7 @@ export function parseTime(time, cFormat) {
   if (typeof time === 'object') {
     date = time;
   } else {
-    if (('' + time).length === 10) time = parseInt(time) * 1000;
+    if (`${time}`.length === 10) time = parseInt(time) * 1000;
     date = new Date(time);
   }
   const formatObj = {
@@ -30,7 +30,7 @@ export function parseTime(time, cFormat) {
       return ['日', '一', '二', '三', '四', '五', '六'][value];
     }
     if (result.length > 0 && value < 10) {
-      value = '0' + value;
+      value = `0${value}`;
     }
     return value || 0;
   });
@@ -46,29 +46,22 @@ export function formatTime(time, option) {
 
   if (diff < 30) {
     return '刚刚';
-  } else if (diff < 3600) {
+  }
+  if (diff < 3600) {
     // less 1 hour
-    return Math.ceil(diff / 60) + '分钟前';
-  } else if (diff < 3600 * 24) {
-    return Math.ceil(diff / 3600) + '小时前';
-  } else if (diff < 3600 * 24 * 2) {
+    return `${Math.ceil(diff / 60)}分钟前`;
+  }
+  if (diff < 3600 * 24) {
+    return `${Math.ceil(diff / 3600)}小时前`;
+  }
+  if (diff < 3600 * 24 * 2) {
     return '1天前';
   }
   if (option) {
     return parseTime(time, option);
-  } else {
-    return (
-      d.getMonth() +
-      1 +
-      '月' +
-      d.getDate() +
-      '日' +
-      d.getHours() +
-      '时' +
-      d.getMinutes() +
-      '分'
-    );
   }
+  return `${d.getMonth() +
+    1}月${d.getDate()}日${d.getHours()}时${d.getMinutes()}分`;
 }
 
 // 格式化时间
@@ -119,7 +112,7 @@ export function param(json) {
   return cleanArray(
     Object.keys(json).map(key => {
       if (json[key] === undefined) return '';
-      return encodeURIComponent(key) + '=' + encodeURIComponent(json[key]);
+      return `${encodeURIComponent(key)}=${encodeURIComponent(json[key])}`;
     })
   ).join('&');
 }
@@ -130,12 +123,10 @@ export function param2Obj(url) {
     return {};
   }
   return JSON.parse(
-    '{"' +
-      decodeURIComponent(search)
-        .replace(/"/g, '\\"')
-        .replace(/&/g, '","')
-        .replace(/=/g, '":"') +
-      '"}'
+    `{"${decodeURIComponent(search)
+      .replace(/"/g, '\\"')
+      .replace(/&/g, '","')
+      .replace(/=/g, '":"')}"}`
   );
 }
 
@@ -173,7 +164,7 @@ export function toggleClass(element, className) {
   let classString = element.className;
   const nameIndex = classString.indexOf(className);
   if (nameIndex === -1) {
-    classString += '' + className;
+    classString += `${className}`;
   } else {
     classString =
       classString.substr(0, nameIndex) +
@@ -224,13 +215,16 @@ export const pickerOptions = [
 export function getTime(type) {
   if (type === 'start') {
     return new Date().getTime() - 3600 * 1000 * 24 * 90;
-  } else {
-    return new Date(new Date().toDateString());
   }
+  return new Date(new Date().toDateString());
 }
 
 export function debounce(func, wait, immediate) {
-  let timeout, args, context, timestamp, result;
+  let timeout;
+  let args;
+  let context;
+  let timestamp;
+  let result;
 
   const later = function() {
     // 据上一次触发时间间隔

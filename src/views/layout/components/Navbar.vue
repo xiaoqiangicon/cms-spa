@@ -45,9 +45,9 @@
             <el-dropdown-item> {{ $t('navbar.github') }} </el-dropdown-item>
           </a>
           <el-dropdown-item divided>
-            <span style="display:block;" @click="logout">{{
-              $t('navbar.logOut')
-            }}</span>
+            <span style="display:block;" @click="logout">
+              {{ $t('navbar.logOut') }}
+            </span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -91,7 +91,7 @@ export default {
 .navbar {
   height: 50px;
   line-height: 50px;
-  border-radius: 0px !important;
+  border-radius: 0 !important;
   .hamburger-container {
     line-height: 58px;
     height: 50px;

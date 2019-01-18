@@ -61,7 +61,7 @@ export default {
   transition: all 0.3s ease-in-out;
 }
 
-.pan-thumb:after {
+.pan-thumb::after {
   content: '';
   width: 8px;
   height: 8px;
@@ -141,6 +141,6 @@ export default {
 
 .pan-item:hover .pan-info p a {
   opacity: 1;
-  transform: translateX(0px) rotate(0deg);
+  transform: translateX(0) rotate(0deg);
 }
 </style>

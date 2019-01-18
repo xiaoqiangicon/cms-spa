@@ -1,5 +1,5 @@
 @mixin clearfix {
-  &:after {
+  &::after {
     content: '';
     display: table;
     clear: both;
@@ -35,6 +35,7 @@
   $width: $width/2;
   $color-border-style: $height solid $color;
   $transparent-border-style: $width solid transparent;
+
   height: 0;
   width: 0;
   @if $direction==up {

@@ -23,7 +23,7 @@ export default {
     handleScroll(e) {
       const eventDelta = e.wheelDelta || -e.deltaY * 40;
       const $scrollWrapper = this.$refs.scrollContainer.$refs.wrap;
-      $scrollWrapper.scrollLeft = $scrollWrapper.scrollLeft + eventDelta / 4;
+      $scrollWrapper.scrollLeft += eventDelta / 4;
     },
     moveToTarget(currentTag) {
       const $container = this.$refs.scrollContainer.$el;
@@ -93,7 +93,7 @@ export default {
   width: 100%;
   /deep/ {
     .el-scrollbar__bar {
-      bottom: 0px;
+      bottom: 0;
     }
     .el-scrollbar__wrap {
       height: 49px;

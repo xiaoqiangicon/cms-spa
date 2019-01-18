@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-Vue.use(Router);
-
 /* Layout */
 import Layout from '@/views/layout/Layout';
 
+Vue.use(Router);
+
 /** note: Submenu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
- **/
+ * */
 
 /**
 * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
@@ -23,7 +23,7 @@ import Layout from '@/views/layout/Layout';
     icon: 'svg-name'             the icon show in the sidebar,
     noCache: true                if true ,the page will no be cached(default is false)
   }
-**/
+* */
 export const constantRouterMap = [
   {
     path: '/redirect',

@@ -68,10 +68,8 @@ vueSticky.install = Vue => {
         const offsetTop = el.getBoundingClientRect().top;
         if (offsetTop < stickyTop) {
           sticky();
-        } else {
-          if (scrollTop < elHeight + stickyTop) {
-            reset();
-          }
+        } else if (scrollTop < elHeight + stickyTop) {
+          reset();
         }
       };
       listenAction = () => {

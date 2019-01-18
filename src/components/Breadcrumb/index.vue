@@ -9,11 +9,12 @@
         <span
           v-if="item.redirect === 'noredirect' || index == levelList.length - 1"
           class="no-redirect"
-          >{{ generateTitle(item.meta.title) }}</span
         >
-        <a v-else @click.prevent="handleLink(item)">{{
-          generateTitle(item.meta.title)
-        }}</a>
+          {{ generateTitle(item.meta.title) }}
+        </span>
+        <a v-else @click.prevent="handleLink(item)">
+          {{ generateTitle(item.meta.title) }}
+        </a>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
@@ -60,7 +61,7 @@ export default {
     pathCompile(path) {
       // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
       const { params } = this.$route;
-      var toPath = pathToRegexp.compile(path);
+      const toPath = pathToRegexp.compile(path);
       return toPath(params);
     },
     handleLink(item) {

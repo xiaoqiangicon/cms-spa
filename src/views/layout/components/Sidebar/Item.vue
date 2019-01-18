@@ -1,8 +1,8 @@
 <template>
   <span>
     <!--<svg-icon v-if="icon" :icon-class="icon"/>-->
-    <i class="el-icon-remove-outline"></i>
-    <span v-if="title" slot="title">{{ title }}</span>
+    <i class="el-icon-remove-outline" />
+    <span v-if="title" slot="title"> {{ title }} </span>
   </span>
 </template>
 <script>

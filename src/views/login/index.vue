@@ -27,8 +27,8 @@
       <el-form-item prop="password">
         <span class="svg-container"> <svg-icon icon-class="password" /> </span>
         <el-input
-          :type="passwordType"
           v-model="loginForm.password"
+          :type="passwordType"
           :placeholder="$t('login.password')"
           name="password"
           auto-complete="on"
@@ -44,17 +44,18 @@
         type="primary"
         style="width:100%;margin-bottom:30px;"
         @click.native.prevent="handleLogin"
-        >{{ $t('login.logIn') }}</el-button
       >
+        {{ $t('login.logIn') }}
+      </el-button>
 
       <div class="tips">
         <span>{{ $t('login.username') }} : admin</span>
         <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
       </div>
       <div class="tips">
-        <span style="margin-right:18px;"
-          >{{ $t('login.username') }} : editor</span
-        >
+        <span style="margin-right:18px;">
+          {{ $t('login.username') }} : editor
+        </span>
         <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
       </div>
 
@@ -62,8 +63,9 @@
         class="thirdparty-button"
         type="primary"
         @click="showDialog = true"
-        >{{ $t('login.thirdparty') }}</el-button
       >
+        {{ $t('login.thirdparty') }}
+      </el-button>
     </el-form>
 
     <el-dialog
@@ -123,7 +125,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler(route) {
         this.redirect = route.query && route.query.redirect;
       },
       immediate: true,
@@ -186,6 +188,7 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss">
 /* 修复input 背景不协调 和光标变色 */
+
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
 $bg: #283443;
@@ -209,15 +212,15 @@ $cursor: #fff;
     width: 85%;
     input {
       background: transparent;
-      border: 0px;
+      border: 0;
       -webkit-appearance: none;
-      border-radius: 0px;
+      border-radius: 0;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
       height: 47px;
       caret-color: $cursor;
       &:-webkit-autofill {
-        -webkit-box-shadow: 0 0 0px 1000px $bg inset !important;
+        -webkit-box-shadow: 0 0 0 1000px $bg inset !important;
         -webkit-text-fill-color: $cursor !important;
       }
     }
@@ -272,7 +275,7 @@ $light_gray: #eee;
     .title {
       font-size: 26px;
       color: $light_gray;
-      margin: 0px auto 40px auto;
+      margin: 0 auto 40px auto;
       text-align: center;
       font-weight: bold;
     }
@@ -280,7 +283,7 @@ $light_gray: #eee;
       color: #fff;
       position: absolute;
       top: 5px;
-      right: 0px;
+      right: 0;
     }
   }
   .show-pwd {
