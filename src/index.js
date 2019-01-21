@@ -1,13 +1,12 @@
-import Vue from 'vue';
-
-import Cookies from 'js-cookie';
-
-import 'normalize.css/normalize.css'; // A modern alternative to CSS resets
-
-import Element from 'element-ui';
+import 'normalize.css/normalize.css';
+import '@senntyou/shortcut.css';
+import './index.less';
 import 'element-ui/lib/theme-chalk/index.css';
+import Vue from 'vue';
+import Cookies from 'js-cookie';
+import Element from 'element-ui';
 
-import '@/sys/styles/index.scss'; // global css
+import './sys/styles/index.scss'; // global css
 
 import App from './App';
 import router from './router';
@@ -24,6 +23,7 @@ Vue.use(Element, {
 
 Vue.config.productionTip = false;
 
+// eslint-disable-next-line no-new
 new Vue({
   el: '#app',
   router,

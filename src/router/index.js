@@ -1,8 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-/* Layout */
-import Layout from '@/sys/views/layout/Layout';
+import Layout from '../sys/views/layout/Layout';
 
 Vue.use(Router);
 
@@ -18,9 +17,7 @@ Vue.use(Router);
 * redirect: noredirect           if `redirect:noredirect` will no redirect in the breadcrumb
 * name:'router-name'             the name is used by <keep-alive> (must set!!!)
 * meta : {
-    roles: ['admin','editor']     will control the page roles (you can set multiple roles)
     title: 'title'               the name show in submenu and breadcrumb (recommend set)
-    icon: 'svg-name'             the icon show in the sidebar,
     noCache: true                if true ,the page will no be cached(default is false)
   }
 * */
@@ -55,12 +52,6 @@ export const constantRouterMap = [
         component: () => import('@/sys/views/dashboard/index'),
         name: 'Dashboard',
         meta: { title: 'dashboard', icon: 'dashboard', noCache: true },
-      },
-      {
-        path: 'dashboard2',
-        component: () => import('@/sys/views/dashboard/index'),
-        name: 'Dashboard2',
-        meta: { title: '哈哈', icon: 'dashboard', noCache: true },
       },
     ],
   },

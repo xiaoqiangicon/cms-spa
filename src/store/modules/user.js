@@ -1,5 +1,8 @@
 // import { loginByUsername, logout, getUserInfo } from '@/api/login';
-import { getToken, setToken, removeToken } from '@/sys/utils/auth';
+import cookie from 'js-cookie';
+import { getToken, setToken, removeToken } from '../../sys/utils/auth';
+import img from '../../../images/chan-zai-128x128.png';
+
 
 const user = {
   state: {
@@ -68,9 +71,8 @@ const user = {
           roles: ['admin'],
           token: 'admin',
           introduction: '我是超级管理员',
-          avatar:
-            'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-          name: 'Super Admin',
+          avatar: img,
+          name: cookie.get('userMid') || '这谁呀',
         };
 
         commit('SET_ROLES', data.roles);
