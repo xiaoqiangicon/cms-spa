@@ -77,11 +77,13 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.6.3",
     "@senntyou/shortcut.css": "^0.1.0",
     "element-ui": "^2.4.11",
     "js-cookie": "^2.2.0",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
+    "particles.js": "^2.0.0",
     "vue": "^2.5.22",
     "vue-router": "^3.0.2",
     "vuex": "^3.0.1"

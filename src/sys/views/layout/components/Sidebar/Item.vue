@@ -1,7 +1,6 @@
 <template>
   <span>
-    <!--<svg-icon v-if="icon" :icon-class="icon"/>-->
-    <i class="el-icon-menu" style="margin-left: -3px" />
+    <i class="fa fa-circle icon" :class="icon" v-if="icon"></i>
     <span v-if="title" slot="title"> {{ title }} </span>
   </span>
 </template>
@@ -20,3 +19,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.icon {
+  font-size: 18px;
+  margin-right: 10px;
+}
+</style>

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import Layout from '../sys/views/layout/Layout';
+import oldRoutes from './old-routes';
 
 Vue.use(Router);
 
@@ -17,9 +18,10 @@ Vue.use(Router);
 * redirect: noredirect           if `redirect:noredirect` will no redirect in the breadcrumb
 * name:'router-name'             the name is used by <keep-alive> (must set!!!)
 * meta : {
-    title: 'title'               the name show in submenu and breadcrumb (recommend set)
-    noCache: true                if true ,the page will no be cached(default is false)
-  }
+*   title: 'title'               the name show in submenu and breadcrumb (recommend set)
+*   icon: 'fa-circle'            font-awesome icon
+*   noCache: true                if true ,the page will no be cached(default is false)
+* }
 * */
 export const constantRouterMap = [
   // {
@@ -51,15 +53,15 @@ export const constantRouterMap = [
         path: 'dashboard',
         component: () => import('@/sys/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: 'dashboard', icon: 'dashboard', noCache: true },
+        meta: { title: 'dashboard', icon: 'fa-circle', noCache: true },
       },
     ],
   },
+  ...oldRoutes,
   { path: '*', redirect: '/404', hidden: true },
 ];
 
 export default new Router({
-  // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap,
 });

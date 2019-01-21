@@ -1,5 +1,6 @@
 import 'normalize.css/normalize.css';
 import '@senntyou/shortcut.css';
+import '@fortawesome/fontawesome-free/css/all.css';
 import './index.less';
 import 'element-ui/lib/theme-chalk/index.css';
 import Vue from 'vue';
