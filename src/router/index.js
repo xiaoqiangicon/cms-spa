@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 /* Layout */
-import Layout from '@/views/layout/Layout';
+import Layout from '@/sys/views/layout/Layout';
 
 Vue.use(Router);
 
@@ -25,35 +25,24 @@ Vue.use(Router);
   }
 * */
 export const constantRouterMap = [
-  {
-    path: '/redirect',
-    component: Layout,
-    hidden: true,
-    children: [
-      {
-        path: '/redirect/:path*',
-        component: () => import('@/views/redirect/index'),
-      },
-    ],
-  },
-  {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true,
-  },
-  {
-    path: '/auth-redirect',
-    component: () => import('@/views/login/authredirect'),
-    hidden: true,
-  },
+  // {
+  //   path: '/login',
+  //   component: () => import('@/sys/views/login/index'),
+  //   hidden: true,
+  // },
+  // {
+  //   path: '/auth-redirect',
+  //   component: () => import('@/sys/views/login/authredirect'),
+  //   hidden: true,
+  // },
   {
     path: '/404',
-    component: () => import('@/views/errorPage/404'),
+    component: () => import('@/sys/views/errorPage/404'),
     hidden: true,
   },
   {
     path: '/401',
-    component: () => import('@/views/errorPage/401'),
+    component: () => import('@/sys/views/errorPage/401'),
     hidden: true,
   },
   {
@@ -63,38 +52,19 @@ export const constantRouterMap = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
+        component: () => import('@/sys/views/dashboard/index'),
         name: 'Dashboard',
         meta: { title: 'dashboard', icon: 'dashboard', noCache: true },
       },
-    ],
-  },
-  {
-    path: '/documentation',
-    component: Layout,
-    redirect: '/documentation/index',
-    children: [
       {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: 'documentation', icon: 'documentation', noCache: true },
+        path: 'dashboard2',
+        component: () => import('@/sys/views/dashboard/index'),
+        name: 'Dashboard2',
+        meta: { title: '哈哈', icon: 'dashboard', noCache: true },
       },
     ],
   },
-  {
-    path: '/guide',
-    component: Layout,
-    redirect: '/guide/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/guide/index'),
-        name: 'Guide',
-        meta: { title: 'guide', icon: 'guide', noCache: true },
-      },
-    ],
-  },
+  { path: '*', redirect: '/404', hidden: true },
 ];
 
 export default new Router({
@@ -103,17 +73,4 @@ export default new Router({
   routes: constantRouterMap,
 });
 
-export const asyncRouterMap = [
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://github.com/PanJiaChen/vue-element-admin',
-        meta: { title: 'externalLink', icon: 'link' },
-      },
-    ],
-  },
-
-  { path: '*', redirect: '/404', hidden: true },
-];
+export const asyncRouterMap = [];
