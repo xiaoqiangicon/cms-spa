@@ -11,8 +11,12 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
-          <span class="dp-inline-block mg-l-5 mg-r-5 ps-relative" style="line-height: 40px; top: -5px;">{{name}}</span>
-          <img :src="avatar" class="user-avatar"/>
+          <span
+            class="dp-inline-block mg-l-5 mg-r-5 ps-relative"
+            style="line-height: 40px; top: -5px;"
+            >{{ name }}</span
+          >
+          <img :src="avatar" class="user-avatar" />
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">

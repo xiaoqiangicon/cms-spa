@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { asyncRouterMap, constantRouterMap } from '@/router';
 
 /**

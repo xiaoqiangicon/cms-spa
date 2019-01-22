@@ -1,8 +1,8 @@
+/* eslint-disable */
 // import { loginByUsername, logout, getUserInfo } from '@/api/login';
 import cookie from 'js-cookie';
 import { getToken, setToken, removeToken } from '../../sys/utils/auth';
 import img from '../../../images/chan-zai-128x128.png';
-
 
 const user = {
   state: {
@@ -80,7 +80,7 @@ const user = {
         commit('SET_AVATAR', data.avatar);
         commit('SET_INTRODUCTION', data.introduction);
 
-        resolve({data});
+        resolve({ data });
 
         // getUserInfo(state.token)
         //   .then(response => {
