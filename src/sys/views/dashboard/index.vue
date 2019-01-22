@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text-container">欢迎使用自在家后台管理系统</div>
-    <div class="particle-container" id="particles-js"></div>
+    <div class="particle-container" id="dashboard-particles-js"></div>
   </div>
 </template>
 
@@ -66,7 +66,12 @@ const options = {
 export default {
   name: 'Dashboard',
   mounted() {
-    window.particlesJS('particles-js', options);
+    window.particlesJS('dashboard-particles-js', options);
+
+    // 从其他页面返回的时候会不显示
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 1000);
   },
 };
 </script>

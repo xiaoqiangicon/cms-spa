@@ -144,13 +144,14 @@ export default {
       this.requestList();
     },
     toAdd() {
-      window.location.href = '/wish/lingEdit';
+      window.sessionStorage.removeItem('ling/edit/item');
+
+      this.$router.push('/ling/edit/0');
     },
     toEdit(item) {
-      window.sessionStorage['ling/index:item'] = JSON.stringify(item.row);
-      setTimeout(() => {
-        window.location.href = `/wish/lingEdit?id=${item.row.id}`;
-      }, 300);
+      window.sessionStorage['ling/edit/item'] = JSON.stringify(item.row);
+
+      this.$router.push(`/ling/edit/${item.row.id}`);
     },
     toDelete(item) {
       idToDelete = item.row.id;

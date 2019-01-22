@@ -8,12 +8,20 @@ const routes = [
     component: Layout,
     controlMark: 'pw_yaolingling',
     redirect: 'noredirect',
+    meta: { title: '要灵灵管理', icon: 'fa-circle', noCache: true },
     children: [
       {
         path: 'index',
         component: () => import('../ling/index/App'),
         name: '礼品管理',
-        meta: { title: '礼品管理', icon: 'fa-circle', noCache: true },
+        meta: { title: '礼品管理', noCache: true },
+      },
+      {
+        path: 'edit/:id',
+        component: () => import('../ling/edit/App'),
+        name: '礼品编辑',
+        meta: { title: '礼品编辑', noCache: true },
+        hidden: !0,
       },
     ],
   },
