@@ -21,8 +21,6 @@ first.forEach(item => {
 
 const second = first.filter(item => item.subItems && item.subItems.length);
 
-console.log(second);
-
 export default second.map(({ id, name, icon, subItems }) => ({
   path: `${domain}/${id}`,
   name,
