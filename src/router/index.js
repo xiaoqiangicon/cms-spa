@@ -3,6 +3,7 @@ import Router from 'vue-router';
 
 import Layout from '../sys/views/layout/Layout';
 import oldRoutes from './old-routes';
+import routes from './routes';
 
 Vue.use(Router);
 
@@ -57,6 +58,7 @@ export const constantRouterMap = [
       },
     ],
   },
+  ...routes,
   ...oldRoutes,
   { path: '*', redirect: '/404', hidden: true },
 ];

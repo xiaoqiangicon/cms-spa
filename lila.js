@@ -60,7 +60,8 @@ export default lila => {
   webpackPlugin(lila);
   webpackConfigPlugin(lila);
 
-  return ({ argv }) => {
+  return ({ argv, cmd }) => {
+    const isDev = cmd === 'dev' || cmd === 'serve';
     const isGray = argv.env === 'gray';
 
     const tasks = [
@@ -120,6 +121,9 @@ export default lila => {
       tasks,
       alias: {
         '@': path.join(__dirname, 'src'),
+      },
+      define: {
+        __SEE_ENV__: isDev ? 1 : 0,
       },
       splitChunks: {
         chunks: 'all',

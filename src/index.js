@@ -9,6 +9,7 @@ import Element from 'element-ui';
 
 import './sys/styles/index.scss'; // global css
 
+import './fetch';
 import App from './App';
 import router from './router';
 import store from './store';
