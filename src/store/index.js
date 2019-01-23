@@ -11,6 +11,7 @@ import getters from './getters';
 
 // 要灵灵
 import lingGift from '../ling/gift/state';
+import lingBubble from '../ling/bubble/state';
 
 Vue.use(Vuex);
 
@@ -25,6 +26,7 @@ const store = new Vuex.Store({
 
     // 要灵灵
     lingGift,
+    lingBubble,
   },
   getters,
 });

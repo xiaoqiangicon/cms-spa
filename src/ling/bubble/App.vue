@@ -8,25 +8,29 @@
       </div>
       <div class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
-          <el-table-column prop="date" label="日期" />
-          <el-table-column prop="typeText" label="奖品类型" />
-          <el-table-column prop="amount" label="奖品金额" />
+          <el-table-column prop="item" label="气泡图片">
+            <template slot-scope="item">
+              <img :src="item.row.cover" class="wd-100" />
+            </template>
+          </el-table-column>
+          <el-table-column prop="text" label="气泡文字" />
+          <el-table-column prop="frequencyText" label="重复频率" />
+          <el-table-column prop="item" label="生效日期">
+            <template slot-scope="item">
+              {{ item.row.startDate }} ~ {{ item.row.endDate }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="item" label="生效时间">
+            <template slot-scope="item">
+              {{ item.row.startHour }}点 ~ {{ item.row.endHour }}点
+            </template>
+          </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="item">
-              <el-button
-                v-if="!item.row.beforeTomorrow"
-                type="text"
-                size="small"
-                @click="toEdit(item)"
-              >
+              <el-button type="text" size="small" @click="toEdit(item)">
                 编辑
               </el-button>
-              <el-button
-                v-if="!item.row.beforeTomorrow"
-                type="text"
-                size="small"
-                @click="toDelete(item)"
-              >
+              <el-button type="text" size="small" @click="toDelete(item)">
                 删除
               </el-button>
             </template>
@@ -88,7 +92,7 @@ export default {
     requestList() {
       this.loading = !0;
 
-      seeFetch('ling/gift/list', {
+      seeFetch('ling/bubble/list', {
         page: this.currentPage,
       }).then(res => {
         if (!res.success) {
@@ -112,26 +116,30 @@ export default {
     },
     toAdd() {
       addProps.forEach(({ name, default: defaultValue }) => {
-        this.$store.state.lingGift.add[name] =
+        this.$store.state.lingBubble.add[name] =
           typeof defaultValue === 'function' ? defaultValue() : defaultValue;
       });
 
-      this.$store.state.lingGift.add.dialogTitle = '添加';
-      this.$store.state.lingGift.add.isUpdate = !1;
-      this.$store.state.lingGift.add.updateId = 0;
-      this.$store.state.lingGift.add.visible = !0;
+      this.$store.state.lingBubble.add.dialogTitle = '添加';
+      this.$store.state.lingBubble.add.isUpdate = !1;
+      this.$store.state.lingBubble.add.updateId = 0;
+      this.$store.state.lingBubble.add.visible = !0;
     },
     toEdit({ row: item }) {
       addProps.forEach(({ name }) => {
-        this.$store.state.lingGift.add[name] = item[name];
+        this.$store.state.lingBubble.add[name] = item[name];
       });
 
-      this.$store.state.lingGift.add.dialogTitle = '编辑';
-      this.$store.state.lingGift.add.visible = !0;
-      this.$store.state.lingGift.add.isUpdate = !0;
-      this.$store.state.lingGift.add.updateId = item.id;
-      this.$store.state.lingGift.add.type = `${item.type}`;
-      this.$store.state.lingGift.add.amount = `${item.amount}`;
+      this.$store.state.lingBubble.add.dialogTitle = '编辑';
+      this.$store.state.lingBubble.add.visible = !0;
+      this.$store.state.lingBubble.add.isUpdate = !0;
+      this.$store.state.lingBubble.add.updateId = item.id;
+      this.$store.state.lingBubble.add.frequency = `${item.frequency}`;
+      this.$store.state.lingBubble.add.redirect = `${item.redirect}`;
+      this.$store.state.lingBubble.add.covers = [item.cover];
+      this.$store.state.lingBubble.add.shareImageType = `${
+        item.shareImageType
+      }`;
     },
     toDelete(item) {
       idToDelete = item.row.id;
@@ -141,7 +149,7 @@ export default {
       if (deleting) return;
 
       deleting = !0;
-      seeFetch('ling/gift/delete', { id: idToDelete }).then(res => {
+      seeFetch('ling/bubble/delete', { id: idToDelete }).then(res => {
         deleting = !1;
 
         if (!res.success) {

@@ -42,6 +42,12 @@ const routes = [
         name: '暴富发奖',
         meta: { title: '暴富发奖', noCache: true },
       },
+      {
+        path: 'bubble',
+        component: () => import('../ling/bubble/App'),
+        name: '气泡广告',
+        meta: { title: '气泡广告', noCache: true },
+      },
     ],
   },
 ];
