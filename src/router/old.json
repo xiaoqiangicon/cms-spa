@@ -345,49 +345,6 @@
       ]
     },
     {
-      "id": "ling",
-      "name": "要灵灵管理",
-      "icon": "fa-circle-o",
-      "subItems": [
-        {
-          "id": "ling-index",
-          "name": "礼品管理",
-          "link": "/wish/lingIndex",
-          "controlMark": "pw_yaolingling"
-        },
-        {
-          "id": "ling-exchange",
-          "name": "兑奖管理",
-          "link": "/wish/lingExchange",
-          "controlMark": "pw_yaolingling"
-        },
-        {
-          "id": "ling-gift",
-          "name": "暴富奖品",
-          "link": "/wish/richGift",
-          "controlMark": "pw_yaolingling"
-        },
-        {
-          "id": "ling-send",
-          "name": "暴富发奖",
-          "link": "/wish/sendRichGift",
-          "controlMark": "pw_yaolingling"
-        },
-        {
-          "id": "ling-bubble",
-          "name": "气泡广告",
-          "link": "/wish/bubble",
-          "controlMark": "pw_yaolingling"
-        },
-        {
-          "id": "ling-entry",
-          "name": "许愿入口",
-          "link": "/wish/entry",
-          "controlMark": "pw_yaolingling"
-        }
-      ]
-    },
-    {
       "id": "user",
       "name": "用户管理",
       "icon": "fa-user",

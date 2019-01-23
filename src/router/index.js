@@ -49,7 +49,6 @@ export const constantRouterMap = [
     path: '',
     component: Layout,
     redirect: 'dashboard',
-    name: 'Dashboard',
     meta: { title: 'dashboard', icon: 'fa-circle', noCache: true },
     children: [
       {
