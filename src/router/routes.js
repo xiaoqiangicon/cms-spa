@@ -19,8 +19,8 @@ const routes = [
       {
         path: 'edit/:id',
         component: () => import('../ling/edit/App'),
-        name: '礼品编辑',
-        meta: { title: '礼品编辑', noCache: true },
+        name: '礼品添加/编辑',
+        meta: { title: '礼品添加/编辑', noCache: true },
         hidden: !0,
       },
     ],

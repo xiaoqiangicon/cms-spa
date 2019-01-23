@@ -199,6 +199,9 @@ export default {
     };
   },
   mounted() {
+    // 由于在 beforeDestroy 使用 this.$route 值会变成 ling/index，需要在这里保存一下
+    this.path = this.$route.path;
+
     const { uploadCover: uploadCoverRef } = this.$refs;
 
     upload(uploadCoverRef, url => {
@@ -219,6 +222,10 @@ export default {
 
     detailEditor = null;
     descEditor = null;
+
+    // this.$route 在这里不准确
+    window.sessionStorage.removeItem('ling/edit/item');
+    this.$store.commit('DEL_VISITED_VIEW', { path: this.path });
   },
   methods: {
     init() {
