@@ -30,6 +30,12 @@ const routes = [
         name: '兑奖管理',
         meta: { title: '兑奖管理', noCache: true },
       },
+      {
+        path: 'gift',
+        component: () => import('../ling/gift/App'),
+        name: '暴富奖品',
+        meta: { title: '暴富奖品', noCache: true },
+      },
     ],
   },
 ];
