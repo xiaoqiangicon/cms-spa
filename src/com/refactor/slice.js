@@ -8,6 +8,8 @@ import JSONRefactor from 'json-refactor';
 JSONRefactor.register({
   test: /^slice!/i,
   handler: (originValue, operator) => {
+    if (!originValue) return originValue;
+
     const operators = operator.split('!');
     const start = parseInt(operators[1], 10);
     const end = parseInt(operators[2], 10);

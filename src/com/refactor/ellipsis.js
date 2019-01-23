@@ -8,6 +8,8 @@ import JSONRefactor from 'json-refactor';
 JSONRefactor.register({
   test: /^ellipsis!/i,
   handler: (originValue, operator) => {
+    if (!originValue) return originValue;
+
     const length = parseInt(operator.split('!')[1], 10) || 20;
 
     return originValue.length > length

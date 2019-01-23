@@ -87,6 +87,7 @@ export default {
   margin-top: -50px;
   text-align: center;
   font-size: 20px;
+  user-select: none;
 }
 
 .particle-container {
