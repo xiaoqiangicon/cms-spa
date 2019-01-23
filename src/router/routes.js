@@ -36,6 +36,12 @@ const routes = [
         name: '暴富奖品',
         meta: { title: '暴富奖品', noCache: true },
       },
+      {
+        path: 'send',
+        component: () => import('../ling/send/App'),
+        name: '暴富发奖',
+        meta: { title: '暴富发奖', noCache: true },
+      },
     ],
   },
 ];
