@@ -48,6 +48,12 @@ const routes = [
         name: '气泡广告',
         meta: { title: '气泡广告', noCache: true },
       },
+      {
+        path: 'entry',
+        component: () => import('../ling/entry/App'),
+        name: '许愿入口',
+        meta: { title: '许愿入口', noCache: true },
+      },
     ],
   },
 ];
