@@ -7,7 +7,8 @@ const routes = [
     path: '/ling',
     component: Layout,
     controlMark: 'pw_yaolingling',
-    redirect: 'noredirect',
+    redirect: '/ling/index',
+    name: '要灵灵管理',
     meta: { title: '要灵灵管理', icon: 'fa-circle', noCache: true },
     children: [
       {
@@ -22,6 +23,12 @@ const routes = [
         name: '礼品添加/编辑',
         meta: { title: '礼品添加/编辑', noCache: true },
         hidden: !0,
+      },
+      {
+        path: 'exchange',
+        component: () => import('../ling/exchange/App'),
+        name: '兑奖管理',
+        meta: { title: '兑奖管理', noCache: true },
       },
     ],
   },

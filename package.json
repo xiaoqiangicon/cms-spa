@@ -88,6 +88,7 @@
     "@zzh/util": "^0.3.0",
     "element-ui": "^2.4.11",
     "js-cookie": "^2.2.0",
+    "json-refactor": "^1.0.0",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "particles.js": "^2.0.0",

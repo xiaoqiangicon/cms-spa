@@ -1,6 +1,6 @@
 <template>
   <span>
-    <i class="fa fa-circle icon" :class="icon" v-if="icon"></i>
+    <i class="fa icon" :class="icon" v-if="icon"></i>
     <span v-if="title" slot="title"> {{ title }} </span>
   </span>
 </template>
