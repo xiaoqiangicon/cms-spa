@@ -13,6 +13,7 @@ import getters from './getters';
 import lingGift from '../ling/gift/state';
 import lingBubble from '../ling/bubble/state';
 import lingEntry from '../ling/entry/state';
+import lingFate from '../ling/fate/state';
 
 Vue.use(Vuex);
 
@@ -29,6 +30,7 @@ const store = new Vuex.Store({
     lingGift,
     lingBubble,
     lingEntry,
+    lingFate,
   },
   getters,
 });

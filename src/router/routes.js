@@ -54,6 +54,12 @@ const routes = [
         name: '许愿入口',
         meta: { title: '许愿入口', noCache: true },
       },
+      {
+        path: 'fate',
+        component: () => import('../ling/fate/App'),
+        name: '好运攻略',
+        meta: { title: '好运攻略', noCache: true },
+      },
     ],
   },
 ];
