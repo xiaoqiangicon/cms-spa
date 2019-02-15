@@ -2,19 +2,17 @@
 import seeFetch from 'see-fetch';
 
 const req = {
-  cover: 'pic',
-  text: 'title',
-  frequency: 'appearType',
-  redirect: 'jumpType',
-  link: 'jumpUrl',
-  shareImageType: 'sharePicType',
+  content: 'details',
+  startDate: 'startTime',
+  endDate: 'endTime',
+  priority: 'top',
 };
 
 seeFetch.config('ling/fate/update', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/wish/addOrUpdateWishAd',
+    '/wish/addOrUpdateStarStrategy',
     '/ling/fate/mock/update1',
     '/ling/fate/mock/update',
   ],

@@ -2,8 +2,6 @@
 import seeFetch from 'see-fetch';
 import '../../../com/refactor/slice';
 
-const frequencyTexts = ['只出现1次', '每天出现1次'];
-
 const req = {
   page: 'pageNum',
 };
@@ -19,37 +17,23 @@ const refactor = {
   data: 'data.list',
   _data: [
     {
-      cover: 'pic',
-      text: 'title',
-      frequency: 'appearType',
-      startDate: 'startDate|slice!0!10',
-      endDate: 'endDate|slice!0!10',
-      redirect: 'jumpType',
-      link: 'jumpUrl',
-      shareImageType: 'sharePicType',
+      content: 'details',
+      startDate: 'startTime|slice!0!10',
+      endDate: 'endTime|slice!0!10',
+      priority: 'top',
     },
   ],
-};
-
-const post = res => {
-  if (res.data)
-    res.data.forEach(item => {
-      item.frequencyText = frequencyTexts[item.frequency - 1];
-    });
-};
-
-const localPost = res => {
-  res.data.forEach(item => {
-    item.frequencyText = frequencyTexts[item.frequency - 1];
-  });
 };
 
 seeFetch.config('ling/fate/list', {
   method: ['post'],
   stringify: [!0],
-  url: ['/wish/wishAdList', '/ling/fate/mock/list1', '/ling/fate/mock/list'],
+  url: [
+    '/wish/starStrategyList',
+    '/ling/fate/mock/list1',
+    '/ling/fate/mock/list',
+  ],
   req: [req, req],
   pre: [pre, pre],
   refactor: [refactor, refactor],
-  post: [post, post, localPost],
 });

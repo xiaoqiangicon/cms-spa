@@ -6,7 +6,7 @@ seeFetch.config('ling/fate/delete', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/wish/addOrUpdateWishAd',
+    '/wish/addOrUpdateStarStrategy',
     '/ling/fate/mock/del1',
     '/ling/fate/mock/del',
   ],
