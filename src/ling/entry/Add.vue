@@ -16,10 +16,10 @@
         <div class="row-name">
           绑定守护者：
         </div>
-        <el-radio v-model="hasGuard" :label="1">
+        <el-radio v-model="hasGuard" :label="1" disabled>
           有
         </el-radio>
-        <el-radio v-model="hasGuard" :label="0">
+        <el-radio v-model="hasGuard" :label="0" disabled>
           无
         </el-radio>
       </div>

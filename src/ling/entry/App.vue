@@ -133,6 +133,9 @@ export default {
       this.$store.state.lingEntry.add.isUpdate = !1;
       this.$store.state.lingEntry.add.updateId = 0;
       this.$store.state.lingEntry.add.visible = !0;
+
+      // 暂时全部都是已绑定
+      this.$store.state.lingEntry.add.hasGuard = 1;
     },
     toEdit({ row: item }) {
       addProps.forEach(({ name }) => {
@@ -152,6 +155,9 @@ export default {
       this.$store.state.lingEntry.add.shareImages = item.shareImage
         ? [item.shareImage]
         : [];
+
+      // 暂时全部都是已绑定
+      this.$store.state.lingEntry.add.hasGuard = 1;
     },
     toDelete(item) {
       idToDelete = item.row.id;
