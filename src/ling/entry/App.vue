@@ -155,6 +155,9 @@ export default {
       this.$store.state.lingEntry.add.shareImages = item.shareImage
         ? [item.shareImage]
         : [];
+      this.$store.state.lingEntry.add.bookmarkImages = item.bookmarkImage
+        ? [item.bookmarkImage]
+        : [];
 
       // 暂时全部都是已绑定
       this.$store.state.lingEntry.add.hasGuard = 1;

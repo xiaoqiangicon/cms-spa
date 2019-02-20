@@ -14,6 +14,7 @@ const req = {
   endDate: 'endTime',
   wishCount: 'wishNum',
   priority: 'top',
+  bookmarkImage: 'bookMarkImg',
 };
 
 seeFetch.config('ling/entry/add', {

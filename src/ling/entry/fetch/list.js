@@ -39,6 +39,7 @@ const refactor = {
       endDate: 'endTime|slice!0!10',
       wishCount: 'wishNum',
       priority: 'top',
+      bookmarkImage: 'bookMarkImg',
     },
   ],
 };

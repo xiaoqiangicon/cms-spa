@@ -18,6 +18,7 @@ export const list = {
     wishCount: id * 10,
     priority: id * 10,
     hide: Math.floor(Math.random() * 2),
+    bookmarkImage: '/images/chan-zai-128x128.png',
   })),
 };
 
@@ -43,6 +44,7 @@ export const list1 = {
       wishNum: id * 10,
       priority: id * 10,
       status: Math.floor(Math.random() * 2),
+      bookMarkImg: '/images/chan-zai-128x128.png',
     })),
   },
 };

@@ -20,6 +20,8 @@ export const addProps = [
   { name: 'wishCount', full: !0, default: '' },
   { name: 'priority', full: !0, default: '' },
   { name: 'hide', full: !0, default: 0 },
+  { name: 'bookmarkImage', full: !0, default: '' },
+  { name: 'bookmarkImages', full: !0, default: () => [] },
 ];
 
 export default {};
