@@ -99,6 +99,7 @@
           <el-option value="1" label="朋友圈分享页" />
           <el-option value="2" label="暴富锦鲤页" />
           <el-option value="3" label="H5链接" />
+          <el-option value="4" label="今日运程" />
         </el-select>
       </div>
       <div v-show="redirect === '3'" class="row">
