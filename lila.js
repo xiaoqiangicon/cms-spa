@@ -3,6 +3,7 @@ import path from 'path';
 import tasksPlugin from 'lila-tasks';
 import webpackPlugin from 'lila-webpack';
 import webpackConfigPlugin from 'lila-webpack-config';
+import MomentLocalesPlugin from 'moment-locales-webpack-plugin';
 
 import accounts from '../accounts';
 
@@ -125,6 +126,11 @@ export default lila => {
       define: {
         __SEE_ENV__: isDev ? 1 : 0,
       },
+      plugins: [
+        new MomentLocalesPlugin({
+          localesToKeep: ['es-us', 'zh-cn'],
+        }),
+      ],
       splitChunks: {
         chunks: 'all',
         cacheGroups: {
