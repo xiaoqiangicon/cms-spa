@@ -37,9 +37,15 @@
       </div>
       <div v-if="hasGuard" class="row">
         <div class="row-name">
-          守护者形象：
+          守护者小图：
         </div>
         <Upload :images="guardAvatars" :multiple="false" />
+      </div>
+      <div v-if="hasGuard" class="row">
+        <div class="row-name">
+          守护者大图：
+        </div>
+        <Upload :images="guardLargeAvatars" :multiple="false" />
       </div>
       <div v-if="hasGuard" class="row">
         <div class="row-name">
@@ -206,6 +212,7 @@ export default {
       const wishCount = parseInt(this.wishCount, 10);
       const priority = parseInt(this.priority, 10);
       const [guardAvatar] = this.guardAvatars;
+      const [guardLargeAvatar] = this.guardLargeAvatars;
       const [attachCover] = this.attachCovers;
       const [shareImage] = this.shareImages;
       const [bookmarkImage] = this.bookmarkImages;
@@ -213,7 +220,8 @@ export default {
       if (!title) error = '许愿标题不能为空';
       else if (hasGuard && !guardName) error = '守护者名称不能为空';
       else if (hasGuard && !guardTags) error = '守护者标签不能为空';
-      else if (hasGuard && !guardAvatar) error = '守护者形象不能为空';
+      else if (hasGuard && !guardAvatar) error = '守护者小图不能为空';
+      else if (hasGuard && !guardLargeAvatar) error = '守护者大图不能为空';
       else if (hasGuard && !guardIntro) error = '守护者简介不能为空';
       else if (hasGuard && !bookmarkImage) error = '书签图片不能为空';
       else if (hasGuard && !guardBtn) error = '入口按钮不能为空';
@@ -247,6 +255,7 @@ export default {
         hasGuard,
         guardName: hasGuard ? guardName : '',
         guardAvatar: hasGuard ? guardAvatar : '',
+        guardLargeAvatar: hasGuard ? guardLargeAvatar : '',
         guardTags: hasGuard ? guardTags : '',
         guardIntro: hasGuard ? guardIntro : '',
         bookmarkImage: hasGuard ? bookmarkImage : '',

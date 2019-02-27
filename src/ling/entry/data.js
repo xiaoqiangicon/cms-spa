@@ -9,6 +9,8 @@ export const addProps = [
   { name: 'guardTags', full: !0, default: '' },
   { name: 'guardAvatar', full: !0, default: '' },
   { name: 'guardAvatars', full: !0, default: () => [] },
+  { name: 'guardLargeAvatar', full: !0, default: '' },
+  { name: 'guardLargeAvatars', full: !0, default: () => [] },
   { name: 'guardIntro', full: !0, default: '' },
   { name: 'guardBtn', full: !0, default: '' },
   { name: 'attachCover', full: !0, default: '' },

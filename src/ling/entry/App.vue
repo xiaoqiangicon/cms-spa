@@ -149,6 +149,9 @@ export default {
       this.$store.state.lingEntry.add.guardAvatars = item.guardAvatar
         ? [item.guardAvatar]
         : [];
+      this.$store.state.lingEntry.add.guardLargeAvatars = item.guardLargeAvatar
+        ? [item.guardLargeAvatar]
+        : [];
       this.$store.state.lingEntry.add.attachCovers = item.attachCover
         ? [item.attachCover]
         : [];

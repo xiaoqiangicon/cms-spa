@@ -31,6 +31,7 @@ const refactor = {
       title: 'name',
       guardTags: 'guardTab',
       guardAvatar: 'guardImg',
+      guardLargeAvatar: 'guardBigImg',
       guardIntro: 'guardDetail',
       guardBtn: 'buttonName',
       attachCover: 'pic',
