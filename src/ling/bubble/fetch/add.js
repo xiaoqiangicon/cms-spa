@@ -8,6 +8,7 @@ const req = {
   redirect: 'jumpType',
   link: 'jumpUrl',
   shareImageType: 'sharePicType',
+  entryId: 'wishTypeId',
 };
 
 seeFetch.config('ling/bubble/add', {

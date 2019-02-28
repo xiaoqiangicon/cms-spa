@@ -27,6 +27,7 @@ const refactor = {
       redirect: 'jumpType',
       link: 'jumpUrl',
       shareImageType: 'sharePicType',
+      entryId: 'wishTypeId',
     },
   ],
 };

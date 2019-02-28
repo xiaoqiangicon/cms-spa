@@ -100,6 +100,7 @@
           <el-option value="2" label="暴富锦鲤页" />
           <el-option value="3" label="H5链接" />
           <el-option value="4" label="今日运程" />
+          <el-option value="5" label="许愿入口" />
         </el-select>
       </div>
       <div v-show="redirect === '3'" class="row">
@@ -122,6 +123,25 @@
           <el-option value="2" label="2019元旦图片" />
           <el-option value="3" label="暴富锦鲤图片" />
           <el-option value="4" label="迎财神" />
+        </el-select>
+      </div>
+      <div v-show="redirect === '5'" class="row">
+        <div class="row-name">
+          许愿入口：
+        </div>
+        <el-select
+          v-model="entryId"
+          placeholder="请选择"
+          size="small"
+          style="width: 200px;"
+        >
+          <el-option :value="0" label="请选择" />
+          <el-option
+            v-for="entry in entryList"
+            :key="entry.id"
+            :value="entry.id"
+            :label="entry.title"
+          />
         </el-select>
       </div>
     </div>
@@ -175,6 +195,11 @@ export default {
       required: !0,
       default: undefined,
     },
+    entryList: {
+      type: Array,
+      required: !0,
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -220,6 +245,7 @@ export default {
       const frequency = parseInt(this.frequency, 10);
       const redirect = parseInt(this.redirect, 10);
       const shareImageType = parseInt(this.shareImageType, 10);
+      const entryId = parseInt(this.entryId, 10) || 0;
 
       if (!cover) error = '气泡图片不能为空';
       else if (!text) error = '气泡文字不能为空';
@@ -228,6 +254,7 @@ export default {
       else if (startHour >= endHour)
         error = '生效时间 - 结束时间需大于开始时间';
       else if (redirect === 3 && !link) error = 'H5链接不能为空';
+      else if (redirect === 5 && !entryId) error = '许愿入口不能为空';
 
       if (error) {
         Notification({
@@ -250,6 +277,7 @@ export default {
         redirect,
         link: redirect === 3 ? link : '',
         shareImageType: redirect === 1 ? shareImageType : 1,
+        entryId: redirect === 5 ? entryId : 0,
       };
 
       if (this.isUpdate) {

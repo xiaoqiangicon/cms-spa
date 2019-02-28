@@ -57,7 +57,7 @@
         </el-button>
       </span>
     </el-dialog>
-    <Add :ok="addDialogOk" />
+    <Add :entry-list="entryList" :ok="addDialogOk" />
   </div>
 </template>
 
@@ -82,11 +82,13 @@ export default {
       currentPage: 1,
       totalCount: 0,
       list: [],
+      entryList: [],
       deleteDialogVisible: !1,
     };
   },
   created() {
     this.requestList();
+    this.requestEntryList();
   },
   methods: {
     requestList() {
@@ -108,6 +110,19 @@ export default {
         this.list = res.data;
 
         window.scrollTo(0, 0);
+      });
+    },
+    requestEntryList() {
+      seeFetch('ling/bubble/entryList').then(res => {
+        if (!res.success) {
+          Notification({
+            title: '提示',
+            message: res.message,
+          });
+          return;
+        }
+
+        this.entryList = res.data;
       });
     },
     pageChange(page) {

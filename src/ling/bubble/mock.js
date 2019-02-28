@@ -13,6 +13,7 @@ export const list = {
     redirect: Math.floor(Math.random() * 3) + 1,
     link: '/link',
     shareImageType: Math.floor(Math.random() * 3) + 1,
+    entryId: id,
   })),
 };
 
@@ -32,6 +33,7 @@ export const list1 = {
       jumpType: Math.floor(Math.random() * 3) + 1,
       jumpUrl: '/link',
       sharePicType: Math.floor(Math.random() * 3) + 1,
+      wishTypeId: id,
     })),
   },
 };

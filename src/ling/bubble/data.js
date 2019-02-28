@@ -13,6 +13,7 @@ export const addProps = [
   { name: 'redirect', full: !0, default: '1' },
   { name: 'link', full: !0, default: '' },
   { name: 'shareImageType', full: !0, default: '1' },
+  { name: 'entryId', full: !0, default: 0 },
 
   // covers
   { name: 'covers', full: !0, default: () => [] },
