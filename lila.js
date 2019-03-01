@@ -2,7 +2,7 @@
 import path from 'path';
 import tasksPlugin from 'lila-tasks';
 import webpackPlugin from 'lila-webpack';
-import webpackConfigPlugin from 'lila-webpack-config';
+import { forVue } from 'lila-webpack-config';
 import MomentLocalesPlugin from 'moment-locales-webpack-plugin';
 
 import accounts from '../accounts';
@@ -59,7 +59,7 @@ export default lila => {
 
   tasksPlugin(lila);
   webpackPlugin(lila);
-  webpackConfigPlugin(lila);
+  forVue(lila);
 
   return ({ argv, cmd }) => {
     const isDev = cmd === 'dev' || cmd === 'serve';
