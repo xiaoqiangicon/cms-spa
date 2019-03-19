@@ -163,9 +163,9 @@ import { Notification, Message } from 'element-ui';
 import StoreImage from '@zzh/store-image';
 import handling from '@zzh/handling';
 
-import '../../com/upload-config';
-import '../../com/store-image-config';
-import '../../com/ueditor-config';
+import '../../configs/upload';
+import '../../configs/store-image';
+import '../../configs/ueditor';
 import '@zzh/ueditor/src/ueditor.config';
 import '@zzh/ueditor';
 

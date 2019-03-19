@@ -25,7 +25,7 @@
 <script>
 import '@senntyou/shortcut.css';
 import '@zzh/upload/dist/upload.css';
-import '../upload-config';
+import '../../configs/upload';
 import upload from '@zzh/upload';
 
 export default {

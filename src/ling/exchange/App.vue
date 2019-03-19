@@ -2,9 +2,7 @@
   <div class="container">
     <el-card>
       <div>
-        <span class="l-hg-32">
-          兑换条件 </span
-        >&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="l-hg-32"> 兑换条件 </span>&nbsp;&nbsp;&nbsp;&nbsp;
         <el-select
           v-model="exchange"
           placeholder="请选择"
@@ -168,7 +166,7 @@ import '@zzh/upload/dist/upload.css';
 import seeFetch from 'see-fetch';
 import { Notification, Message } from 'element-ui';
 
-import '../../com/upload-config';
+import '../../configs/upload';
 
 import upload from '@zzh/upload';
 
