@@ -39,13 +39,13 @@
           <div class="row-name">
             礼品详情：
           </div>
-          <div id="detail-editor" />
+          <div id="ling-edit-detail-editor" />
         </div>
         <div class="row">
           <div class="row-name">
             兑换说明：
           </div>
-          <div id="desc-editor" />
+          <div id="ling-edit-desc-editor" />
         </div>
         <div class="row">
           <div class="row-name">
@@ -202,9 +202,9 @@ export default {
       this.covers.push(url);
     });
 
-    detailEditor = window.UE.getEditor('detail-editor');
+    detailEditor = window.UE.getEditor('ling-edit-detail-editor');
     detailEditor.ready(() => {
-      descEditor = window.UE.getEditor('desc-editor');
+      descEditor = window.UE.getEditor('ling-edit-desc-editor');
       descEditor.ready(() => {
         this.init();
       });
