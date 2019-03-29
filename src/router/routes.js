@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
-import cookie from 'js-cookie';
 import Layout from '../sys/views/layout/Layout';
+import { domain, valid } from './data';
 
 const routes = [
   {
@@ -60,15 +60,14 @@ const routes = [
         name: '好运攻略',
         meta: { title: '好运攻略', noCache: true },
       },
+      {
+        path: `${domain}/wish/marker`,
+        name: '祈福牌管理',
+        meta: { title: '祈福牌管理' },
+      },
     ],
   },
 ];
-
-const isLocal =
-  window.location.hostname.split('.')[0].indexOf('localhost') > -1;
-
-const valid = item =>
-  isLocal || !item.controlMark || !!parseInt(cookie.get(item.controlMark), 10);
 
 const first = routes.filter(item => valid(item));
 
