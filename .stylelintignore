@@ -1,5 +1,6 @@
 .lila
 dev
 build
+/coverage
 src/sys
 res/

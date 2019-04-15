@@ -2,9 +2,7 @@
   <div class="container">
     <el-card>
       <div class="clearfix">
-        <span class="l-hg-32">
-          状态 </span
-        >&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="l-hg-32"> 状态 </span>&nbsp;&nbsp;&nbsp;&nbsp;
         <el-select
           v-model="status"
           placeholder="请选择"
