@@ -67,6 +67,37 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/temple',
+    component: Layout,
+    controlMark: 'pw_temple',
+    redirect: '/temple/super',
+    name: '寺院管理',
+    meta: { title: '寺院管理', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        path: 'super',
+        component: () => import('../temple/super/App'),
+        name: '超级访问',
+        meta: { title: '超级访问', noCache: true },
+      },
+      {
+        path: `${domain}/temple/verify`,
+        name: '寺院审核',
+        meta: { title: '寺院审核' },
+      },
+      {
+        path: `${domain}/temple/certification`,
+        name: '寺院列表',
+        meta: { title: '寺院列表' },
+      },
+      {
+        path: `${domain}/finance/verifyIndex`,
+        name: '善款资料审核',
+        meta: { title: '善款资料审核' },
+      },
+    ],
+  },
 ];
 
 const first = routes.filter(item => valid(item));

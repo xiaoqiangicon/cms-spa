@@ -1,31 +1,6 @@
 {
   "items": [
     {
-      "id": "temple-manage",
-      "name": "寺院管理",
-      "icon": "fa-home",
-      "subItems": [
-        {
-          "id": "temple-verify",
-          "name": "寺院审核",
-          "link": "/temple/verify",
-          "controlMark": "pw_temple"
-        },
-        {
-          "id": "temple-certification",
-          "name": "寺院列表",
-          "link": "/temple/certification",
-          "controlMark": "pw_temple"
-        },
-        {
-          "id": "cash-verify",
-          "name": "善款资料审核",
-          "link": "/finance/verifyIndex",
-          "controlMark": "pw_temple"
-        }
-      ]
-    },
-    {
       "id": "order-manage",
       "name": "订单管理",
       "icon": "fa-credit-card",
