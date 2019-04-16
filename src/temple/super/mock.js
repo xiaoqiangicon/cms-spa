@@ -9,7 +9,7 @@ export const templeList = {
 export const getAdmin = {
   errorCode: 0,
   data: {
-    templeId: 2,
+    templeId: 0,
   },
 };
 

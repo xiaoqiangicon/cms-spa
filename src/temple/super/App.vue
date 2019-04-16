@@ -35,7 +35,12 @@
             :label="item.name"
           /> </el-select
         >&nbsp;&nbsp;&nbsp;&nbsp;
-        <el-button size="small" type="primary" @click="updateAdmin">
+        <el-button
+          v-loading="loading"
+          size="small"
+          type="primary"
+          @click="updateAdmin"
+        >
           保存
         </el-button>
       </div>
@@ -53,7 +58,7 @@ export default {
   data() {
     return {
       loading: !0,
-      templeId: 0,
+      templeId: '',
       list: [],
     };
   },
@@ -64,7 +69,7 @@ export default {
     requestList() {
       this.loading = !0;
 
-      seeFetch('temple/super/templeList', {}).then(listRes => {
+      seeFetch('temple/super/templeList', { isTest: 0 }).then(listRes => {
         if (!listRes.success) {
           Notification({
             title: '提示',
@@ -84,7 +89,8 @@ export default {
             return;
           }
 
-          this.templeId = res.data.templeId;
+          const { templeId } = res.data;
+          this.templeId = res.data.templeId ? templeId : '';
           this.loading = !1;
         });
       });
