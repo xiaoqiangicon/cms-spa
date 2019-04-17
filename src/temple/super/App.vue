@@ -69,31 +69,33 @@ export default {
     requestList() {
       this.loading = !0;
 
-      seeFetch('temple/super/templeList', { isTest: 0 }).then(listRes => {
-        if (!listRes.success) {
-          Notification({
-            title: '提示',
-            message: listRes.message,
-          });
-          return;
-        }
-
-        this.list = listRes.data;
-
-        seeFetch('temple/super/getAdmin', {}).then(res => {
-          if (!res.success) {
+      seeFetch('temple/super/templeList', { isTest: 1, verify: -1 }).then(
+        listRes => {
+          if (!listRes.success) {
             Notification({
               title: '提示',
-              message: res.message,
+              message: listRes.message,
             });
             return;
           }
 
-          const { templeId } = res.data;
-          this.templeId = res.data.templeId ? templeId : '';
-          this.loading = !1;
-        });
-      });
+          this.list = listRes.data;
+
+          seeFetch('temple/super/getAdmin', {}).then(res => {
+            if (!res.success) {
+              Notification({
+                title: '提示',
+                message: res.message,
+              });
+              return;
+            }
+
+            const { templeId } = res.data;
+            this.templeId = res.data.templeId ? templeId : '';
+            this.loading = !1;
+          });
+        }
+      );
     },
     updateAdmin() {
       const { templeId } = this;
