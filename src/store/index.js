@@ -15,6 +15,9 @@ import lingBubble from '../ling/bubble/state';
 import lingEntry from '../ling/entry/state';
 import lingFate from '../ling/fate/state';
 
+// 善款中心
+import financePending from '../finance/pending/state';
+
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -31,6 +34,9 @@ const store = new Vuex.Store({
     lingBubble,
     lingEntry,
     lingFate,
+
+    // 善款中心
+    financePending,
   },
   getters,
 });

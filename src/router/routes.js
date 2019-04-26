@@ -98,6 +98,58 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/finance',
+    component: Layout,
+    redirect: '/finance/pending',
+    name: '善款中心',
+    meta: { title: '善款中心', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        path: 'pending',
+        component: () => import('../finance/pending/App'),
+        name: '待处理事项',
+        meta: { title: '待处理事项', noCache: true },
+        controlMark: 'pw_money',
+      },
+      {
+        path: `${domain}/finance/stat`,
+        name: '善款统计',
+        meta: { title: '善款统计' },
+        controlMark: 'pw_money',
+      },
+      {
+        path: `${domain}/earningsStatistics/stat`,
+        name: '盈收统计',
+        meta: { title: '盈收统计', noCache: true },
+        controlMark: 'pw_cash_stat',
+      },
+      {
+        path: `${domain}/cash/income`,
+        name: '盈收管理',
+        meta: { title: '盈收管理', noCache: true },
+        controlMark: 'pw_rate',
+      },
+      {
+        path: `${domain}/cash/record`,
+        name: '人工记账',
+        meta: { title: '人工记账', noCache: true },
+        controlMark: 'pw_cash_income',
+      },
+      {
+        path: `${domain}/cash/remark`,
+        name: '提醒备注',
+        meta: { title: '提醒备注', noCache: true },
+        controlMark: 'pw_cash_remark',
+      },
+      {
+        path: `${domain}/cash/jing`,
+        name: '交易统计',
+        meta: { title: '交易统计', noCache: true },
+        controlMark: 'pw_cash_jing',
+      },
+    ],
+  },
 ];
 
 const first = routes.filter(item => valid(item));
