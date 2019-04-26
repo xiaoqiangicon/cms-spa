@@ -113,6 +113,14 @@ const routes = [
         controlMark: 'pw_money',
       },
       {
+        path: 'taking',
+        component: () => import('../finance/taking/App'),
+        name: '提现账单详情',
+        meta: { title: '提现账单详情', noCache: true },
+        controlMark: 'pw_money',
+        hidden: !0,
+      },
+      {
         path: `${domain}/finance/stat`,
         name: '善款统计',
         meta: { title: '善款统计' },
