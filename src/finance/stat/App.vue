@@ -1,0 +1,204 @@
+<template>
+  <div class="container">
+    <div>
+      <el-button size="small" plain type="primary">
+        善款统计
+      </el-button>
+      <el-button size="small" plain @click="toNav(2)">
+        善款明细
+      </el-button>
+      <el-button size="small" plain @click="toNav(3)">
+        特殊提现
+      </el-button>
+    </div>
+    <div class="mg-t-20">
+      <el-select
+        v-model="filterTemple"
+        filterable
+        placeholder="请选择"
+        size="small"
+        style="width: 200px;"
+        @change="doSearch"
+      >
+        <el-option label="汇总" :value="0" />
+        <el-option
+          v-for="item in temples"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        />
+      </el-select>
+      <el-select
+        v-model="filterYear"
+        filterable
+        placeholder="请选择"
+        size="small"
+        style="width: 200px;"
+        @change="doSearch"
+      >
+        <el-option
+          v-for="year in years"
+          :key="year"
+          :label="year + '年'"
+          :value="year"
+        />
+      </el-select>
+    </div>
+    <el-card class="mg-t-20">
+      <div class="dp-flex t-a-center">
+        <div class="fx-1">
+          <div>累计善款 （每日0点更新）</div>
+          <div class="mg-t-10">
+            17592.52元
+          </div>
+        </div>
+        <div class="fx-1">
+          <div>累计已提现</div>
+          <div class="mg-t-10">
+            17592.52元
+          </div>
+          <div class="mg-t-10">
+            <el-button size="small" plain @click="toSummary">
+              提现记录
+            </el-button>
+          </div>
+        </div>
+        <div class="fx-1">
+          <div>结余</div>
+          <div class="mg-t-10">
+            17592.52元
+          </div>
+        </div>
+      </div>
+    </el-card>
+    <el-card class="mg-t-20">
+      <div class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="item" label="气泡图片">
+            <template slot-scope="item">
+              <img :src="item.row.cover" class="wd-100" />
+            </template>
+          </el-table-column>
+          <el-table-column prop="text" label="气泡文字" />
+          <el-table-column prop="frequencyText" label="重复频率" />
+          <el-table-column prop="item" label="生效日期">
+            <template slot-scope="item">
+              {{ item.row.startDate }} ~ {{ item.row.endDate }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="item" label="生效时间">
+            <template slot-scope="item">
+              {{ item.row.startHour }}点 ~ {{ item.row.endHour }}点
+            </template>
+          </el-table-column>
+          <!--          <el-table-column label="操作">-->
+          <!--            <template slot-scope="item">-->
+          <!--              <el-button-->
+          <!--                type="text"-->
+          <!--                size="small"-->
+          <!--              >-->
+          <!--                编辑-->
+          <!--              </el-button>-->
+          <!--            </template>-->
+          <!--          </el-table-column>-->
+        </el-table>
+        <el-pagination
+          :total="totalCount"
+          :current-page="currentPage"
+          background
+          layout="prev, pager, next"
+          style="margin-top: 40px"
+          @current-change="pageChange"
+        />
+      </div>
+    </el-card>
+  </div>
+</template>
+
+<script>
+import seeFetch from 'see-fetch';
+import { Notification } from 'element-ui';
+import { now } from '@zzh/n-util';
+import './fetch';
+
+export default {
+  name: 'App',
+  data() {
+    return {
+      loading: !0,
+      currentPage: 1,
+      totalCount: 0,
+      list: [],
+      filterTemple: 0,
+      temples: [],
+      filterYear: now.year,
+      years: [],
+    };
+  },
+  created() {
+    for (let i = 2016; i <= now.year; i += 1) this.years.push(i);
+
+    seeFetch('finance/stat/temples').then(res => {
+      if (!res.success || !res.data || !res.data.length) {
+        Notification({
+          title: '提示',
+          message: '获取寺院数据失败',
+        });
+        return;
+      }
+
+      this.temples = res.data;
+    });
+
+    this.requestList();
+  },
+  methods: {
+    toNav(sequence) {
+      if (sequence === 1) this.$router.push('/finance/stat');
+      else if (sequence === 2) this.$router.push('/finance/summary');
+      else if (sequence === 3) this.$router.push('/finance/special');
+    },
+    requestList() {
+      this.loading = !0;
+
+      seeFetch('finance/stat/list', {
+        page: this.currentPage,
+      }).then(res => {
+        if (!res.success) {
+          Notification({
+            title: '提示',
+            message: res.message,
+          });
+          return;
+        }
+
+        this.loading = !1;
+        this.totalCount = res.totalCount;
+        this.list = res.data;
+
+        window.scrollTo(0, 0);
+      });
+    },
+    pageChange(page) {
+      this.currentPage = page;
+      this.requestList();
+    },
+    doSearch() {
+      this.currentPage = 1;
+      this.requestList();
+    },
+    toSummary() {},
+  },
+};
+</script>
+
+<style scoped>
+.container {
+  width: 100%;
+  padding: 40px 20px;
+}
+
+.body {
+  margin-top: 20px;
+}
+</style>

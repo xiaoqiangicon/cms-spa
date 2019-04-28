@@ -121,9 +121,10 @@ const routes = [
         hidden: !0,
       },
       {
-        path: `${domain}/finance/stat`,
+        path: `stat`,
+        component: () => import('../finance/stat/App'),
         name: '善款统计',
-        meta: { title: '善款统计' },
+        meta: { title: '善款统计', noCache: true },
         controlMark: 'pw_money',
       },
       {
