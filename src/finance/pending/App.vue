@@ -261,8 +261,8 @@ export default {
           return;
         }
 
-        const listItem = this.list.find(i => i.id === item.id);
-        listItem.gotReceipt = value ? 1 : 0;
+        // eslint-disable-next-line no-param-reassign
+        item.gotReceipt = value ? 1 : 0;
 
         Notification({
           title: '提示',
@@ -286,8 +286,9 @@ export default {
       this.$store.state.financePending.add.receiptImages = item.receiptImages;
     },
     toDetail({ row: item }) {
-      console.log(item);
-      // todo
+      window.sessionStorage['finance/taking||item'] = JSON.stringify(item);
+
+      this.$router.push(`/finance/taking/${item.id}`);
     },
     addDialogOk() {
       this.fetchStat();

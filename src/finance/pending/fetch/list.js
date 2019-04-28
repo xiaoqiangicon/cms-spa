@@ -28,11 +28,12 @@ const refactor = {
   data: [
     {
       time: 'add_time',
+      templeId: 'temple_id',
       templeName: 'temple_name',
       isQuestion: 'is_question',
       amount: 'price',
       gotReceipt: 'is_express_receipt',
-      extra: 'remarks',
+      question: 'remarks',
       feedbackImages: 'picList',
       receiptImages: 'feedBackPicList',
     },

@@ -35,7 +35,68 @@ export const orders = {
         inPromoting: subId === 1 ? 1 : 0,
       })),
     })),
+    // 回单照片
+    feedbackImages: [
+      '/sample/image1.jpg',
+      '/sample/image2.jpg',
+      '/sample/image3.jpg',
+      '/sample/image4.jpg',
+    ],
   },
 };
 
-export const temples1 = { errorCode: 0 };
+export const orders1 = { errorCode: 0 };
+
+export const remarks = {
+  success: !0,
+  data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
+    id,
+    content: `content ${id}`,
+    takeEffect: id % 2,
+  })),
+};
+
+export const remarks1 = {
+  errorCode: 0,
+  data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
+    id,
+    title: `content ${id}`,
+    status: id % 2,
+  })),
+};
+
+export const updateRemark = { success: !0 };
+export const updateRemark1 = { errorCode: 0 };
+
+export const info = {
+  success: !0,
+  data: {
+    templeId: 12,
+    templeName: 'templeName',
+    type: 2,
+    isQuestion: 0,
+    question: 'question',
+    answer: 'answer',
+  },
+};
+
+export const info1 = {
+  errorCode: 0,
+  data: {
+    templeId: 12,
+    templeName: 'templeName',
+    type: 1,
+    isQuestion: 1,
+    question: 'question',
+    answer: 'answer',
+  },
+};
+
+export const answer = { success: !0 };
+export const answer1 = { errorCode: 0 };
+
+export const confirm = { success: !0 };
+export const confirm1 = { errorCode: 0 };
+
+export const finish = { success: !0 };
+export const finish1 = { errorCode: 0 };

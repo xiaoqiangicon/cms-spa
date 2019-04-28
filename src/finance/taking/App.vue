@@ -1,7 +1,40 @@
 <template>
   <div class="container">
     <el-card v-loading="loading">
-      <div class="content">
+      <el-card v-if="isQuestion" class="box-card">
+        <el-button
+          v-if="type === 1"
+          size="small"
+          class="fl-right"
+          plain
+          @click="toAnswer"
+        >
+          回复
+        </el-button>
+        <div>{{ templeName }}有疑问：{{ question }}</div>
+        <div v-if="type === 2" class="mg-t-20">已回复：{{ answer }}</div>
+      </el-card>
+      <div class="clearfix mg-t-20">
+        <el-button
+          size="small"
+          class="fl-right"
+          plain
+          :type="showType === 2 ? 'primary' : 'default'"
+          @click="changeShowType(2)"
+        >
+          项目汇总
+        </el-button>
+        <el-button
+          size="small"
+          class="fl-right mg-r-10"
+          plain
+          :type="showType === 1 ? 'primary' : 'default'"
+          @click="changeShowType(1)"
+        >
+          时间汇总
+        </el-button>
+      </div>
+      <div class="content mg-t-20">
         <div
           v-for="(dateItem, index) in dateItems"
           :key="index"
@@ -118,9 +151,56 @@
           提现金额：{{ realTakeAmount }} 元
         </div>
       </el-card>
+      <el-card v-if="remarks && remarks.length" class="mg-t-20">
+        <div slot="header" class="clearfix">
+          <span>提现注意事项</span>&nbsp;&nbsp;&nbsp;&nbsp;
+          <span class="gray">若下列注意事项已经完成，请勾选为已处理</span>
+        </div>
+        <div
+          v-for="remark in remarks"
+          :key="remark.id"
+          class="remark-row"
+          :class="remark.takeEffect ? '' : 'disabled'"
+        >
+          <button class="clean remark-btn" @click="updateRemark(remark)" />
+          <span>{{ remark.content }}</span>
+        </div>
+      </el-card>
       <el-card class="mg-t-20">
         <div slot="header" class="clearfix">
           <span>{{ templeName }}账户信息</span>
+        </div>
+        <div v-if="isQuestion === 0" class="fl-right t-a-right">
+          <div v-if="type !== 2" class="red">
+            {{
+              type === 5
+                ? '*确认打款后后不可撤销，请仔细核对'
+                : '*确认订单后不可撤销，请仔细核对'
+            }}
+          </div>
+          <div class="mg-t-20">
+            <el-button
+              v-if="type !== 2 && type !== 5"
+              size="small"
+              @click="confirmTake"
+            >
+              确认提现订单
+            </el-button>
+            <el-button
+              v-if="type === 2 || type === 5"
+              size="small"
+              @click="confirmReceive"
+            >
+              {{ type === 5 ? '确认已打款' : '更新处理' }}
+            </el-button>
+            <el-button
+              v-if="type === 2 || type === 5"
+              size="small"
+              @click="uploadFeedbackImages"
+            >
+              {{ type === 5 ? '上传回单图片' : '更新回单照片' }}
+            </el-button>
+          </div>
         </div>
         <div>银行名称：{{ bankName }}</div>
         <div class="mg-t-10">支行名称：{{ subBankName }}</div>
@@ -128,6 +208,7 @@
         <div class="mg-t-10">银行卡号：{{ accountNumber }}</div>
       </el-card>
     </el-card>
+    <feedback-images :ok="succeedUpload" />
   </div>
 </template>
 
@@ -138,12 +219,12 @@ import { Notification } from 'element-ui';
 // import '@fancyapps/fancybox/dist/jquery.fancybox.css';
 // import '@fancyapps/fancybox';
 // import fancyboxConfig from '../../configs/fancybox';
-// import Add from './Add';
+import FeedbackImages from './FeedbackImages';
 import './fetch';
 
 export default {
   name: 'App',
-  // components: { Add },
+  components: { FeedbackImages },
   data() {
     return {
       loading: !0,
@@ -178,10 +259,31 @@ export default {
       accountName: '',
       // 银行卡号
       accountNumber: '',
+      // 回单照片
+      feedbackImages: [],
+      // 提现注意事项
+      remarks: [],
+      // 寺院id
+      templeId: 0,
+      // type 字段
+      type: 0,
+      // 是否是疑问订单
+      isQuestion: 0,
+      // 疑问内容
+      question: '',
+      // 回答内容
+      answer: '',
+      // 当前id
+      id: 0,
+      // 展示类型||1：按时间，2：按项目
+      showType: 1,
     };
   },
   created() {
-    seeFetch('finance/taking/orders').then(res => {
+    this.path = this.$route.path;
+    this.id = parseInt(this.$route.params.id, 10);
+
+    seeFetch('finance/taking/info').then(res => {
       if (!res.success) {
         Notification({
           title: '提示',
@@ -190,29 +292,196 @@ export default {
         return;
       }
 
-      this.dateItems = res.data.dateItems;
-      this.totalAmount = res.data.totalAmount || 0;
-      this.totalIncreaseCharge = res.data.totalIncreaseCharge || 0;
-      this.totalChannelCharge = res.data.totalChannelCharge || 0;
-      this.totalChannelSubsidy = res.data.totalChannelSubsidy || 0;
-      this.totalFunctionCharge = res.data.totalFunctionCharge || 0;
-      this.totalPromoterReward = res.data.totalPromoterReward || 0;
-      this.realTakeAmount = res.data.realTakeAmount || 0;
-      this.platformSupport = res.data.platformSupport || 0;
-      this.specialCharge = res.data.specialCharge || 0;
-      this.bankName = res.data.account.bankName || '';
-      this.subBankName = res.data.account.subBankName || '';
-      this.accountName = res.data.account.accountName || '';
-      this.accountNumber = res.data.account.accountNumber || '';
-      this.loading = !1;
+      this.templeId = res.data.templeId;
+      this.templeName = res.data.templeName;
+      this.type = res.data.type;
+      this.isQuestion = res.data.isQuestion;
+      this.question = res.data.question;
+      this.answer = res.data.answer;
+
+      this.fetchRemarks();
+      this.fetchList();
     });
   },
+
+  beforeDestroy() {
+    // this.$route 在这里不准确
+    window.sessionStorage.removeItem('finance/taking||item');
+    this.$store.commit('DEL_VISITED_VIEW', { path: this.path });
+  },
   methods: {
+    fetchRemarks() {
+      seeFetch('finance/taking/remarks', {
+        templeId: this.templeId,
+      }).then(res => {
+        if (!res.success || !res.data || !res.data.length) return;
+
+        this.remarks = res.data;
+      });
+    },
+    fetchList() {
+      this.loading = !0;
+      seeFetch('finance/taking/orders', {
+        id: this.id,
+        showType: this.showType,
+      }).then(res => {
+        if (!res.success) {
+          Notification({
+            title: '提示',
+            message: res.message,
+          });
+          return;
+        }
+
+        this.dateItems = res.data.dateItems;
+        this.totalAmount = res.data.totalAmount || 0;
+        this.totalIncreaseCharge = res.data.totalIncreaseCharge || 0;
+        this.totalChannelCharge = res.data.totalChannelCharge || 0;
+        this.totalChannelSubsidy = res.data.totalChannelSubsidy || 0;
+        this.totalFunctionCharge = res.data.totalFunctionCharge || 0;
+        this.totalPromoterReward = res.data.totalPromoterReward || 0;
+        this.realTakeAmount = res.data.realTakeAmount || 0;
+        this.platformSupport = res.data.platformSupport || 0;
+        this.specialCharge = res.data.specialCharge || 0;
+        this.bankName = res.data.account.bankName || '';
+        this.subBankName = res.data.account.subBankName || '';
+        this.accountName = res.data.account.accountName || '';
+        this.accountNumber = res.data.account.accountNumber || '';
+        this.feedbackImages = res.data.feedbackImages || [];
+        this.loading = !1;
+      });
+    },
     fetchStat() {
       seeFetch('finance/taking/orders').then(res => {
         this.toHandleCount = res.toHandleCount || 0;
         this.toReplyCount = res.toReplyCount || 0;
       });
+    },
+    updateRemark(remark) {
+      seeFetch('finance/taking/updateRemark', {
+        id: remark.id,
+        status: remark.takeEffect ? 0 : 1,
+      }).then(res => {
+        if (!res.success) {
+          Notification({
+            title: '提示',
+            message: res.message,
+          });
+          return;
+        }
+
+        // eslint-disable-next-line no-param-reassign
+        remark.takeEffect = remark.takeEffect ? 0 : 1;
+
+        Notification({
+          title: '提示',
+          message: '操作成功',
+        });
+      });
+    },
+    changeShowType(showType) {
+      if (this.showType === showType) return;
+
+      this.showType = showType;
+      this.fetchList();
+    },
+    toAnswer() {
+      this.$prompt('回复疑问账单', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+      }).then(({ value }) => {
+        if (!value) return;
+
+        seeFetch('finance/taking/answer', {
+          id: this.id,
+          content: value,
+        }).then(res => {
+          if (!res.success) {
+            Notification({
+              title: '提示',
+              message: res.message,
+            });
+            return;
+          }
+
+          Notification({
+            title: '提示',
+            message: '回复成功',
+          });
+
+          this.type = 2;
+          this.answer = value;
+        });
+      });
+    },
+    confirmTake() {
+      this.$confirm('确认账单数据无误？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(() => {
+        seeFetch('finance/taking/confirm', { id: this.id }).then(res => {
+          if (!res.success) {
+            Notification({
+              title: '提示',
+              message: res.message,
+            });
+            return;
+          }
+
+          Notification({
+            title: '提示',
+            message: '操作成功',
+          });
+
+          this.$router.back();
+        });
+      });
+    },
+    confirmReceive() {
+      if (!this.feedbackImages || !this.feedbackImages.length) {
+        Notification({
+          title: '提示',
+          message: '您还没上传回执单图片，请上传后再确认',
+        });
+        return;
+      }
+
+      this.$confirm('确认账单并发送提醒？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(() => {
+        seeFetch('finance/taking/confirm', {
+          id: this.id,
+          images: this.feedbackImages.join(','),
+        }).then(res => {
+          if (!res.success) {
+            Notification({
+              title: '提示',
+              message: res.message,
+            });
+            return;
+          }
+
+          Notification({
+            title: '提示',
+            message: '操作成功',
+          });
+
+          this.$router.back();
+        });
+      });
+    },
+    uploadFeedbackImages() {
+      this.$store.state.financeTaking.add.dialogTitle = '上传银行回单照片';
+      this.$store.state.financeTaking.add.visible = !0;
+      this.$store.state.financeTaking.add.editFeedbackImages = [
+        ...this.feedbackImages,
+      ];
+    },
+    succeedUpload(images) {
+      this.feedbackImages = images;
     },
   },
 };
@@ -325,5 +594,35 @@ export default {
   top: 2px;
   cursor: pointer;
   font-size: 20px;
+}
+
+.remark-row {
+  position: relative;
+  padding-left: 60px;
+  margin-top: 20px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.remark-btn {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  margin-top: -12px;
+  background-image: url('https://pic.zizaihome.com/5440698c-b00d-11e8-b58d-00163e0c001e.svg');
+  background-size: 100% 100%;
+  cursor: pointer;
+}
+
+.remark-row.disabled {
+  text-decoration: line-through;
+
+  .remark-btn {
+    background-image: url('https://pic.zizaihome.com/7b48a7d8-b00d-11e8-9360-00163e0c001e.svg');
+  }
 }
 </style>

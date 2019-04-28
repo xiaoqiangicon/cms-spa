@@ -3,7 +3,7 @@ export const addProps = [
   { name: 'updateId', full: !1, default: 0 },
   { name: 'dialogTitle', full: !1, default: '确认订单' },
   { name: 'visible', full: !0, default: !1 },
-  { name: 'receiptImages', full: !0, default: () => [] },
+  { name: 'editFeedbackImages', full: !0, default: () => [] },
 ];
 
 export default {};

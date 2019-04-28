@@ -32,11 +32,14 @@ export const list = {
   data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
     id,
     time: '2017-01-01 01:01:01',
+    templeId: id * 10,
     templeName: `templeName${id}`,
     type: id % 2 ? (id % 2) + 1 : (id % 6) + 1,
     isQuestion: id % 2,
     amount: id * 100,
     gotReceipt: id % 2,
+    question: 'question',
+    answer: 'answer',
     feedbackImages: [
       '/sample/image1.jpg',
       '/sample/image2.jpg',
@@ -58,11 +61,14 @@ export const list1 = {
   data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
     id,
     add_time: '2017-01-01 01:01:01',
+    temple_id: id * 10,
     temple_name: `templeName${id}`,
     type: id % 2 ? (id % 2) + 1 : (id % 6) + 1,
     is_question: id % 2,
     price: id * 100,
     is_express_receipt: id % 2,
+    remarks: 'question',
+    answer: 'answer',
     picList: [
       '/sample/image1.jpg',
       '/sample/image2.jpg',

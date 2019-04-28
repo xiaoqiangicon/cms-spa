@@ -218,7 +218,7 @@ export default {
     descEditor = null;
 
     // this.$route 在这里不准确
-    window.sessionStorage.removeItem('ling/edit/item');
+    window.sessionStorage.removeItem('ling/edit||item');
     this.$store.commit('DEL_VISITED_VIEW', { path: this.path });
   },
   methods: {

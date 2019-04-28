@@ -17,6 +17,7 @@ import lingFate from '../ling/fate/state';
 
 // 善款中心
 import financePending from '../finance/pending/state';
+import financeTaking from '../finance/taking/state';
 
 Vue.use(Vuex);
 
@@ -37,6 +38,7 @@ const store = new Vuex.Store({
 
     // 善款中心
     financePending,
+    financeTaking,
   },
   getters,
 });
