@@ -306,7 +306,6 @@ export default {
 
   beforeDestroy() {
     // this.$route 在这里不准确
-    window.sessionStorage.removeItem('finance/taking||item');
     this.$store.commit('DEL_VISITED_VIEW', { path: this.path });
   },
   methods: {
@@ -452,7 +451,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning',
       }).then(() => {
-        seeFetch('finance/taking/confirm', {
+        seeFetch('finance/taking/finish', {
           id: this.id,
           images: this.feedbackImages.join(','),
         }).then(res => {

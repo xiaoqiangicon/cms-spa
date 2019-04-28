@@ -142,8 +142,6 @@ export default {
       this.requestList();
     },
     toAdd() {
-      window.sessionStorage.removeItem('ling/edit||item');
-
       this.$router.push('/ling/edit/0');
     },
     toEdit(item) {

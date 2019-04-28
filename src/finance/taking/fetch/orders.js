@@ -7,18 +7,49 @@ const req = {
 };
 
 const refactor = {
-  data: [
-    {
-      time: 'add_time',
-      templeName: 'temple_name',
-      isQuestion: 'is_question',
-      amount: 'price',
-      gotReceipt: 'is_express_receipt',
-      extra: 'remarks',
-      feedbackImages: 'picList',
-      receiptImages: 'feedBackPicList',
+  data: {
+    account: 'bank',
+    _account: {
+      // 支行名称
+      subBankName: 'bankBranchName',
+      // 银行开户名称
+      accountName: 'bankCardUserName',
+      // 银行卡号
+      accountNumber: 'bankCardNumber',
     },
-  ],
+    // 打赏
+    platformSupport: 'reward',
+    // 特殊提现手续费
+    specialCharge: 'specialPickUpMoney',
+    // 回单照片
+    feedbackImages: 'picList',
+    dateItems: 'pickUpMoneyList',
+    _dateItems: [
+      {
+        date: 'month',
+        orders: 'pickUpList',
+        _orders: [
+          {
+            title: 'name',
+            // 数量
+            count: 'order_num',
+            // 金额
+            amount: 'price',
+            // 增值服务费
+            increaseCharge: 'percentMoney',
+            // 渠道服务费
+            channelCharge: 'counter_fee',
+            // 渠道服务费补贴
+            channelSubsidy: 'subsidy_counter_fee',
+            // 功能服务费
+            functionCharge: 'serviceMoney',
+            // 推广员奖励金
+            promoterReward: 'promotionMoney',
+          },
+        ],
+      },
+    ],
+  },
 };
 
 const post = res => {

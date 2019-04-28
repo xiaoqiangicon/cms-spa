@@ -18,6 +18,11 @@ export const makeTotal = data => {
   let realTakeAmount = 0;
 
   data.dateItems.forEach(dateItem => {
+    const dates = dateItem.date.split('-');
+
+    dateItem.year = parseInt(dates[0], 10);
+    dateItem.month = parseInt(dates[1], 10);
+
     dateItem.orders.forEach(order => {
       totalAmount += order.amount || 0;
       totalIncreaseCharge += order.increaseCharge || 0;
