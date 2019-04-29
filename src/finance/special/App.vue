@@ -52,6 +52,7 @@
           placeholder="请选择"
           size="small"
           style="width: 200px;"
+          @change="changeSubId"
         >
           <el-option label="所有子类别" :value="0" />
           <el-option
@@ -94,6 +95,27 @@
         />
       </div>
     </el-card>
+    <el-dialog :visible.sync="confirmDialogVisible" title="提示" width="30%">
+      <div class="t-a-center">
+        <div>发送特殊提现账单，请确认以下信息：</div>
+        <div class="red mg-t-20">寺院名称：{{ selectedTempleName }}</div>
+        <div class="red mg-t-10">项目名称：{{ selectedTypeName }}</div>
+        <div v-if="filterSubId" class="red mg-t-10">
+          子项目名称：{{ selectedSubTypeName }}
+        </div>
+        <div class="mg-t-20">
+          处理完成后请在“待办事项”中处理特殊账单
+        </div>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="confirmDialogVisible = !1">
+          取 消
+        </el-button>
+        <el-button type="primary" @click="doTake">
+          确 定
+        </el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -121,6 +143,10 @@ export default {
       temples: [],
       types: [],
       subIds: [],
+      confirmDialogVisible: !1,
+      selectedTempleName: '',
+      selectedTypeName: '',
+      selectedSubTypeName: '',
     };
   },
   created() {
@@ -210,6 +236,9 @@ export default {
         return;
       }
 
+      this.confirmDialogVisible = !0;
+    },
+    doTake() {
       seeFetch('finance/special/add', {
         templeId: this.filterTemple,
         type: this.filterType,
@@ -228,6 +257,7 @@ export default {
           message: '添加成功',
         });
 
+        this.confirmDialogVisible = !1;
         this.doSearch();
       });
     },
@@ -235,16 +265,36 @@ export default {
       this.filterType = 0;
       this.filterSubId = 0;
       this.fetchTypes();
+
+      const selectedTempleItem = this.temples.find(
+        i => i.id === this.filterTemple
+      );
+      if (selectedTempleItem) this.selectedTempleName = selectedTempleItem.name;
+      else this.selectedTempleName = '所有寺院';
     },
     afterFetchTypes() {
       const typeItem = this.types.find(i => i.id === this.filterType);
 
-      if (!typeItem) this.subIds = [];
-      else this.subIds = typeItem.children;
+      if (!typeItem) {
+        this.subIds = [];
+        this.selectedTypeName = '所有类别';
+      } else {
+        this.subIds = typeItem.children;
+        this.selectedTypeName = typeItem.name;
+      }
     },
     changeType() {
       this.filterSubId = 0;
       this.afterFetchTypes();
+    },
+    changeSubId() {
+      const subIdItem = this.subIds.find(i => i.id === this.filterSubId);
+
+      if (!subIdItem) {
+        this.selectedSubTypeName = '所有子类别';
+      } else {
+        this.selectedSubTypeName = subIdItem.name;
+      }
     },
     del({ row: item }) {
       if (!item.takeId) {
@@ -255,23 +305,29 @@ export default {
         return;
       }
 
-      seeFetch('finance/special/del', {
-        id: item.takeId,
-      }).then(res => {
-        if (!res.success) {
+      this.$confirm('确定撤回这个订单吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(() => {
+        seeFetch('finance/special/del', {
+          id: item.takeId,
+        }).then(res => {
+          if (!res.success) {
+            Notification({
+              title: '提示',
+              message: res.message,
+            });
+            return;
+          }
+
           Notification({
             title: '提示',
-            message: res.message,
+            message: '撤回成功',
           });
-          return;
-        }
 
-        Notification({
-          title: '提示',
-          message: '撤回成功',
+          this.pageChange(this.currentPage);
         });
-
-        this.pageChange(this.currentPage);
       });
     },
   },

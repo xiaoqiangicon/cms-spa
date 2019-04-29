@@ -4,6 +4,7 @@ import { makeTotal } from '../util';
 
 const req = {
   id: 'pickUpId',
+  showType: 'type',
 };
 
 const refactor = {

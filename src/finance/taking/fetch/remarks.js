@@ -20,6 +20,6 @@ seeFetch.config('finance/taking/remarks', {
     '/finance/taking/mock/remarks1',
     '/finance/taking/mock/remarks',
   ],
-  req: [pre, pre],
+  pre: [pre, pre],
   refactor: [refactor, refactor],
 });
