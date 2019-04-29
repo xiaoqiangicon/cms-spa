@@ -1,33 +1,15 @@
 /* eslint-disable no-param-reassign, prefer-destructuring */
 import seeFetch from 'see-fetch';
-import '../../../com/refactor/slice';
-
-const frequencyTexts = ['只出现1次', '每天出现1次'];
-
-const req = {
-  page: 'pageNum',
-};
-
-const pre = params => ({
-  ...params,
-  pageNum: params.pageNum - 1,
-  pageSize: 10,
-});
 
 const refactor = {
-  totalCount: 'data.count',
-  data: 'data.list',
-  _data: [
+  totalIncome: 'price_sum',
+  totalTaken: 'pick_money_sum',
+  data: [
     {
-      cover: 'pic',
-      text: 'title',
-      frequency: 'appearType',
-      startDate: 'startDate|slice!0!10',
-      endDate: 'endDate|slice!0!10',
-      redirect: 'jumpType',
-      link: 'jumpUrl',
-      shareImageType: 'sharePicType',
-      entryId: 'wishTypeId',
+      income: 'price',
+      count: 'cnt',
+      available: 'canPickUpMoney',
+      taken: 'pickMoney',
     },
   ],
 };
@@ -35,26 +17,21 @@ const refactor = {
 const post = res => {
   if (res.data)
     res.data.forEach(item => {
-      item.frequencyText = frequencyTexts[item.frequency - 1];
+      const dates = item.add_time.split('-');
+      item.year = parseInt(dates[0], 10);
+      item.month = parseInt(dates[1], 10);
+      item.remain = (item.income - item.taken).toFixed(2);
     });
-};
-
-const localPost = res => {
-  res.data.forEach(item => {
-    item.frequencyText = frequencyTexts[item.frequency - 1];
-  });
 };
 
 seeFetch.config('finance/stat/list', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/wish/wishAdList',
+    '/finance/getMoneyCntList',
     '/finance/stat/mock/list1',
     '/finance/stat/mock/list',
   ],
-  req: [req, req],
-  pre: [pre, pre],
   refactor: [refactor, refactor],
-  post: [post, post, localPost],
+  post: [post, post],
 });

@@ -72,44 +72,28 @@
       </div>
     </el-card>
     <el-card class="mg-t-20">
+      <canvas ref="chart" />
+    </el-card>
+    <el-card class="mg-t-20">
       <div class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
-          <el-table-column prop="item" label="气泡图片">
+          <el-table-column prop="item" label="日期">
             <template slot-scope="item">
-              <img :src="item.row.cover" class="wd-100" />
+              {{ item.row.year }}年{{ item.row.month }}月
             </template>
           </el-table-column>
-          <el-table-column prop="text" label="气泡文字" />
-          <el-table-column prop="frequencyText" label="重复频率" />
-          <el-table-column prop="item" label="生效日期">
+          <el-table-column prop="income" label="善款收入" />
+          <el-table-column prop="count" label="善款数量" />
+          <el-table-column prop="taken" label="提现完成" />
+          <el-table-column prop="remain" label="结余" />
+          <el-table-column label="操作">
             <template slot-scope="item">
-              {{ item.row.startDate }} ~ {{ item.row.endDate }}
+              <el-button type="text" size="small" @click="toDetail(item)">
+                查看详情
+              </el-button>
             </template>
           </el-table-column>
-          <el-table-column prop="item" label="生效时间">
-            <template slot-scope="item">
-              {{ item.row.startHour }}点 ~ {{ item.row.endHour }}点
-            </template>
-          </el-table-column>
-          <!--          <el-table-column label="操作">-->
-          <!--            <template slot-scope="item">-->
-          <!--              <el-button-->
-          <!--                type="text"-->
-          <!--                size="small"-->
-          <!--              >-->
-          <!--                编辑-->
-          <!--              </el-button>-->
-          <!--            </template>-->
-          <!--          </el-table-column>-->
         </el-table>
-        <el-pagination
-          :total="totalCount"
-          :current-page="currentPage"
-          background
-          layout="prev, pager, next"
-          style="margin-top: 40px"
-          @current-change="pageChange"
-        />
       </div>
     </el-card>
   </div>
@@ -118,25 +102,29 @@
 <script>
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
-import { now } from '@zzh/n-util';
+import { now, fillZero } from '@zzh/n-util';
+import Chart from 'chart.js';
+import { makeChartConfig, makeChartTitle } from './util';
 import './fetch';
+
+let chart;
 
 export default {
   name: 'App',
   data() {
     return {
       loading: !0,
-      currentPage: 1,
-      totalCount: 0,
       list: [],
       filterTemple: 0,
       temples: [],
       filterYear: now.year,
       years: [],
+      total: 0,
+      chartData: [],
     };
   },
   created() {
-    for (let i = 2016; i <= now.year; i += 1) this.years.push(i);
+    for (let i = now.year; i >= 2016; i -= 1) this.years.push(i);
 
     seeFetch('finance/stat/temples').then(res => {
       if (!res.success || !res.data || !res.data.length) {
@@ -152,7 +140,25 @@ export default {
 
     this.requestList();
   },
+  mounted() {
+    const { chart: chartRef } = this.$refs;
+
+    chart = new Chart(chartRef.getContext('2d'), this.makeChartConfig());
+  },
+  beforeDestroy() {
+    if (chart) {
+      chart.destroy();
+      chart = null;
+    }
+  },
   methods: {
+    makeChartConfig() {
+      return makeChartConfig({
+        year: this.filterYear,
+        total: this.total,
+        chartData: this.chartData,
+      });
+    },
     toNav(sequence) {
       if (sequence === 1) this.$router.push('/finance/stat');
       else if (sequence === 2) this.$router.push('/finance/summary');
@@ -162,7 +168,8 @@ export default {
       this.loading = !0;
 
       seeFetch('finance/stat/list', {
-        page: this.currentPage,
+        templeId: this.filterTemple,
+        year: this.filterYear,
       }).then(res => {
         if (!res.success) {
           Notification({
@@ -173,21 +180,36 @@ export default {
         }
 
         this.loading = !1;
-        this.totalCount = res.totalCount;
         this.list = res.data;
+        this.chartData = res.data.map(i => i.income);
+        this.total = this.chartData.reduce((num, i) => i + num);
+
+        chart.options.title.text = makeChartTitle({
+          year: this.filterYear,
+          total: this.total,
+        });
+        chart.data.datasets[0].data = this.chartData;
+        chart.update();
 
         window.scrollTo(0, 0);
       });
     },
-    pageChange(page) {
-      this.currentPage = page;
-      this.requestList();
-    },
     doSearch() {
-      this.currentPage = 1;
       this.requestList();
     },
-    toSummary() {},
+    toSummary() {
+      this.$router.push('/finance/summary/templeId/0/start//end/');
+    },
+    toDetail({ row: item }) {
+      const { year, month } = item;
+      const start = `${year}-${fillZero(month)}-01`;
+      const end = `${month === 12 ? year + 1 : year}-${fillZero(
+        month === 12 ? 1 : month + 1
+      )}-01`;
+      this.$router.push(
+        `/finance/summary/templeId/${this.templeId}/start/${start}/end/${end}`
+      );
+    },
   },
 };
 </script>

@@ -1,41 +1,30 @@
 export const list = {
   success: !0,
-  totalCount: 99,
-  data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
+  totalIncome: 10000,
+  totalTaken: 6000,
+  data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(id => ({
     id,
-    cover: `/images/chan-zai-128x128.png`,
-    text: `气泡文字 ${id}`,
-    frequency: Math.floor(Math.random() * 2) + 1,
-    startDate: `2019-01-${id + 10}`,
-    endDate: `2019-02-${id + 10}`,
-    startHour: id,
-    endHour: id + 10,
-    redirect: Math.floor(Math.random() * 3) + 1,
-    link: '/link',
-    shareImageType: Math.floor(Math.random() * 3) + 1,
-    entryId: id,
+    year: 2019,
+    month: id,
+    income: id * 10,
+    count: id * 5,
+    taken: id * 8,
+    remain: id * 2,
   })),
 };
 
 export const list1 = {
   errorCode: 0,
-  data: {
-    count: 99,
-    list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
-      id,
-      pic: `/images/chan-zai-128x128.png`,
-      title: `气泡文字 ${id}`,
-      appearType: Math.floor(Math.random() * 2) + 1,
-      startDate: `2019-01-${id + 10}`,
-      endDate: `2019-02-${id + 10}`,
-      startHour: id,
-      endHour: id + 10,
-      jumpType: Math.floor(Math.random() * 3) + 1,
-      jumpUrl: '/link',
-      sharePicType: Math.floor(Math.random() * 3) + 1,
-      wishTypeId: id,
-    })),
-  },
+  price_sum: 10000,
+  pick_money_sum: 6000,
+  data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(id => ({
+    id,
+    add_time: `2019-${id > 9 ? id : `0${id}`}-01`,
+    price: id * 10,
+    cnt: id * 5,
+    canPickUpMoney: id * 10,
+    pickMoney: id * 8,
+  })),
 };
 
 export const temples = {
