@@ -136,6 +136,14 @@ const routes = [
         hidden: !0,
       },
       {
+        path: 'special',
+        component: () => import('../finance/special/App'),
+        name: '特殊提现',
+        meta: { title: '特殊提现', noCache: true },
+        controlMark: 'pw_money',
+        hidden: !0,
+      },
+      {
         path: `${domain}/earningsStatistics/stat`,
         name: '盈收统计',
         meta: { title: '盈收统计', noCache: true },
