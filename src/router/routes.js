@@ -128,6 +128,14 @@ const routes = [
         controlMark: 'pw_money',
       },
       {
+        path: 'summary',
+        component: () => import('../finance/summary/App'),
+        name: '善款明细',
+        meta: { title: '善款明细', noCache: true },
+        controlMark: 'pw_money',
+        hidden: !0,
+      },
+      {
         path: `${domain}/earningsStatistics/stat`,
         name: '盈收统计',
         meta: { title: '盈收统计', noCache: true },

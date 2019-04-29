@@ -198,7 +198,11 @@ export default {
       this.requestList();
     },
     toSummary() {
-      this.$router.push('/finance/summary/templeId/0/start//end/');
+      window.sessionStorage[
+        'finance/pending||filterTemple'
+      ] = this.filterTemple;
+      window.sessionStorage['finance/pending||filterStatus'] = 3;
+      this.$router.push('/finance/pending');
     },
     toDetail({ row: item }) {
       const { year, month } = item;
@@ -206,9 +210,14 @@ export default {
       const end = `${month === 12 ? year + 1 : year}-${fillZero(
         month === 12 ? 1 : month + 1
       )}-01`;
-      this.$router.push(
-        `/finance/summary/templeId/${this.templeId}/start/${start}/end/${end}`
-      );
+
+      window.sessionStorage[
+        'finance/summary||filterTemple'
+      ] = this.filterTemple;
+      window.sessionStorage['finance/summary||filterStart'] = start;
+      window.sessionStorage['finance/summary||filterEnd'] = end;
+
+      this.$router.push(`/finance/summary`);
     },
   },
 };

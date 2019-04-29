@@ -186,10 +186,26 @@ export default {
       }
 
       this.temples = res.data;
+
+      if (window.sessionStorage['finance/pending||filterTemple']) {
+        this.filterTemple = parseInt(
+          window.sessionStorage['finance/pending||filterTemple'],
+          10
+        );
+        window.sessionStorage.removeItem('finance/pending||filterTemple');
+      }
+      if (window.sessionStorage['finance/pending||filterStatus']) {
+        this.filterStatus = parseInt(
+          window.sessionStorage['finance/pending||filterStatus'],
+          10
+        );
+        window.sessionStorage.removeItem('finance/pending||filterStatus');
+      }
+
+      this.fetchList();
     });
 
     this.fetchStat();
-    this.fetchList();
   },
   methods: {
     fetchStat() {

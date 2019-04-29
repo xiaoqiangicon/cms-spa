@@ -14,7 +14,6 @@ const statusTexts = [
 const req = {
   page: 'pageNumber',
   status: 'type',
-  templeId: 'templeId',
   gotReceipt: 'expressReceipt',
 };
 
