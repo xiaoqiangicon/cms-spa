@@ -144,7 +144,8 @@ const routes = [
         hidden: !0,
       },
       {
-        path: `${domain}/earningsStatistics/stat`,
+        path: 'income-stat',
+        component: () => import('../finance/income-stat/App'),
         name: '盈收统计',
         meta: { title: '盈收统计', noCache: true },
         controlMark: 'pw_cash_stat',

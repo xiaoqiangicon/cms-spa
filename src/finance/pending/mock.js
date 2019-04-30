@@ -52,6 +52,8 @@ export const list = {
       '/sample/image3.jpg',
       '/sample/image4.jpg',
     ],
+    specialTakeCount: id,
+    isSpecial: id % 2,
   })),
 };
 
@@ -81,6 +83,8 @@ export const list1 = {
       '/sample/image3.jpg',
       '/sample/image4.jpg',
     ],
+    specialPickUpCnt: id,
+    isSpecialPickUp: id % 2,
   })),
 };
 

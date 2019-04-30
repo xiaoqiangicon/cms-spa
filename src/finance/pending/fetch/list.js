@@ -35,6 +35,8 @@ const refactor = {
       question: 'remarks',
       feedbackImages: 'picList',
       receiptImages: 'feedBackPicList',
+      specialTakeCount: 'specialPickUpCnt',
+      isSpecial: 'isSpecialPickUp',
     },
   ],
 };
@@ -66,6 +68,8 @@ const post = res => {
 
       item.showFeedbackImages = whetherShowFeedbackImages(item);
       item.showReceiptImages = whetherShowReceiptImages(item);
+
+      item.typeText = item.isSpecial ? '特殊提现' : '正常提现';
     });
 };
 

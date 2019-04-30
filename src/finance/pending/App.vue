@@ -92,8 +92,26 @@
       <div class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
           <el-table-column prop="time" label="申请时间" />
-          <el-table-column prop="templeName" label="申请寺院" />
-          <el-table-column prop="statusText" label="类型" />
+          <el-table-column label="申请寺院">
+            <template slot-scope="item">
+              <div>{{ item.row.templeName }}</div>
+              <div v-if="item.row.specialTakeCount" class="mg-t-10">
+                <el-popover placement="top-start" width="300" trigger="hover">
+                  <el-button slot="reference" type="success" size="small" round>
+                    特殊 {{ item.row.specialTakeCount }} 次
+                  </el-button>
+                  <div>
+                    已特殊提现 {{ item.row.specialTakeCount }} 次（包含当前项）
+                  </div>
+                  <div class="mg-t-10 f-s-12 gray">
+                    清零规则：自然年1月1日 0：00
+                  </div>
+                </el-popover>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="statusText" label="状态" />
+          <el-table-column prop="typeText" label="类型" />
           <el-table-column prop="amount" label="金额" />
           <el-table-column label="邮寄收据">
             <template slot-scope="item">

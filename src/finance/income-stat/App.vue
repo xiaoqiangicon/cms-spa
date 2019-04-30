@@ -1,0 +1,385 @@
+<template>
+  <div class="container">
+    <el-card v-loading="loadingSummary" class="mg-t-20">
+      <div slot="header" class="clearfix">
+        <span>盈收概览</span>
+      </div>
+      <el-select
+        v-model="filterYear"
+        filterable
+        placeholder="请选择"
+        size="small"
+        style="width: 200px;"
+        @change="doSearchSummary"
+      >
+        <el-option
+          v-for="year in years"
+          :key="year"
+          :label="year + '年'"
+          :value="year"
+        />
+      </el-select>
+
+      <el-row :gutter="20" class="mg-t-20">
+        <el-col :span="17">
+          <el-card
+            class="dp-inline-block mg-b-20 mg-r-20"
+            style="width: 250px;"
+          >
+            <p>累计盈收（每日0点更新）</p>
+            <p>
+              <span class="f-s-20">{{
+                parseFloat((total + offlineTotal).toFixed(2))
+              }}</span>
+              元
+            </p>
+            <el-divider />
+            <p class="t-a-right gray">线上：{{ total }} 元</p>
+            <p class="t-a-right gray">线下：{{ offlineTotal }} 元</p>
+          </el-card>
+          <el-card
+            class="dp-inline-block mg-b-20 mg-r-20"
+            style="width: 250px;"
+          >
+            <p>年度盈收</p>
+            <p>
+              <span class="f-s-20">{{
+                parseFloat((yearTotal + offlineYearTotal).toFixed(2))
+              }}</span>
+              元
+            </p>
+            <el-divider />
+            <p class="t-a-right gray">线上：{{ yearTotal }} 元</p>
+            <p class="t-a-right gray">线下：{{ offlineYearTotal }} 元</p>
+          </el-card>
+          <el-card
+            class="dp-inline-block mg-b-20 mg-r-20"
+            style="width: 250px;"
+          >
+            <p>本月盈收</p>
+            <p>
+              <span class="f-s-20">{{
+                parseFloat((monthTotal + offlineMonthTotal).toFixed(2))
+              }}</span>
+              元
+            </p>
+            <el-divider />
+            <p class="t-a-right gray">线上：{{ monthTotal }} 元</p>
+            <p class="t-a-right gray">线下：{{ offlineMonthTotal }} 元</p>
+          </el-card>
+          <el-card>
+            <canvas ref="chart" />
+          </el-card>
+        </el-col>
+        <el-col :span="7">
+          <el-card>
+            <div slot="header" class="clearfix">
+              <span>2019 年线上盈收占比</span>
+            </div>
+            <div v-if="projects && projects.length">
+              <el-row
+                v-for="project in projects"
+                :key="project.name"
+                :gutter="10"
+                class="mg-b-20"
+              >
+                <el-col :span="8">
+                  {{ project.name }}
+                </el-col>
+                <el-col :span="8">
+                  {{ project.amount }}
+                </el-col>
+                <el-col :span="8"> {{ project.percent }}% </el-col>
+              </el-row>
+            </div>
+            <div v-else class="t-a-center">
+              暂无数据
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+    </el-card>
+    <el-card class="mg-t-20">
+      <div slot="header" class="clearfix">
+        <span>盈收报表</span>
+      </div>
+      <div>
+        <el-select
+          v-model="filterType"
+          placeholder="请选择"
+          size="small"
+          style="width: 200px;"
+          @change="doSearch"
+        >
+          <el-option label="推广佛事" :value="1" />
+          <el-option label="转单系统" :value="4" />
+          <el-option label="增值服务 - 实景探寺" :value="2" />
+          <el-option label="增值服务 - 微供奉" :value="3" />
+          <el-option label="法师祈福" :value="5" />
+          <el-option label="分销推广" :value="7" />
+        </el-select>
+        <el-date-picker
+          v-model="filterStartDate"
+          align="right"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="开始日期"
+          size="small"
+          style="width: 200px;"
+          @change="doSearch"
+        />
+        <el-date-picker
+          v-model="filterEndDate"
+          align="right"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="结束日期"
+          size="small"
+          style="width: 200px;"
+          @change="doSearch"
+        />
+        <div v-show="filterType === 1 || filterType === 4" class="fl-right">
+          <el-button
+            size="small"
+            plain
+            :type="filterDimension === 2 ? 'primary' : 'default'"
+            @click="changeDimension(2)"
+          >
+            项目维度
+          </el-button>
+          <el-button
+            size="small"
+            plain
+            :type="filterDimension === 1 ? 'primary' : 'default'"
+            @click="changeDimension(1)"
+          >
+            寺院维度
+          </el-button>
+        </div>
+      </div>
+      <div class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column v-if="filterType === 5" prop="time" label="时间" />
+          <el-table-column
+            v-if="filterType !== 5"
+            prop="templeName"
+            label="寺院名称"
+          />
+          <el-table-column
+            v-if="
+              (filterType === 1 || filterType === 4) && filterDimension === 2
+            "
+            prop="foShiName"
+            label="佛事名称"
+          />
+          <el-table-column
+            v-if="
+              [1, 7].indexOf(filterType) > -1 ||
+                (filterType === 4 && filterDimension === 1)
+            "
+            prop="amount"
+            label="佛事金额（元）"
+          />
+          <el-table-column prop="profit" label="盈收金额（元）" />
+          <el-table-column
+            v-if="
+              [2, 3, 5].indexOf(filterType) > -1 ||
+                (filterType === 4 && filterDimension === 2)
+            "
+            prop="amount"
+            label="订单金额（元）"
+          />
+          <el-table-column
+            v-if="filterType === 2 || filterType === 3"
+            label="支付服务费"
+          >
+            <template slot-scope="item">
+              {{ item.row.chargeRate }}%
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-if="filterType === 2"
+            prop="yueGuangBaoHe"
+            label="月光宝盒（元）"
+          />
+          <el-table-column
+            v-if="filterType === 2 || filterType === 3"
+            prop="manualRecord"
+            label="人工记录（元）"
+          />
+          <el-table-column
+            v-if="filterType === 5"
+            prop="orderCount"
+            label="完成订单数量"
+          />
+          <el-table-column
+            v-if="filterType === 5"
+            prop="faShiProfit"
+            label="法师收益金额（元）"
+          />
+        </el-table>
+      </div>
+    </el-card>
+  </div>
+</template>
+
+<script>
+import seeFetch from 'see-fetch';
+import { Notification } from 'element-ui';
+import { now, dateByInterval } from '@zzh/n-util';
+import Chart from 'chart.js';
+import { makeChartConfig, makeChartTitle } from './util';
+import './fetch';
+
+let chart;
+
+export default {
+  name: 'App',
+  data() {
+    return {
+      loading: !0,
+      loadingSummary: !0,
+      filterYear: now.year,
+      total: 0,
+      yearTotal: 0,
+      monthTotal: 0,
+      yearList: [],
+      projects: [],
+      offlineTotal: 0,
+      offlineYearTotal: 0,
+      offlineMonthTotal: 0,
+      offlineYearList: [],
+      list: [],
+      years: [],
+      filterType: 1,
+      filterStartDate: dateByInterval(-30),
+      filterEndDate: now.date,
+      filterDimension: 2,
+    };
+  },
+  created() {
+    for (let i = now.year; i >= 2016; i -= 1) this.years.push(i);
+
+    this.fetchSummary();
+    this.fetchList();
+  },
+  mounted() {
+    const { chart: chartRef } = this.$refs;
+
+    chart = new Chart(chartRef.getContext('2d'), this.makeChartConfig());
+  },
+  beforeDestroy() {
+    if (chart) {
+      chart.destroy();
+      chart = null;
+    }
+  },
+  methods: {
+    makeChartConfig() {
+      return makeChartConfig({
+        year: this.filterYear,
+        onlineData: this.yearList,
+        offlineData: this.offlineYearList,
+      });
+    },
+    fetchSummary() {
+      this.loadingSummary = !0;
+
+      let count = 0;
+
+      seeFetch('finance/income-stat/summary', { year: this.filterYear }).then(
+        res => {
+          if (!res.success) {
+            Notification({
+              title: '提示',
+              message: res.message || '未知错误，请稍后重试',
+            });
+            return;
+          }
+
+          this.total = res.total;
+          this.yearTotal = res.yearTotal;
+          this.monthTotal = res.monthTotal;
+          this.yearList = res.yearList;
+          this.projects = res.projects;
+
+          count += 1;
+          if (count >= 2) this.afterFetchSummary();
+        }
+      );
+
+      seeFetch('finance/income-stat/offline', { year: this.filterYear }).then(
+        res => {
+          if (!res.success) {
+            Notification({
+              title: '提示',
+              message: res.message || '未知错误，请稍后重试',
+            });
+            return;
+          }
+
+          this.offlineTotal = res.total;
+          this.offlineYearTotal = res.yearTotal;
+          this.offlineMonthTotal = res.monthTotal;
+          this.offlineYearList = res.yearList;
+
+          count += 1;
+          if (count >= 2) this.afterFetchSummary();
+        }
+      );
+    },
+    afterFetchSummary() {
+      this.loadingSummary = !1;
+
+      chart.options.title.text = makeChartTitle({ year: this.filterYear });
+      chart.data.datasets[0].data = this.yearList;
+      chart.data.datasets[1].data = this.offlineYearList;
+      chart.update();
+    },
+    doSearchSummary() {
+      this.fetchSummary();
+    },
+    fetchList() {
+      this.loading = !0;
+
+      seeFetch('finance/income-stat/list', {
+        type: this.filterType,
+        dimension: this.filterDimension,
+        startDate: this.filterStartDate,
+        endDate: this.filterEndDate,
+      }).then(res => {
+        if (!res.success) {
+          Notification({
+            title: '提示',
+            message: res.message,
+          });
+          return;
+        }
+
+        this.loading = !1;
+        this.list = res.data;
+      });
+    },
+    doSearch() {
+      this.fetchList();
+    },
+    changeDimension(dimension) {
+      if (this.filterDimension === dimension) return;
+
+      this.filterDimension = dimension;
+      this.doSearch();
+    },
+  },
+};
+</script>
+
+<style scoped>
+.container {
+  width: 100%;
+  padding: 40px 20px;
+}
+
+.body {
+  margin-top: 20px;
+}
+</style>

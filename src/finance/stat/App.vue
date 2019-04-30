@@ -48,15 +48,11 @@
       <div class="dp-flex t-a-center">
         <div class="fx-1">
           <div>累计善款 （每日0点更新）</div>
-          <div class="mg-t-10">
-            17592.52元
-          </div>
+          <div class="mg-t-10">{{ totalIncome }}元</div>
         </div>
         <div class="fx-1">
           <div>累计已提现</div>
-          <div class="mg-t-10">
-            17592.52元
-          </div>
+          <div class="mg-t-10">{{ totalTaken }}元</div>
           <div class="mg-t-10">
             <el-button size="small" plain @click="toSummary">
               提现记录
@@ -65,8 +61,10 @@
         </div>
         <div class="fx-1">
           <div>结余</div>
+          <div class="mg-t-10">{{ totalRemain }}元</div>
           <div class="mg-t-10">
-            17592.52元
+            <el-button size="small" plain> 可提现{{ canTake }}元 </el-button>
+            <el-button size="small" plain> 不可提现{{ cantTake }}元 </el-button>
           </div>
         </div>
       </div>
@@ -121,6 +119,11 @@ export default {
       years: [],
       total: 0,
       chartData: [],
+      totalIncome: 0,
+      totalTaken: 0,
+      totalRemain: 0,
+      canTake: 0,
+      cantTake: 0,
     };
   },
   created() {
@@ -183,6 +186,12 @@ export default {
         this.list = res.data;
         this.chartData = res.data.map(i => i.income);
         this.total = this.chartData.reduce((num, i) => i + num);
+
+        this.totalIncome = res.totalIncome || 0;
+        this.totalTaken = res.totalTaken || 0;
+        this.canTake = res.canTake || 0;
+        this.cantTake = res.cantTake || 0;
+        this.totalRemain = (this.canTake + this.cantTake).toFixed(2);
 
         chart.options.title.text = makeChartTitle({
           year: this.filterYear,

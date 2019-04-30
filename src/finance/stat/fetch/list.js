@@ -2,8 +2,10 @@
 import seeFetch from 'see-fetch';
 
 const refactor = {
-  totalIncome: 'price_sum',
-  totalTaken: 'pick_money_sum',
+  totalIncome: 'price',
+  totalTaken: 'pickMoney',
+  canTake: 'canPickUpMoney',
+  cantTake: 'notPickMoney',
   data: [
     {
       income: 'price',

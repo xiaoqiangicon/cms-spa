@@ -1,0 +1,57 @@
+import seeFetch from 'see-fetch';
+
+const projectNames = {
+  1: '推广佛事',
+  4: '转单系统',
+  2: '实景探寺',
+  3: '微供奉',
+  5: '法师祈福',
+  6: '提现打赏',
+  7: '分销推广',
+};
+
+const responseRefactor = {
+  total: 'data.totalEarningsMoney',
+  yearTotal: 'data.yearEarningsMoney',
+  monthTotal: 'data.monthEarningsMoney',
+  projects: 'data.yearEarningsMoneyProportion',
+  _projects: [{ key: 'type', amount: 'earningsMoney' }],
+};
+
+/* eslint-disable no-param-reassign */
+const postHandle = res => {
+  if (res.projects && res.projects.length) {
+    let totalAmount = 0;
+    res.projects.forEach(project => {
+      project.amount = parseFloat(project.amount.toFixed(2));
+      totalAmount += project.amount;
+    });
+    res.projects.forEach(project => {
+      project.name = projectNames[project.key];
+      project.percent = parseFloat(
+        ((project.amount * 100) / totalAmount).toFixed(2)
+      );
+    });
+  }
+
+  res.yearList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  if (res.data.monthEarningsMoneyList) {
+    res.data.monthEarningsMoneyList.forEach(item => {
+      res.yearList[
+        parseInt(item.incomeTime.split('-')[1], 10) - 1
+      ] = parseFloat(parseFloat(item.earningsMoney).toFixed(2));
+    });
+  }
+};
+
+seeFetch.config('finance/income-stat/summary', {
+  method: ['post'],
+  stringify: [!0],
+  url: [
+    '/earningsStatistics/getEarningsTotal',
+    '/finance/income-stat/mock/summary1',
+    '/finance/income-stat/mock/summary',
+  ],
+  responseRefactor: [responseRefactor, responseRefactor],
+  postHandle: [postHandle, postHandle],
+});

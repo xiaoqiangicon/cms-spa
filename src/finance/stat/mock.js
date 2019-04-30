@@ -2,6 +2,8 @@ export const list = {
   success: !0,
   totalIncome: 10000,
   totalTaken: 6000,
+  canTake: 3000,
+  cantTake: 1000,
   data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(id => ({
     id,
     year: 2019,
@@ -15,8 +17,10 @@ export const list = {
 
 export const list1 = {
   errorCode: 0,
-  price_sum: 10000,
-  pick_money_sum: 6000,
+  price: 10000,
+  pickMoney: 6000,
+  canPickUpMoney: 3000,
+  notPickMoney: 1000,
   data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(id => ({
     id,
     add_time: `2019-${id > 9 ? id : `0${id}`}-01`,
