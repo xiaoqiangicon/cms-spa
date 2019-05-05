@@ -6,10 +6,10 @@
           <shi-jing />
         </el-tab-pane>
         <el-tab-pane label="供奉系统" name="second">
-          <shi-jing />
+          haha
         </el-tab-pane>
         <el-tab-pane label="推广佛事" name="third">
-          <shi-jing />
+          hehe
         </el-tab-pane>
       </el-tabs>
     </el-card>

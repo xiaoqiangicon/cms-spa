@@ -14,13 +14,10 @@
         <el-table-column prop="lastEditUser" label="最后编辑用户" />
         <el-table-column label="操作">
           <template slot-scope="item">
-            <el-button v-if="item.row.ended && !item.row.confirmed" type="text">
-              确认结算
-            </el-button>
-            <el-button type="text">
+            <el-button type="text" @click="toEdit(item)">
               编辑
             </el-button>
-            <el-button type="text">
+            <el-button type="text" @click="toRecords(item)">
               记录
             </el-button>
           </template>
@@ -35,16 +32,25 @@
         @current-change="pageChange"
       />
     </div>
+    <shi-jing-add :ok="addDialogOk" />
+    <shi-jing-records />
   </div>
 </template>
 
 <script>
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
+import { shiJingAddProps, shiJingRecordsProps } from './data';
+import ShiJingAdd from './ShiJingAdd';
+import ShiJingRecords from './ShiJingRecords';
 import './fetch';
 
 export default {
   name: 'ShiJing',
+  components: {
+    ShiJingAdd,
+    ShiJingRecords,
+  },
   data() {
     return {
       loading: !0,
@@ -84,6 +90,29 @@ export default {
     },
     toSearch() {
       this.currentPage = 1;
+      this.fetchList();
+    },
+    toEdit({ row: item }) {
+      shiJingAddProps.forEach(({ name }) => {
+        this.$store.state.financeIncome.shiJingAdd[name] = item[name];
+      });
+
+      this.$store.state.financeIncome.shiJingAdd.dialogTitle = '编辑';
+      this.$store.state.financeIncome.shiJingAdd.visible = !0;
+      this.$store.state.financeIncome.shiJingAdd.isUpdate = !0;
+      this.$store.state.financeIncome.shiJingAdd.updateId = item.id;
+    },
+    toRecords({ row: item }) {
+      shiJingRecordsProps.forEach(({ name }) => {
+        this.$store.state.financeIncome.shiJingRecords[name] = item[name];
+      });
+
+      this.$store.state.financeIncome.shiJingRecords.dialogTitle = '记录';
+      this.$store.state.financeIncome.shiJingRecords.visible = !0;
+      this.$store.state.financeIncome.shiJingRecords.isUpdate = !0;
+      this.$store.state.financeIncome.shiJingRecords.updateId = item.id;
+    },
+    addDialogOk() {
       this.fetchList();
     },
   },
