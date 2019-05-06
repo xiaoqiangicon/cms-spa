@@ -172,8 +172,9 @@ const routes = [
         controlMark: 'pw_cash_remark',
       },
       {
-        path: `${domain}/cash/jing`,
+        path: 'trade-stat',
         name: '交易统计',
+        component: () => import('../finance/trade-stat/App'),
         meta: { title: '交易统计', noCache: true },
         controlMark: 'pw_cash_jing',
       },
