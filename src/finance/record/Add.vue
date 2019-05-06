@@ -22,6 +22,7 @@
           placeholder="请选择"
           size="small"
           style="width: 200px;"
+          filterable
         >
           <el-option label="请选择寺院" :value="0" />
           <el-option
@@ -41,6 +42,7 @@
           placeholder="请选择"
           size="small"
           style="width: 200px;"
+          filterable
         >
           <el-option
             v-for="item in relatedItems"

@@ -22,6 +22,7 @@
           placeholder="请选择"
           size="small"
           style="width: 200px;"
+          filterable
           @change="onChangeTemple"
         >
           <el-option :value="0" label="请选择寺院" />
@@ -49,6 +50,7 @@
           placeholder="请选择"
           size="small"
           style="width: 200px;"
+          filterable
         >
           <el-option :value="0" label="请选择佛事" />
           <el-option

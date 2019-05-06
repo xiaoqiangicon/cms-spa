@@ -28,9 +28,7 @@
           >
             <p>累计盈收（每日0点更新）</p>
             <p>
-              <span class="f-s-20">{{
-                parseFloat((total + offlineTotal).toFixed(2))
-              }}</span>
+              <span class="f-s-20">{{ allTotal }}</span>
               元
             </p>
             <el-divider />
@@ -43,9 +41,7 @@
           >
             <p>年度盈收</p>
             <p>
-              <span class="f-s-20">{{
-                parseFloat((yearTotal + offlineYearTotal).toFixed(2))
-              }}</span>
+              <span class="f-s-20">{{ allYearTotal }}</span>
               元
             </p>
             <el-divider />
@@ -58,9 +54,7 @@
           >
             <p>本月盈收</p>
             <p>
-              <span class="f-s-20">{{
-                parseFloat((monthTotal + offlineMonthTotal).toFixed(2))
-              }}</span>
+              <span class="f-s-20">{{ allMonthTotal }}</span>
               元
             </p>
             <el-divider />
@@ -255,6 +249,9 @@ export default {
       filterStartDate: dateByInterval(-30),
       filterEndDate: now.date,
       filterDimension: 2,
+      allTotal: 0,
+      allYearTotal: 0,
+      allMonthTotal: 0,
     };
   },
   created() {
@@ -297,9 +294,9 @@ export default {
             return;
           }
 
-          this.total = res.total;
-          this.yearTotal = res.yearTotal;
-          this.monthTotal = res.monthTotal;
+          this.total = res.total || 0;
+          this.yearTotal = res.yearTotal || 0;
+          this.monthTotal = res.monthTotal || 0;
           this.yearList = res.yearList;
           this.projects = res.projects;
 
@@ -318,9 +315,9 @@ export default {
             return;
           }
 
-          this.offlineTotal = res.total;
-          this.offlineYearTotal = res.yearTotal;
-          this.offlineMonthTotal = res.monthTotal;
+          this.offlineTotal = res.total || 0;
+          this.offlineYearTotal = res.yearTotal || 0;
+          this.offlineMonthTotal = res.monthTotal || 0;
           this.offlineYearList = res.yearList;
 
           count += 1;
@@ -328,8 +325,25 @@ export default {
         }
       );
     },
+    refreshFields() {
+      this.allTotal = parseFloat(
+        (parseFloat(this.total) + parseFloat(this.offlineTotal)).toFixed(2)
+      );
+      this.allYearTotal = parseFloat(
+        (
+          parseFloat(this.yearTotal) + parseFloat(this.offlineYearTotal)
+        ).toFixed(2)
+      );
+      this.allMonthTotal = parseFloat(
+        (
+          parseFloat(this.monthTotal) + parseFloat(this.offlineMonthTotal)
+        ).toFixed(2)
+      );
+    },
     afterFetchSummary() {
       this.loadingSummary = !1;
+
+      this.refreshFields();
 
       chart.options.title.text = makeChartTitle({ year: this.filterYear });
       chart.data.datasets[0].data = this.yearList;

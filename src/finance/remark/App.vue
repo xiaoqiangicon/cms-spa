@@ -4,10 +4,10 @@
       <div class="clearfix">
         <el-select
           v-model="filterTemple"
-          filterable
           placeholder="请选择"
           size="small"
           style="width: 200px;"
+          filterable
           @change="doSearch"
         >
           <el-option label="全部" :value="0" />
