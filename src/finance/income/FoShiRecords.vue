@@ -31,18 +31,18 @@
 <script>
 import { Notification } from 'element-ui';
 import seeFetch from 'see-fetch';
-import { shiJingRecordsProps } from './data';
+import { foShiRecordsProps } from './data';
 
 const computedProps = {};
 
-shiJingRecordsProps.forEach(({ name, full }) => {
+foShiRecordsProps.forEach(({ name, full }) => {
   if (full) {
     computedProps[name] = {
       get() {
-        return this.$store.state.financeIncome.shiJingRecords[name];
+        return this.$store.state.financeIncome.foShiRecords[name];
       },
       set(value) {
-        const key = `financeIncome/shiJingRecords/update${name
+        const key = `financeIncome/foShiRecords/update${name
           .slice(0, 1)
           .toUpperCase()}${name.slice(1)}`;
         this.$store.commit(key, value);
@@ -50,13 +50,13 @@ shiJingRecordsProps.forEach(({ name, full }) => {
     };
   } else {
     computedProps[name] = function() {
-      return this.$store.state.financeIncome.shiJingRecords[name];
+      return this.$store.state.financeIncome.foShiRecords[name];
     };
   }
 });
 
 export default {
-  name: 'ShiJingRecords',
+  name: 'FoShiRecords',
   data() {
     return {
       loading: !0,
@@ -75,12 +75,13 @@ export default {
   },
   methods: {
     clickCancel() {
-      this.$store.commit(`financeIncome/shiJingRecords/updateVisible`, !1);
+      this.$store.commit(`financeIncome/foShiRecords/updateVisible`, !1);
     },
     fetchList() {
       this.loading = !0;
-      seeFetch('finance/income/recordsShiJing', {
+      seeFetch('finance/income/recordsFoShi', {
         id: this.id,
+        foShiId: this.foShiId,
         page: this.currentPage,
       }).then(res => {
         this.loading = !1;

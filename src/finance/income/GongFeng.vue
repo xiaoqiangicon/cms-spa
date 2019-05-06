@@ -32,24 +32,24 @@
         @current-change="pageChange"
       />
     </div>
-    <shi-jing-add :ok="addDialogOk" />
-    <shi-jing-records />
+    <gong-feng-add :ok="addDialogOk" />
+    <gong-feng-records />
   </div>
 </template>
 
 <script>
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
-import { shiJingAddProps, shiJingRecordsProps } from './data';
-import ShiJingAdd from './ShiJingAdd';
-import ShiJingRecords from './ShiJingRecords';
+import { gongFengAddProps, gongFengRecordsProps } from './data';
+import GongFengAdd from './GongFengAdd';
+import GongFengRecords from './GongFengRecords';
 import './fetch';
 
 export default {
-  name: 'ShiJing',
+  name: 'GongFeng',
   components: {
-    ShiJingAdd,
-    ShiJingRecords,
+    GongFengAdd,
+    GongFengRecords,
   },
   data() {
     return {
@@ -65,7 +65,7 @@ export default {
   methods: {
     fetchList() {
       this.loading = !0;
-      seeFetch('finance/income/listShiJing', {
+      seeFetch('finance/income/listGongFeng', {
         page: this.currentPage,
       }).then(res => {
         this.loading = !1;
@@ -93,24 +93,24 @@ export default {
       this.fetchList();
     },
     toEdit({ row: item }) {
-      shiJingAddProps.forEach(({ name }) => {
-        this.$store.state.financeIncome.shiJingAdd[name] = item[name];
+      gongFengAddProps.forEach(({ name }) => {
+        this.$store.state.financeIncome.gongFengAdd[name] = item[name];
       });
 
-      this.$store.state.financeIncome.shiJingAdd.dialogTitle = '编辑';
-      this.$store.state.financeIncome.shiJingAdd.visible = !0;
-      this.$store.state.financeIncome.shiJingAdd.isUpdate = !0;
-      this.$store.state.financeIncome.shiJingAdd.updateId = item.id;
+      this.$store.state.financeIncome.gongFengAdd.dialogTitle = '编辑';
+      this.$store.state.financeIncome.gongFengAdd.visible = !0;
+      this.$store.state.financeIncome.gongFengAdd.isUpdate = !0;
+      this.$store.state.financeIncome.gongFengAdd.updateId = item.id;
     },
     toRecords({ row: item }) {
-      shiJingRecordsProps.forEach(({ name }) => {
-        this.$store.state.financeIncome.shiJingRecords[name] = item[name];
+      gongFengRecordsProps.forEach(({ name }) => {
+        this.$store.state.financeIncome.gongFengRecords[name] = item[name];
       });
 
-      this.$store.state.financeIncome.shiJingRecords.dialogTitle = '记录';
-      this.$store.state.financeIncome.shiJingRecords.visible = !0;
-      this.$store.state.financeIncome.shiJingRecords.isUpdate = !0;
-      this.$store.state.financeIncome.shiJingRecords.updateId = item.id;
+      this.$store.state.financeIncome.gongFengRecords.dialogTitle = '记录';
+      this.$store.state.financeIncome.gongFengRecords.visible = !0;
+      this.$store.state.financeIncome.gongFengRecords.isUpdate = !0;
+      this.$store.state.financeIncome.gongFengRecords.updateId = item.id;
       this.$store.state.financeIncome.shiJingRecords.id = item.id;
     },
     addDialogOk() {

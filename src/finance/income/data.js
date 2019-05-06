@@ -5,7 +5,7 @@ export const shiJingAddProps = [
   { name: 'visible', full: !0, default: !1 },
   { name: 'templeId', full: !0, default: 0 },
   { name: 'templeName', full: !0, default: '' },
-  { name: 'serviceCharge', full: !0, default: 0 },
+  { name: 'serviceCharge', full: !0, default: '' },
   { name: 'takeEffectTime', full: !0, default: '' },
 ];
 
@@ -24,7 +24,7 @@ export const gongFengAddProps = [
   { name: 'visible', full: !0, default: !1 },
   { name: 'templeId', full: !0, default: 0 },
   { name: 'templeName', full: !0, default: '' },
-  { name: 'serviceCharge', full: !0, default: 0 },
+  { name: 'serviceCharge', full: !0, default: '' },
   { name: 'takeEffectTime', full: !0, default: '' },
 ];
 
@@ -45,8 +45,9 @@ export const foShiAddProps = [
   { name: 'templeName', full: !0, default: '' },
   { name: 'foShiId', full: !0, default: 0 },
   { name: 'foShiName', full: !0, default: '' },
-  { name: 'serviceCharge', full: !0, default: 0 },
+  { name: 'serviceCharge', full: !0, default: '' },
   { name: 'takeEffectTime', full: !0, default: '' },
+  { name: 'item', full: !0, default: () => ({}) },
 ];
 
 export const foShiRecordsProps = [

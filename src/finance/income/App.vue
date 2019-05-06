@@ -6,10 +6,10 @@
           <shi-jing />
         </el-tab-pane>
         <el-tab-pane label="供奉系统" name="second">
-          haha
+          <gong-feng />
         </el-tab-pane>
         <el-tab-pane label="推广佛事" name="third">
-          hehe
+          <fo-shi />
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -18,11 +18,15 @@
 
 <script>
 import ShiJing from './ShiJing';
+import GongFeng from './GongFeng';
+import FoShi from './FoShi';
 
 export default {
   name: 'App',
   components: {
     ShiJing,
+    GongFeng,
+    FoShi,
   },
   data() {
     return {
