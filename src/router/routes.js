@@ -151,15 +151,16 @@ const routes = [
         controlMark: 'pw_cash_stat',
       },
       {
-        path: `income`,
+        path: 'income',
         name: '盈收管理',
         component: () => import('../finance/income/App'),
         meta: { title: '盈收管理', noCache: true },
         controlMark: 'pw_rate',
       },
       {
-        path: `${domain}/cash/record`,
+        path: 'record',
         name: '人工记账',
+        component: () => import('../finance/record/App'),
         meta: { title: '人工记账', noCache: true },
         controlMark: 'pw_cash_income',
       },

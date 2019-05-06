@@ -19,6 +19,7 @@ import lingFate from '../ling/fate/state';
 import financePending from '../finance/pending/state';
 import financeTaking from '../finance/taking/state';
 import financeIncome from '../finance/income/state';
+import financeRecord from '../finance/record/state';
 
 Vue.use(Vuex);
 
@@ -41,6 +42,7 @@ const store = new Vuex.Store({
     financePending,
     financeTaking,
     financeIncome,
+    financeRecord,
   },
   getters,
 });
