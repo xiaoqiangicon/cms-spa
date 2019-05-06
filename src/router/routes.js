@@ -165,8 +165,9 @@ const routes = [
         controlMark: 'pw_cash_income',
       },
       {
-        path: `${domain}/cash/remark`,
+        path: 'remark',
         name: '提醒备注',
+        component: () => import('../finance/remark/App'),
         meta: { title: '提醒备注', noCache: true },
         controlMark: 'pw_cash_remark',
       },

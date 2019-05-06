@@ -20,6 +20,7 @@ import financePending from '../finance/pending/state';
 import financeTaking from '../finance/taking/state';
 import financeIncome from '../finance/income/state';
 import financeRecord from '../finance/record/state';
+import financeRemark from '../finance/remark/state';
 
 Vue.use(Vuex);
 
@@ -43,6 +44,7 @@ const store = new Vuex.Store({
     financeTaking,
     financeIncome,
     financeRecord,
+    financeRemark,
   },
   getters,
 });
