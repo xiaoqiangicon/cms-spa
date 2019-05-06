@@ -11,3 +11,4 @@ import './temples';
 import './fo-shi';
 import './add-fo-shi';
 import './confirm';
+import './list-zi-ying';

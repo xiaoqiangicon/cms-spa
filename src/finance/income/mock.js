@@ -71,6 +71,45 @@ export const listFoShi1 = {
   },
 };
 
+export const listZiYing = {
+  success: true,
+  totalCount: 99,
+  data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
+    id,
+    foShiId: id,
+    foShiName: `佛事名佛事名佛事名佛事名佛事名佛事名佛事名佛事名佛事名 ${id}`,
+    amount: id * 1000, // 订单总额
+    corporationProfitRate: id * 10, // 企业分成
+    profitAmount: id * 100, // 当前盈收
+    usedAmount: id * 102, // 已支出
+    manualAmount: id * 102, // 人工记录
+    transformAmount: id * 102, // 转单系统
+    remainAmount: id * 101, // 剩余金额
+    ended: Math.floor(Math.random() * 2),
+  })),
+};
+export const listZiYing1 = {
+  result: 0,
+  data: {
+    count: 99,
+    list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
+      templeId: id,
+      templeName: `寺院名 ${id}`,
+      commodityId: id,
+      commodityName: `佛事名佛事名佛事名佛事名佛事名佛事名佛事名佛事名佛事名 ${id}`,
+      rate: id / 10,
+      startTime: '2019-07-01 12:12:12',
+      updateTime: '2019-07-01 01:01:01',
+      managerName: `编辑用户 ${id}`,
+      isEnd: Math.floor(Math.random() * 2),
+      isFinish: Math.floor(Math.random() * 2),
+      promotionPercentage: id * 5,
+      promotionMoney: id * 5,
+      serviceMoney: id * 5,
+    })),
+  },
+};
+
 export const listShiJing = {
   success: true,
   totalCount: 99,

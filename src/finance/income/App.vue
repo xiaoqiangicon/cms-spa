@@ -11,6 +11,9 @@
         <el-tab-pane label="推广佛事" name="third">
           <fo-shi />
         </el-tab-pane>
+        <el-tab-pane label="自营佛事" name="fourth">
+          <zi-ying />
+        </el-tab-pane>
       </el-tabs>
     </el-card>
   </div>
@@ -20,6 +23,7 @@
 import ShiJing from './ShiJing';
 import GongFeng from './GongFeng';
 import FoShi from './FoShi';
+import ZiYing from './ZiYing';
 
 export default {
   name: 'App',
@@ -27,6 +31,7 @@ export default {
     ShiJing,
     GongFeng,
     FoShi,
+    ZiYing,
   },
   data() {
     return {
