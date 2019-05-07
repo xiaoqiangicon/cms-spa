@@ -93,7 +93,7 @@ export const summary = {
     randomMoney(),
   ],
   projects: [1, 2, 3, 4, 5, 6, 7].map(id => ({
-    key: id,
+    id,
     name: `项目${id}`,
     amount: randomMoney(),
     percent: id * 10,

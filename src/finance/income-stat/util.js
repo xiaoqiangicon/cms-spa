@@ -63,6 +63,13 @@ export const makeChartConfig = ({ onlineData, offlineData, year }) => ({
             display: true,
             labelString: '元',
           },
+          ticks: {
+            callback(value) {
+              return value > 10000
+                ? `${parseFloat((value / 10000).toFixed(2))}w`
+                : value;
+            },
+          },
         },
       ],
     },

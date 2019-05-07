@@ -21,7 +21,7 @@
       </el-select>
 
       <el-row :gutter="20" class="mg-t-20">
-        <el-col :span="17">
+        <el-col :span="16">
           <el-card
             class="dp-inline-block mg-b-20 mg-r-20"
             style="width: 250px;"
@@ -65,7 +65,7 @@
             <canvas ref="chart" />
           </el-card>
         </el-col>
-        <el-col :span="7">
+        <el-col :span="8">
           <el-card>
             <div slot="header" class="clearfix">
               <span>2019 年线上盈收占比</span>
@@ -79,6 +79,13 @@
               >
                 <el-col :span="8">
                   {{ project.name }}
+                  <el-tooltip
+                    v-if="project.tooltip"
+                    :content="project.tooltip"
+                    placement="top"
+                  >
+                    <i class="el-icon-question question" />
+                  </el-tooltip>
                 </el-col>
                 <el-col :span="8">
                   {{ project.amount }}
@@ -469,5 +476,13 @@ export default {
 
 .body {
   margin-top: 20px;
+}
+
+.question {
+  margin-left: 5px;
+  position: relative;
+  top: 2px;
+  cursor: pointer;
+  font-size: 20px;
 }
 </style>

@@ -36,6 +36,15 @@
           <template slot-scope="item">
             {{ item.row.corporationProfitRate }}%
           </template>
+          <template slot="header" slot-scope="item">
+            {{ item.column.label }}
+            <el-tooltip
+              content="分成给公司的比例，按单笔计算。若修改后则从当天最新的一笔订单计算。"
+              placement="top"
+            >
+              <i class="el-icon-question question" />
+            </el-tooltip>
+          </template>
         </el-table-column>
         <el-table-column prop="profitAmount" label="当前盈收" />
         <el-table-column label="已支出">
@@ -211,5 +220,13 @@ export default {
 <style lang="less" scoped>
 .body {
   margin-top: 20px;
+}
+
+.question {
+  margin-left: 5px;
+  position: relative;
+  top: 2px;
+  cursor: pointer;
+  font-size: 20px;
 }
 </style>

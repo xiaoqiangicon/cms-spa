@@ -14,12 +14,26 @@ const projectNames = {
   11: '自营佛事',
 };
 
+const tooltips = {
+  1: '按用户下单的时间计算',
+  4: '按确认或订单自动完成时间计算',
+  2: '',
+  3: '',
+  5: '用户点感恩或订单自动完成计算',
+  6: '提现账单流程完成后计算',
+  7: '',
+  8: '自营寺院的所有文章打赏，用户下单的时间计算',
+  9: '按用户下单的时间计算',
+  10: '自在家推荐寺院的日行一善模块，按用户下单的时间计算',
+  11: '',
+};
+
 const responseRefactor = {
   total: 'data.totalEarningsMoney',
   yearTotal: 'data.yearEarningsMoney',
   monthTotal: 'data.monthEarningsMoney',
   projects: 'data.yearEarningsMoneyProportion',
-  _projects: [{ key: 'type', amount: 'earningsMoney' }],
+  _projects: [{ id: 'type', amount: 'earningsMoney' }],
 };
 
 /* eslint-disable no-param-reassign */
@@ -31,7 +45,8 @@ const postHandle = res => {
       totalAmount += project.amount;
     });
     res.projects.forEach(project => {
-      project.name = projectNames[project.key];
+      project.name = projectNames[project.id];
+      project.tooltip = tooltips[project.id];
       project.percent = parseFloat(
         ((project.amount * 100) / totalAmount).toFixed(2)
       );
