@@ -6,12 +6,14 @@ import {
   foShiAddProps,
   foShiRecordsProps,
   ziYingAddProps,
-  ziYingRecordsProps,
+  ziYingModifyRecordsProps,
+  ziYingUseProps,
+  ziYingUseRecordsProps,
 } from './data';
 
 const shiJingAddMutations = {};
-const shiJingRecordsMutations = {};
 const shiJingAddState = {};
+const shiJingRecordsMutations = {};
 const shiJingRecordsState = {};
 
 shiJingAddProps.forEach(({ name }) => {
@@ -22,6 +24,11 @@ shiJingAddProps.forEach(({ name }) => {
   };
 });
 
+shiJingAddProps.forEach(({ name, default: defaultValue }) => {
+  shiJingAddState[name] =
+    typeof defaultValue === 'function' ? defaultValue() : defaultValue;
+});
+
 shiJingRecordsProps.forEach(({ name }) => {
   const key = `update${name.slice(0, 1).toUpperCase()}${name.slice(1)}`;
   shiJingRecordsMutations[key] = (state, payload) => {
@@ -30,19 +37,14 @@ shiJingRecordsProps.forEach(({ name }) => {
   };
 });
 
-shiJingAddProps.forEach(({ name, default: defaultValue }) => {
-  shiJingAddState[name] =
-    typeof defaultValue === 'function' ? defaultValue() : defaultValue;
-});
-
 shiJingRecordsProps.forEach(({ name, default: defaultValue }) => {
   shiJingRecordsState[name] =
     typeof defaultValue === 'function' ? defaultValue() : defaultValue;
 });
 
 const gongFengAddMutations = {};
-const gongFengRecordsMutations = {};
 const gongFengAddState = {};
+const gongFengRecordsMutations = {};
 const gongFengRecordsState = {};
 
 gongFengAddProps.forEach(({ name }) => {
@@ -53,6 +55,11 @@ gongFengAddProps.forEach(({ name }) => {
   };
 });
 
+gongFengAddProps.forEach(({ name, default: defaultValue }) => {
+  gongFengAddState[name] =
+    typeof defaultValue === 'function' ? defaultValue() : defaultValue;
+});
+
 gongFengRecordsProps.forEach(({ name }) => {
   const key = `update${name.slice(0, 1).toUpperCase()}${name.slice(1)}`;
   gongFengRecordsMutations[key] = (state, payload) => {
@@ -61,19 +68,14 @@ gongFengRecordsProps.forEach(({ name }) => {
   };
 });
 
-gongFengAddProps.forEach(({ name, default: defaultValue }) => {
-  gongFengAddState[name] =
-    typeof defaultValue === 'function' ? defaultValue() : defaultValue;
-});
-
 gongFengRecordsProps.forEach(({ name, default: defaultValue }) => {
   gongFengRecordsState[name] =
     typeof defaultValue === 'function' ? defaultValue() : defaultValue;
 });
 
 const foShiAddMutations = {};
-const foShiRecordsMutations = {};
 const foShiAddState = {};
+const foShiRecordsMutations = {};
 const foShiRecordsState = {};
 
 foShiAddProps.forEach(({ name }) => {
@@ -84,6 +86,11 @@ foShiAddProps.forEach(({ name }) => {
   };
 });
 
+foShiAddProps.forEach(({ name, default: defaultValue }) => {
+  foShiAddState[name] =
+    typeof defaultValue === 'function' ? defaultValue() : defaultValue;
+});
+
 foShiRecordsProps.forEach(({ name }) => {
   const key = `update${name.slice(0, 1).toUpperCase()}${name.slice(1)}`;
   foShiRecordsMutations[key] = (state, payload) => {
@@ -92,32 +99,23 @@ foShiRecordsProps.forEach(({ name }) => {
   };
 });
 
-foShiAddProps.forEach(({ name, default: defaultValue }) => {
-  foShiAddState[name] =
-    typeof defaultValue === 'function' ? defaultValue() : defaultValue;
-});
-
 foShiRecordsProps.forEach(({ name, default: defaultValue }) => {
   foShiRecordsState[name] =
     typeof defaultValue === 'function' ? defaultValue() : defaultValue;
 });
 
 const ziYingAddMutations = {};
-const ziYingRecordsMutations = {};
 const ziYingAddState = {};
-const ziYingRecordsState = {};
+const ziYingModifyRecordsMutations = {};
+const ziYingModifyRecordsState = {};
+const ziYingUseMutations = {};
+const ziYingUseState = {};
+const ziYingUseRecordsMutations = {};
+const ziYingUseRecordsState = {};
 
 ziYingAddProps.forEach(({ name }) => {
   const key = `update${name.slice(0, 1).toUpperCase()}${name.slice(1)}`;
   ziYingAddMutations[key] = (state, payload) => {
-    // eslint-disable-next-line no-param-reassign
-    state[name] = payload;
-  };
-});
-
-ziYingRecordsProps.forEach(({ name }) => {
-  const key = `update${name.slice(0, 1).toUpperCase()}${name.slice(1)}`;
-  ziYingRecordsMutations[key] = (state, payload) => {
     // eslint-disable-next-line no-param-reassign
     state[name] = payload;
   };
@@ -128,8 +126,42 @@ ziYingAddProps.forEach(({ name, default: defaultValue }) => {
     typeof defaultValue === 'function' ? defaultValue() : defaultValue;
 });
 
-ziYingRecordsProps.forEach(({ name, default: defaultValue }) => {
-  ziYingRecordsState[name] =
+ziYingModifyRecordsProps.forEach(({ name }) => {
+  const key = `update${name.slice(0, 1).toUpperCase()}${name.slice(1)}`;
+  ziYingModifyRecordsMutations[key] = (state, payload) => {
+    // eslint-disable-next-line no-param-reassign
+    state[name] = payload;
+  };
+});
+
+ziYingModifyRecordsProps.forEach(({ name, default: defaultValue }) => {
+  ziYingModifyRecordsState[name] =
+    typeof defaultValue === 'function' ? defaultValue() : defaultValue;
+});
+
+ziYingUseProps.forEach(({ name }) => {
+  const key = `update${name.slice(0, 1).toUpperCase()}${name.slice(1)}`;
+  ziYingUseMutations[key] = (state, payload) => {
+    // eslint-disable-next-line no-param-reassign
+    state[name] = payload;
+  };
+});
+
+ziYingUseProps.forEach(({ name, default: defaultValue }) => {
+  ziYingUseState[name] =
+    typeof defaultValue === 'function' ? defaultValue() : defaultValue;
+});
+
+ziYingUseRecordsProps.forEach(({ name }) => {
+  const key = `update${name.slice(0, 1).toUpperCase()}${name.slice(1)}`;
+  ziYingUseRecordsMutations[key] = (state, payload) => {
+    // eslint-disable-next-line no-param-reassign
+    state[name] = payload;
+  };
+});
+
+ziYingUseRecordsProps.forEach(({ name, default: defaultValue }) => {
+  ziYingUseRecordsState[name] =
     typeof defaultValue === 'function' ? defaultValue() : defaultValue;
 });
 
@@ -171,10 +203,20 @@ export default {
       state: ziYingAddState,
       mutations: ziYingAddMutations,
     },
-    ziYingRecords: {
+    ziYingModifyRecords: {
       namespaced: true,
-      state: ziYingRecordsState,
-      mutations: ziYingRecordsMutations,
+      state: ziYingModifyRecordsState,
+      mutations: ziYingModifyRecordsMutations,
+    },
+    ziYingUse: {
+      namespaced: true,
+      state: ziYingUseState,
+      mutations: ziYingUseMutations,
+    },
+    ziYingUseRecords: {
+      namespaced: true,
+      state: ziYingUseRecordsState,
+      mutations: ziYingUseRecordsMutations,
     },
   },
 };

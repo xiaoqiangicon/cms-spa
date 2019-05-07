@@ -69,7 +69,25 @@ export const ziYingAddProps = [
   { name: 'corporationProfitRate', full: !0, default: '' },
 ];
 
-export const ziYingRecordsProps = [
+export const ziYingModifyRecordsProps = [
+  { name: 'isUpdate', full: !1, default: !1 },
+  { name: 'updateId', full: !1, default: 0 },
+  { name: 'dialogTitle', full: !1, default: '记录' },
+  { name: 'visible', full: !0, default: !1 },
+  { name: 'id', full: !0, default: 0 },
+  { name: 'foShiId', full: !0, default: 0 },
+];
+
+export const ziYingUseProps = [
+  { name: 'isUpdate', full: !1, default: !1 },
+  { name: 'updateId', full: !1, default: 0 },
+  { name: 'dialogTitle', full: !1, default: '编辑' },
+  { name: 'visible', full: !0, default: !1 },
+  { name: 'foShiId', full: !0, default: 0 },
+  { name: 'item', full: !0, default: () => ({}) },
+];
+
+export const ziYingUseRecordsProps = [
   { name: 'isUpdate', full: !1, default: !1 },
   { name: 'updateId', full: !1, default: 0 },
   { name: 'dialogTitle', full: !1, default: '记录' },

@@ -13,41 +13,13 @@
       </el-alert>
       <div v-if="isUpdate" class="row">
         <div class="row-name">
-          寺院：
+          佛事名称：
         </div>
-        <span class="l-hg-32">{{ templeName }}</span>
+        <span class="l-hg-32">{{ foShiId + ' - ' + foShiName }}</span>
       </div>
       <div v-else class="row">
         <div class="row-name">
-          寺院：
-        </div>
-        <el-select
-          v-model="templeId"
-          v-loading="loadingTemples"
-          placeholder="请选择"
-          size="small"
-          style="width: 200px;"
-          filterable
-          @change="onChangeTemple"
-        >
-          <el-option :value="0" label="请选择寺院" />
-          <el-option
-            v-for="item in temples"
-            :key="item.id"
-            :value="item.id"
-            :label="item.name"
-          />
-        </el-select>
-      </div>
-      <div v-if="isUpdate" class="row">
-        <div class="row-name">
-          佛事：
-        </div>
-        <span class="l-hg-32">{{ foShiName }}</span>
-      </div>
-      <div v-else class="row">
-        <div class="row-name">
-          佛事：
+          佛事名称：
         </div>
         <el-select
           v-model="foShiId"
@@ -62,29 +34,20 @@
             v-for="item in ziYingItems"
             :key="item.id"
             :value="item.id"
-            :label="item.name"
+            :label="item.id + ' - ' + item.name"
           />
         </el-select>
       </div>
       <div class="row">
         <div class="row-name">
-          支付服务费：
+          公司分成：
         </div>
-        <el-input v-model="serviceCharge" size="small" style="width: 200px;" />
-        <span class="l-hg-32">%</span>
-      </div>
-      <div class="row">
-        <div class="row-name">
-          生效时间：
-        </div>
-        <el-date-picker
-          v-model="takeEffectTime"
-          align="right"
-          type="datetime"
-          value-format="yyyy-MM-dd HH:mm:ss"
+        <el-input
+          v-model="corporationProfitRate"
           size="small"
           style="width: 200px;"
         />
+        <span class="l-hg-32">%</span>
       </div>
     </div>
     <span slot="footer" class="dialog-footer">
@@ -101,7 +64,6 @@
 <script>
 import { Notification } from 'element-ui';
 import seeFetch from 'see-fetch';
-import { now, numOfDateTime } from '@zzh/n-util';
 import { ziYingAddProps } from './data';
 
 const computedProps = {};
@@ -126,15 +88,10 @@ ziYingAddProps.forEach(({ name, full }) => {
   }
 });
 
-// 寺院数据
-let temples = [
+// 佛事列表
+let ziYingItems = [
   // {id, name}
 ];
-
-// 佛事数据
-const ziYing = {
-  // templeId => [{id, name}]
-};
 
 export default {
   name: 'ZiYingAdd',
@@ -148,12 +105,7 @@ export default {
   data() {
     return {
       saving: !1,
-      loadingTemples: !1,
       loadingZiYing: !1,
-      // 寺院
-      temples: [
-        // {id, name}
-      ],
       // 佛事列表
       ziYingItems: [
         // {id, name}
@@ -164,16 +116,16 @@ export default {
     ...computedProps,
   },
   created() {
-    if (temples && temples.length) this.temples = [...temples];
+    if (ziYingItems && ziYingItems.length) this.ziYingItems = [...ziYingItems];
     else {
-      this.loadingTemples = !0;
-      seeFetch('finance/income/temples').then(res => {
-        this.loadingTemples = !1;
+      this.loadingZiYing = !0;
+      seeFetch('finance/income/ziYingFoShi').then(res => {
+        this.loadingZiYing = !1;
 
         if (!res.success || !res.data || !res.data.length) return;
 
-        temples = res.data;
-        this.temples = [...temples];
+        ziYingItems = res.data;
+        this.ziYingItems = [...ziYingItems];
       });
     }
   },
@@ -182,39 +134,16 @@ export default {
       this.$store.commit(`financeIncome/ziYingAdd/updateVisible`, !1);
     },
     clickOk() {
-      const { templeId, foShiId, takeEffectTime } = this;
+      const { foShiId } = this;
 
-      const serviceCharge = parseFloat(this.serviceCharge);
+      const corporationProfitRate = parseFloat(this.corporationProfitRate);
 
       let error;
 
-      if (!templeId) error = '请选择寺院';
-      else if (!foShiId) error = '请选择佛事';
-      else if (!serviceCharge) error = '支付服务费不能为空';
-      else if (!takeEffectTime) error = '生效时间不能为空';
-      else if (numOfDateTime(now.dateTime) > numOfDateTime(takeEffectTime))
-        error = '生效时间不能在当前时刻之前';
-      else {
-        let max = 100;
-        const ziYingItem = this.item;
-
-        if (ziYingItem.promoteRate) max -= ziYingItem.promoteRate;
-        else if (ziYingItem.promoteAmount && ziYingItem.price > 0)
-          max -= parseFloat(
-            (ziYingItem.promoteAmount / ziYingItem.price).toFixed(2)
-          );
-
-        if (ziYingItem.serviceRate) max -= ziYingItem.serviceRate;
-        else if (ziYingItem.serviceAmount && ziYingItem.price > 0)
-          max -= parseFloat(
-            (ziYingItem.serviceAmount / ziYingItem.price).toFixed(2)
-          );
-
-        max = parseFloat(max.toFixed(2));
-
-        if (serviceCharge > max)
-          error = `当前佛事正在分销推广中，分成比例不可超过 ${max}%`;
-      }
+      if (!foShiId) error = '请选择佛事';
+      else if (!corporationProfitRate) error = '公司分成不能为空';
+      else if (corporationProfitRate < 0) error = '公司分成不能为负数';
+      else if (corporationProfitRate > 100) error = '公司分成不能为大于100%';
 
       if (error) {
         Notification({
@@ -225,15 +154,9 @@ export default {
       }
 
       this.saving = !0;
-
-      let fetchName = 'finance/income/updateZiYing';
-      if (!this.isUpdate) fetchName = 'finance/income/addZiYing';
-
-      seeFetch(fetchName, {
-        id: templeId,
-        serviceCharge,
-        takeEffectTime,
+      seeFetch('finance/income/updateZiYing', {
         foShiId,
+        corporationProfitRate,
       }).then(res => {
         this.saving = !1;
 
@@ -253,30 +176,6 @@ export default {
         this.$store.commit(`financeIncome/ziYingAdd/updateVisible`, !1);
         this.ok();
       });
-    },
-    onChangeTemple() {
-      this.foShiId = 0;
-      if (!this.templeId) {
-        this.ziYingItems = [];
-        return;
-      }
-
-      const ziYingItems = ziYing[this.templeId];
-
-      if (ziYingItems) this.ziYingItems = [...ziYingItems];
-      else {
-        this.loadingZiYing = !0;
-        seeFetch('finance/income/ziYing', { templeId: this.templeId }).then(
-          res => {
-            this.loadingZiYing = !1;
-
-            if (!res.success || !res.data || !res.data.length) return;
-
-            ziYing[this.templeId] = res.data;
-            this.ziYingItems = [...res.data];
-          }
-        );
-      }
     },
   },
 };

@@ -74,7 +74,7 @@ seeFetch.config('finance/income-stat/list', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/earningsStatistics/getEarningsList ',
+    '/earningsStatistics/getEarningsList',
     '/finance/income-stat/mock/list1',
     '/finance/income-stat/mock/list',
   ],

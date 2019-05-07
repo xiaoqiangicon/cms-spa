@@ -7,13 +7,12 @@
   >
     <div class="content">
       <el-table v-loading="loading" :data="list" style="width: 100%">
-        <el-table-column prop="takeEffectTime" label="生效时间" />
-        <el-table-column label="服务费用">
+        <el-table-column prop="editTime" label="编辑时间" />
+        <el-table-column label="公司比例">
           <template slot-scope="item">
-            {{ item.row.serviceCharge }}%
+            {{ item.row.corporationProfitRate }}%
           </template>
         </el-table-column>
-        <el-table-column prop="editTime" label="编辑时间" />
         <el-table-column prop="editUser" label="编辑用户" />
       </el-table>
       <el-pagination
@@ -31,18 +30,18 @@
 <script>
 import { Notification } from 'element-ui';
 import seeFetch from 'see-fetch';
-import { ziYingRecordsProps } from './data';
+import { ziYingModifyRecordsProps } from './data';
 
 const computedProps = {};
 
-ziYingRecordsProps.forEach(({ name, full }) => {
+ziYingModifyRecordsProps.forEach(({ name, full }) => {
   if (full) {
     computedProps[name] = {
       get() {
-        return this.$store.state.financeIncome.ziYingRecords[name];
+        return this.$store.state.financeIncome.ziYingModifyRecords[name];
       },
       set(value) {
-        const key = `financeIncome/ziYingRecords/update${name
+        const key = `financeIncome/ziYingModifyRecords/update${name
           .slice(0, 1)
           .toUpperCase()}${name.slice(1)}`;
         this.$store.commit(key, value);
@@ -50,13 +49,13 @@ ziYingRecordsProps.forEach(({ name, full }) => {
     };
   } else {
     computedProps[name] = function() {
-      return this.$store.state.financeIncome.ziYingRecords[name];
+      return this.$store.state.financeIncome.ziYingModifyRecords[name];
     };
   }
 });
 
 export default {
-  name: 'ZiYingRecords',
+  name: 'ZiYingModifyRecords',
   data() {
     return {
       loading: !0,
@@ -75,12 +74,11 @@ export default {
   },
   methods: {
     clickCancel() {
-      this.$store.commit(`financeIncome/ziYingRecords/updateVisible`, !1);
+      this.$store.commit(`financeIncome/ziYingModifyRecords/updateVisible`, !1);
     },
     fetchList() {
       this.loading = !0;
-      seeFetch('finance/income/recordsZiYing', {
-        id: this.id,
+      seeFetch('finance/income/ziYingModifyRecords', {
         foShiId: this.foShiId,
         page: this.currentPage,
       }).then(res => {

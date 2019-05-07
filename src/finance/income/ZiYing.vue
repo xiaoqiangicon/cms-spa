@@ -8,7 +8,7 @@
         size="small"
         style="width: 250px;"
       >
-        <el-button slot="append" icon="el-icon-search" @click="toSearch" />
+        <el-button slot="append" icon="el-icon-search" @click="doSearch" />
       </el-input>
       <el-button class="fl-right" size="small" @click="toAdd">
         添加自营佛事
@@ -49,18 +49,17 @@
         <el-table-column prop="remainAmount" label="剩余金额" />
         <el-table-column label="操作">
           <template slot-scope="item">
-            <el-button
-              v-if="item.row.ended && !item.row.confirmed"
-              type="text"
-              @click="toConfirm(item)"
-            >
-              确认结算
-            </el-button>
             <el-button type="text" @click="toEdit(item)">
               编辑
             </el-button>
-            <el-button type="text" @click="toRecords(item)">
-              记录
+            <el-button type="text" @click="toModifyRecords(item)">
+              修改记录
+            </el-button>
+            <el-button type="text" @click="toUse(item)">
+              支出
+            </el-button>
+            <el-button type="text" @click="toUseRecords(item)">
+              支出记录
             </el-button>
           </template>
         </el-table-column>
@@ -74,24 +73,35 @@
         @current-change="pageChange"
       />
     </div>
-    <zi-ying-add :ok="addDialogOk" />
-    <zi-ying-records />
+    <zi-ying-add :ok="fetchList" />
+    <zi-ying-modify-records />
+    <zi-ying-use :ok="fetchList" />
+    <zi-ying-use-records />
   </div>
 </template>
 
 <script>
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
-import { ziYingAddProps, ziYingRecordsProps } from './data';
+import {
+  ziYingAddProps,
+  ziYingModifyRecordsProps,
+  ziYingUseProps,
+  ziYingUseRecordsProps,
+} from './data';
 import ZiYingAdd from './ZiYingAdd';
-import ZiYingRecords from './ZiYingRecords';
+import ZiYingModifyRecords from './ZiYingModifyRecords';
+import ZiYingUse from './ZiYingUse';
+import ZiYingUseRecords from './ZiYingUseRecords';
 import './fetch';
 
 export default {
   name: 'ZiYing',
   components: {
     ZiYingAdd,
-    ZiYingRecords,
+    ZiYingModifyRecords,
+    ZiYingUse,
+    ZiYingUseRecords,
   },
   data() {
     return {
@@ -132,7 +142,7 @@ export default {
       this.currentPage = page;
       this.fetchList();
     },
-    toSearch() {
+    doSearch() {
       this.currentPage = 1;
       this.fetchList();
     },
@@ -157,61 +167,42 @@ export default {
       this.$store.state.financeIncome.ziYingAdd.updateId = 0;
       this.$store.state.financeIncome.ziYingAdd.visible = !0;
     },
-    toRecords({ row: item }) {
-      ziYingRecordsProps.forEach(({ name }) => {
-        this.$store.state.financeIncome.ziYingRecords[name] = item[name];
+    toModifyRecords({ row: item }) {
+      ziYingModifyRecordsProps.forEach(({ name }) => {
+        this.$store.state.financeIncome.ziYingModifyRecords[name] = item[name];
       });
 
-      this.$store.state.financeIncome.ziYingRecords.dialogTitle = '记录';
-      this.$store.state.financeIncome.ziYingRecords.visible = !0;
-      this.$store.state.financeIncome.ziYingRecords.isUpdate = !0;
-      this.$store.state.financeIncome.ziYingRecords.updateId = item.id;
-      this.$store.state.financeIncome.shiJingRecords.id = item.id;
-      this.$store.state.financeIncome.shiJingRecords.ziYing = item.foShiId;
+      this.$store.state.financeIncome.ziYingModifyRecords.dialogTitle =
+        '修改记录';
+      this.$store.state.financeIncome.ziYingModifyRecords.visible = !0;
+      this.$store.state.financeIncome.ziYingModifyRecords.isUpdate = !0;
+      this.$store.state.financeIncome.ziYingModifyRecords.updateId = item.id;
+      this.$store.state.financeIncome.ziYingModifyRecords.id = item.id;
+      this.$store.state.financeIncome.ziYingModifyRecords.foShiId =
+        item.foShiId;
     },
-    toConfirm({ row: item }) {
-      this.$confirm(
-        `<div class="t-a-center">
-          ${item.foShiName}
-          <br />
-          佛事ID：
-          ${item.foShiId}
-          <br />
-          <br />
-          <br />
-          确认结算后不可取消
-        </div>`,
-        '提示',
-        {
-          dangerouslyUseHTMLString: true,
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-        }
-      ).then(() => {
-        seeFetch('finance/income/confirm', {
-          id: item.foShiId,
-          templeId: item.templeId,
-          type: 2,
-        }).then(res => {
-          if (!res.success) {
-            Notification({
-              title: '提示',
-              message: res.message || '确认出错，请稍后再试',
-            });
-            return;
-          }
-
-          Notification({
-            title: '提示',
-            message: '操作成功',
-          });
-
-          this.fetchList();
-        });
+    toUse({ row: item }) {
+      ziYingUseProps.forEach(({ name }) => {
+        this.$store.state.financeIncome.ziYingUse[name] = item[name];
       });
+
+      this.$store.state.financeIncome.ziYingUse.dialogTitle = '添加支出项';
+      this.$store.state.financeIncome.ziYingUse.visible = !0;
+      this.$store.state.financeIncome.ziYingUse.isUpdate = !0;
+      this.$store.state.financeIncome.ziYingUse.updateId = item.id;
+      this.$store.state.financeIncome.ziYingUse.item = { ...item };
     },
-    addDialogOk() {
-      this.fetchList();
+    toUseRecords({ row: item }) {
+      ziYingUseRecordsProps.forEach(({ name }) => {
+        this.$store.state.financeIncome.ziYingUseRecords[name] = item[name];
+      });
+
+      this.$store.state.financeIncome.ziYingUseRecords.dialogTitle = '支出记录';
+      this.$store.state.financeIncome.ziYingUseRecords.visible = !0;
+      this.$store.state.financeIncome.ziYingUseRecords.isUpdate = !0;
+      this.$store.state.financeIncome.ziYingUseRecords.updateId = item.id;
+      this.$store.state.financeIncome.ziYingUseRecords.id = item.id;
+      this.$store.state.financeIncome.ziYingUseRecords.foShiId = item.foShiId;
     },
   },
 };

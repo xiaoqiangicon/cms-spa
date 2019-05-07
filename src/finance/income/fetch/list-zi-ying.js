@@ -7,23 +7,18 @@ const requestKeys = {
 };
 
 const responseRefactor = {
-  totalCount: 'data.count',
+  totalCount: 'data.cnt',
   data: 'data.list',
   _data: [
     {
       id: 'templeId',
-      key: 'commodityId',
       foShiId: 'commodityId',
       foShiName: 'commodityName',
-      serviceCharge: 'rate',
-      takeEffectTime: 'startTime',
-      lastEditTime: 'updateTime',
-      lastEditUser: 'managerName',
+      amount: 'price', // 订单总额
+      corporationProfitRate: 'dividedPricePercentage', // 企业分成
+      profitAmount: 'earningsPrice', // 当前盈收
+      manualAmount: 'expenditurePrice', // 人工记录
       ended: 'isEnd',
-      confirmed: 'isFinish',
-      promoteRate: 'promotionPercentage',
-      promoteAmount: 'promotionMoney',
-      serviceRate: 'serviceMoney',
     },
   ],
 };
@@ -31,14 +26,20 @@ const responseRefactor = {
 /* eslint-disable no-param-reassign */
 const preHandle = req => {
   req.pageSize = 10;
-  if (req.isFinish === 2) req.isFinish = 0;
 };
 
 /* eslint-disable no-param-reassign */
 const postHandle = res => {
   if (res.data && res.data.length) {
     res.data.forEach(item => {
-      item.serviceCharge = parseFloat((item.serviceCharge * 100).toFixed(1)); // 最小 0.1
+      item.transformAmount = 0;
+      item.usedAmount = item.manualAmount;
+      item.remainAmount = parseFloat(
+        (
+          (item.amount * item.corporationProfitRate) / 100 -
+          item.usedAmount
+        ).toFixed(2)
+      );
     });
   }
 };
