@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign, prefer-destructuring */
 import seeFetch from 'see-fetch';
+import { readableTime } from '@zzh/n-util';
 
 const req = {
   page: 'pageNum',
@@ -8,32 +9,17 @@ const req = {
 const pre = params => ({
   ...params,
   pageNum: params.pageNum - 1,
-  type: -1,
-  pageSize: 10,
 });
 
-const refactor = {
-  totalCount: 'data.count',
-  data: 'data.list',
-  _data: [
-    {
-      title: 'name',
-      exchangePrice: 'coin',
-      exchangeCount: 'exchangeNum',
-      remainCount: 'stock',
-      priority: 'sort',
-    },
-  ],
-};
+const refactor = {};
 
 const post = res => {
-  if (res.data)
-    res.data.forEach(item => {
-      item.cover = item.pic.split(',')[0];
-    });
+  res.data.list.forEach(item => {
+    item.timeStr = readableTime(item.time);
+  });
 };
 
-seeFetch.config('ling/index/list', {
+seeFetch.config('qu/article/list', {
   method: ['post'],
   stringify: [!0],
   url: [
