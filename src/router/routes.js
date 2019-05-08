@@ -81,6 +81,12 @@ const routes = [
         name: '订阅文章列表',
         meta: { title: '订阅文章列表', noCache: true },
       },
+      {
+        path: 'manage',
+        component: () => import('../qu/article/App'),
+        name: '订阅文章列表',
+        meta: { title: '订阅文章列表', noCache: true },
+      },
     ],
   },
   {
