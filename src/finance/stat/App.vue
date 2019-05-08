@@ -63,8 +63,12 @@
           <div>结余</div>
           <div class="mg-t-10">{{ totalRemain }}元</div>
           <div class="mg-t-10">
-            <el-button size="small" plain> 可提现{{ canTake }}元 </el-button>
-            <el-button size="small" plain> 不可提现{{ cantTake }}元 </el-button>
+            <el-button class="no-hover" size="small" plain>
+              可提现{{ canTake }}元
+            </el-button>
+            <el-button class="no-hover" size="small" plain>
+              不可提现{{ cantTake }}元
+            </el-button>
           </div>
         </div>
       </div>
@@ -185,7 +189,10 @@ export default {
         this.loading = !1;
         this.list = res.data;
         this.chartData = res.data.map(i => i.income);
-        this.total = this.chartData.reduce((num, i) => i + num);
+        this.total =
+          this.chartData && this.chartData.length
+            ? this.chartData.reduce((num, i) => i + num)
+            : 0;
 
         this.totalIncome = res.totalIncome || 0;
         this.totalTaken = res.totalTaken || 0;
@@ -240,5 +247,10 @@ export default {
 
 .body {
   margin-top: 20px;
+}
+
+.no-hover:hover {
+  color: #606266;
+  border-color: #dcdfe6;
 }
 </style>

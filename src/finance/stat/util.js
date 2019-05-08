@@ -1,7 +1,12 @@
 import { chartColors, months } from '../../util/data';
 
+const defaultChartData = '.'
+  .repeat(12)
+  .split('')
+  .map(() => 0);
+
 export const makeChartTitle = ({ year, total }) =>
-  `${year}年筹集善款  ¥${total}`;
+  `${year}年筹集善款  ¥${total || 0}`;
 
 export const makeChartConfig = ({ chartData, year, total }) => ({
   type: 'line',
@@ -12,7 +17,7 @@ export const makeChartConfig = ({ chartData, year, total }) => ({
         label: '筹集善款',
         backgroundColor: chartColors.green,
         borderColor: chartColors.green,
-        data: chartData,
+        data: chartData && chartData.length ? chartData : defaultChartData,
         fill: false,
       },
     ],

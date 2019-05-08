@@ -168,7 +168,7 @@ export default {
   methods: {
     toNav(sequence) {
       if (sequence === 1) this.$router.push('/finance/stat');
-      else if (sequence === 2) this.$router.push('/finance/special');
+      else if (sequence === 2) this.$router.push('/finance/summary');
       else if (sequence === 3) this.$router.push('/finance/special');
     },
     fetchList() {
