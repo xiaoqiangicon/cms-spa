@@ -84,6 +84,28 @@ const routes = [
     ],
   },
   {
+    path: '/promo',
+    component: Layout,
+    controlMark: 'pw_promo',
+    redirect: '/promo/index',
+    name: '运营事件',
+    meta: { title: '运营事件', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        path: 'index',
+        component: () => import('../promo/index/App'),
+        name: '事件管理',
+        meta: { title: '事件管理', noCache: true },
+      },
+      {
+        path: 'statistics',
+        component: () => import('../promo/statistics/App'),
+        name: '事件统计',
+        meta: { title: '事件统计', noCache: true },
+      },
+    ],
+  },
+  {
     path: '/temple',
     component: Layout,
     controlMark: 'pw_temple',
