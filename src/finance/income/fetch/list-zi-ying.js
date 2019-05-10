@@ -1,9 +1,7 @@
 import seeFetch from 'see-fetch';
 
 const requestKeys = {
-  page: 'pageNumber',
-  search: 'commodityId',
-  status: 'isFinish',
+  page: 'pageNum',
 };
 
 const responseRefactor = {
@@ -25,6 +23,7 @@ const responseRefactor = {
 
 /* eslint-disable no-param-reassign */
 const preHandle = req => {
+  req.pageNum -= 1;
   req.pageSize = 10;
 };
 
@@ -48,7 +47,7 @@ seeFetch.config('finance/income/listZiYing', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/earningsStatistics/getCommodityList',
+    '/earningsStatistics/getZizaihomeCommodityList',
     '/finance/income/mock/listZiYing1',
     '/finance/income/mock/listZiYing',
   ],
