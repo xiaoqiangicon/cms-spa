@@ -39,7 +39,7 @@
           <template slot="header" slot-scope="item">
             {{ item.column.label }}
             <el-tooltip
-              content="分成给公司的比例，按单笔计算。若修改后则从当天最新的一笔订单计算。"
+              content="分成给公司的比例，按当天的计算生效。若修改比例后则当天所有的订单都会在24:00调整变更。"
               placement="top"
             >
               <i class="el-icon-question question" />
@@ -50,9 +50,9 @@
         <el-table-column label="已支出">
           <template slot-scope="item">
             {{ item.row.usedAmount }}<br />
-            <span class="f-s-12">人工记录：{{ item.row.manualAmount }}</span
-            ><br />
-            <span class="f-s-12">转单系统：{{ item.row.transformAmount }}</span>
+            <span class="f-s-12">人工记录：{{ item.row.manualAmount }}</span>
+            <!--<br />-->
+            <!--<span class="f-s-12">转单系统：{{ item.row.transformAmount }}</span>-->
           </template>
         </el-table-column>
         <el-table-column prop="remainAmount" label="剩余金额" />

@@ -143,7 +143,7 @@
           style="width: 200px;"
           @change="doSearch"
         />
-        <div v-show="[1, 4, 8, 11].indexOf(filterType) > -1" class="fl-right">
+        <div v-show="[1, 4, 11].indexOf(filterType) > -1" class="fl-right">
           <el-button
             size="small"
             plain
@@ -242,16 +242,8 @@
           <el-table-column prop="profit" label="盈收金额（元）" />
         </el-table>
       </div>
-      <!-- 文章打赏 + 项目维度 -->
-      <div v-else-if="filterType === 8 && filterDimension === 2" class="body">
-        <el-table v-loading="loading" :data="list" style="width: 100%">
-          <el-table-column prop="foShiName" label="名称" />
-          <el-table-column prop="templeName" label="寺院名称" />
-          <el-table-column prop="profit" label="盈收金额（元）" />
-        </el-table>
-      </div>
-      <!-- 文章打赏 + 寺院维度 -->
-      <div v-else-if="filterType === 8 && filterDimension === 1" class="body">
+      <!-- 文章打赏 -->
+      <div v-else-if="filterType === 8" class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
           <el-table-column prop="templeName" label="寺院名称" />
           <el-table-column prop="profit" label="盈收金额（元）" />
@@ -439,7 +431,7 @@ export default {
 
       seeFetch('finance/income-stat/list', {
         type: this.filterType,
-        dimension: this.filterDimension,
+        dimension: this.filterType === 8 ? 1 : this.filterDimension,
         startDate: this.filterStartDate,
         endDate: this.filterEndDate,
       }).then(res => {
