@@ -103,6 +103,20 @@ const routes = [
         name: '事件统计',
         meta: { title: '事件统计', noCache: true },
       },
+      {
+        path: 'transferSet/:id',
+        component: () => import('../promo/transfer_set/App'),
+        name: '转单系统/转单设置',
+        meta: { title: '转单系统/转单设置', noCache: true },
+        hidden: !0,
+      },
+      {
+        path: 'mergeSet/:id',
+        component: () => import('../promo/merge_set/App'),
+        name: '转单系统/组合设置',
+        meta: { title: '转单系统/组合设置', noCache: true },
+        hidden: !0,
+      },
     ],
   },
   {

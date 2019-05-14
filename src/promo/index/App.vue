@@ -7,7 +7,7 @@
       <el-tab-pane label="推广佛事">
         <Buddhist />
       </el-tab-pane>
-      <el-tab-pane label="分享激励">
+      <el-tab-pane label="分享福币">
         <Fu />
       </el-tab-pane>
     </el-tabs>
