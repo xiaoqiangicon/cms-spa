@@ -1,3 +1,4 @@
+import { now } from '@zzh/n-util';
 import { chartColors, months } from '../../util/data';
 
 const defaultChartData = '.'
@@ -65,3 +66,17 @@ export const makeChartConfig = ({ chartData, year, total }) => ({
     },
   },
 });
+
+export const makeChartData = (items, year) => {
+  if (!items || !items.length) return [];
+
+  const result = items.map(i => i.income);
+
+  const fillLength = 12 - result.length;
+
+  // 今年的数据或者满12个月
+  if (!fillLength || now.year === year) return result;
+
+  // 去年及以前的可能会缺数据
+  return [...new Array(fillLength).fill(0), ...result];
+};

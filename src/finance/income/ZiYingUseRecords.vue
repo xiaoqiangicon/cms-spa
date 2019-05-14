@@ -100,7 +100,7 @@ export default {
           return;
         }
 
-        this.totalCount = res.totalCount;
+        if (this.currentPage === 1) this.totalCount = res.totalCount;
         this.list = res.data;
 
         window.scrollTo(0, 0);

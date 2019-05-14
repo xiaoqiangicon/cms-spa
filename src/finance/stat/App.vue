@@ -44,7 +44,7 @@
         />
       </el-select>
     </div>
-    <el-card class="mg-t-20">
+    <el-card v-loading="loading" class="mg-t-20">
       <div class="dp-flex t-a-center">
         <div class="fx-1">
           <div>累计善款 （每日0点更新）</div>
@@ -64,16 +64,16 @@
           <div class="mg-t-10">{{ totalRemain }}元</div>
           <div class="mg-t-10">
             <el-button class="no-hover" size="small" plain>
-              可提现{{ canTake }}元
+              可提现 {{ canTake }}元
             </el-button>
             <el-button class="no-hover" size="small" plain>
-              不可提现{{ cantTake }}元
+              不可提现 {{ cantTake }}元
             </el-button>
           </div>
         </div>
       </div>
     </el-card>
-    <el-card class="mg-t-20">
+    <el-card v-loading="loading" class="mg-t-20">
       <canvas ref="chart" />
     </el-card>
     <el-card class="mg-t-20">
@@ -106,7 +106,7 @@ import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
 import { now, fillZero } from '@zzh/n-util';
 import Chart from 'chart.js';
-import { makeChartConfig, makeChartTitle } from './util';
+import { makeChartConfig, makeChartTitle, makeChartData } from './util';
 import './fetch';
 
 let chart;
@@ -188,7 +188,7 @@ export default {
 
         this.loading = !1;
         this.list = res.data;
-        this.chartData = res.data.map(i => i.income);
+        this.chartData = makeChartData(res.data);
         this.total =
           this.chartData && this.chartData.length
             ? this.chartData.reduce((num, i) => i + num)

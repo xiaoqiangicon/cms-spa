@@ -78,7 +78,7 @@
           filterable
           placeholder="请选择"
           size="small"
-          @change="filterTempleChange"
+          @change="toSearch"
         >
           <el-option label="汇总" :value="0" />
           <el-option
@@ -250,7 +250,7 @@ export default {
           return;
         }
 
-        this.totalCount = res.totalCount;
+        if (this.currentPage === 1) this.totalCount = res.totalCount;
         this.list = res.data;
 
         window.scrollTo(0, 0);
@@ -274,12 +274,6 @@ export default {
       if (this.filterReceipt === value) return;
 
       this.filterReceipt = value;
-      this.toSearch();
-    },
-    filterTempleChange(value) {
-      if (this.filterTemple === value) return;
-
-      this.filterTemple = value;
       this.toSearch();
     },
     changeGotReceipt(value, { row: item }) {
