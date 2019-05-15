@@ -431,7 +431,7 @@ export default {
 
       seeFetch('finance/income-stat/list', {
         type: this.filterType,
-        dimension: this.filterType === 8 ? 1 : this.filterDimension,
+        dimension: this.filterDimension,
         startDate: this.filterStartDate,
         endDate: this.filterEndDate,
       }).then(res => {

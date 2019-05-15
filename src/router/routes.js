@@ -68,22 +68,6 @@ const routes = [
     ],
   },
   {
-    path: '/qu',
-    component: Layout,
-    controlMark: 'pw_qutoutiao',
-    redirect: '/qu/article',
-    name: '趣头条管理',
-    meta: { title: '趣头条管理', icon: 'fa-circle', noCache: true },
-    children: [
-      {
-        path: 'article',
-        component: () => import('../qu/article/App'),
-        name: '订阅文章列表',
-        meta: { title: '订阅文章列表', noCache: true },
-      },
-    ],
-  },
-  {
     path: '/temple',
     component: Layout,
     controlMark: 'pw_temple',
@@ -193,6 +177,22 @@ const routes = [
         component: () => import('../finance/trade-stat/App'),
         meta: { title: '交易统计', noCache: true },
         controlMark: 'pw_cash_jing',
+      },
+    ],
+  },
+  {
+    path: '/qu',
+    component: Layout,
+    controlMark: 'pw_qu',
+    redirect: '/qu/article',
+    name: '趣头条管理',
+    meta: { title: '趣头条管理', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        path: 'article',
+        component: () => import('../qu/article/App'),
+        name: '订阅文章列表',
+        meta: { title: '订阅文章列表', noCache: true },
       },
     ],
   },

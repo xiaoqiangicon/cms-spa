@@ -43,7 +43,7 @@
           <div class="head">
             <div class="unit unit-head">
               <div class="unit-inner">
-                <div v-if="displayType === 1" class="cell cell-name">
+                <div v-if="showType === 1" class="cell cell-name">
                   {{ dateItem.year }}年{{ dateItem.month }}月项目
                 </div>
                 <div v-else class="cell cell-name">
@@ -229,7 +229,7 @@ export default {
     return {
       loading: !0,
       // 展示类型 || 1：按时间展示，2：按项目展示
-      displayType: 1,
+      showType: 1,
       dateItems: [],
       // 总金额
       totalAmount: 0,
@@ -275,8 +275,6 @@ export default {
       answer: '',
       // 当前id
       id: 0,
-      // 展示类型||1：按时间，2：按项目
-      showType: 1,
     };
   },
   created() {

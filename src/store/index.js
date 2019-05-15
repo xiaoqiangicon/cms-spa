@@ -22,6 +22,9 @@ import financeIncome from '../finance/income/state';
 import financeRecord from '../finance/record/state';
 import financeRemark from '../finance/remark/state';
 
+// 趣头条
+import quArticle from '../qu/article/state';
+
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -45,6 +48,9 @@ const store = new Vuex.Store({
     financeIncome,
     financeRecord,
     financeRemark,
+
+    // 趣头条
+    quArticle,
   },
   getters,
 });

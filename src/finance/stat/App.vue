@@ -188,7 +188,7 @@ export default {
 
         this.loading = !1;
         this.list = res.data;
-        this.chartData = makeChartData(res.data);
+        this.chartData = makeChartData(res.data, this.filterYear);
         this.total =
           this.chartData && this.chartData.length
             ? this.chartData.reduce((num, i) => i + num)

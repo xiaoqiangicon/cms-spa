@@ -22,7 +22,8 @@ const responseRefactor = {
 };
 
 const preHandle = req => {
-  if (req.type === 2 || req.type === 3 || req.type === 7) req.sumType = 1;
+  if (req.type === 2 || req.type === 3 || req.type === 7 || req.type === 8)
+    req.sumType = 1;
 };
 
 /* eslint-disable no-param-reassign */
@@ -59,8 +60,7 @@ const postHandle = res => {
         .toFixed(2),
       orderCount: res.data
         .map(item => item.orderCount)
-        .reduce((sum, value) => sum + value)
-        .toFixed(2),
+        .reduce((sum, value) => sum + value),
       faShiProfit: res.data
         .map(item => item.faShiProfit)
         .reduce((sum, value) => sum + value)
