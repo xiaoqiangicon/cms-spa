@@ -194,6 +194,12 @@ const routes = [
         name: '订阅文章列表',
         meta: { title: '订阅文章列表', noCache: true },
       },
+      {
+        path: 'material',
+        component: () => import('../qu/material/App'),
+        name: '素材库',
+        meta: { title: '素材库', noCache: true },
+      },
     ],
   },
 ];
