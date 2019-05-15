@@ -88,6 +88,7 @@
     "@zzh/ueditor": "^0.3.0",
     "@zzh/upload": "git+http://git.zizaihome.cn/senntyou/upload.git#5fa55966",
     "@zzh/util": "^0.3.0",
+    "clone": "^2.1.2",
     "colors.css": "^3.0.0",
     "element-ui": "^2.4.11",
     "jquery": "^3.3.1",
