@@ -200,6 +200,12 @@ const routes = [
         name: '素材库',
         meta: { title: '素材库', noCache: true },
       },
+      {
+        path: 'source',
+        component: () => import('../qu/source/App'),
+        name: '订阅源管理',
+        meta: { title: '订阅源管理', noCache: true },
+      },
     ],
   },
 ];

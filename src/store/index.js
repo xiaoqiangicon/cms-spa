@@ -25,6 +25,7 @@ import financeRemark from '../finance/remark/state';
 // 趣头条
 import quArticle from '../qu/article/state';
 import quMaterial from '../qu/material/state';
+import quSource from '../qu/source/state';
 
 Vue.use(Vuex);
 
@@ -53,6 +54,7 @@ const store = new Vuex.Store({
     // 趣头条
     quArticle,
     quMaterial,
+    quSource,
   },
   getters,
 });
