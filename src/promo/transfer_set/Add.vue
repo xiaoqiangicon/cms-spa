@@ -18,6 +18,7 @@
 
 <script>
 import seeFetch from 'see-fetch';
+import { Notification } from 'element-ui';
 import './fetch/index';
 
 export default {
@@ -42,8 +43,13 @@ export default {
     save() {
       const { templeId } = this;
       if (!templeId) {
+        Notification({
+          type: 'error',
+          title: '提示',
+          message: '请选择寺院',
+        });
+        return;
       }
-
 
       this.$emit('save', templeId);
       this.$emit('updateVisible', false);

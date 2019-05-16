@@ -41,14 +41,28 @@
       </div>
       <el-card class="main">
         <el-table
-          ref="multipleTable"
+          ref="table"
           :data="tableData"
           tooltip-effect="dark"
           style="width: 100%"
           @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" width="55" :selectable="tableSelectable"></el-table-column>
-          <el-table-column prop="name" label="选择项名称" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="name" label="选择项名称" show-overflow-tooltip>
+            <template slot-scope="scope">
+              <el-tag v-if="scope.row.isZizaijiaCommodity" size="mini">自营</el-tag>
+              <el-tooltip
+                v-if="scope.row.isZizaijiaCommodity && scope.row.isOrder"
+                class="item"
+                effect="dark"
+                content="佛事被标记为自营佛事且已存在历史订单，不可勾选和修改"
+                placement="top-start"
+              >
+                <i class="el-icon-info" style="color: #FAAD14;"></i>
+              </el-tooltip>
+              {{ scope.row.name }}
+            </template>
+          </el-table-column>
           <el-table-column prop="price" label="价格（元）">
             <template
               slot-scope="scope"
@@ -109,6 +123,7 @@ import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
 import './fetch/index';
 import Add from './Add';
+import { setTimeout } from 'timers';
 
 export default {
   name: 'App',
@@ -154,6 +169,7 @@ export default {
         if (transferTempleList.length) {
           this.templeId = transferTempleList[0].id;
           this.tableData = transferTempleList[0].subList;
+          this.updateTableSelected();
         }
       });
     },
@@ -191,7 +207,11 @@ export default {
       );
     },
     tableSelectable(row) {
-      return row.price > 0;
+      if(row.price <= 0) return false;
+
+      if(row.isZizaijiaCommodity && row.isOrder) return false;
+
+      return true;
     },
     // 将服务器数据转化为表格数据
     // 本地 subList {id, name, conversionSubdivide, isConversion, isOrder, isZizaijiaCommodity, price}
@@ -202,13 +222,18 @@ export default {
       res.subList = clone(subList);
 
       res.subList.forEach(sub => {
-        if (item.subList.find(itemSub => itemSub.id === sub.id)) {
-          // 赋值服务器字段
-          const { transferPrice, transferRate, fuBiRate } = itemSub;
+        const findSub = item.subList.find(itemSub => itemSub.id === sub.id);
+        if (findSub) {
+          sub.selected = true;
+
+          // 赋值服务器字段 并设置为选中状态
+          const { transferPrice, transferRate, fuBiRate } = findSub;
           sub.transferPrice = transferPrice;
           sub.transferRate = transferRate;
           sub.fuBiRate = fuBiRate;
         } else {
+          sub.selected = false;
+
           // 补全字段
           sub.transferPrice = 0;
           sub.transferRate = 0;
@@ -222,43 +247,52 @@ export default {
     // 本地 subList {id, name, price, transferPrice, transferRate, fuBiRate}
     // 服务器 subList {id, transferPrice, transferRate}
     createSubmitData() {
-      const {buddhistId, transferTempleList} = this;
+      const { buddhistId, transferTempleList } = this;
       let params = { buddhistId };
 
       params.transferTempleList = clone(transferTempleList);
       params.transferTempleList = params.transferTempleList.map(item => {
-        let res = {id: item.id, subList: []};
+        let res = { id: item.id, subList: [] };
 
         item.subList.forEach(sub => {
-          if(sub.selected && sub.price > 0) {
+          if (sub.selected && sub.price > 0) {
             res.subList.push({
               transferPrice: sub.transferPrice,
               transferRate: sub.transferRate,
-            })
+            });
           }
-        })
+        });
 
         return res;
-      })
+      });
 
       return params;
     },
-
+    updateTableSelected() {
+      this.tableData.forEach(item => {
+        if (item.selected) {
+          setTimeout(() => {
+            this.$refs.table.toggleRowSelection(item, true);
+          });
+        }
+      });
+    },
     updateDialogVisible(val) {
       this.addDialogVisible = val;
     },
     handleSelectionChange(selectedAry) {
-      console.log(selectedAry);
-      const {templeId} = this;
+      const { templeId } = this;
 
-      const index = this.transferTempleList.findIndex(item => item.id === templeId);
+      const index = this.transferTempleList.findIndex(
+        item => item.id === templeId
+      );
       this.transferTempleList[index].subList.forEach(sub => {
-        if(selectedAry.find(item => item.id === sub.id)) {
+        if (selectedAry.find(item => item.id === sub.id)) {
           sub.selected = true;
         } else {
           sub.selected = false;
         }
-      })
+      });
     },
     save() {
       const params = this.createSubmitData();
@@ -286,6 +320,7 @@ export default {
       this.tableData = this.transferTempleList.find(
         item => item.id === id
       ).subList;
+      this.updateTableSelected();
     },
     addTemple(id) {
       if (this.transferTempleList.find(item => item.id === id)) {
@@ -300,11 +335,11 @@ export default {
       } else {
         const index = this.templeList.findIndex(item => item.id === id);
         const { name } = this.templeList[index];
-
         const tableData = this.createTableData({ id, name, subList: [] });
         this.transferTempleList.push(tableData);
         this.templeId = id;
         this.tableData = tableData.subList;
+        this.updateTableSelected();
       }
     },
     delTemple(id) {

@@ -13,9 +13,11 @@ const refactor = {
       _subList: [
         {
           id: 'subdivideId',
+          name: 'subdivideName',
           buddhistId: 'commodityId',
           transferPrice: 'price',
-          transferPercent: 'percent',
+          transferRate: 'percent',
+          // fuBiRate: 'fuBiRate',
         }
       ]
     },
