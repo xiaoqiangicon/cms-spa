@@ -2,20 +2,24 @@
   <div class="container">
     <el-card>
       <div class="clearfix">
+        <span class="l-hg-32"> 搜索 </span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <el-input
+          v-model="search"
+          placeholder="请输入关键字搜索"
+          size="small"
+          style="width: 250px"
+        >
+          <el-button slot="append" icon="el-icon-search" @click="doSearch" />
+        </el-input>
         <el-button class="fl-right" size="small" @click="toAdd">
           添加
         </el-button>
       </div>
       <div class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
-          <el-table-column prop="item" label="公众号名称">
-            <template slot-scope="item">
-              <img :src="item.row.avatar" class="wd-50 bd-rd-50-pc" />
-              <span>{{ item.row.name }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column prop="name" label="公众号名称" />
           <el-table-column prop="account" label="微信号" />
-          <el-table-column prop="count" label="文章数" />
+          <el-table-column v-if="!1" prop="count" label="文章数" />
           <el-table-column label="操作">
             <template slot-scope="item">
               <el-button
@@ -60,6 +64,7 @@ export default {
   },
   data() {
     return {
+      search: '',
       loading: !0,
       currentPage: 1,
       totalCount: 0,
@@ -74,6 +79,7 @@ export default {
       this.loading = !0;
 
       seeFetch('qu/source/list', {
+        search: this.search,
         page: this.currentPage,
       }).then(res => {
         if (!res.success) {

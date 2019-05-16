@@ -15,13 +15,24 @@ const pre = params => ({
 const refactor = {
   totalCount: 'data.count',
   data: 'data.list',
-  _data: [{}],
+  _data: [
+    {
+      wxAccount: 'accounts',
+      wxAuthor: 'author',
+      content: 'articleHtml',
+      addedToLibrary: 'isUse',
+      publishTime: 'printTime',
+      pullTime: 'pullTime',
+    },
+  ],
 };
 
 const post = res => {
   if (res.data)
     res.data.forEach(item => {
       item.shortContent = item.content ? item.content.slice(0, 40) : '';
+
+      if (item.articleImg) item.cover = item.articleImg.split(',')[0];
     });
 };
 

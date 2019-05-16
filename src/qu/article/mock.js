@@ -20,6 +20,14 @@ export const list1 = {
     count: 99,
     list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
       id,
+      title: `title ${id}`,
+      accounts: `wxAccount ${id}`,
+      author: `wxAuthor ${id}`,
+      articleImg: `/images/chan-zai-128x128.png,/images/chan-zai-128x128.png`,
+      articleHtml: `content ${id}`,
+      isUse: id % 2,
+      printTime: '2019-01-01 01:01:01',
+      pullTime: '2019-01-01 01:01:01',
     })),
   },
 };

@@ -38,8 +38,21 @@
           <el-table-column prop="createdAt" label="创建时间" />
           <el-table-column label="操作">
             <template slot-scope="item">
-              <el-button type="text" size="small" @click="toEdit(item)">
+              <el-button
+                v-if="item.row.canEdit"
+                type="text"
+                size="small"
+                @click="toEdit(item)"
+              >
                 编辑
+              </el-button>
+              <el-button
+                v-if="item.row.status === -1"
+                type="text"
+                size="small"
+                @click="toRestore(item)"
+              >
+                恢复
               </el-button>
               <el-button type="text" size="small" @click="toDelete(item)">
                 删除
@@ -180,6 +193,32 @@ export default {
           Notification({
             title: '提示',
             message: '删除成功',
+          });
+
+          this.fetchList();
+        });
+      });
+    },
+    toRestore({ row: item }) {
+      this.$confirm('确定恢复吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(() => {
+        seeFetch('qu/material/restore', {
+          id: item.id,
+        }).then(res => {
+          if (!res.success) {
+            Notification({
+              title: '提示',
+              message: res.message,
+            });
+            return;
+          }
+
+          Notification({
+            title: '提示',
+            message: '恢复成功',
           });
 
           this.fetchList();

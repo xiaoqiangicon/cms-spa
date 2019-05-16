@@ -11,7 +11,7 @@
         type="success"
         effect="dark"
       />
-      <div v-if="!1" class="preview mg-t-20">
+      <div class="preview mg-t-20">
         <draggable v-model="jsonContent.content">
           <transition-group>
             <p
@@ -25,6 +25,11 @@
             </p>
           </transition-group>
         </draggable>
+      </div>
+      <div class="row">
+        <el-button size="small" @click="remakeContent">
+          重新加载内容
+        </el-button>
       </div>
       <div class="row">
         <div class="row-name">
@@ -136,7 +141,12 @@ import '@zzh/upload/dist/upload.css';
 import '../../configs/upload';
 import upload from '@zzh/upload';
 import { addProps, regions, publishAccounts } from './data';
-import { makeJsonItem, PARSE_TYPE_TEXT, PARSE_TYPE_IMAGE } from './parse';
+import {
+  makeJsonItem,
+  getJsonContent,
+  PARSE_TYPE_TEXT,
+  PARSE_TYPE_IMAGE,
+} from './parse';
 
 const computedProps = {};
 
@@ -288,6 +298,19 @@ export default {
       );
       this.$store.state.quMaterial.selectImageResult = [];
       this.$store.state.quMaterial.selectImageVisible = !0;
+    },
+    remakeContent() {
+      this.$confirm(
+        '重新加载内容会丢失当前正在编辑的内容，确定继续？',
+        '提示',
+        {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        }
+      ).then(() => {
+        this.jsonContent = getJsonContent(this.content);
+      });
     },
     clickCancel() {
       this.$store.commit(`quMaterial/updateVisible`, !1);

@@ -3,6 +3,7 @@ import seeFetch from 'see-fetch';
 import { publishAccounts, statuses } from '../data';
 
 const req = {
+  search: 'content',
   page: 'pageNum',
 };
 
@@ -15,7 +16,16 @@ const pre = params => ({
 const refactor = {
   totalCount: 'data.count',
   data: 'data.list',
-  _data: [{}],
+  _data: [
+    {
+      covers: 'titleImg',
+      content: 'articleHtml',
+      jsonContent: 'articleJson',
+      publishAccount: 'pushAccount',
+      region: 'area',
+      createdAt: 'addTime',
+    },
+  ],
 };
 
 const post = res => {
@@ -43,7 +53,7 @@ seeFetch.config('qu/material/list', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/wish/wishAdList',
+    '/funtop/getUseList',
     '/qu/material/mock/list1',
     '/qu/material/mock/list',
   ],

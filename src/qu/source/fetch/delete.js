@@ -6,7 +6,7 @@ seeFetch.config('qu/source/delete', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/wish/addOrUpdateWishAd',
+    '/funtop/addOrUpdateGzh',
     '/qu/source/mock/del1',
     '/qu/source/mock/del',
   ],

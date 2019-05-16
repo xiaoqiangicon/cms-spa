@@ -14,9 +14,9 @@ export const addProps = [
 ];
 
 export const statuses = [
-  { id: 1, name: '草稿' },
-  { id: 2, name: '已发布' },
-  { id: 3, name: '回收站' },
+  { id: 0, name: '草稿' },
+  { id: 1, name: '已发布' },
+  { id: -1, name: '回收站' },
 ];
 
 export const publishAccounts = [

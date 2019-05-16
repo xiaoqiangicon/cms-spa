@@ -3,7 +3,6 @@ export const list = {
   totalCount: 99,
   data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
     id,
-    avatar: `/images/chan-zai-128x128.png`,
     name: `name ${id}`,
     account: `account ${id}`,
     count: id * 10,
@@ -16,6 +15,8 @@ export const list1 = {
     count: 99,
     list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
       id,
+      name: `name ${id}`,
+      wxid: `account ${id}`,
     })),
   },
 };
