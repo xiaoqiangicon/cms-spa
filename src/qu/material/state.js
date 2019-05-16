@@ -23,7 +23,11 @@ export default {
     add: addState,
     action: '',
     actionVisible: !1,
-    selectAction: 1,
+    actionSelected: 1,
+    imagesToSelect: [],
+    selectImageVisible: !1,
+    selectImageResult: [],
+    imagesSelected: 1,
   },
   mutations: {
     ...addMutations,

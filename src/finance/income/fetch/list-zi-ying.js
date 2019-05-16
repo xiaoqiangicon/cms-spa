@@ -35,6 +35,7 @@ const postHandle = res => {
       item.usedAmount = item.manualAmount;
       item.remainAmount = parseFloat(
         (
+          item.amount -
           (item.amount * item.corporationProfitRate) / 100 -
           item.usedAmount
         ).toFixed(2)

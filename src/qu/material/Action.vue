@@ -63,7 +63,7 @@ export default {
     },
     go(action) {
       this.$store.state.quMaterial.action = action;
-      this.$store.state.quMaterial.selectAction += 1;
+      this.$store.state.quMaterial.actionSelected += 1;
       this.$store.state.quMaterial.actionVisible = !1;
     },
   },

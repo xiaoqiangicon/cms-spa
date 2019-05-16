@@ -33,6 +33,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="shortContent" label="内容" />
+          <el-table-column prop="publishAccountText" label="帐号" />
           <el-table-column prop="statusText" label="状态" />
           <el-table-column prop="createdAt" label="创建时间" />
           <el-table-column label="操作">
@@ -58,15 +59,18 @@
     </el-card>
     <Add :ok="fetchList" />
     <Action />
+    <SelectImage />
   </div>
 </template>
 
 <script>
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
+import { getDate } from '@zzh/n-util';
 import { addProps } from './data';
 import Add from './Add';
 import Action from './Action';
+import SelectImage from './SelectImage';
 import { getJsonContent } from './parse';
 import './fetch';
 
@@ -75,6 +79,7 @@ export default {
   components: {
     Add,
     Action,
+    SelectImage,
   },
   data() {
     return {
@@ -145,6 +150,15 @@ export default {
         item.content,
         item.jsonContent
       );
+      this.$store.state.quMaterial.add.region = item.region || '';
+      this.$store.state.quMaterial.add.publishAccount =
+        item.publishAccount || 1;
+      this.$store.state.quMaterial.add.covers = item.covers
+        ? item.covers.split(',')
+        : [];
+      const date = getDate(new Date(new Date().getTime() + 2 * 60 * 60 * 1000));
+      this.$store.state.quMaterial.add.publishTime =
+        item.publishTime || date.dateTime;
     },
     toDelete(item) {
       this.$confirm('确定删除吗？', '提示', {

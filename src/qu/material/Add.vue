@@ -3,7 +3,7 @@
     :visible="visible"
     :title="dialogTitle"
     :before-close="clickCancel"
-    width="500px"
+    width="700px"
   >
     <div class="content">
       <el-alert
@@ -11,7 +11,7 @@
         type="success"
         effect="dark"
       />
-      <div class="preview mg-t-20">
+      <div v-if="!1" class="preview mg-t-20">
         <draggable v-model="jsonContent.content">
           <transition-group>
             <p
@@ -26,13 +26,103 @@
           </transition-group>
         </draggable>
       </div>
+      <div class="row">
+        <div class="row-name">
+          封面图片：
+        </div>
+        <div class="mg-b-10">
+          <div
+            v-for="(image, index) in covers"
+            :key="image"
+            class="image"
+            @click="delImage(index)"
+          >
+            <img :src="image" class="image-img" />
+            <button class="clean image-close">
+              X
+            </button>
+          </div>
+        </div>
+        <div>
+          <el-button size="small" @click="selectImages">
+            选取内容的图片
+          </el-button>
+          <el-button size="small" class="mg-l-10 ps-relative">
+            上传图片
+            <div ref="upload" />
+          </el-button>
+        </div>
+        <p class="mg-t-10">
+          最多3张，超过3张将只取前3张
+        </p>
+      </div>
+      <div class="row">
+        <div class="row-name">
+          发布账户：
+        </div>
+        <el-select
+          v-model="publishAccount"
+          placeholder="请选择"
+          size="small"
+          style="width: 100%"
+        >
+          <el-option
+            v-for="item in publishAccounts"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
+        <p class="mg-t-10">
+          发布后不可修改，请谨慎选择
+        </p>
+      </div>
+      <div class="row">
+        <div class="row-name">
+          地域：
+        </div>
+        <el-select
+          v-model="region"
+          placeholder="请选择"
+          size="small"
+          style="width: 100%"
+        >
+          <el-option label="请选择" value="" />
+          <el-option v-for="r in regions" :key="r" :label="r" :value="r" />
+        </el-select>
+        <p class="mg-t-10">
+          如稿件讲述的是某地域的事件，请添加该地域的标签
+        </p>
+      </div>
+      <div class="row">
+        <div class="row-name">
+          发布时间：
+        </div>
+        <el-date-picker
+          v-model="publishTime"
+          align="right"
+          type="datetime"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          size="small"
+          style="width: 200px;"
+        />
+        <p class="mg-t-10">
+          日期时间只可选在未来，并且至少选择2小时后
+        </p>
+        <p class="mg-t-10">
+          发布后不可修改，请谨慎选择
+        </p>
+      </div>
     </div>
-    <span slot="footer" class="dialog-footer">
+    <span slot="footer" v-loading="saving" class="dialog-footer">
       <el-button @click="clickCancel">
         取 消
       </el-button>
-      <el-button v-loading="saving" type="primary" @click="clickOk">
-        确 定
+      <el-button type="primary" @click="clickOk(1)">
+        保存
+      </el-button>
+      <el-button type="primary" @click="clickOk(2)">
+        发布
       </el-button>
     </span>
   </el-dialog>
@@ -42,7 +132,10 @@
 import { Notification } from 'element-ui';
 import Draggable from 'vuedraggable';
 import seeFetch from 'see-fetch';
-import { addProps } from './data';
+import '@zzh/upload/dist/upload.css';
+import '../../configs/upload';
+import upload from '@zzh/upload';
+import { addProps, regions, publishAccounts } from './data';
 import { makeJsonItem, PARSE_TYPE_TEXT, PARSE_TYPE_IMAGE } from './parse';
 
 const computedProps = {};
@@ -67,16 +160,18 @@ addProps.forEach(({ name, full }) => {
   }
 });
 
-['action', 'selectAction'].forEach(name => {
-  computedProps[name] = {
-    get() {
-      return this.$store.state.quMaterial[name];
-    },
-    set(value) {
-      this.$store.state.quMaterial[name] = value;
-    },
-  };
-});
+['action', 'actionSelected', 'selectImageResult', 'imagesSelected'].forEach(
+  name => {
+    computedProps[name] = {
+      get() {
+        return this.$store.state.quMaterial[name];
+      },
+      set(value) {
+        this.$store.state.quMaterial[name] = value;
+      },
+    };
+  }
+);
 
 export default {
   name: 'Add',
@@ -94,13 +189,16 @@ export default {
     return {
       saving: !1,
       handleIndex: -1,
+      regions,
+      initUpload: !1,
+      publishAccounts,
     };
   },
   computed: {
     ...computedProps,
   },
   watch: {
-    selectAction() {
+    actionSelected() {
       if (this.action === 'edit') {
         const item = this.jsonContent.content[this.handleIndex];
 
@@ -142,16 +240,59 @@ export default {
         this.jsonContent.content.splice(index, 0, makeJsonItem(type, value));
       });
     },
+    imagesSelected() {
+      this.covers.push(...this.selectImageResult);
+    },
+  },
+  updated() {
+    if (!this.initUpload) {
+      const { upload: uploadEl } = this.$refs;
+
+      upload(
+        uploadEl,
+        url => {
+          this.covers.push(url);
+        },
+        { multiple: !0 }
+      );
+
+      this.initUpload = !0;
+    }
   },
   methods: {
     showActions(index) {
       this.handleIndex = index;
       this.$store.state.quMaterial.actionVisible = !0;
     },
+    delImage(index) {
+      this.covers.splice(index, 1);
+    },
+    selectImages() {
+      const imageItems = this.jsonContent.content.filter(
+        i => i.type === PARSE_TYPE_IMAGE
+      );
+
+      if (!imageItems.length) {
+        Notification({
+          title: '提示',
+          message: '内容没有图片可供选择',
+        });
+        return;
+      }
+
+      this.$store.state.quMaterial.imagesToSelect = imageItems.map(
+        ({ content }) => ({
+          url: content,
+          selected: !1,
+        })
+      );
+      this.$store.state.quMaterial.selectImageResult = [];
+      this.$store.state.quMaterial.selectImageVisible = !0;
+    },
     clickCancel() {
       this.$store.commit(`quMaterial/updateVisible`, !1);
     },
-    clickOk() {
+    clickOk(sequence) {
       if (this.saving) return;
 
       let error;
@@ -159,27 +300,17 @@ export default {
       // eslint-disable-next-line prefer-destructuring
       this.cover = this.covers[0];
       const {
-        cover,
-        text,
-        startDate,
-        endDate,
-        startHour,
-        endHour,
-        link,
+        title,
+        jsonContent,
+        region,
+        publishAccount,
+        covers,
+        publishTime,
       } = this;
-      const frequency = parseInt(this.frequency, 10);
-      const redirect = parseInt(this.redirect, 10);
-      const shareImageType = parseInt(this.shareImageType, 10);
-      const entryId = parseInt(this.entryId, 10) || 0;
 
-      if (!cover) error = '气泡图片不能为空';
-      else if (!text) error = '气泡文字不能为空';
-      else if (!startDate) error = '生效日期 - 开始日期不能为空';
-      else if (!endDate) error = '生效日期 - 结束日期不能为空';
-      else if (startHour >= endHour)
-        error = '生效时间 - 结束时间需大于开始时间';
-      else if (redirect === 3 && !link) error = 'H5链接不能为空';
-      else if (redirect === 5 && !entryId) error = '许愿入口不能为空';
+      if (!title) error = '标题不能为空';
+      else if (!jsonContent.content.length) error = '内容不能为空';
+      else if (!publishTime && sequence === 2) error = '发布时间不能为空';
 
       if (error) {
         Notification({
@@ -192,61 +323,37 @@ export default {
       this.saving = !0;
 
       const params = {
-        cover,
-        text,
-        frequency,
-        startDate,
-        endDate,
-        startHour,
-        endHour,
-        redirect,
-        link: redirect === 3 ? link : '',
-        shareImageType: redirect === 1 ? shareImageType : 1,
-        entryId: redirect === 5 ? entryId : 0,
+        title,
+        jsonContent: JSON.stringify(jsonContent),
+        region,
+        publishAccount,
+        covers: covers.slice(0, 3).join(','),
       };
 
-      if (this.isUpdate) {
-        params.id = this.updateId;
-        seeFetch('qu/material/update', params).then(res => {
-          this.saving = !1;
-
-          if (!res.success) {
-            Notification({
-              title: '提示',
-              message: res.message,
-            });
-            return;
-          }
-
-          Notification({
-            title: '提示',
-            message: '更新成功',
-          });
-
-          this.$store.commit(`quMaterial/updateVisible`, !1);
-          this.ok();
-        });
-      } else {
-        seeFetch('qu/material/add', params).then(res => {
-          this.saving = !1;
-
-          if (!res.success) {
-            Notification({
-              title: '提示',
-              message: res.message,
-            });
-            return;
-          }
-
-          Notification({
-            title: '提示',
-            message: '添加成功',
-          });
-
-          this.$store.commit(`quMaterial/updateVisible`, !1);
-          this.ok();
-        });
+      if (sequence === 2) {
+        params.publishTime = publishTime;
+        params.publish = 1;
       }
+
+      seeFetch('qu/material/update', params).then(res => {
+        this.saving = !1;
+
+        if (!res.success) {
+          Notification({
+            title: '提示',
+            message: res.message,
+          });
+          return;
+        }
+
+        Notification({
+          title: '提示',
+          message: '操作成功',
+        });
+
+        this.$store.commit(`quMaterial/updateVisible`, !1);
+        this.ok();
+      });
     },
   },
 };
@@ -281,6 +388,7 @@ export default {
   border-radius: 5px;
   border: 1px solid #eee;
   padding: 20px;
+  margin: 0 auto;
 
   img {
     width: 100%;
@@ -295,5 +403,33 @@ export default {
     border-radius: 5px;
     background-color: #eee;
   }
+}
+
+.image {
+  position: relative;
+  display: inline-block;
+  height: 100px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.image-img {
+  height: 100%;
+}
+
+.image-close {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  font-size: 18px;
+  display: none;
+}
+
+.image:hover .image-close {
+  display: block;
 }
 </style>

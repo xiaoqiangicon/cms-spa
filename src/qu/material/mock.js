@@ -7,8 +7,11 @@ export const list = {
     id,
     title: `title ${id}`,
     cover: `/images/chan-zai-128x128.png`,
+    covers: `/sample/image1.jpg,/sample/image2.jpg`,
     content: richText,
     status: (id % 3) + 1,
+    publishAccount: (id % 3) + 1,
+    region: '全国',
     createdAt: '2019-01-01 01:01:01',
   })),
 };

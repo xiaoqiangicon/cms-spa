@@ -31,7 +31,17 @@
             <span>{{ item.row.foShiName }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="amount" label="订单总额" />
+        <el-table-column prop="amount" label="自营总额">
+          <template slot="header" slot-scope="item">
+            {{ item.column.label }}
+            <el-tooltip
+              content="若有订单或选择项被标记为转单则不计算到自营总额中"
+              placement="top"
+            >
+              <i class="el-icon-question question" />
+            </el-tooltip>
+          </template>
+        </el-table-column>
         <el-table-column label="企业分成">
           <template slot-scope="item">
             {{ item.row.corporationProfitRate }}%
@@ -46,16 +56,46 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="profitAmount" label="当前盈收" />
+        <el-table-column prop="profitAmount" label="当前盈收">
+          <template slot="header" slot-scope="item">
+            {{ item.column.label }}
+            <el-tooltip
+              content="当前已经记录到“盈收统计”中的金额，会根据企业分成比例浮动"
+              placement="top"
+            >
+              <i class="el-icon-question question" />
+            </el-tooltip>
+          </template>
+        </el-table-column>
         <el-table-column label="已支出">
           <template slot-scope="item">
-            {{ item.row.usedAmount }}<br />
-            <span class="f-s-12">人工记录：{{ item.row.manualAmount }}</span>
+            {{ item.row.usedAmount }}
+            <!--<br />-->
+            <!--<span class="f-s-12">人工记录：{{ item.row.manualAmount }}</span>-->
             <!--<br />-->
             <!--<span class="f-s-12">转单系统：{{ item.row.transformAmount }}</span>-->
           </template>
+          <template slot="header" slot-scope="item">
+            {{ item.column.label }}
+            <el-tooltip
+              content="若有订单被标记为转单则不计算到自营佛事的盈收统计当中。用“已支出”将其数据剔除。"
+              placement="top"
+            >
+              <i class="el-icon-question question" />
+            </el-tooltip>
+          </template>
         </el-table-column>
-        <el-table-column prop="remainAmount" label="剩余金额" />
+        <el-table-column prop="remainAmount" label="可用金额">
+          <template slot="header" slot-scope="item">
+            {{ item.column.label }}
+            <el-tooltip
+              content="可参考这个金额设置人工支出：自营总额（a）- 当前盈收（c）- 人工记录已支出（d）"
+              placement="top"
+            >
+              <i class="el-icon-question question" />
+            </el-tooltip>
+          </template>
+        </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="item">
             <el-button type="text" @click="toEdit(item)">

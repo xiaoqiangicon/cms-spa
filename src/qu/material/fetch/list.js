@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign, prefer-destructuring */
 import seeFetch from 'see-fetch';
-import { statuses } from '../data';
+import { publishAccounts, statuses } from '../data';
 
 const req = {
   page: 'pageNum',
@@ -23,6 +23,9 @@ const post = res => {
     res.data.forEach(item => {
       item.shortContent = item.content ? item.content.slice(0, 40) : '';
       item.statusText = statuses.find(i => i.id === item.status).name;
+      item.publishAccountText = publishAccounts.find(
+        i => i.id === item.publishAccount
+      ).name;
     });
 };
 
@@ -30,6 +33,9 @@ const localPost = res => {
   res.data.forEach(item => {
     item.shortContent = item.content ? item.content.slice(0, 40) : '';
     item.statusText = statuses.find(i => i.id === item.status).name;
+    item.publishAccountText = publishAccounts.find(
+      i => i.id === item.publishAccount
+    ).name;
   });
 };
 
