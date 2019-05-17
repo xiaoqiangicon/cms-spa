@@ -33,6 +33,8 @@ const post = res => {
     res.data.forEach(item => {
       item.shortContent = item.content ? item.content.slice(0, 40) : '';
       item.statusText = statuses.find(i => i.id === item.status).name;
+
+      if (!item.publishAccount) item.publishAccount = 1;
       item.publishAccountText = publishAccounts.find(
         i => i.id === item.publishAccount
       ).name;

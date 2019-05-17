@@ -183,7 +183,7 @@ const routes = [
   {
     path: '/qu',
     component: Layout,
-    controlMark: 'pw_qu',
+    controlMark: 'pw_funtop',
     redirect: '/qu/article',
     name: '趣头条管理',
     meta: { title: '趣头条管理', icon: 'fa-circle', noCache: true },
