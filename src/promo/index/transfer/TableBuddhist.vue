@@ -140,9 +140,13 @@ export default {
         this.pagination.total = res.count;
       });
     },
+    refresh() {
+      this.pagination.page = 1;
+      this.requestList();
+    },
     onSizeChange(pageSize) {
       this.pagination.pageSize = pageSize;
-      this.pagination.page = 0;
+      this.pagination.page = 1;
       this.requestList();
     },
     onCurrentChange(page) {

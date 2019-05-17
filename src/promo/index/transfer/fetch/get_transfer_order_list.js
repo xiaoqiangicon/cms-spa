@@ -1,10 +1,10 @@
 import seeFetch from 'see-fetch';
 
 const req = {
-  buddhistId: 'commodityId',
-  tel: 'phone',
   // type: 'type', // 1 未转单 2 已转单
+  buddhistId: 'commodityId',
   subId: 'subdivideId', // 选择项id 0 全部
+  tel: 'phone',
   page: 'pageNumber',
   // pageSize: 'pageSize',
 };
@@ -35,7 +35,7 @@ const refactor = {
   ],
 };
 
-const post = () => {};
+const post = () => { };
 
 seeFetch.config('promo/index/transfer/getTransferOrderList', {
   method: ['post'],

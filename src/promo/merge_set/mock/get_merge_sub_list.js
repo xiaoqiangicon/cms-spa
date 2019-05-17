@@ -6,11 +6,18 @@ export default {
     name: `选择项名称${id}`,
     conversionSubdivide: [
       {
-        templeId: 11,
-        commodityId: 11,
-        subdivideId: 11,
-        name: '选择项',
-        price: 0,
+        templeId: 1,
+        commodityId: 1,
+        subdivideId: 1,
+        name: '选择项1',
+        price: 1,
+      },
+      {
+        templeId: 2,
+        commodityId: 2,
+        subdivideId: 2,
+        name: '选择项2',
+        price: 2,
       }
     ],
     isOrder: Math.floor(Math.random() * 2),

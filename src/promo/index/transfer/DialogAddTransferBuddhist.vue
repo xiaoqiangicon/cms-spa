@@ -12,7 +12,7 @@
       size="small"
       style="width: 200px;"
       filterable
-      @change="onChangeBuddhist" 
+      @change="onChangeBuddhist"
     >
       <el-option
         v-for="item in buddhistList"
@@ -99,7 +99,7 @@ addProps.forEach(({ name, full }) => {
 });
 
 export default {
-  name: 'AddTransferBuddhistDialog',
+  name: 'DialogAddTransferBuddhist',
   data() {
     return {
       buddhistId: '',
@@ -175,7 +175,7 @@ export default {
                 title: '提示',
                 message: '添加成功',
               });
-
+              this.$emit('save');
               this.addTransferBuddhistDialogVisible = false;
               this.init();
             }

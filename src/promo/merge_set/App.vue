@@ -55,19 +55,57 @@
         </div>
         <el-table ref="table" :data="tableData" tooltip-effect="dark" style="width: 100%">
           <el-table-column prop="name" label="寺院名称" show-overflow-tooltip>
-            <template slot-scope="scope">寺院下拉</template>
+            <template slot-scope="scope">
+              <el-select
+                v-model="scope.row.templeId"
+                placeholder="请选择"
+                size="small"
+                @change="handleChangeRowTemple(scope)"
+                filterable
+              >
+                <el-option
+                  v-for="item in transferTempleList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </template>
           </el-table-column>
           <el-table-column prop="price" label="佛事名称">
-            <template slot-scope="scope">佛事下拉</template>
+            <template slot-scope="scope">
+              <el-select
+                v-model="scope.row.buddhistId"
+                placeholder="请选择"
+                size="small"
+                @change="handleChangeRowBuddhist(scope)"
+                filterable
+              >
+                <el-option
+                  v-for="item in scope.row.buddhistSelect"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </template>
           </el-table-column>
           <el-table-column prop="transferRate" label="选择项">
-            <template slot="header" slot-scope="scope">
-              转单比例
-              选择项下拉
+            <template slot-scope="scope">
+              <el-select v-model="scope.row.subId" placeholder="请选择" size="small" filterable>
+                <el-option
+                  v-for="item in scope.row.subSelect"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
             </template>
           </el-table-column>
           <el-table-column prop="transferPrice" label="转单价格（元）">
-            <template slot-scope="scope">转单价格输入框</template>
+            <template slot-scope="scope">
+              <el-input v-model="scope.row.price" placeholder=""></el-input>
+            </template>
           </el-table-column>
         </el-table>
       </el-card>
@@ -108,7 +146,7 @@ export default {
       transferTempleList: [], // 可设置的寺院列表数据
       templeBuddhistMap: {}, // {templeId: []}寺院 佛事 的 map , 每次请求数据后存储到本地, 优化请求
 
-      subId: null,
+      subId: null, // 当前选中的组合项
       tableData: [], // {templeId, buddhistSelecte, buddhistId, subSelect, subId, price}
     };
   },
@@ -168,28 +206,25 @@ export default {
       });
     },
     getBuddhistList(templeId) {
-      return new Promise((resolve, reject) => {
-        seeFetch('promo/merge_set/getBuddhistList', { id: templeId }).then(
-          res => {
-            if (!res.success) {
-              Notification({
-                type: 'error',
-                title: '提示',
-                message: res.message,
-              });
-              return;
-            }
-            resolve(res);
-          }
-        );
+      return seeFetch('promo/merge_set/getBuddhistList', {
+        id: templeId,
+      }).then(res => {
+        if (!res.success) {
+          Notification({
+            type: 'error',
+            title: '提示',
+            message: res.message,
+          });
+          return;
+        }
+        this.templeBuddhistMap[templeId] = res.data;
+        console.log('单条数据获取结束');
+        return res.data;
       });
     },
     createTableData(subId, cb) {
-      // 根据当前选中的选择项
-      // 从服务器获取转单寺院列表
-      // 从服务器请求寺院对应的佛事列表
+      // 根据当前选中的选择项 从服务器获取转单寺院列表 从服务器请求寺院对应的佛事列表
       const origin = this.mergeSubList.find(item => item.id == subId);
-      let res = [];
       let promiseAry = [];
 
       origin.subList.forEach(({ templeId, buddhistId, subId, price }) => {
@@ -198,46 +233,111 @@ export default {
           buddhistId,
           subId,
           price,
+          buddhistSelect: [],
+          subSelect: [],
         };
 
-        debugger
+        let getData = new Promise((resolve, reject) => {
+          if (this.templeBuddhistMap[templeId] === undefined) {
+            resolve(this.getBuddhistList(templeId));
+          } else {
+            console.log('单条数据获取结束');
+            resolve(this.templeBuddhistMap[templeId]);
+          }
+        });
 
-        let getData = () => {
-          return new Promise((resolve, reject) => {
-            if (this.templeBuddhistMap[templeId] === undefined) {
-              this.getBuddhistList(templeId).then(buddhistListRes => {
-                this.templeBuddhistMap[templeId] = buddhistListRes.data;
-                resolve();
-              });
-            } else {
-              resolve();
+        let handleData = () => {
+          return getData.then(data => {
+            resItem.buddhistSelect = data;
+            // 本地模拟数据的时候这里报错会导致下边的语句不执行, 因此添加判断语句
+            const findItem = data.find(item => item.id === buddhistId);
+            if (findItem) {
+              resItem.subSelecte = findItem.subList;
             }
+            console.log('单条数据处理成功');
+            return resItem;
           });
         };
 
-        getData().then(() => {
-          resItem.buddhsitSelect = buddhistListRes.data;
-          resItem.subSelecte = res.data.find(
-            item => item.id === buddhistId
-          ).subList;
-          res.push(resItem);
-          debugger
-        });
-        promiseAry.push(getData);
+        promiseAry.push(handleData());
+      });
 
-        Promise.all(promiseAry).then(() => {
-          cb(res);
-        });
+      Promise.all(promiseAry).then(res => {
+        console.log('全部执行结束');
+        console.log(res);
+        cb(res);
       });
     },
-    createSubmitData() {},
+    createSubmitData() {
+      // 将当前的 tableData 转化为 submitData
+      const { tableData, subId } = this;
+      const params = { subId, mergeList: [] };
+      tableData.forEach(({ templeId, buddhistId, subId, price }) => {
+        if (templeId) {
+          params.mergeList.push({
+            templeId,
+            buddhistId,
+            subId,
+            price: parseFloat(price),
+          });
+        }
+      });
+
+      return params;
+    },
     updateDialogVisible(val) {
       this.addDialogVisible = val;
     },
-    add() {},
+    handleChangeRowTemple(scope) {
+      const { templeId } = scope.row;
+
+      // 重置 佛事 id 与选择项 id
+      scope.row.buddhistId = '';
+      scope.row.subId = '';
+
+      // 获取寺院对应的佛事下拉数据
+      const getData = new Promise((resolve, reject) => {
+        if (this.templeBuddhistMap[templeId] === undefined) {
+          this.getBuddhistList(templeId).then(data => resolve(data));
+        } else {
+          resolve(this.templeBuddhistMap[templeId]);
+        }
+      });
+
+      getData.then(data => {
+        scope.row.buddhistSelect = data;
+        return data;
+      });
+    },
+    handleChangeRowBuddhist(scope) {
+      const { buddhistId, buddhistSelect } = scope.row;
+      scope.row.subSelect = buddhistSelect.find(
+        item => item.id === buddhistId
+      ).subList;
+    },
+    add() {
+      this.tableData.push({
+        templeId: '',
+        buddhistId: '',
+        subId: '',
+        buddhistSelected: [],
+        subSelect: [],
+        price: '',
+      });
+    },
     save() {
+      if (!this.subId) {
+        Notification({
+          type: 'error',
+          title: '提示',
+          message: '您当前还未选中任何组合项哦',
+        });
+        return;
+      }
+
       const params = this.createSubmitData();
       console.log(params);
+
       seeFetch('promo/merge_set/update', params).then(res => {
         if (!res.success) {
           Notification({
@@ -258,7 +358,9 @@ export default {
     },
     changeSub(id) {
       this.subId = id;
-      this.tableData = [];
+      this.createTableData(id, res => {
+        this.tableData = res;
+      });
     },
     addMergeSub(id) {
       if (this.mergeSubList.find(item => item.id === id)) {

@@ -1,8 +1,16 @@
 import seeFetch from 'see-fetch';
 
 const req = {
-  // subdivideId: 'subdivideId',
-  mergeSub: 'conversionSubdivide',
+  subId: 'subdivideId',
+  mergeList: 'conversionSubdivide',
+  _mergeList: [
+    {
+      // templeId: 'templeId',
+      buddhistId: 'commodityId',
+      subId: 'subdivideId',
+      // price: 'price',
+    }
+  ]
 };
 
 seeFetch.config('promo/merge_set/update', {
