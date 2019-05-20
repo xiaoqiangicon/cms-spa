@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     title="添加佛事"
-    :visible.sync="addTransferBuddhistDialogVisible"
+    :visible.sync="dialogAddTransferBuddhistVisible"
   >
     <div class="mg-b-10 f-s-18">
       请选择转单佛事
@@ -58,7 +58,7 @@
       slot="footer"
       class="dialog-footer"
     >
-      <el-button @click="addTransferBuddhistDialogVisible = false">
+      <el-button @click="dialogAddTransferBuddhistVisible = false">
         取 消
       </el-button>
       <el-button
@@ -176,7 +176,7 @@ export default {
                 message: '添加成功',
               });
               this.$emit('save');
-              this.addTransferBuddhistDialogVisible = false;
+              this.dialogAddTransferBuddhistVisible = false;
               this.init();
             }
           );

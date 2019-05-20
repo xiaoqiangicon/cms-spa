@@ -1,5 +1,14 @@
 <template>
   <div>
+    <div class="operation mg-b-10">
+      <span class="mg-l-20 mg-r-10">若批量转单给寺院请筛选佛事和选择项</span>
+      <el-button
+        type="primary"
+        size="mini"
+        @click="handleClickGroupTransfer"
+        :disabled="multipleSelection.length <= 0"
+      >转单</el-button>
+    </div>
     <el-table
       ref="multipleTable"
       :data="tableData"
@@ -7,21 +16,48 @@
       style="width: 100%"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" width="55" :align="'center'"/>
-      <el-table-column prop="name" label="佛事名称" show-overflow-tooltip/>
-      <el-table-column prop="name" label="所属寺院" show-overflow-tooltip/>
-      <el-table-column prop="name" label="状态" show-overflow-tooltip :align="'center'">
-        <template slot-scope="scope">1321123</template>
+      <el-table-column
+        :selectable="tableRowSelectable"
+        type="selection"
+        width="55"
+        :align="'center'"
+      />
+      <el-table-column prop="buddhistName" label="佛事名称" show-overflow-tooltip/>
+      <el-table-column label="状态" show-overflow-tooltip :align="'center'">
+        <template slot-scope="scope">{{scope.row.isAuto ? '自动' : '手动'}}</template>
       </el-table-column>
-      <el-table-column prop="address" label="数量" :align="'center'"/>
-      <el-table-column prop="address" label="支付金额（元）" :align="'center'"/>
-      <el-table-column prop="address" label="转单金额（元）" :align="'center'"/>
-      <el-table-column prop="address" label="支付时间" show-overflow-tooltip :align="'center'"/>
-      <el-table-column prop="address" label="操作" width="100" :align="'center'">
+      <el-table-column prop="buyNum" label="数量" :align="'center'"/>
+      <el-table-column prop="price" label="支付金额（元）" :align="'center'"/>
+      <el-table-column label="所属寺院" show-overflow-tooltip :align="'center'">
+        <template slot-scope="scope">
+          <div v-for="item in scope.row.orderList" :key="item.addTime">{{item.templeName}}</div>
+        </template>
+      </el-table-column>
+      <el-table-column label="支付时间" show-overflow-tooltip :align="'center'">
+        <template slot-scope="scope">
+          <div v-for="item in scope.row.orderList" :key="item.addTime">{{item.addTime}}</div>
+        </template>
+      </el-table-column>
+      <el-table-column label="转单金额（元）" :align="'center'">
+        <template slot-scope="scope">
+          <div v-for="item in scope.row.orderList" :key="item.addTime">{{item.transferPrice}}</div>
+        </template>
+      </el-table-column>
+      <el-table-column label="详情" width="100" :align="'center'">
+        <template slot-scope="scope">
+          <div v-for="(item, index) in scope.row.orderList" :key="item.addTime">
+            <el-button
+              type="text"
+              size="small"
+              @click="handleClickDetail(scope.row, item, index)"
+            >详情</el-button>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="100" :align="'center'">
         <template slot-scope="scope">
           <div>
-            <el-button type="text" size="small" @click="handleClickTransfer(scope.row)">转单</el-button>
-            <el-button type="text" size="small" @click="handleClickDetail(scope.row)">详情</el-button>
+            <el-button type="text" size="small" @click="handleClickSingleTransfer(scope.row)">转单</el-button>
           </div>
         </template>
       </el-table-column>
@@ -41,8 +77,9 @@
       @updateVisible="updateDialogDetailVisible"
     />
     <DialogTransfer
-      :detail="detail"
+      :detail="transferDetail"
       :visible="dialogTransferVisible"
+      @submit="refresh"
       @updateVisible="updateDialogTransferVisible"
     />
   </div>
@@ -68,6 +105,8 @@ export default {
 
       tableData: [],
       detail: {},
+
+      transferDetail: {}, // buddhistId, orderIds
 
       pagination: {
         page: 1,
@@ -107,17 +146,68 @@ export default {
         this.pagination.total = res.count;
       });
     },
+    tableSpanMethod({ row, column, rowIndex, columnIndex }) {},
     refresh() {
       this.pagination.page = 1;
       this.requestList();
     },
-    handleSelectionChange() {},
-    handleClickTransfer(rowData) {
-      this.detail = rowData;
+    tableRowSelectable(row) {
+      return parseInt(this.subId, 10) !== 0;
+    },
+    handleSelectionChange(selectedItem) {
+      this.multipleSelection = selectedItem;
+    },
+    handleClickGroupTransfer() {
+      if (this.multipleSelection.length <= 0) {
+        Notification({
+          type: 'warning',
+          title: '提示',
+          message: '请选择订单',
+        });
+        return;
+      }
+
+      this.transferDetail = {
+        buddhistId: this.buddhsitId,
+        orderIds: this.multipleSelection.map(item => item.id).join(','),
+      };
       this.dialogTransferVisible = !0;
     },
-    handleClickDetail(rowData) {
-      this.detail = rowData;
+    handleClickSingleTransfer(rowData) {
+      this.transferDetail = {
+        buddhistId: this.buddhsitId,
+        orderIds: rowData.id,
+      };
+
+      this.dialogTransferVisible = !0;
+    },
+    handleClickDetail(rowData, itemData, itemIndex) {
+      const {
+        isAuto,
+        buddhistName,
+        subName,
+        buyNum,
+        price,
+        orderId,
+        orderNum,
+        wxId,
+      } = rowData;
+      const { feedBackImg, transferPrice, addTime } = itemData;
+      const detail = {
+        buddhistName,
+        subName,
+        buyNum,
+        price,
+        orderId,
+        orderNum,
+        transferPrice,
+        addTime,
+        wxId,
+        feedBackImg: feedBackImg.split(','),
+        ps: isAuto ? itemData.ps : rowData.ps[itemIndex].ps,
+      };
+
+      this.detail = detail;
       this.dialogDetailVisible = !0;
     },
     onSizeChange(pageSize) {

@@ -1,6 +1,6 @@
 export const addProps = [
   // transfer
-  {name: 'addTransferBuddhistDialogVisible', full: !0, default: !1},
+  {name: 'dialogAddTransferBuddhistVisible', full: !0, default: !1},
 
   // buddhist
 

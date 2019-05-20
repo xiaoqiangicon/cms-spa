@@ -10,7 +10,7 @@
             <el-button
               type="primary"
               size="small"
-              @click="addTransferBuddhistDialogVisible = true"
+              @click="dialogAddTransferBuddhistVisible = true"
             >添加转单佛事</el-button>
           </div>
         </div>
@@ -167,6 +167,7 @@ export default {
       this.subList = this.buddhistList.find(
         item => item.id === this.buddhistId
       ).subList;
+      this.subId = '0';
     },
     handleClick() {
       console.log(this.activeName);

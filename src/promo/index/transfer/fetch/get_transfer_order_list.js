@@ -18,17 +18,30 @@ const refactor = {
   total: 'count',
   data: [
     {
-      name: 'name', // 佛事名称
-      subdivideName: 'subdivideName', // 选择项名称
+      buddhistName: 'name', // 佛事名称
+      subName: 'subdivideName', // 选择项名称
       buyNum: 'buyNum', // 数量
-      isAutoConversion: 'isAutoConversion', // 自动/手动 转单
+      isAuto: 'isAutoConversion', // 自动/手动 转单
       price: 'price', // 转单价格
-      conversionOrder: [
+      orderId: 'orderId', // 订单号
+      orderNum: 'orderNo', // 外部订单号
+      wxId: 'wxTransactionId', // 支付流水号
+      orderList: 'conversionOrder',
+      ps: 'posiscript',
+      _ps: [{
+        feedBackImg: 'pic_url',
+        ps: 'posiscript',
+        subId: 'subdirideId',
+        subName: 'subdirideName',
+      }],
+      _orderList: [
         {
           addTime: 'addTime', // 转单时间
-          conversionOrderPrice: 'conversionOrderPrice',
-          isFinish: 'isFinish', //
+          transferPrice: 'conversionOrderPrice', // 转单价格
+          isFinish: 'isFinish', // 已被处理
           templeName: 'templeName', // 所属寺院
+          feedBackImg: 'disposePicUrl', // 反馈图片
+          ps: 'posiscript'
         },
       ],
     },
