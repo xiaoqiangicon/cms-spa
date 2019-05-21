@@ -2,51 +2,51 @@
   <el-dialog title="订单详情" :visible.sync="visible" :before-close="()=>{sVisible = false}">
     <div class="row">
       <div class="title">佛事名称</div>
-      ：{{detail.buddhistName}}
+      ：{{transferOrderDetail.buddhistName}}
     </div>
     <div class="row">
       <div class="title">规格</div>
-      ：{{detail.subName}}
+      ：{{transferOrderDetail.subName}}
     </div>
     <div class="row">
       <div class="title">数量</div>
-      ：{{detail.buyNum}}
+      ：{{transferOrderDetail.buyNum}}
     </div>
     <div class="row">
       <div class="title">支付</div>
-      ：{{detail.price}}
+      ：{{transferOrderDetail.price}}
     </div>
     <div class="row">
       <div class="title">转单价格</div>
-      ：{{detail.transferPrice}}
+      ：{{transferOrderDetail.transferPrice}}
     </div>
     <div class="row">
       <div class="title">下单时间</div>
-      ：{{detail.addTime}}
+      ：{{transferOrderDetail.addTime}}
     </div>
     <div class="row">
       <div class="title">订单号</div>
-      ：{{detail.orderId}}
+      ：{{transferOrderDetail.orderId}}
     </div>
     <div class="row">
       <div class="title">外部订单号</div>
-      ：{{detail.orderNum}}
+      ：{{transferOrderDetail.orderNum}}
     </div>
     <div class="row">
       <div class="title">支付流水号</div>
-      ：{{detail.wxId}}
+      ：{{transferOrderDetail.wxId}}
     </div>
     <div class="bar"></div>
     <div class="row">
       <div class="title">反馈图</div>
       <div class="content">：
-        <div v-for="item in detail.feedBackImg" :key="item" class="img-container">
+        <div v-for="item in transferOrderDetail.feedBackImg" :key="item" class="img-container">
           <img :src="item">
         </div>
       </div>
     </div>
     <div class="bar"></div>
-    <div v-for="item in detail.ps" :key="item.inputId" class="row">
+    <div v-for="item in transferOrderDetail.ps" :key="item.inputId" class="row">
       <template v-if="item.type === 14 && item.value">
         <div v-for="img in item.value.spilt(',')" :key="img" class="img-container">
           <img :src="img">
@@ -62,13 +62,39 @@
 </template>
 
 <script>
+
+import { addProps } from '../data';
+const computedProps = {};
+addProps.forEach(({ name, full }) => {
+  if (full) {
+    computedProps[name] = {
+      get() {
+        return this.$store.state.promoIndex.add[name];
+      },
+      set(value) {
+        const key = `promoIndex/update${name
+          .slice(0, 1)
+          .toUpperCase()}${name.slice(1)}`;
+        this.$store.commit(key, value);
+      },
+    };
+  } else {
+    computedProps[name] = function() {
+      return this.$store.state.promoIndex.add[name];
+    };
+  }
+});
+
 export default {
   name: 'dialogDetail',
-  props: ['detail', 'visible'],
+  props: ['visible'],
   data() {
     return {
       sVisible: this.visible,
     };
+  },
+  computed: {
+    ...computedProps,
   },
   watch: {
     visible(val) {

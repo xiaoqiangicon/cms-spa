@@ -14,14 +14,15 @@ const refactor = {
   total: 'count',
   data: [
     {
-      id: 'id',
-      name: 'name',
-      templeList: 'templeList',
-      orderNum: 'orderNum', // 未转单数
-      conversionOrderNum: 'conversionOrderNum', // 已转单数
-      conversionOrderPrice: 'conversionOrderPrice', // 已转金额
-      profitConversionOrderPrice: 'profitConversionOrderPrice', // 盈收金额
-      time: 'time', // 添加时间
+      // id: 'id',
+      // name: 'name',
+      // templeList: 'templeList',
+      // orderNum: 'orderNum', // 未转单数
+      // conversionOrderNum: 'conversionOrderNum', // 已转单数
+      // conversionOrderPrice: 'conversionOrderPrice', // 已转金额
+      // profitConversionOrderPrice: 'profitConversionOrderPrice', // 盈收金额
+      // time: 'time', // 添加时间
+      // isEnd: 'isEnd', // 是否结束
       subList: 'subdivide', // 选择项列表
     },
   ],

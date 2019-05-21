@@ -12,7 +12,7 @@ export default {
     profitConversionOrderPrice: 0.03,
     subdivide: [
       {
-        id: 10,
+        id: 1,
         conversionSubdivide: Math.floor(Math.random() * 2),
         isConversion: Math.floor(Math.random() * 2),
         isOrder: Math.floor(Math.random() * 2),
@@ -21,7 +21,7 @@ export default {
         price: 0.01,
       },
       {
-        id: 11,
+        id: 2,
         conversionSubdivide: Math.floor(Math.random() * 2),
         isConversion: Math.floor(Math.random() * 2),
         isOrder: Math.floor(Math.random() * 2),
@@ -30,7 +30,7 @@ export default {
         price: 0,
       },
       {
-        id: 12,
+        id: 3,
         conversionSubdivide: Math.floor(Math.random() * 2),
         isConversion: Math.floor(Math.random() * 2),
         isOrder: Math.floor(Math.random() * 2),
@@ -41,5 +41,6 @@ export default {
     ],
     templeList: ['寺院1', '寺院2'],
     time: '2017-12-21 19:12:36',
+    isEnd: Math.floor(Math.random()*2),
   })),
 };

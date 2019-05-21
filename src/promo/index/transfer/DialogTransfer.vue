@@ -7,6 +7,7 @@
         placeholder="请选择"
         size="small"
         style="width: 200px;"
+        @change="onChangeTransferTemple"
         filterable
       >
         <el-option
@@ -17,10 +18,15 @@
         />
       </el-select>
     </div>
-    <div>
+    <div v-show="price">
       <span class="mg-r-5">转单价格</span>
-      <el-input style="width: 200px;" v-model="transferPrice" placeholder="请输入内容"></el-input>
+      <el-input style="width: 200px;" v-model="price" placeholder="请输入价格"></el-input>
       <span class="mg-l-10">/ 单</span>
+    </div>
+    <div v-show="percent">
+      <span class="mg-r-5">转单比例</span>
+      <el-input style="width: 200px;" v-model="percent" placeholder="请输入价格"></el-input>
+      <span class="mg-l-10">% / 单</span>
     </div>
     <div class="tip">
       <div>温馨提示</div>
@@ -45,15 +51,15 @@
       </div>
       <div class="row">
         <div class="title">转单数量</div>
-        <div class="content"></div>
+        <div class="content">{{transferOrderIds.length}}</div>
       </div>
       <div class="row">
         <div class="title">总计原价（元）</div>
-        <div class="content"></div>
+        <div class="content">{{originPriceSum}}</div>
       </div>
       <div class="row">
         <div class="title">转单价格（元）</div>
-        <div class="content"></div>
+        <div class="content">{{priceSum}}</div>
       </div>
       <div class="tip">
         <div>温馨提示</div>
@@ -94,14 +100,19 @@ addProps.forEach(({ name, full }) => {
 
 export default {
   name: 'dialogTransfer',
-  props: ['detail', 'visible'], // detail {buddhistName, orderIds}
+  props: ['visible'], //
   data() {
     return {
       sVisible: this.visible,
 
       transferTempleList: [], // 转单寺院列表
       transferTempleId: '', // 转单寺院
-      transferPrice: '', // 转单价格
+
+      originPrice: '', // 转单原价
+      price: '', // 转单价格
+      percent: '', // 转单百分比
+      originPriceSum: '', // 转单原价总计
+      priceSum: '', // 转单价格总计
 
       dialoguSbmitVisible: !1,
     };
@@ -132,8 +143,13 @@ export default {
   },
   methods: {
     init() {
+      this.transferTempleList = [];
       this.transferTempleId = '';
-      this.transferPrice = '';
+      this.originPrice = '';
+      this.price = '';
+      this.percent = '';
+      this.originPriceSum = '';
+      this.priceSum = '';
       this.getTransferTempleList();
     },
     getTransferTempleList() {
@@ -152,17 +168,58 @@ export default {
         this.transferTempleList = res.data;
       });
     },
+    onChangeTransferTemple(transferTempleId) {
+      // 获取转单选择项的 subId
+      // 多订单 获取全局的 transferSubId
+      // 单订单 获取 全局的 transferOrderDetail 里的subId
+      const subId = this.transferSubId
+        ? this.transferSubId
+        : this.transferOrderDetail.subId;
+      // 获取转单寺院的价格配置
+      const transferTempleSubList = this.transferTempleList.find(
+        item => item.id === transferTempleId
+      ).subList;
+
+      const { price, percent } = transferTempleSubList.find(
+        item => item.id === subId
+      );
+      // 获取转单选择项的原价
+      const { price: originPrice } = this.transferSubList.find(
+        item => item.id === subId
+      );
+      // 计算
+      this.originPrice = originPrice;
+      this.price = price;
+      this.percent = percent;
+      this.originPriceSum = (
+        originPrice * this.transferOrderIds.length
+      ).toFixed(4);
+      this.priceSum = (price
+        ? price * this.transferOrderIds.length
+        : (percent / 100) * this.transferOrderIds.length
+      ).toFixed(4);
+    },
     handleClickConfirm() {
-      this.dialoguSbmitVisible = !0;
+      if (!this.transferTempleId) {
+        Notification({
+          type: 'warning',
+          title: '提示',
+          message: '请选择转单寺院',
+        });
+        return;
+      } else {
+        this.dialoguSbmitVisible = !0;
+      }
     },
     handleClickSubmit() {
       const {
         transferBuddhistId: buddhistId,
-        templeId: templeId,
-        orderIds,
+        transferTempleId: templeId,
+        transferOrderIds: orderIds,
         price,
         percent,
       } = this;
+
       seeFetch('promo/index/transfer/transfer', {
         buddhistId,
         templeId,
@@ -178,7 +235,16 @@ export default {
           });
           return;
         }
-        this.transferTempleList = res.data;
+
+        Notification({
+          type: 'success',
+          title: '提示',
+          message: '操作成功',
+        });
+
+        this.$emit('submit');
+        this.dialoguSbmitVisible = !1;
+        this.$emit('updateVisible', !1);
       });
     },
   },

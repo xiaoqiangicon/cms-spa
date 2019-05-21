@@ -2,11 +2,16 @@ import seeFetch from 'see-fetch';
 
 const req = {
   buddhistId: 'commodityId',
-  templeId: 'templeId',
-  orderIds: 'orderIds',
-  price: 'price',
-  percent: 'percent',
+  // templeId: 'templeId',
+  // orderIds: 'orderIds',
+  // price: 'price',
+  // percent: 'percent',
 };
+
+const pre = params => ({
+  ...params,
+  orderIds: params.orderIds.join(','),
+});
 
 seeFetch.config('promo/index/transfer/transfer', {
   method: ['post'],
@@ -17,4 +22,5 @@ seeFetch.config('promo/index/transfer/transfer', {
     '/promo/index/transfer/mock/success',
   ],
   req: [req, req],
+  pre: [pre, pre]
 });

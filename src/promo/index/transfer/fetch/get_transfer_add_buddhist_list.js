@@ -10,8 +10,8 @@ const pre = params => ({
 const refactor = {
   data: [
     {
-      id: 'id',
-      name: 'name',
+      // id: 'id',
+      // name: 'name',
     },
   ],
 };
@@ -19,7 +19,7 @@ const refactor = {
 const post = () => {};
 
 seeFetch.config('promo/index/getTransferAddBuddhistList', {
-  method: ['post'],  
+  method: ['post'],
   stringify: [!0],
   url: [
     '/conversionOrder/commodityGetList',

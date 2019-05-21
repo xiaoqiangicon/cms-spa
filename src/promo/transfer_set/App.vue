@@ -4,7 +4,7 @@
       <div class="f-s-18 mg-b-10">{{ buddhistName }}</div>
       <div class="gray">
         <span class="mg-r-10">佛事ID：{{ buddhistId }}</span>|
-        <span class="mg-l-10">佛事状态：进行中</span>
+        <span class="mg-l-10">佛事状态：{{isEnd ? '已结束' : '进行中'}}</span>
       </div>
       <el-button
         style="position: absolute; bottom: 40px;right: 40px;"
@@ -136,6 +136,7 @@ export default {
       buddhistName: null,
       buddhistStatus: null,
       subList: [], // 佛事的选择项数据 {id, name, conversionSubdivide, isConversion, isOrder, isZizaijiaCommodity, price}
+      isEnd: null,
 
       addDialogVisible: !1,
 
@@ -157,11 +158,13 @@ export default {
         name: buddhistName,
         buddhistStatus,
         subList,
+        isEnd,
       } = JSON.parse(window.sessionStorage.getItem('promo/index/item'));
       this.buddhistId = buddhistId;
       this.buddhistName = buddhistName;
       this.buddhistStatus = buddhistStatus;
       this.subList = subList;
+      this.isEnd = isEnd;
 
       this.getTempleList();
       this.getTransferTempleList(() => {

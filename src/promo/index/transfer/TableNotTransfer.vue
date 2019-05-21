@@ -72,7 +72,6 @@
       @current-change="onCurrentChange"
     />
     <DialogDetail
-      :detail="detail"
       :visible="dialogDetailVisible"
       @updateVisible="updateDialogDetailVisible"
     />
@@ -124,7 +123,6 @@ export default {
       dialogTransferVisible: !1,
 
       tableData: [],
-      detail: {},
 
       pagination: {
         page: 1,
@@ -187,17 +185,19 @@ export default {
         return;
       }
 
-      this.transferOrderIds = this.multipleSelection.map(item => item.id).join(','),
+      this.transferOrderIds = this.multipleSelection.map(item => item.id),
       this.dialogTransferVisible = !0;
     },
     handleClickSingleTransfer(rowData) {
-      this.transferOrderIds = rowData.id,
+      this.transferOrderDetail = rowData;
+      this.transferOrderIds = [rowData.id],
       this.dialogTransferVisible = !0;
     },
     handleClickDetail(rowData, itemData, itemIndex) {
       const {
         isAuto,
         buddhistName,
+        subId,
         subName,
         buyNum,
         price,
@@ -220,7 +220,7 @@ export default {
         ps: isAuto ? itemData.ps : rowData.ps[itemIndex].ps,
       };
 
-      this.detail = detail;
+      this.transferOrderDetail = detail;
       this.dialogDetailVisible = !0;
     },
     onSizeChange(pageSize) {

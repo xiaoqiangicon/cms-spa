@@ -20,10 +20,11 @@ const refactor = {
     {
       buddhistName: 'name', // 佛事名称
       subName: 'subdivideName', // 选择项名称
-      buyNum: 'buyNum', // 数量
+      subId: 'subdivideId', // 选择项id
+      // buyNum: 'buyNum', // 数量
       isAuto: 'isAutoConversion', // 自动/手动 转单
-      price: 'price', // 转单价格
-      orderId: 'orderId', // 订单号
+      // price: 'price', // 转单价格
+      // orderId: 'orderId', // 订单号
       orderNum: 'orderNo', // 外部订单号
       wxId: 'wxTransactionId', // 支付流水号
       orderList: 'conversionOrder',

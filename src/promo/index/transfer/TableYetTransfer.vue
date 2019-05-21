@@ -52,12 +52,10 @@
       @current-change="onCurrentChange"
     />
     <DialogDetail
-      :detail="detail"
       :visible="dialogDetailVisible"
       @updateVisible="updateDialogDetailVisible"
     />
     <DialogRetract
-      :detail="detail"
       :visible="dialogCancelVisible"
       @submit="refresh"
       @updateVisible="updateDialogCancelVisible"
@@ -105,7 +103,6 @@ export default {
       dialogCancelVisible: !1,
 
       tableData: [],
-      detail: {},
 
       pagination: {
         page: 1,
@@ -177,7 +174,7 @@ export default {
         return;
       }
 
-      this.detail = { id, buddhistName, subName, templeName };
+      this.transferOrderDetail = { id, buddhistName, subName, templeName };
       this.dialogCancelVisible = !0;
     },
     handleClickDetail(rowData, itemData, itemIndex) {
@@ -206,7 +203,7 @@ export default {
         ps: isAuto ? itemData.ps : rowData.ps[itemIndex].ps,
       };
 
-      this.detail = detail;
+      this.transferOrderDetail = detail;
       this.dialogDetailVisible = !0;
     },
     onSizeChange(pageSize) {
