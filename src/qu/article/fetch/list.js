@@ -20,8 +20,8 @@ const refactor = {
       wxAccount: 'accounts',
       wxAuthor: 'author',
       content: 'articleHtml',
+      contentText: 'articleText',
       addedToLibrary: 'isUse',
-      publishTime: 'printTime',
       pullTime: 'pullTime',
     },
   ],
@@ -30,7 +30,10 @@ const refactor = {
 const post = res => {
   if (res.data)
     res.data.forEach(item => {
-      item.shortContent = item.content ? item.content.slice(0, 40) : '';
+      item.content = item.content.trim();
+      item.shortContentText = item.contentText
+        ? item.contentText.slice(0, 40)
+        : '';
 
       if (item.articleImg) item.cover = item.articleImg.split(',')[0];
     });
@@ -38,7 +41,9 @@ const post = res => {
 
 const localPost = res => {
   res.data.forEach(item => {
-    item.shortContent = item.content ? item.content.slice(0, 40) : '';
+    item.shortContentText = item.contentText
+      ? item.contentText.slice(0, 40)
+      : '';
   });
 };
 

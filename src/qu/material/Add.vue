@@ -7,7 +7,7 @@
   >
     <div class="content">
       <el-alert
-        title="提示：点击文字或图片进行操作"
+        title="提示：拖动图片或文字进行排序，点击文字或图片进行操作"
         type="success"
         effect="dark"
       />
@@ -216,6 +216,7 @@ export default {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           inputValue: item.content,
+          inputType: 'textarea',
         }).then(({ value }) => {
           if (!value) return;
 
@@ -234,6 +235,7 @@ export default {
       this.$prompt('请输入内容', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
+        inputType: 'textarea',
       }).then(({ value }) => {
         if (!value) return;
 
@@ -247,7 +249,11 @@ export default {
           this.action === 'insertTextAfter'
             ? PARSE_TYPE_TEXT
             : PARSE_TYPE_IMAGE;
-        this.jsonContent.content.splice(index, 0, makeJsonItem(type, value));
+
+        const values = value.split('\n').filter(i => !!i);
+        const items = values.map(i => makeJsonItem(type, i));
+
+        this.jsonContent.content.splice(index, 0, ...items);
       });
     },
     imagesSelected() {
@@ -346,6 +352,7 @@ export default {
       this.saving = !0;
 
       const params = {
+        id: this.updateId,
         title,
         jsonContent: JSON.stringify(jsonContent),
         region,

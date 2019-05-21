@@ -3,6 +3,7 @@ import seeFetch from 'see-fetch';
 
 const req = {
   account: 'wxid',
+  interval: 'updateDays',
 };
 
 seeFetch.config('qu/source/update', {

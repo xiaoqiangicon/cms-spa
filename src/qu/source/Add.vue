@@ -18,6 +18,13 @@
         </div>
         <el-input v-model="account" size="small" style="width: 200px;" />
       </div>
+      <div class="row">
+        <div class="row-name">
+          拉取间隔：
+        </div>
+        <el-input v-model="interval" size="small" style="width: 200px;" />
+        天
+      </div>
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="clickCancel">
@@ -84,6 +91,7 @@ export default {
       let error;
 
       const { name, account } = this;
+      const interval = parseInt(this.interval, 10) || 1;
 
       if (!name) error = '名称不能为空';
       else if (!account) error = '微信号不能为空';
@@ -101,6 +109,7 @@ export default {
       const params = {
         name,
         account,
+        interval,
       };
 
       if (this.isUpdate) {

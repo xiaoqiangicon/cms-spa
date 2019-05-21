@@ -5,7 +5,8 @@ export const list = {
     id,
     name: `name ${id}`,
     account: `account ${id}`,
-    count: id * 10,
+    interval: id,
+    lastPullTime: '2019-01-01 01:01:01',
   })),
 };
 
@@ -17,6 +18,8 @@ export const list1 = {
       id,
       name: `name ${id}`,
       wxid: `account ${id}`,
+      updateDays: id,
+      lastUpdateTime: '2019-01-01 01:01:01',
     })),
   },
 };

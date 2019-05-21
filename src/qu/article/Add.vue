@@ -8,7 +8,9 @@
     <div class="f-s-18">
       {{ title }}
     </div>
-    <div class="mg-t-20">{{ wxAccount }} / {{ publishTime }}</div>
+    <div class="mg-t-20">
+      {{ wxAccount }}
+    </div>
     <div class="content" v-html="content" />
   </el-dialog>
 </template>

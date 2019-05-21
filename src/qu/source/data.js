@@ -6,6 +6,7 @@ export const addProps = [
   // fields
   { name: 'name', full: !0, default: '' },
   { name: 'account', full: !0, default: '' },
+  { name: 'interval', full: !0, default: 1 },
 ];
 
 export default {};

@@ -19,15 +19,11 @@
         <el-table v-loading="loading" :data="list" style="width: 100%">
           <el-table-column prop="name" label="公众号名称" />
           <el-table-column prop="account" label="微信号" />
-          <el-table-column v-if="!1" prop="count" label="文章数" />
+          <el-table-column prop="interval" label="拉取间隔天数" />
+          <el-table-column prop="lastPullTime" label="最近拉取时间" />
           <el-table-column label="操作">
             <template slot-scope="item">
-              <el-button
-                v-if="!1"
-                type="text"
-                size="small"
-                @click="toEdit(item)"
-              >
+              <el-button type="text" size="small" @click="toEdit(item)">
                 编辑
               </el-button>
               <el-button type="text" size="small" @click="toDelete(item)">

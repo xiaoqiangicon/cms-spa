@@ -9,6 +9,8 @@ export const list = {
     cover: `/images/chan-zai-128x128.png`,
     covers: `/sample/image1.jpg,/sample/image2.jpg`,
     content: richText,
+    contentText:
+      'contentTextcontentTextcontentTextcontentTextcontentTextcontentTextcontentText',
     status: (id % 3) - 1,
     publishAccount: (id % 3) + 1,
     region: '全国',
@@ -26,6 +28,8 @@ export const list1 = {
       title: `title ${id}`,
       titleImg: `/sample/image1.jpg,/sample/image2.jpg`,
       articleHtml: richText,
+      articleText:
+        'contentTextcontentTextcontentTextcontentTextcontentTextcontentTextcontentText',
       status: (id % 3) - 1,
       pushAccount: (id % 3) + 1,
       area: '全国',

@@ -32,7 +32,7 @@
               <img :src="item.row.cover" class="wd-100" />
             </template>
           </el-table-column>
-          <el-table-column prop="shortContent" label="内容" />
+          <el-table-column prop="shortContentText" label="内容摘要" />
           <el-table-column prop="publishAccountText" label="帐号" />
           <el-table-column prop="statusText" label="状态" />
           <el-table-column prop="createdAt" label="创建时间" />

@@ -10,8 +10,9 @@ export const list = {
     wxAuthor: `wxAuthor ${id}`,
     cover: `/images/chan-zai-128x128.png`,
     content: richText.repeat(5),
+    contentText:
+      'contentTextcontentTextcontentTextcontentTextcontentTextcontentTextcontentText',
     addedToLibrary: id % 2,
-    publishTime: '2019-01-01 01:01:01',
     pullTime: '2019-01-01 01:01:01',
   })),
 };
@@ -27,8 +28,9 @@ export const list1 = {
       author: `wxAuthor ${id}`,
       articleImg: `/images/chan-zai-128x128.png,/images/chan-zai-128x128.png`,
       articleHtml: richText.repeat(5),
+      articleText:
+        'contentTextcontentTextcontentTextcontentTextcontentTextcontentTextcontentText',
       isUse: id % 2,
-      printTime: '2019-01-01 01:01:01',
       pullTime: '2019-01-01 01:01:01',
     })),
   },

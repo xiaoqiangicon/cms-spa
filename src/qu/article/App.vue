@@ -36,13 +36,12 @@
             </template>
           </el-table-column>
           <el-table-column prop="wxAccount" label="微信公众号" />
-          <el-table-column prop="shortContent" label="内容" />
+          <el-table-column prop="shortContentText" label="内容摘要" />
           <el-table-column label="是否已添加到素材库">
             <template slot-scope="item">
               {{ item.row.addedToLibrary ? '是' : '否' }}
             </template>
           </el-table-column>
-          <el-table-column prop="publishTime" label="发布时间" />
           <el-table-column prop="pullTime" label="拉取时间" />
           <el-table-column label="操作">
             <template slot-scope="item">

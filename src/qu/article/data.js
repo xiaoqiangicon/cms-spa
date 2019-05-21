@@ -6,7 +6,6 @@ export const addProps = [
   // fields
   { name: 'title', full: !0, default: '' },
   { name: 'wxAccount', full: !0, default: '' },
-  { name: 'publishTime', full: !0, default: '' },
   { name: 'content', full: !0, default: '' },
 ];
 

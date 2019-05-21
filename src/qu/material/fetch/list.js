@@ -20,6 +20,7 @@ const refactor = {
     {
       covers: 'titleImg',
       content: 'articleHtml',
+      contentText: 'articleText',
       jsonContent: 'articleJson',
       publishAccount: 'pushAccount',
       region: 'area',
@@ -31,7 +32,10 @@ const refactor = {
 const post = res => {
   if (res.data)
     res.data.forEach(item => {
-      item.shortContent = item.content ? item.content.slice(0, 40) : '';
+      item.content = item.content.trim();
+      item.shortContentText = item.contentText
+        ? item.contentText.slice(0, 40)
+        : '';
       item.statusText = statuses.find(i => i.id === item.status).name;
 
       if (!item.publishAccount) item.publishAccount = 1;
@@ -43,7 +47,9 @@ const post = res => {
 
 const localPost = res => {
   res.data.forEach(item => {
-    item.shortContent = item.content ? item.content.slice(0, 40) : '';
+    item.shortContentText = item.contentText
+      ? item.contentText.slice(0, 40)
+      : '';
     item.statusText = statuses.find(i => i.id === item.status).name;
     item.publishAccountText = publishAccounts.find(
       i => i.id === item.publishAccount

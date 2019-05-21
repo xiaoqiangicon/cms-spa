@@ -18,6 +18,8 @@ const refactor = {
   _data: [
     {
       account: 'wxid',
+      interval: 'updateDays',
+      lastPullTime: 'lastUpdateTime',
     },
   ],
 };
