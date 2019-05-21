@@ -1,7 +1,7 @@
 <template>
   <el-dialog title="转单设置" :visible.sync="visible" :before-close="()=>{sVisible = false}">
     <div class="mg-b-20">
-      <span class="mg-r-5">请 选 择</span>
+      <span class="mg-r-10">请 选 择</span>
       <el-select
         v-model="transferTempleId"
         placeholder="请选择"
@@ -17,8 +17,10 @@
         />
       </el-select>
     </div>
-    <div>转单价格
-      <el-input style="width: 200px;" v-model="transferPrice" placeholder="请输入内容"></el-input>/ 单
+    <div>
+      <span class="mg-r-5">转单价格</span>
+      <el-input style="width: 200px;" v-model="transferPrice" placeholder="请输入内容"></el-input>
+      <span class="mg-l-10">/ 单</span>
     </div>
     <div class="tip">
       <div>温馨提示</div>
@@ -35,11 +37,11 @@
     >
       <div class="row">
         <div class="title">佛事名称</div>
-        <div class="content"></div>
+        <div class="content">{{transferBuddhistName}}</div>
       </div>
       <div class="row">
         <div class="title">转移寺院</div>
-        <div class="content"></div>
+        <div class="content">{{transferTempleName}}</div>
       </div>
       <div class="row">
         <div class="title">转单数量</div>
@@ -68,19 +70,54 @@
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
 
+import { addProps } from '../data';
+const computedProps = {};
+addProps.forEach(({ name, full }) => {
+  if (full) {
+    computedProps[name] = {
+      get() {
+        return this.$store.state.promoIndex.add[name];
+      },
+      set(value) {
+        const key = `promoIndex/update${name
+          .slice(0, 1)
+          .toUpperCase()}${name.slice(1)}`;
+        this.$store.commit(key, value);
+      },
+    };
+  } else {
+    computedProps[name] = function() {
+      return this.$store.state.promoIndex.add[name];
+    };
+  }
+});
+
 export default {
   name: 'dialogTransfer',
-  props: ['detail', 'visible'], // detail {buddhistId, orderIds}
+  props: ['detail', 'visible'], // detail {buddhistName, orderIds}
   data() {
     return {
       sVisible: this.visible,
 
-      transferTempleList: [],
-      transferTempleId: '',
-      transferPrice: '',
+      transferTempleList: [], // 转单寺院列表
+      transferTempleId: '', // 转单寺院
+      transferPrice: '', // 转单价格
 
       dialoguSbmitVisible: !1,
     };
+  },
+  computed: {
+    ...computedProps,
+    transferTempleName() {
+      const findItem = this.transferTempleList.find(
+        item => item.id === parseInt(this.transferTempleId)
+      );
+      if (findItem) {
+        return findItem.name;
+      } else {
+        return '';
+      }
+    },
   },
   watch: {
     visible(val) {
@@ -100,7 +137,7 @@ export default {
       this.getTransferTempleList();
     },
     getTransferTempleList() {
-      const { buddhistId } = this;
+      const { transferBuddhistId: buddhistId } = this;
       seeFetch('promo/index/transfer/getTransferTempleList', {
         buddhistId,
       }).then(res => {
@@ -118,7 +155,32 @@ export default {
     handleClickConfirm() {
       this.dialoguSbmitVisible = !0;
     },
-    handleClickSubmit() {},
+    handleClickSubmit() {
+      const {
+        transferBuddhistId: buddhistId,
+        templeId: templeId,
+        orderIds,
+        price,
+        percent,
+      } = this;
+      seeFetch('promo/index/transfer/transfer', {
+        buddhistId,
+        templeId,
+        orderIds,
+        price,
+        percent,
+      }).then(res => {
+        if (!res.success) {
+          Notification({
+            type: 'error',
+            title: '提示',
+            message: res.message,
+          });
+          return;
+        }
+        this.transferTempleList = res.data;
+      });
+    },
   },
 };
 </script>
@@ -134,6 +196,7 @@ export default {
 }
 .row {
   display: flex;
+  margin-bottom: 10px;
   .title {
     flex-basis: 100px;
   }

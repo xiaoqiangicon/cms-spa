@@ -5,7 +5,7 @@ export default {
   count: 100,
   data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
     id,
-    name: '测试机随缘寺院转单测试',
+    name: `测试机随缘寺院转单测试${id}`,
     conversionOrderNum: 1,
     conversionOrderPrice: 0,
     orderNum: 1,

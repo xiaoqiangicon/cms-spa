@@ -1,11 +1,11 @@
 import seeFetch from 'see-fetch';
 
 const req = {
+  buddhistId: 'commodityId',
   templeId: 'templeId',
   orderIds: 'orderIds',
   price: 'price',
   percent: 'percent',
-  buddhistId: 'commodityId',
 };
 
 seeFetch.config('promo/index/transfer/transfer', {

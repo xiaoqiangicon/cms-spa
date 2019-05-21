@@ -22,6 +22,7 @@ const refactor = {
       conversionOrderPrice: 'conversionOrderPrice', // 已转金额
       profitConversionOrderPrice: 'profitConversionOrderPrice', // 盈收金额
       time: 'time', // 添加时间
+      subList: 'subdivide', // 选择项列表
     },
   ],
 };

@@ -77,7 +77,6 @@
       @updateVisible="updateDialogDetailVisible"
     />
     <DialogTransfer
-      :detail="transferDetail"
       :visible="dialogTransferVisible"
       @submit="refresh"
       @updateVisible="updateDialogTransferVisible"
@@ -91,9 +90,30 @@ import { Notification } from 'element-ui';
 import DialogDetail from './DialogDetail';
 import DialogTransfer from './DialogTransfer';
 
+import { addProps } from '../data';
+const computedProps = {};
+addProps.forEach(({ name, full }) => {
+  if (full) {
+    computedProps[name] = {
+      get() {
+        return this.$store.state.promoIndex.add[name];
+      },
+      set(value) {
+        const key = `promoIndex/update${name
+          .slice(0, 1)
+          .toUpperCase()}${name.slice(1)}`;
+        this.$store.commit(key, value);
+      },
+    };
+  } else {
+    computedProps[name] = function() {
+      return this.$store.state.promoIndex.add[name];
+    };
+  }
+});
+
 export default {
   name: 'TableNotTransfer',
-  props: ['buddhistId', 'subId', 'tel'],
   components: {
     DialogDetail,
     DialogTransfer,
@@ -106,8 +126,6 @@ export default {
       tableData: [],
       detail: {},
 
-      transferDetail: {}, // buddhistId, orderIds
-
       pagination: {
         page: 1,
         pageSize: 10,
@@ -117,12 +135,15 @@ export default {
       multipleSelection: [],
     };
   },
+  computed: {
+    ...computedProps,
+  },
   created() {
     this.requestList();
   },
   methods: {
     requestList() {
-      const { buddhistId, tel, subId } = this;
+      const { transferBuddhistId: buddhistId, transferTel: tel, transferSubId: subId } = this;
       const { page, pageSize } = this.pagination;
 
       seeFetch('promo/index/transfer/getTransferOrderList', {
@@ -146,13 +167,12 @@ export default {
         this.pagination.total = res.count;
       });
     },
-    tableSpanMethod({ row, column, rowIndex, columnIndex }) {},
     refresh() {
       this.pagination.page = 1;
       this.requestList();
     },
     tableRowSelectable(row) {
-      return parseInt(this.subId, 10) !== 0;
+      return this.transferSubId !== 0;
     },
     handleSelectionChange(selectedItem) {
       this.multipleSelection = selectedItem;
@@ -167,18 +187,11 @@ export default {
         return;
       }
 
-      this.transferDetail = {
-        buddhistId: this.buddhsitId,
-        orderIds: this.multipleSelection.map(item => item.id).join(','),
-      };
+      this.transferOrderIds = this.multipleSelection.map(item => item.id).join(','),
       this.dialogTransferVisible = !0;
     },
     handleClickSingleTransfer(rowData) {
-      this.transferDetail = {
-        buddhistId: this.buddhsitId,
-        orderIds: rowData.id,
-      };
-
+      this.transferOrderIds = rowData.id,
       this.dialogTransferVisible = !0;
     },
     handleClickDetail(rowData, itemData, itemIndex) {

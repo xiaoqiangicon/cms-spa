@@ -156,7 +156,7 @@ export default {
         id: buddhistId,
         name: buddhistName,
         buddhistStatus,
-        subdivide: subList,
+        subList,
       } = JSON.parse(window.sessionStorage.getItem('promo/index/item'));
       this.buddhistId = buddhistId;
       this.buddhistName = buddhistName;

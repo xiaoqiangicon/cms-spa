@@ -36,8 +36,8 @@
       <el-table-column label="操作" width="100" :align="'center'">
         <template slot-scope="scope">
           <div>
-            <span class="disabled" v-if="!!scope.row.isAuto || (!scope.row.isAuto && !!scope.row.orderList[0].isFinish)" @click="handleClickCancel(scope.row)">撤回</span>
-            <el-button v-else type="text" size="small" @click="handleClickCancel(scope.row)">撤回</el-button>
+            <span class="disabled" v-if="!!scope.row.isAuto || (!scope.row.isAuto && !!scope.row.orderList[0].isFinish)" @click="handleClickRetract(scope.row)">撤回</span>
+            <el-button v-else type="text" size="small" @click="handleClickRetract(scope.row)">撤回</el-button>
           </div>
         </template>
       </el-table-column>
@@ -71,9 +71,30 @@ import { Notification } from 'element-ui';
 import DialogDetail from './DialogDetail';
 import DialogRetract from './DialogRetract';
 
+import { addProps } from '../data';
+const computedProps = {};
+addProps.forEach(({ name, full }) => {
+  if (full) {
+    computedProps[name] = {
+      get() {
+        return this.$store.state.promoIndex.add[name];
+      },
+      set(value) {
+        const key = `promoIndex/update${name
+          .slice(0, 1)
+          .toUpperCase()}${name.slice(1)}`;
+        this.$store.commit(key, value);
+      },
+    };
+  } else {
+    computedProps[name] = function() {
+      return this.$store.state.promoIndex.add[name];
+    };
+  }
+});
+
 export default {
   name: 'TableYetTransfer',
-  props: ['buddhistId', 'subId', 'tel'],
   components: {
     DialogDetail,
     DialogRetract,
@@ -95,12 +116,15 @@ export default {
       multipleSelection: [],
     };
   },
+  computed: {
+    ...computedProps,
+  },
   created() {
     this.requestList();
   },
   methods: {
     requestList() {
-      const { buddhistId, tel, subId } = this;
+      const { transferBuddhistId: buddhistId, transferTel: tel, transferSubId: subId } = this;
       const { page, pageSize } = this.pagination;
       const self = this;
 
@@ -129,7 +153,7 @@ export default {
       this.requestList();
     },
     handleSelectionChange() {},
-    handleClickCancel(rowData) {
+    handleClickRetract(rowData) {
       const { id, isAuto, buddhistName, subName } = rowData;
       const { templeName } = rowData.orderList[0];
       const { isFinish } = rowData.orderList[0];

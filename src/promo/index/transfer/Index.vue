@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <div class="filter">
-        <div v-if="activeName === 'tableBuddhist'">
+        <div v-if="transferActiveName === 'tableBuddhist'">
           <div
             class="tip fl-left"
           >转单系统：手动调度APP的订单给指定的寺院处理、自动调度为APP超度和祈福的组合单其中转单系统与推广佛事为互斥关系，但两者都可设置分享激励</div>
@@ -15,69 +15,54 @@
           </div>
         </div>
         <div v-else>
-          <div class="pd-t-30">
-            <div class="mg-r-10 fl-left">佛事名称 &nbsp;&nbsp;
-              <el-select
-                v-model="buddhistId"
-                placeholder="请选择"
-                size="small"
-                style="width: 200px;"
-                @change="handleChangeBuddhist"
-                filterable
-              >
-                <el-option value="0" label="全部"/>
-                <el-option
-                  v-for="item in buddhistList"
-                  :key="item.id"
-                  :value="item.id"
-                  :label="item.name"
-                />
-              </el-select>
-            </div>
-            <div class="mg-r-10 fl-left">选择项名称 &nbsp;&nbsp;
-              <el-select
-                v-model="subId"
-                placeholder="请选择"
-                size="small"
-                style="width: 200px;"
-                filterable
-              >
-                <el-option value="0" label="全部"/>
-                <el-option
-                  v-for="item in subList"
-                  :key="item.id"
-                  :value="item.id"
-                  :label="item.name"
-                />
-              </el-select>
-            </div>
-            <div class="fl-right">
-              <el-button icon="el-icon-search" size="small" type="primary" @click="refreshTableData(activeName)">搜索</el-button>
-            </div>
-            <div class="fl-right mg-r-10" style="width: 120px;">
-              <el-input v-model="tel" placeholder="请填写手机号" size="small"/>
+          <div class="pd-t-20">
+            <div class="mg-r-10 f-s-16">当前佛事&nbsp;&nbsp;&nbsp;&nbsp; {{transferBuddhistName}}</div>
+            <div class="mg-t-20">
+              <div class="mg-r-10 fl-left">选择项名称 &nbsp;&nbsp;
+                <el-select
+                  v-model="transferSubId"
+                  placeholder="请选择"
+                  size="small"
+                  style="width: 200px;"
+                  filterable
+                  @change="refreshTableData(transferActiveName)"
+                >
+                  <el-option :value="0" label="全部"/>
+                  <el-option
+                    v-for="item in transferSubList"
+                    :key="item.id"
+                    :value="item.id"
+                    :label="item.name"
+                  />
+                </el-select>
+              </div>
+              <div class="fl-right">
+                <el-button
+                  icon="el-icon-search"
+                  size="small"
+                  type="primary"
+                  @click="refreshTableData(transferActiveName)"
+                >搜索</el-button>
+              </div>
+              <div class="fl-right mg-r-10" style="width: 120px;">
+                <el-input v-model="transferTel" placeholder="请填写手机号" size="small"/>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tabs v-model="transferActiveName" @tab-click="handleClickTab">
         <el-tab-pane label="佛事管理" name="tableBuddhist">
           <TableBuddhist ref="tableBuddhist"/>
         </el-tab-pane>
-        <el-tab-pane label="未转单项" name="tableNotTransfer">
+        <el-tab-pane :disabled="transferBuddhistId === ''" label="未转单项" name="tableNotTransfer">
           <TableNotTransfer
             ref="tableNotTransfer"
-            :buddhistId="buddhistId"
-            :subId="subId"
-            :tel="tel"
           />
         </el-tab-pane>
-        <el-tab-pane label="已转单项" name="tableYetTransfer">
+        <el-tab-pane :disabled="transferBuddhistId === ''" label="已转单项" name="tableYetTransfer">
           <TableYetTransfer
             ref="tableYetTransfer"
-            :buddhistId="buddhistId"
-            :subId="subId"
-            :tel="tel"
           />
         </el-tab-pane>
       </el-tabs>
@@ -90,12 +75,12 @@
 import './fetch';
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
-import { addProps } from '../data';
 import DialogAddTransferBuddhist from './DialogAddTransferBuddhist';
 import TableBuddhist from './TableBuddhist';
 import TableYetTransfer from './TableYetTransfer';
 import TableNotTransfer from './TableNotTransfer';
 
+import { addProps } from '../data';
 const computedProps = {};
 addProps.forEach(({ name, full }) => {
   if (full) {
@@ -127,8 +112,6 @@ export default {
   },
   data() {
     return {
-      activeName: 'tableBuddhist',
-
       buddhistId: '0',
       subId: '0',
       tel: '',
@@ -139,38 +122,23 @@ export default {
   },
   computed: {
     ...computedProps,
-  },
-  created() {
-    this.getBuddhistList();
+    buddhistName() {
+      const findItem = this.buddhistList.find(
+        item => item.id === parseInt(this.buddhistId)
+      );
+      if (findItem) {
+        return findItem.name;
+      } else {
+        return '';
+      }
+    },
   },
   methods: {
-    refresh() {},
     refreshTableData(tableName) {
       this.$refs[tableName].refresh();
     },
-    getBuddhistList() {
-      seeFetch('promo/index/transfer/getBuddhistList', {}).then(res => {
-        if (!res.success) {
-          Notification({
-            type: 'error',
-            title: '提示',
-            message: res.message,
-          });
-          return;
-        }
-
-        this.buddhistList = res.data;
-        this.subList = [];
-      });
-    },
-    handleChangeBuddhist(index) {
-      this.subList = this.buddhistList.find(
-        item => item.id === this.buddhistId
-      ).subList;
-      this.subId = '0';
-    },
-    handleClick() {
-      console.log(this.activeName);
+    handleClickTab(tab) {
+      this.refreshTableData(this.transferActiveName);
     },
   },
 };
