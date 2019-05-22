@@ -31,6 +31,8 @@ export default {
     uploadImageVisible: !1,
     uploadImageResult: [],
     imagesUploaded: 1,
+    detailVisible: !1,
+    detailJsonContent: {},
   },
   mutations: {
     ...addMutations,

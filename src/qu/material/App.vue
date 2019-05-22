@@ -33,7 +33,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="shortContentText" label="内容摘要" />
-          <el-table-column prop="publishAccountText" label="帐号" />
+          <el-table-column prop="publishAccountText" label="发布账户" />
           <el-table-column prop="statusText" label="状态" />
           <el-table-column prop="publishAuthor" label="发布作者" />
           <el-table-column label="是否原创">
@@ -60,6 +60,9 @@
               >
                 恢复
               </el-button>
+              <el-button type="text" size="small" @click="toDetail(item)">
+                详情
+              </el-button>
               <el-button type="text" size="small" @click="toDelete(item)">
                 删除
               </el-button>
@@ -80,6 +83,7 @@
     <Action />
     <SelectImage />
     <UploadImage />
+    <Detail />
   </div>
 </template>
 
@@ -92,6 +96,7 @@ import Add from './Add';
 import Action from './Action';
 import SelectImage from './SelectImage';
 import UploadImage from './UploadImage';
+import Detail from './Detail';
 import { getJsonContent } from './parse';
 import './fetch';
 
@@ -102,6 +107,7 @@ export default {
     Action,
     SelectImage,
     UploadImage,
+    Detail,
   },
   data() {
     return {
@@ -182,6 +188,13 @@ export default {
       this.$store.state.quMaterial.add.publishTime =
         item.publishTime || date.dateTime;
       this.$store.state.quMaterial.add.original = item.original || 0;
+    },
+    toDetail({ row: item }) {
+      this.$store.state.quMaterial.detailVisible = !0;
+      this.$store.state.quMaterial.detailJsonContent = getJsonContent(
+        item.content,
+        item.jsonContent
+      );
     },
     toDelete(item) {
       this.$confirm('确定删除吗？', '提示', {

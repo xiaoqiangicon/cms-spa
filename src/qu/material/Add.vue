@@ -33,6 +33,21 @@
       </div>
       <div class="row">
         <div class="row-name">
+          标题：
+        </div>
+        <el-input
+          v-model="title"
+          placeholder="请输入"
+          size="small"
+          maxlength="30"
+          style="width: 100%"
+        />
+        <p class="mg-t-10">
+          最多30字
+        </p>
+      </div>
+      <div class="row">
+        <div class="row-name">
           封面图片：
         </div>
         <div class="mg-b-10">
@@ -92,6 +107,27 @@
           <el-option label="否" :value="0" />
           <el-option label="是" :value="1" />
         </el-select>
+      </div>
+      <div class="row">
+        <div class="row-name">
+          发布账户：
+        </div>
+        <el-select
+          v-model="publishAccount"
+          placeholder="请选择"
+          size="small"
+          style="width: 100%"
+        >
+          <el-option
+            v-for="item in publishAccounts"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
+        <p class="mg-t-10">
+          发布后不可修改，请谨慎选择
+        </p>
       </div>
       <div class="row">
         <div class="row-name">
@@ -370,6 +406,7 @@ export default {
       } = this;
 
       if (!title) error = '标题不能为空';
+      else if (title.length > 30) error = '标题最多30字';
       else if (!jsonContent.content.length) error = '内容不能为空';
       else if (!covers.length) error = '封面不能为空';
       else if (sequence === 2) {
