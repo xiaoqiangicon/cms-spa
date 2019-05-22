@@ -23,6 +23,7 @@ const refactor = {
       // profitConversionOrderPrice: 'profitConversionOrderPrice', // 盈收金额
       // time: 'time', // 添加时间
       // isEnd: 'isEnd', // 是否结束
+      isShareFuBi: 'isShareBlessCoin', // 是否分享福币
       subList: 'subdivide', // 选择项列表
     },
   ],

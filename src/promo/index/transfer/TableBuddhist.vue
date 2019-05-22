@@ -17,7 +17,12 @@
       <el-table-column prop="conversionOrderNum" label="已转单数" :align="'center'"/>
       <el-table-column prop="conversionOrderPrice" label="订单金额（元）" :align="'center'"/>
       <el-table-column prop="profitConversionOrderPrice" label="盈收金额（元）" :align="'center'"/>
-      <el-table-column prop="id" label="分享福币" :align="'center'"/>
+      <el-table-column label="分享福币" :align="'center'">
+        <template slot-scope="scope">
+          <span v-if="scope.row.isShareFuBi">已设置</span>
+          <span v-else style="color: #409EFF;">未设置</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="100" :align="'center'">
         <template slot-scope="scope">
           <div>
@@ -124,20 +129,18 @@ export default {
       this.requestList();
     },
     toTransferList(item) {
-      const {id, name, subList} = item;
+      const { id, name, subList } = item;
       this.transferBuddhistId = id;
       this.transferBuddhistName = name;
       this.transferSubList = subList;
       this.transferActiveName = 'tableNotTransfer';
     },
     toTransferSet(item) {
-      window.sessionStorage['promo/index/item'] = JSON.stringify(item);
-
+      window.sessionStorage['promo/index/transfer/item'] = JSON.stringify(item);
       this.$router.push(`/promo/transferSet/${item.id}`);
     },
     toMergeSet(item) {
-      window.sessionStorage['promo/index/item'] = JSON.stringify(item);
-
+      window.sessionStorage['promo/index/transfer/item'] = JSON.stringify(item);
       this.$router.push(`/promo/mergeSet/${item.id}`);
     },
   },

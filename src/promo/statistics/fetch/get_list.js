@@ -12,6 +12,7 @@ const pre = params => ({
 });
 
 const refactor = {
+  total: 'count',
   data: [{
     // id: 'id', // 寺院 id
     // name: 'name', // 寺院名

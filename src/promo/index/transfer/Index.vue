@@ -44,7 +44,7 @@
                   @click="refreshTableData(transferActiveName)"
                 >搜索</el-button>
               </div>
-              <div class="fl-right mg-r-10" style="width: 120px;">
+              <div class="fl-right mg-r-10" style="width:  120px;">
                 <el-input v-model="transferTel" placeholder="请填写手机号" size="small"/>
               </div>
             </div>

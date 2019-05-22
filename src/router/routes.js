@@ -117,6 +117,13 @@ const routes = [
         meta: { title: '转单系统/组合设置', noCache: true },
         hidden: !0,
       },
+      {
+        path: 'buddhistEdit/:id',
+        component: () => import('../promo/buddhist_edit/App'),
+        name: '推广佛事/推广编辑',
+        meta: { title: '推广佛事/推广编辑', noCache: true },
+        hidden: !0,
+      }
     ],
   },
   {

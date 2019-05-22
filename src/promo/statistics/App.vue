@@ -9,7 +9,7 @@
           size="small"
           style="width: 200px;"
           filterable
-          @change="getList"
+          @change="refresh"
         >
           <el-option :value="0" label="全部"/>
           <el-option v-for="item in templeList" :key="item.id" :value="item.id" :label="item.name"/>
@@ -79,6 +79,10 @@ export default {
     this.getList();
   },
   methods: {
+    refresh() {
+      this.pagination.page = 1;
+      this.getList();
+    },
     getTempleList() {
       seeFetch('promo/statistics/getTempleList', {}).then(res => {
         if (!res.success) {

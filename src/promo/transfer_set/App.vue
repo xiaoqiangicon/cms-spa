@@ -159,7 +159,7 @@ export default {
         buddhistStatus,
         subList,
         isEnd,
-      } = JSON.parse(window.sessionStorage.getItem('promo/index/item'));
+      } = JSON.parse(window.sessionStorage.getItem('promo/index/transfer/item'));
       this.buddhistId = buddhistId;
       this.buddhistName = buddhistName;
       this.buddhistStatus = buddhistStatus;
