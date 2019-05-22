@@ -24,6 +24,8 @@ const refactor = {
       jsonContent: 'articleJson',
       publishAccount: 'pushAccount',
       region: 'area',
+      publishAuthor: 'printAuthor',
+      original: 'isOriginal',
       createdAt: 'addTime',
     },
   ],
@@ -42,6 +44,8 @@ const post = res => {
       item.publishAccountText = publishAccounts.find(
         i => i.id === item.publishAccount
       ).name;
+
+      if (!item.publishAuthor) item.publishAuthor = '自在家';
     });
 };
 

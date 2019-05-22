@@ -21,7 +21,11 @@
             <el-button v-if="item.row.confirmed" type="primary" size="mini">
               已确认
             </el-button>
-            <el-button v-else-if="item.row.ended" type="danger" size="mini">
+            <el-button
+              v-else-if="item.row.ended === 1"
+              type="danger"
+              size="mini"
+            >
               已结束
             </el-button>
             <el-button v-else size="mini">
@@ -42,7 +46,7 @@
         <el-table-column label="操作">
           <template slot-scope="item">
             <el-button
-              v-if="item.row.ended && !item.row.confirmed"
+              v-if="item.row.ended === 1 && !item.row.confirmed"
               type="text"
               @click="toConfirm(item)"
             >

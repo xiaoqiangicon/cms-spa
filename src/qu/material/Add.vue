@@ -58,28 +58,7 @@
           </el-button>
         </div>
         <p class="mg-t-10">
-          最多3张，超过3张将只取前3张
-        </p>
-      </div>
-      <div class="row">
-        <div class="row-name">
-          发布账户：
-        </div>
-        <el-select
-          v-model="publishAccount"
-          placeholder="请选择"
-          size="small"
-          style="width: 100%"
-        >
-          <el-option
-            v-for="item in publishAccounts"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"
-          />
-        </el-select>
-        <p class="mg-t-10">
-          发布后不可修改，请谨慎选择
+          至少1张，最多3张，超过3张将只取前3张
         </p>
       </div>
       <div class="row">
@@ -90,6 +69,7 @@
           v-model="region"
           placeholder="请选择"
           size="small"
+          filterable
           style="width: 100%"
         >
           <el-option label="请选择" value="" />
@@ -97,6 +77,34 @@
         </el-select>
         <p class="mg-t-10">
           如稿件讲述的是某地域的事件，请添加该地域的标签
+        </p>
+      </div>
+      <div class="row">
+        <div class="row-name">
+          是否原创：
+        </div>
+        <el-select
+          v-model="original"
+          placeholder="请选择"
+          size="small"
+          style="width: 100%"
+        >
+          <el-option label="否" :value="0" />
+          <el-option label="是" :value="1" />
+        </el-select>
+      </div>
+      <div class="row">
+        <div class="row-name">
+          发布作者：
+        </div>
+        <el-input
+          v-model="publishAuthor"
+          placeholder="请输入"
+          size="small"
+          style="width: 100%"
+        />
+        <p class="mg-t-10">
+          默认：自在家
         </p>
       </div>
       <div class="row">
@@ -136,6 +144,7 @@
 <script>
 import { Notification } from 'element-ui';
 import Draggable from 'vuedraggable';
+import { getDate, numOfDateTime } from '@zzh/n-util';
 import seeFetch from 'see-fetch';
 import '@zzh/upload/dist/upload.css';
 import '../../configs/upload';
@@ -170,18 +179,24 @@ addProps.forEach(({ name, full }) => {
   }
 });
 
-['action', 'actionSelected', 'selectImageResult', 'imagesSelected'].forEach(
-  name => {
-    computedProps[name] = {
-      get() {
-        return this.$store.state.quMaterial[name];
-      },
-      set(value) {
-        this.$store.state.quMaterial[name] = value;
-      },
-    };
-  }
-);
+[
+  'action',
+  'actionSelected',
+  'selectImageResult',
+  'imagesSelected',
+  'uploadImageVisible',
+  'uploadImageResult',
+  'imagesUploaded',
+].forEach(name => {
+  computedProps[name] = {
+    get() {
+      return this.$store.state.quMaterial[name];
+    },
+    set(value) {
+      this.$store.state.quMaterial[name] = value;
+    },
+  };
+});
 
 export default {
   name: 'Add',
@@ -231,6 +246,15 @@ export default {
         return;
       }
 
+      if (
+        this.action === 'insertImageBefore' ||
+        this.action === 'insertImageAfter'
+      ) {
+        this.uploadImageResult = [];
+        this.uploadImageVisible = !0;
+        return;
+      }
+
       // insertTextBefore, insertTextAfter, insertImageBefore, insertImageAfter
       this.$prompt('请输入内容', '提示', {
         confirmButtonText: '确定',
@@ -240,18 +264,12 @@ export default {
         if (!value) return;
 
         const index =
-          this.action === 'insertTextBefore' ||
-          this.action === 'insertImageBefore'
+          this.action === 'insertTextBefore'
             ? this.handleIndex
             : this.handleIndex + 1;
-        const type =
-          this.action === 'insertTextBefore' ||
-          this.action === 'insertTextAfter'
-            ? PARSE_TYPE_TEXT
-            : PARSE_TYPE_IMAGE;
 
         const values = value.split('\n').filter(i => !!i);
-        const items = values.map(i => makeJsonItem(type, i));
+        const items = values.map(i => makeJsonItem(PARSE_TYPE_TEXT, i));
 
         this.jsonContent.content.splice(index, 0, ...items);
       });
@@ -259,11 +277,23 @@ export default {
     imagesSelected() {
       this.covers.push(...this.selectImageResult);
     },
+    imagesUploaded() {
+      const index =
+        this.action === 'insertImageBefore'
+          ? this.handleIndex
+          : this.handleIndex + 1;
+
+      const items = this.uploadImageResult.map(i =>
+        makeJsonItem(PARSE_TYPE_IMAGE, i)
+      );
+
+      this.jsonContent.content.splice(index, 0, ...items);
+    },
   },
   updated() {
-    if (!this.initUpload) {
-      const { upload: uploadEl } = this.$refs;
+    const { upload: uploadEl } = this.$refs;
 
+    if (uploadEl && !this.initUpload) {
       upload(
         uploadEl,
         url => {
@@ -333,13 +363,26 @@ export default {
         jsonContent,
         region,
         publishAccount,
+        publishAuthor,
+        original,
         covers,
         publishTime,
       } = this;
 
       if (!title) error = '标题不能为空';
       else if (!jsonContent.content.length) error = '内容不能为空';
-      else if (!publishTime && sequence === 2) error = '发布时间不能为空';
+      else if (!covers.length) error = '封面不能为空';
+      else if (sequence === 2) {
+        if (!publishTime) error = '发布时间不能为空';
+        else {
+          const date = getDate(
+            new Date(new Date().getTime() + 2 * 60 * 60 * 1000)
+          );
+          if (numOfDateTime(publishTime) < numOfDateTime(date.dateTime)) {
+            error = '发布时间至少应在当前时间2小时后';
+          }
+        }
+      }
 
       if (error) {
         Notification({
@@ -357,6 +400,8 @@ export default {
         jsonContent: JSON.stringify(jsonContent),
         region,
         publishAccount,
+        original,
+        publishAuthor: publishAuthor || '自在家',
         covers: covers.slice(0, 3).join(','),
       };
 

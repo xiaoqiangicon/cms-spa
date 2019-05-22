@@ -15,6 +15,8 @@ export const list = {
     publishAccount: (id % 3) + 1,
     region: '全国',
     canEdit: id % 2,
+    publishAuthor: '推送作者',
+    original: id % 2,
     createdAt: '2019-01-01 01:01:01',
   })),
 };
@@ -34,6 +36,8 @@ export const list1 = {
       pushAccount: (id % 3) + 1,
       area: '全国',
       canEdit: id % 2,
+      printAuthor: '推送作者',
+      isOriginal: id % 2,
       addTime: '2019-01-01 01:01:01',
     })),
   },

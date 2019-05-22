@@ -28,6 +28,9 @@ export default {
     selectImageVisible: !1,
     selectImageResult: [],
     imagesSelected: 1,
+    uploadImageVisible: !1,
+    uploadImageResult: [],
+    imagesUploaded: 1,
   },
   mutations: {
     ...addMutations,

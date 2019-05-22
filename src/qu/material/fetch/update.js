@@ -7,6 +7,8 @@ const req = {
   publishAccount: 'pushAccount',
   covers: 'titleImg',
   publishTime: 'printTime',
+  publishAuthor: 'printAuthor',
+  original: 'isOriginal',
 };
 
 const pre = params => {

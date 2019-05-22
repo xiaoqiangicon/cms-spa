@@ -10,6 +10,8 @@ export const addProps = [
   { name: 'region', full: !0, default: '' },
   { name: 'publishAccount', full: !0, default: 1 },
   { name: 'covers', full: !0, default: () => [] },
+  { name: 'publishAuthor', full: !0, default: '' },
+  { name: 'original', full: !0, default: 0 },
   { name: 'publishTime', full: !0, default: '' },
 ];
 

@@ -1,3 +1,5 @@
+import he from 'he';
+
 // jsonContent 的版本号，以备数据结构的变化
 export const version = '1.0';
 // jsonContent 解析器的版本号
@@ -15,7 +17,10 @@ export const makeJsonContent = content => ({
 });
 
 export const getJsonContent = (content, jsonContent) => {
-  if (jsonContent) return JSON.parse(jsonContent);
+  if (jsonContent)
+    return typeof jsonContent === 'string'
+      ? JSON.parse(jsonContent)
+      : jsonContent;
 
   // 1. 纯文字，2：img 标签
   const regExp = /(>([^><]+?)<)|(<img[^>]* src="([^"]+?)"[^>]*>)/gi;
@@ -27,7 +32,7 @@ export const getJsonContent = (content, jsonContent) => {
     // 文字
     if (matches[2]) {
       const text = matches[2].trim();
-      if (text) result.push(makeJsonItem(PARSE_TYPE_TEXT, text));
+      if (text) result.push(makeJsonItem(PARSE_TYPE_TEXT, he.decode(text)));
     }
     // 图片
     else if (matches[4]) {
