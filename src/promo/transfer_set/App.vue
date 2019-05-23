@@ -20,7 +20,7 @@
             class="fl-right"
             size="small"
             type="primary"
-            @click="addDialogVisible = true"
+            @click="dialogAddVisible = true"
           >添加寺院</el-button>
         </div>
         <div class="list">
@@ -81,7 +81,7 @@
             </template>
             <template slot-scope="scope">
               <el-input style="width: 80px;" v-model="scope.row.transferRate" placeholder=""></el-input>
-              <span class="mg-t-5 mg-r-5" slot="suffix">%</span>
+              <span class="mg-l-5" slot="suffix">%</span>
             </template>
           </el-table-column>
           <el-table-column prop="transferPrice" label="转单金额（元）">
@@ -89,7 +89,7 @@
               <el-input style="width: 80px;" v-model="scope.row.transferPrice" placeholder=""></el-input>
             </template>
           </el-table-column>
-          <el-table-column prop="fuBiRate" label="分享福币（%）">
+          <el-table-column label="分享福币（%）">
             <template slot="header" slot-scope="scope">分享福币（%）
               <el-tooltip
                 class="item"
@@ -101,17 +101,47 @@
               </el-tooltip>
             </template>
             <template slot-scope="scope">
-              <el-input style="width: 80px;" v-model="scope.row.fuBiRate" placeholder=""></el-input>
-              <span class="mg-t-5 mg-r-5" slot="suffix">%</span>
+              <div
+                v-if="scope.row.price !== 0"
+                style="cursor: pointer;"
+                @click="handleClickEditFuBiPercent(scope.row)"
+              >
+                {{subList.find(subItem => subItem.id === scope.row.id).shareFuBiPercent}}%
+                <i
+                  style="color: #409EFF;"
+                  class="el-icon-edit"
+                ></i>
+              </div>
+              <div v-else>-</div>
             </template>
           </el-table-column>
         </el-table>
       </el-card>
     </div>
+    <!-- DialogEditFuBi -->
+    <el-dialog
+      :title="curSubItem.name"
+      :visible.sync="dialogEditFuBiVisible"
+      :before-close="()=>{dialogEditFuBiVisible=!1;}"
+    >
+      <div>
+        <span class="mg-r-5">分享福币</span>
+        <el-input
+          style="width: 100px;"
+          v-model.number="tempCurSubItem.shareFuBiPercent"
+          placeholder=""
+        ></el-input>
+        <span class="mg-l-5">%</span>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitFuBiSet">保 存</el-button>
+      </span>
+    </el-dialog>
+    <!-- DialogAdd -->
     <Add
-      :visible="addDialogVisible"
+      :visible="dialogAddVisible"
       :templeList="templeList"
-      @updateVisible="updateDialogVisible"
+      @updateVisible="updateDialogAddVisible"
       @save="addTemple"
     />
   </div>
@@ -134,11 +164,15 @@ export default {
     return {
       buddhistId: null,
       buddhistName: null,
-      buddhistStatus: null,
-      subList: [], // 佛事的选择项数据 {id, name, conversionSubdivide, isConversion, isOrder, isZizaijiaCommodity, price}
+      promotionPercent: null,
+      subList: [], // {id, name, conversionSubdivide, isConversion, isOrder, isZizaijiaCommodity, price, shareFuBiPercent}
       isEnd: null,
 
-      addDialogVisible: !1,
+      dialogEditFuBiVisible: !1,
+      dialogAddVisible: !1,
+
+      curSubItem: {}, // id name price shareFuBiPercent
+      tempCurSubItem: {}, // id name price shareFuBiPercent
 
       templeList: [],
       transferTempleList: [],
@@ -156,15 +190,18 @@ export default {
       const {
         id: buddhistId,
         name: buddhistName,
-        buddhistStatus,
         subList,
         isEnd,
-      } = JSON.parse(window.sessionStorage.getItem('promo/index/transfer/item'));
+        promotionPercent,
+      } = JSON.parse(
+        window.sessionStorage.getItem('promo/index/transfer/item')
+      );
+
       this.buddhistId = buddhistId;
       this.buddhistName = buddhistName;
-      this.buddhistStatus = buddhistStatus;
       this.subList = subList;
       this.isEnd = isEnd;
+      this.promotionPercent = promotionPercent;
 
       this.getTempleList();
       this.getTransferTempleList(() => {
@@ -203,23 +240,23 @@ export default {
             return;
           }
           this.transferTempleList = res.data.map(item =>
-            this.createTableData(item)
+            this.createHandleData(item)
           );
           cb && cb();
         }
       );
     },
     tableSelectable(row) {
-      if(row.price <= 0) return false;
+      if (row.price <= 0) return false;
 
-      if(row.isZizaijiaCommodity && row.isOrder) return false;
+      if (row.isZizaijiaCommodity && row.isOrder) return false;
 
       return true;
     },
-    // 将服务器数据转化为表格数据
+    // 将服务器数据转化为表格形式数据
     // 本地 subList {id, name, conversionSubdivide, isConversion, isOrder, isZizaijiaCommodity, price}
-    // 服务器 subList {id, name, price, transferPrice, transferRate, fuBiRate}
-    createTableData(item) {
+    // 服务器 subList {id, name, price, transferPrice, transferRate, shareFuBiPercent}
+    createHandleData(item) {
       const { subList } = this;
       let res = { ...item };
       res.subList = clone(subList);
@@ -230,24 +267,22 @@ export default {
           sub.selected = true;
 
           // 赋值服务器字段 并设置为选中状态
-          const { transferPrice, transferRate, fuBiRate } = findSub;
+          const { transferPrice, transferRate } = findSub;
           sub.transferPrice = transferPrice;
           sub.transferRate = transferRate;
-          sub.fuBiRate = fuBiRate;
         } else {
           sub.selected = false;
 
           // 补全字段
           sub.transferPrice = 0;
           sub.transferRate = 0;
-          sub.fuBiRate = 0;
         }
       });
       return res;
     },
     // 生成上传数据
     // 处理本地的transferTempleList [{id, subList: [{}]}] 数据并上传
-    // 本地 subList {id, name, price, transferPrice, transferRate, fuBiRate}
+    // 本地 subList {id, name, price, transferPrice, transferRate}
     // 服务器 subList {id, transferPrice, transferRate}
     createSubmitData() {
       const { buddhistId, transferTempleList } = this;
@@ -280,8 +315,8 @@ export default {
         }
       });
     },
-    updateDialogVisible(val) {
-      this.addDialogVisible = val;
+    updateDialogAddVisible(val) {
+      this.dialogAddVisible = val;
     },
     handleSelectionChange(selectedAry) {
       const { templeId } = this;
@@ -297,10 +332,63 @@ export default {
         }
       });
     },
+    handleClickEditFuBiPercent(rowData) {
+      const curSubItem = this.subList.find(item => item.id === rowData.id);
+      this.curSubItem = curSubItem;
+      this.tempCurSubItem = { ...curSubItem };
+      this.dialogEditFuBiVisible = !0;
+    },
+    submitFuBiSet() {
+      const { promotionPercent } = this;
+      const { id: subId } = this.tempCurSubItem;
+      let { shareFuBiPercent } = this.tempCurSubItem;
+
+      if (promotionPercent + shareFuBiPercent > 100) {
+        Notification({
+          type: 'warning',
+          title: '提示',
+          message: `福币分成比例不可超过${100 - promotionPercent}`,
+        });
+        return;
+      }
+
+      if (!shareFuBiPercent) {
+        // 设置为 0 或不填 提示 为不设置分成
+        Notification({
+          type: 'info',
+          title: '提示',
+          message: '设置为0或不填将保存为不设置分成',
+        });
+        shareFuBiPercent = 0;
+      }
+
+      seeFetch('promo/transfer_set_/update_sub_set', {
+        subId,
+        shareFuBiPercent,
+      }).then(res => {
+        if (!res.success) {
+          Notification({
+            type: 'error',
+            title: '提示',
+            message: res.message,
+          });
+          return;
+        }
+
+        Notification({
+          type: 'success',
+          title: '提示',
+          message: '保存成功',
+        });
+
+        this.curSubItem.shareFuBiPercent = shareFuBiPercent;
+        this.dialogEditFuBiVisible = !1;
+      });
+    },
     save() {
       const params = this.createSubmitData();
       console.log(params);
-      seeFetch('promo/transfer_set/update', params).then(res => {
+      seeFetch('promo/transfer_set/update_transfer_set', params).then(res => {
         if (!res.success) {
           Notification({
             type: 'error',
@@ -338,10 +426,10 @@ export default {
       } else {
         const index = this.templeList.findIndex(item => item.id === id);
         const { name } = this.templeList[index];
-        const tableData = this.createTableData({ id, name, subList: [] });
-        this.transferTempleList.push(tableData);
+        const handleData = this.createHandleData({ id, name, subList: [] });
+        this.transferTempleList.push(handleData);
         this.templeId = id;
-        this.tableData = tableData.subList;
+        this.tableData = handleData.subList;
         this.updateTableSelected();
       }
     },

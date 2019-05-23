@@ -10,6 +10,7 @@ export default {
     conversionOrderPrice: 0,
     orderNum: 1,
     profitConversionOrderPrice: 0.03,
+    promotionPercentage: 11,
     subdivide: [
       {
         id: 1,
@@ -19,6 +20,7 @@ export default {
         isZizaijiaCommodity: 0,
         name: '选择项需支付',
         price: 0.01,
+        shareBlessCoinPercentage: 11,
       },
       {
         id: 2,
@@ -28,6 +30,7 @@ export default {
         isZizaijiaCommodity: 0,
         name: '选择项无需支付',
         price: 0,
+        shareBlessCoinPercentage: 20,
       },
       {
         id: 3,
@@ -37,6 +40,7 @@ export default {
         isZizaijiaCommodity: 0,
         name: '选择项随喜',
         price: -1,
+        shareBlessCoinPercentage: 30,
       },
     ],
     templeList: ['寺院1', '寺院2'],

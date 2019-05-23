@@ -18,7 +18,7 @@ const req = {
   ]
 };
 
-seeFetch.config('promo/transfer_set/update', {
+seeFetch.config('promo/transfer_set/update_transfer_set', {
   method: ['post'],
   stringify: [!0, !0],
   url: [
