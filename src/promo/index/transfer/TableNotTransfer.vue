@@ -20,7 +20,7 @@
         :selectable="tableRowSelectable"
         type="selection"
         width="55"
-        :align="'center'"
+        align=" left"
       />
       <el-table-column prop="buddhistName" label="佛事名称" show-overflow-tooltip/>
       <el-table-column label="状态" show-overflow-tooltip :align="'center'">
@@ -54,7 +54,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="100" :align="'center'">
+      <el-table-column label="操作" width="100" align="right">
         <template slot-scope="scope">
           <div>
             <el-button type="text" size="small" @click="handleClickSingleTransfer(scope.row)">转单</el-button>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-table :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="id" label="ID" width="100" :align="'center'"/>
+      <el-table-column prop="id" label="ID" width="100" :align="'left'"/>
       <el-table-column prop="name" label="佛事名称"/>
       <el-table-column label="关联寺院" :align="'center'">
         <template slot-scope="scope">
@@ -23,7 +23,7 @@
           <span v-else style="color: #409EFF;">未设置</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="100" :align="'center'">
+      <el-table-column label="操作" width="100" align="center">
         <template slot-scope="scope">
           <div>
             <el-button type="text" size="small" @click="toTransferList(scope.row)">转单列表</el-button>

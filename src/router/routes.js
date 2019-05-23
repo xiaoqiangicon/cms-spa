@@ -68,6 +68,22 @@ const routes = [
     ],
   },
   {
+    path: '/fubi',
+    component: Layout,
+    controlMark: 'pw_fubi',
+    redirect: '/fubi/index',
+    name: '福币分销',
+    meta: { title: '福币分销', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        path: 'index',
+        component: () => import('../fubi/index/App'),
+        name: '福币商城',
+        meta: { title: '福币商城', noCache: true },
+      },
+    ],
+  },
+  {
     path: '/promo',
     component: Layout,
     controlMark: 'pw_promo',

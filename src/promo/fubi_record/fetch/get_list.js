@@ -18,14 +18,7 @@ const refactor = {
     total: 'count',
     list: [
       {
-        // id: 'id',
-        // sort: 'sort',
-        // buddhistName: 'buddhistName',
-        // templeName: 'templeName',
-        // type: 'type',
-        // orderNum: 'orderNum',
-        // sharePay: 'sharePay',
-        // fuBiMoney: 'fuBiMoney',
+        // id, addTime, name, payMoney, owner, fuBiMoney,
       }
     ]
   }

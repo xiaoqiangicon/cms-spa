@@ -21,7 +21,7 @@
     </div>
     <div class="table">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column v-if="!isFinish" label="排序" width="100" align="left">
+        <el-table-column v-if="!isFinish" label="排序" width="100" align="center">
           <template slot="header" slot-scope="scope">排序
             <el-tooltip class="item" effect="dark" content="排序影响“分享列表”的顺序" placement="top-start">
               <i class="el-icon-info" style="color: #409EFF;"></i>
@@ -43,14 +43,12 @@
         <el-table-column prop="orderNum" label="订单数量" :align="'center'"></el-table-column>
         <el-table-column prop="sharePay" label="分享支付（元）" :align="'center'"></el-table-column>
         <el-table-column prop="fuBiMoney" label="产生福币（元）" :align="'center'"></el-table-column>
-        <el-table-column label="操作" :align="'right'">
+        <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <div v-if="!isFinish">
-              <el-button type="text" size="small" @click="handleClickManage(scope.row)">管理</el-button>
-            </div>
-            <div>
-              <el-button type="text" size="small" @click="handleClickRecord(scope.row)">记录</el-button>
-            </div>
+            <span v-if="!isFinish">
+              <el-button type="text" size="small" @click="handleClickManage(scope.row)">管理</el-button>-
+            </span>
+            <el-button type="text" size="small" @click="handleClickRecord(scope.row)">记录</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -205,9 +203,5 @@ export default {
     background-color: #f6ffed;
     color: rgba(0, 0, 0, 0.65);
   }
-}
-.tabs {
-}
-.table {
 }
 </style>
