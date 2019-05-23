@@ -126,6 +126,9 @@ export default lila => {
       define: {
         __SEE_ENV__: isDev ? 1 : 0,
       },
+      provide: {
+        jQuery: 'jquery',
+      },
       plugins: [
         new MomentLocalesPlugin({
           localesToKeep: ['es-us', 'zh-cn'],

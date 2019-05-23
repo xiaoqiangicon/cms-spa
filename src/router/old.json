@@ -115,55 +115,6 @@
       ]
     },
     {
-      "id": "cash",
-      "name": "善款中心",
-      "icon": "fa-yen",
-      "subItems": [
-        {
-          "id": "cash-index",
-          "name": "待处理事项",
-          "link": "/finance/index",
-          "controlMark": "pw_money"
-        },
-        {
-          "id": "cash-stat",
-          "name": "善款统计",
-          "link": "/finance/stat",
-          "controlMark": "pw_money"
-        },
-        {
-          "id": "cash-income-stat",
-          "name": "盈收统计",
-          "link": "/earningsStatistics/stat",
-          "controlMark": "pw_cash_stat"
-        },
-        {
-          "id": "cash-income",
-          "name": "盈收管理",
-          "link": "/cash/income",
-          "controlMark": "pw_rate"
-        },
-        {
-          "id": "cash-record",
-          "name": "人工记账",
-          "link": "/cash/record",
-          "controlMark": "pw_cash_income"
-        },
-        {
-          "id": "cash-remark",
-          "name": "提醒备注",
-          "link": "/cash/remark",
-          "controlMark": "pw_cash_remark"
-        },
-        {
-          "id": "cash-jing",
-          "name": "交易统计",
-          "link": "/cash/jing",
-          "controlMark": "pw_cash_jing"
-        }
-      ]
-    },
-    {
       "id": "hardware",
       "name": "寺院硬件 ",
       "icon": "fa-square",

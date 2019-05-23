@@ -27,12 +27,12 @@ seeFetch.config('ling/edit/info', {
   implement: [
     () =>
       new Promise(resolve => {
-        const item = window.sessionStorage['ling/edit/item'];
+        const item = window.sessionStorage['ling/edit||item'];
 
         if (!item) {
           resolve({
-            errorCode: 0,
-            msg: '请勿重复编辑此页',
+            errorCode: -1,
+            msg: '页面已过期',
           });
         } else {
           resolve({

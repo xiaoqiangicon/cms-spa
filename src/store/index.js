@@ -15,6 +15,18 @@ import lingBubble from '../ling/bubble/state';
 import lingEntry from '../ling/entry/state';
 import lingFate from '../ling/fate/state';
 
+// 善款中心
+import financePending from '../finance/pending/state';
+import financeTaking from '../finance/taking/state';
+import financeIncome from '../finance/income/state';
+import financeRecord from '../finance/record/state';
+import financeRemark from '../finance/remark/state';
+
+// 趣头条
+import quArticle from '../qu/article/state';
+import quMaterial from '../qu/material/state';
+import quSource from '../qu/source/state';
+
 // 事件管理
 import promoIndex from '../promo/index/state';
 
@@ -34,6 +46,18 @@ const store = new Vuex.Store({
     lingBubble,
     lingEntry,
     lingFate,
+
+    // 善款中心
+    financePending,
+    financeTaking,
+    financeIncome,
+    financeRecord,
+    financeRemark,
+
+    // 趣头条
+    quArticle,
+    quMaterial,
+    quSource,
 
     // 事件管理
     promoIndex,
