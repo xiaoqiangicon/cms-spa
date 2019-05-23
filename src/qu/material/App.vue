@@ -196,7 +196,7 @@ export default {
         item.jsonContent
       );
     },
-    toDelete(item) {
+    toDelete({ row: item }) {
       this.$confirm('确定删除吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

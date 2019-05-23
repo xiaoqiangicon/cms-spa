@@ -46,6 +46,8 @@ const post = res => {
       ).name;
 
       if (!item.publishAuthor) item.publishAuthor = '自在家';
+
+      item.cover = item.covers ? item.covers.split(',')[0] : '';
     });
 };
 
