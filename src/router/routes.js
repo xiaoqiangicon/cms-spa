@@ -68,6 +68,49 @@ const routes = [
     ],
   },
   {
+    path: '/promo',
+    component: Layout,
+    controlMark: 'pw_promo',
+    redirect: '/promo/index',
+    name: '运营事件',
+    meta: { title: '运营事件', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        path: 'index',
+        component: () => import('../promo/index/App'),
+        name: '事件管理',
+        meta: { title: '事件管理', noCache: true },
+      },
+      {
+        path: 'statistics',
+        component: () => import('../promo/statistics/App'),
+        name: '事件统计',
+        meta: { title: '事件统计', noCache: true },
+      },
+      {
+        path: 'transferSet/:id',
+        component: () => import('../promo/transfer_set/App'),
+        name: '转单系统/转单设置',
+        meta: { title: '转单系统/转单设置', noCache: true },
+        hidden: !0,
+      },
+      {
+        path: 'mergeSet/:id',
+        component: () => import('../promo/merge_set/App'),
+        name: '转单系统/组合设置',
+        meta: { title: '转单系统/组合设置', noCache: true },
+        hidden: !0,
+      },
+      {
+        path: 'buddhistEdit/:id',
+        component: () => import('../promo/buddhist_edit/App'),
+        name: '推广佛事/推广编辑',
+        meta: { title: '推广佛事/推广编辑', noCache: true },
+        hidden: !0,
+      }
+    ],
+  },
+  {
     path: '/temple',
     component: Layout,
     controlMark: 'pw_temple',

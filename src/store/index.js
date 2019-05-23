@@ -27,6 +27,9 @@ import quArticle from '../qu/article/state';
 import quMaterial from '../qu/material/state';
 import quSource from '../qu/source/state';
 
+// 事件管理
+import promoIndex from '../promo/index/state';
+
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -55,6 +58,9 @@ const store = new Vuex.Store({
     quArticle,
     quMaterial,
     quSource,
+
+    // 事件管理
+    promoIndex,
   },
   getters,
 });
