@@ -104,6 +104,16 @@ const routes = [
         meta: { title: '事件统计', noCache: true },
       },
       {
+        path: `${domain}/event/thousand`,
+        name: '千寺祈福',
+        meta: { title: '千寺祈福'},
+      },
+      {
+        path: `${domain}/goods/index`,
+        name: '自在好物',
+        meta: { title: '自在好物'},
+      },
+      {
         path: 'transferSet/:id',
         component: () => import('../promo/transfer_set/App'),
         name: '转单系统/转单设置',
@@ -123,7 +133,14 @@ const routes = [
         name: '推广佛事/推广编辑',
         meta: { title: '推广佛事/推广编辑', noCache: true },
         hidden: !0,
-      }
+      },
+      {
+        path: 'fubiRecord/:id',
+        component: () => import('../promo/fubi_record/App'),
+        name: '福币分享/记录',
+        meta: { title: '福币分享/记录', noCache: true },
+        hidden: !0,
+      },
     ],
   },
   {
