@@ -5,7 +5,7 @@
         <span class="l-hg-32"> 搜索 </span>&nbsp;&nbsp;&nbsp;&nbsp;
         <el-input
           v-model="search"
-          placeholder="请输入关键字搜索"
+          placeholder="搜索标题或公众号"
           size="small"
           style="width: 250px"
         >

@@ -33,6 +33,10 @@ export default {
     imagesUploaded: 1,
     detailVisible: !1,
     detailJsonContent: {},
+    cropImageVisible: !1,
+    cropImageUrl: '',
+    cropImageResult: '',
+    imageCropped: 1,
   },
   mutations: {
     ...addMutations,

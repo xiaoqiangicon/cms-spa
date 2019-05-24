@@ -107,6 +107,7 @@
           <el-option label="否" :value="0" />
           <el-option label="是" :value="1" />
         </el-select>
+        <p class="mg-t-10" v-if="original === 1 && copyRight">{{copyRight}}</p>
       </div>
       <div class="row">
         <div class="row-name">
@@ -192,6 +193,15 @@ import {
   PARSE_TYPE_TEXT,
   PARSE_TYPE_IMAGE,
 } from './parse';
+import {
+  ACTION_EDIT,
+  ACTION_DELETE,
+  ACTION_INSERT_TEXT_BEFORE,
+  ACTION_INSERT_TEXT_AFTER,
+  ACTION_INSERT_IMAGE_BEFORE,
+  ACTION_INSERT_IMAGE_AFTER,
+  ACTION_CROP_IMAGE,
+} from './constant';
 
 const computedProps = {};
 
@@ -223,6 +233,10 @@ addProps.forEach(({ name, full }) => {
   'uploadImageVisible',
   'uploadImageResult',
   'imagesUploaded',
+  'cropImageVisible',
+  'cropImageUrl',
+  'imageCropped',
+  'cropImageResult',
 ].forEach(name => {
   computedProps[name] = {
     get() {
@@ -260,7 +274,7 @@ export default {
   },
   watch: {
     actionSelected() {
-      if (this.action === 'edit') {
+      if (this.action === ACTION_EDIT) {
         const item = this.jsonContent.content[this.handleIndex];
 
         this.$prompt('请输入内容', '提示', {
@@ -277,21 +291,32 @@ export default {
         return;
       }
 
-      if (this.action === 'delete') {
+      if (this.action === ACTION_DELETE) {
         this.jsonContent.content.splice(this.handleIndex, 1);
         return;
       }
 
+      if (this.action === ACTION_CROP_IMAGE) {
+        const item = this.jsonContent.content[this.handleIndex];
+
+        if (item.type !== PARSE_TYPE_IMAGE) return;
+
+        this.cropImageUrl = item.content;
+        this.cropImageResult = '';
+        this.cropImageVisible = !0;
+        return;
+      }
+
       if (
-        this.action === 'insertImageBefore' ||
-        this.action === 'insertImageAfter'
+        this.action === ACTION_INSERT_IMAGE_BEFORE ||
+        this.action === ACTION_INSERT_IMAGE_AFTER
       ) {
         this.uploadImageResult = [];
         this.uploadImageVisible = !0;
         return;
       }
 
-      // insertTextBefore, insertTextAfter, insertImageBefore, insertImageAfter
+      // insertTextBefore, insertTextAfter
       this.$prompt('请输入内容', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -300,7 +325,7 @@ export default {
         if (!value) return;
 
         const index =
-          this.action === 'insertTextBefore'
+          this.action === ACTION_INSERT_TEXT_BEFORE
             ? this.handleIndex
             : this.handleIndex + 1;
 
@@ -324,6 +349,11 @@ export default {
       );
 
       this.jsonContent.content.splice(index, 0, ...items);
+    },
+    imageCropped() {
+      const item = this.jsonContent.content[this.handleIndex];
+
+      item.content = this.cropImageResult;
     },
   },
   updated() {

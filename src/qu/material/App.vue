@@ -63,7 +63,9 @@
               <el-button type="text" size="small" @click="toDetail(item)">
                 详情
               </el-button>
-              <el-button type="text" size="small" @click="toDelete(item)">
+              <el-button
+                v-if="item.row.status !== -1"
+                type="text" size="small" @click="toDelete(item)">
                 删除
               </el-button>
             </template>
@@ -84,6 +86,7 @@
     <SelectImage />
     <UploadImage />
     <Detail />
+    <CropImage />
   </div>
 </template>
 
@@ -96,6 +99,7 @@ import Add from './Add';
 import Action from './Action';
 import SelectImage from './SelectImage';
 import UploadImage from './UploadImage';
+import CropImage from './CropImage';
 import Detail from './Detail';
 import { getJsonContent } from './parse';
 import './fetch';
@@ -108,6 +112,7 @@ export default {
     SelectImage,
     UploadImage,
     Detail,
+    CropImage,
   },
   data() {
     return {
