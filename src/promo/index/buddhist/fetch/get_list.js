@@ -26,12 +26,13 @@ const refactor = {
         // rate: 'rate',
         // startTime: 'startTime',
         // updateTime: 'updateTime',
+        // isPromotion: 'isPromotion', 
         updateUser: 'managerName',
         promotionPercent: 'promotionPercentage', // 推广百分比
         subList: 'subdivideList',
         _subList: [
           {
-            // id: 'id', 
+            // id: 'id',
             shareFuBiPercent: 'shareBlessCoinPercentage'
           }
         ],

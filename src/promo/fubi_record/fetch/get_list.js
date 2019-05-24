@@ -2,9 +2,10 @@
 import seeFetch from 'see-fetch';
 
 const req = {
-  // type: 'type', // 0 全部 1 转单佛事 2 推广佛事
-  // isFinish: 'isFinish', // 0 1
-  page: 'pageNumber',
+  buddhistId: 'commodityId',
+  // startTime, endTime,
+  searchStr: 'searchContent',
+  page: 'pageNum',
   // pageSize: 'pageSize',
 };
 
@@ -15,10 +16,14 @@ const pre = params => ({
 
 const refactor = {
   data: {
-    total: 'count',
+    total: 'total',
     list: [
       {
-        // id, addTime, name, payMoney, owner, fuBiMoney,
+        // id, payTime, name
+        payMoney: 'price', // 支付金额
+        fuBiMoney: 'shareBlessCoin', // 获得福币金额
+        nickname: 'nickName', // 获得福币的用户名
+        tel: 'mobile', // 获得福币的用户手机号码 
       }
     ]
   }

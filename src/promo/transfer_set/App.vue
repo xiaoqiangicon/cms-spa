@@ -188,8 +188,8 @@ export default {
   methods: {
     init() {
       const {
-        id: buddhistId,
-        name: buddhistName,
+        buddhistId,
+        buddhistName,
         subList,
         isEnd,
         promotionPercent,

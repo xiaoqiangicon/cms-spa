@@ -21,7 +21,7 @@
     </div>
     <div class="table">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column v-if="!isFinish" label="排序" width="100" align="center">
+        <el-table-column v-if="!isEnd" label="排序" width="100" align="center">
           <template slot="header" slot-scope="scope">排序
             <el-tooltip class="item" effect="dark" content="排序影响“分享列表”的顺序" placement="top-start">
               <i class="el-icon-info" style="color: #409EFF;"></i>
@@ -34,18 +34,18 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="id" label="ID" width="100" align="center"></el-table-column>
+        <el-table-column prop="buddhistId" label="ID" width="100" align="center"></el-table-column>
         <el-table-column prop="buddhistName" label="佛事名称"></el-table-column>
         <el-table-column prop="templeName" label="寺院名称"></el-table-column>
         <el-table-column label="类型" align="center">
-          <template slot-scope="scope">{{type === 1 ? '转单佛事' : '推广佛事'}}</template>
+          <template slot-scope="scope">{{scope.row.type === 1 ? '转单佛事' : '推广佛事'}}</template>
         </el-table-column>
         <el-table-column prop="orderNum" label="订单数量" :align="'center'"></el-table-column>
         <el-table-column prop="sharePay" label="分享支付（元）" :align="'center'"></el-table-column>
         <el-table-column prop="fuBiMoney" label="产生福币（元）" :align="'center'"></el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <span v-if="!isFinish">
+            <span v-if="!isEnd">
               <el-button type="text" size="small" @click="handleClickManage(scope.row)">管理</el-button>-
             </span>
             <el-button type="text" size="small" @click="handleClickRecord(scope.row)">记录</el-button>
@@ -76,7 +76,7 @@ export default {
     return {
       type: 0,
       curTab: 'ing',
-      tableData: [], // sort id buddhistName templeName orderNum sharePay fuBiMoney
+      tableData: [], // sort buddhistId buddhistName templeName orderNum sharePay fuBiMoney
       pagination: {
         page: 1,
         pageSize: 20,
@@ -85,7 +85,7 @@ export default {
     };
   },
   computed: {
-    isFinish() {
+    isEnd() {
       return this.curTab === 'end';
     },
   },
@@ -101,12 +101,12 @@ export default {
       this.getList();
     },
     getList() {
-      const { type, isFinish } = this;
+      const { type, isEnd } = this;
       const { page, pageSize } = this.pagination;
 
       seeFetch('promo/index/fu/get_list', {
         type,
-        isFinish,
+        isEnd,
         page,
         pageSize,
       }).then(res => {
@@ -130,7 +130,7 @@ export default {
       this.refresh();
     },
     handleClickRowSort(rowData) {
-      this.$prompt('请填写新的序号', '提示', {
+      this.$prompt('请填写新的序号', '修改序号', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputPattern: /^\d+$/,
@@ -149,6 +149,7 @@ export default {
 
             Notification({
               type: 'success',
+              title: '提示',
               message: '修改成功',
             });
 
@@ -167,7 +168,7 @@ export default {
         window.sessionStorage['promo/index/transfer/item'] = JSON.stringify(
           rowData
         );
-        this.$router.push(`/promo/transferSet/${rowData.id}`);
+        this.$router.push(`/promo/transferSet/${rowData.buddhistId}`);
       } else {
         // 推广佛事设置
         window.sessionStorage['promo/index/buddhist/item'] = JSON.stringify(
@@ -177,8 +178,9 @@ export default {
       }
     },
     handleClickRecord(rowData) {
-      const { id } = rowData;
-      this.$router.push(`/promo/fubiRecord/${id}`);
+      const { buddhistId } = rowData;
+      window.sessionStorage.setItem('promo/index/fu/item', JSON.stringify(rowData));
+      this.$router.push(`/promo/fubiRecord/${buddhistId}`);
     },
     onSizeChange(pageSize) {
       this.pagination.pageSize = pageSize;

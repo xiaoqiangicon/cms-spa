@@ -1,32 +1,42 @@
 <template>
   <div class="container">
     <el-card class="info">
-      <div class="f-s-18 mg-b-10">{{ buddhistName }}</div>
+      <div class="f-s-18 mg-b-10">{{ buddhistData.buddhistName }}</div>
       <div class="gray">
-        <span class="mg-r-10">佛事状态：{{isEnd ? '已结束' : '进行中'}}</span>|
-        <span class="mg-l-10">寺院名称：{{templeName}}</span>
+        <span class="mg-r-10">佛事状态：{{buddhistData.isEnd ? '已结束' : '进行中'}}</span>|
+        <span class="mg-l-10">寺院名称：{{buddhistData.templeName}}</span>
       </div>
     </el-card>
     <el-card class="mg-t-20">
       <div class="filter">
-        <el-date-picker size="small" v-model="time" type="date" placeholder="选择日期"></el-date-picker>
+        <el-date-picker
+          size="small"
+          v-model="time"
+          type="daterange"
+          align="right"
+          unlink-panels
+          range-separator="至 "
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          :picker-options="pickerOptions"
+          value-format="yyyy-MM-dd"
+        ></el-date-picker>
         <el-input size="small" style="width:200px;" v-model="searchStr" placeholder="分享人名字/手机号码"></el-input>
         <el-button class="fl-right" type="primary" size="small" @click="refresh">搜索</el-button>
       </div>
       <div class="table">
         <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="addTime" label="下单时间" />
-          <el-table-column prop="name" label="名称" />
-          <el-table-column prop="payMoney" label="支付金额（元）" />
+          <el-table-column prop="payTime" label="下单时间"/>
+          <el-table-column prop="name" label="名称"/>
+          <el-table-column prop="payMoney" label="支付金额（元）"/>
           <el-table-column label="所属分享人">
             <template slot-scope="scope">
-              {{scope.row.owner}}
+              <div>{{scope.row.nickname}}</div>
+              <div>{{scope.row.tel}}</div>
             </template>
           </el-table-column>
           <el-table-column label="获得福币（元）" align="center">
-             <template slot-scope="scope">
-              {{scope.row.fuBiMoney}}
-            </template>
+            <template slot-scope="scope">{{scope.row.fuBiMoney}}</template>
           </el-table-column>
         </el-table>
         <el-pagination
@@ -52,10 +62,9 @@ export default {
   name: '',
   data() {
     return {
-      id: null,
-      status: 0, // 0 全部
-      time: '', // 下单时间
-      searchStr: '', // 搜索字符串
+      buddhistData: {}, // buddhistId, buddhistName, templeName, isEnd
+      time: [], //  startTime endTime
+      searchStr: '',
 
       tableData: [], // id, addTime, name, payMoney, owner, fuBiMoney
       pagination: {
@@ -64,10 +73,37 @@ export default {
         total: 0,
       },
 
-      buddhistName: '佛事打断点',
-      buddhistId: 101,
-      isEnd: 1,
-      templeName: '寺院',
+      pickerOptions: {
+        shortcuts: [
+          {
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            },
+          },
+          {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            },
+          },
+          {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            },
+          },
+        ],
+      },
     };
   },
   created() {
@@ -75,18 +111,24 @@ export default {
   },
   methods: {
     init() {
-      const id = parseInt(this.$route.params.id, 10);
-      this.id = id;
+      const sessionItem = JSON.parse(
+        window.sessionStorage.getItem('promo/index/fu/item')
+      );
+      this.buddhistData = sessionItem;
       this.getList();
     },
     getList() {
-      const { id, status, time, searchStr } = this;
+      const { buddhistId } = this.buddhistData;
+      const { time, searchStr } = this;
+      const { page, pageSize } = this.pagination;
 
       seeFetch('promo/fubi_record/get_list', {
-        id,
-        status,
-        time,
+        buddhistId,
+        startTime: time[0],
+        endTime: time[1],
         searchStr,
+        page,
+        pageSize,
       }).then(res => {
         if (!res.success) {
           Notification({
