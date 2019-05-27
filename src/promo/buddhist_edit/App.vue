@@ -194,7 +194,7 @@ export default {
           message: '保存成功',
         });
 
-        this.rate = rate / 100;
+        this.buddhistData.rate = rate / 100;
         this.startTime = startTime;
         this.dialogEditVisible = !1;
       });

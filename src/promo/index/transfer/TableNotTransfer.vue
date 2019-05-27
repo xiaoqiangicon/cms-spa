@@ -10,18 +10,14 @@
       >转单</el-button>
     </div>
     <el-table
+      v-loading="loading"
       ref="multipleTable"
       :data="tableData"
       tooltip-effect="dark"
       style="width: 100%"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column
-        :selectable="tableRowSelectable"
-        type="selection"
-        width="55"
-        align=" left"
-      />
+      <el-table-column :selectable="tableRowSelectable" type="selection" width="55" align=" left"/>
       <el-table-column prop="buddhistName" label="佛事名称" show-overflow-tooltip/>
       <el-table-column label="状态" show-overflow-tooltip :align="'center'">
         <template slot-scope="scope">{{scope.row.isAuto ? '自动' : '手动'}}</template>
@@ -71,10 +67,7 @@
       @size-change="onSizeChange"
       @current-change="onCurrentChange"
     />
-    <DialogDetail
-      :visible="dialogDetailVisible"
-      @updateVisible="updateDialogDetailVisible"
-    />
+    <DialogDetail :visible="dialogDetailVisible" @updateVisible="updateDialogDetailVisible"/>
     <DialogTransfer
       :visible="dialogTransferVisible"
       @submit="refresh"
@@ -119,6 +112,8 @@ export default {
   },
   data() {
     return {
+      loading: !0,
+
       dialogDetailVisible: !1,
       dialogTransferVisible: !1,
 
@@ -137,11 +132,17 @@ export default {
     ...computedProps,
   },
   created() {
-    this.requestList();
+    // this.requestList();
   },
   methods: {
     requestList() {
-      const { transferBuddhistId: buddhistId, transferTel: tel, transferSubId: subId } = this;
+      this.loading = !0;
+
+      const {
+        transferBuddhistId: buddhistId,
+        transferTel: tel,
+        transferSubId: subId,
+      } = this;
       const { page, pageSize } = this.pagination;
 
       seeFetch('promo/index/transfer/getTransferOrderList', {
@@ -163,6 +164,7 @@ export default {
 
         this.tableData = res.data;
         this.pagination.total = res.count;
+        this.loading = !1;
       });
     },
     refresh() {
@@ -185,12 +187,33 @@ export default {
         return;
       }
 
-      this.transferOrderIds = this.multipleSelection.map(item => item.id),
+      this.transferOrderIds = this.multipleSelection.map(item => item.id);
       this.dialogTransferVisible = !0;
     },
     handleClickSingleTransfer(rowData) {
       this.transferOrderDetail = rowData;
-      this.transferOrderIds = [rowData.id],
+      this.transferOrderIds = [rowData.id];
+
+      // 兼容错误数据 旧的随喜未转单数据
+      const subId = this.transferSubId
+        ? this.transferSubId
+        : this.transferOrderDetail.subId;
+
+      // 获取转单选择项的原价
+      const { price: originPrice } = this.transferSubList.find(
+        item => item.id === subId
+      );
+
+      if(originPrice <= 0) {
+        Notification({
+          type: 'warning',
+          title: '提示',
+          message: '当前未转单项属于无需支付或随喜，禁止转单',
+        })
+        return;
+      }
+
+
       this.dialogTransferVisible = !0;
     },
     handleClickDetail(rowData, itemData, itemIndex) {
@@ -216,10 +239,9 @@ export default {
         transferPrice,
         addTime,
         wxId,
-        feedBackImg: feedBackImg.split(','),
+        feedBackImg: feedBackImg ? feedBackImg.split(',') : [],
         ps: isAuto ? itemData.ps : rowData.ps[itemIndex].ps,
       };
-
       this.transferOrderDetail = detail;
       this.dialogDetailVisible = !0;
     },

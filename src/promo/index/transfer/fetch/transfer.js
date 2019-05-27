@@ -10,7 +10,7 @@ const req = {
 
 const pre = params => ({
   ...params,
-  orderIds: params.orderIds.join(','),
+  orderIds: JSON.stringify(params.orderIds),
 });
 
 seeFetch.config('promo/index/transfer/transfer', {

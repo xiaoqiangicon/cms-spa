@@ -20,7 +20,7 @@
       </el-tabs>
     </div>
     <div class="table">
-      <el-table :data="tableData" style="width: 100%">
+      <el-table v-loading="loading" :data="tableData" style="width: 100%">
         <el-table-column v-if="!isEnd" label="排序" width="100" align="center">
           <template slot="header" slot-scope="scope">排序
             <el-tooltip class="item" effect="dark" content="排序影响“分享列表”的顺序" placement="top-start">
@@ -74,6 +74,8 @@ export default {
   name: 'Fu',
   data() {
     return {
+      loading: !0,
+
       type: 0,
       curTab: 'ing',
       tableData: [], // sort buddhistId buddhistName templeName orderNum sharePay fuBiMoney
@@ -86,7 +88,7 @@ export default {
   },
   computed: {
     isEnd() {
-      return this.curTab === 'end';
+      return Number(this.curTab === 'end');
     },
   },
   created() {
@@ -101,6 +103,8 @@ export default {
       this.getList();
     },
     getList() {
+      this.loading = !0;
+
       const { type, isEnd } = this;
       const { page, pageSize } = this.pagination;
 
@@ -121,6 +125,7 @@ export default {
 
         this.pagination.total = res.data.total;
         this.tableData = res.data.list;
+        this.loading = !1;
       });
     },
     handleChangeType() {
@@ -130,6 +135,7 @@ export default {
       this.refresh();
     },
     handleClickRowSort(rowData) {
+      const {buddhistId} = rowData;
       this.$prompt('请填写新的序号', '修改序号', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -137,7 +143,7 @@ export default {
         inputErrorMessage: '请输入数字',
       })
         .then(({ value: sort }) => {
-          seeFetch('promo/index/fu/update_sort', { sort }).then(res => {
+          seeFetch('promo/index/fu/update_sort', { buddhistId, sort }).then(res => {
             if (!res.success) {
               Notification({
                 type: 'error',

@@ -1,21 +1,21 @@
 import seeFetch from 'see-fetch';
 
 const req = {
-  page: 'pageNum',
+  page: 'pageNumber',
   // pageSize: 'pageSize',
 };
 
 const pre = params => ({
   ...params,
-  pageNum: params.pageNum - 1,
+  pageNumber: params.pageNumber - 1,
 });
 
 const refactor = {
   total: 'count',
   data: [
     {
-      // id: 'id',
-      // name: 'name',
+      buddhistId: 'id',
+      buddhistName: 'name',
       // templeList: 'templeList',
       // orderNum: 'orderNum', // 未转单数
       // conversionOrderNum: 'conversionOrderNum', // 已转单数

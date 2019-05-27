@@ -23,7 +23,7 @@ const refactor = {
         payMoney: 'price', // 支付金额
         fuBiMoney: 'shareBlessCoin', // 获得福币金额
         nickname: 'nickName', // 获得福币的用户名
-        tel: 'mobile', // 获得福币的用户手机号码 
+        tel: 'mobile', // 获得福币的用户手机号码
       }
     ]
   }
@@ -33,7 +33,7 @@ seeFetch.config('promo/fubi_record/get_list', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/wish/wishGiftList',
+    'blessCoinShop/getBlessCoinShareRecord',
     '/promo/fubi_record/mock/get_list',
     '/promo/fubi_record/mock/get_list',
   ],

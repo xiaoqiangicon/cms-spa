@@ -80,13 +80,23 @@
               </el-tooltip>
             </template>
             <template slot-scope="scope">
-              <el-input style="width: 80px;" v-model="scope.row.transferRate" placeholder=""></el-input>
+              <el-input
+                :disabled="!scope.row.selected"
+                style="width: 80px;"
+                v-model.number="scope.row.transferRate"
+                placeholder=""
+              ></el-input>
               <span class="mg-l-5" slot="suffix">%</span>
             </template>
           </el-table-column>
           <el-table-column prop="transferPrice" label="转单金额（元）">
             <template slot-scope="scope">
-              <el-input style="width: 80px;" v-model="scope.row.transferPrice" placeholder=""></el-input>
+              <el-input
+                :disabled="!scope.row.selected"
+                style="width: 80px;"
+                v-model.number="scope.row.transferPrice"
+                placeholder=""
+              ></el-input>
             </template>
           </el-table-column>
           <el-table-column label="分享福币（%）">
@@ -295,6 +305,7 @@ export default {
         item.subList.forEach(sub => {
           if (sub.selected && sub.price > 0) {
             res.subList.push({
+              id: sub.id,
               transferPrice: sub.transferPrice,
               transferRate: sub.transferRate,
             });
@@ -387,6 +398,25 @@ export default {
     },
     save() {
       const params = this.createSubmitData();
+
+      let verify = !0;
+      params.transferTempleList.map(temple => {
+        temple.subList.map(sub => {
+          if (sub.transferPrice && sub.transferRate) {
+            verify = !1;
+          }
+        });
+      });
+
+      if (!verify) {
+        Notification({
+          type: 'warning',
+          title: '提示',
+          message: '转单比例和转单金额只能设置一项',
+        });
+        return;
+      }
+
       console.log(params);
       seeFetch('promo/transfer_set/update_transfer_set', params).then(res => {
         if (!res.success) {
@@ -397,14 +427,14 @@ export default {
           });
           return;
         }
-      });
 
-      Notification({
-        type: 'success',
-        title: '提示',
-        message: '保存成功',
+        Notification({
+          type: 'success',
+          title: '提示',
+          message: '保存成功',
+        });
+        this.init();
       });
-      this.init();
     },
     changeTemple(id) {
       this.templeId = id;
@@ -513,7 +543,8 @@ export default {
           }
           .id {
             flex-basis: 60px;
-            text-align: center;
+            padding-left: 10px;
+            text-align: left;
           }
           .name {
             flex-grow: 1;

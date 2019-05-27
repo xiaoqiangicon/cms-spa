@@ -6,7 +6,7 @@
           <div class="filter">
             <span class="mg-r-10">类型</span>
             <el-select
-              v-model="typeId"
+              v-model.number="typeId"
               placeholder="请选择"
               size="small"
               @change="handleChangeType"
@@ -20,7 +20,7 @@
                 :value="item.id"
               ></el-option>
             </el-select>
-            <el-button type="primary" size="small" @click="handleClickEditType">编辑类型</el-button>
+            <el-button class="mg-l-10" type="primary" size="small" @click="handleClickEditType">编辑类型</el-button>
             <el-button class="fl-right" type="primary" size="small" @click="handleClickAdd">添加奖品</el-button>
           </div>
           <div class="table">
@@ -88,6 +88,7 @@
     </el-dialog>
     <!-- dialogEditType -->
     <el-dialog title="编辑类型" :visible.sync="dialogEditType" :before-close="()=>{dialogEditType=!1;}">
+      <el-button class="mg-l-10" type="primary" size="small" @click="handleClickEditType">添加类型</el-button>
       <el-table :data="typeList" style="width: 100%">
         <el-table-column label="排序">
           <template slot-scope="scope">
@@ -118,7 +119,7 @@
     <el-dialog title="添加奖品" :visible.sync="dialogAdd" :before-close="()=>{dialogAdd=!1;}">
       <div class="row">
         <span class="title">佛事名称</span>：
-        <el-select v-model="tempAdd.buddhistId" placeholder="请选择佛事" size="small" filterable>
+        <el-select v-model.number="tempAdd.buddhistId" placeholder="请选择佛事" size="small" filterable>
           <el-option
             v-for="item in buddhistList"
             :key="item.id"
@@ -129,7 +130,7 @@
       </div>
       <div class="row">
         <span class="title">类型</span>：
-        <el-select v-model="tempAdd.typeId" placeholder="请选择类型" size="small" filterable>
+        <el-select v-model.number="tempAdd.typeId" placeholder="请选择类型" size="small" filterable>
           <el-option v-for="item in typeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
         </el-select>
       </div>

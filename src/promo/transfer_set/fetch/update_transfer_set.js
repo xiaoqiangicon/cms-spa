@@ -2,21 +2,35 @@ import seeFetch from 'see-fetch';
 
 const req = {
   buddhistId: 'commodityId',
-  transferTempleList: 'conversionOrderTemple',
-  _transferTempleList: [
-    {
-      id: 'templeId',
-      subList: 'subdivide',
-      _subList: [
-        {
-          id: 'subdivideId',
-          transferPrice: 'price',
-          transferRate: 'percent'
-        }
-      ]
-    }
-  ]
+  transferTempleList: 'conversionOrderTemple', // 下方的规则插件没有应用到
+  // _transferTempleList: [
+  //   {
+  //     id: 'templeId',
+  //     subList: 'subdivide',
+  //     _subList: [
+  //       {
+  //         id: 'subdivideId',
+  //         transferPrice: 'price',
+  //         transferRate: 'percent'
+  //       }
+  //     ],
+  //   }
+  // ],
 };
+
+const pre = params => {
+  const res = {};
+  res.commodityId = params.commodityId;
+  res.conversionOrderTemple = params.conversionOrderTemple.map(item => ({
+    templeId: item.id,
+    subdivide: item.subList.map(sub => ({
+      subdivideId: sub.id,
+      price: sub.transferPrice,
+      percent: sub.transferRate,
+    }))
+  }))
+  return res
+}
 
 seeFetch.config('promo/transfer_set/update_transfer_set', {
   method: ['post'],
@@ -27,4 +41,5 @@ seeFetch.config('promo/transfer_set/update_transfer_set', {
     '/promo/transfer_set/mock/success',
   ],
   req: [req, req],
+  pre: [pre, pre],
 });

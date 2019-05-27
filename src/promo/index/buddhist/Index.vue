@@ -5,10 +5,17 @@
       其中转单系统与推广佛事为互斥关系，但两者都可设置分享激励
     </div>
     <div class="filter mg-b-20">
-      <el-select size="small" v-model="templeId" placeholder="请选择寺院" @change="refresh">
-        <el-option v-for="item in templeList" :key="item.id" :label="item.name" :value="item.name"></el-option>
+      <el-select
+        size="small"
+        v-model.number="templeId"
+        placeholder="请选择寺院"
+        @change="refresh"
+        filterable
+      >
+        <el-option :key="0" label="全部" :value="0"></el-option>
+        <el-option v-for="item in templeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
       </el-select>
-      <el-input placeholder="请输入佛事ID" v-model="buddhistId" size="small" style="width:200px;">
+      <el-input placeholder="请输入佛事ID" v-model.number="buddhistId" size="small" style="width:200px;">
         <el-button slot="append" icon="el-icon-search" @click="refresh"></el-button>
       </el-input>
       <el-button
@@ -18,7 +25,7 @@
         @click="()=>{dialogAddVisible=!0;}"
       >添加推广佛事</el-button>
     </div>
-    <el-table :data="list" style="width: 100%">
+    <el-table v-loading="loading" :data="list" style="width: 100%">
       <el-table-column prop="templeId" label="寺院ID" width="100" :align="'left'"></el-table-column>
       <el-table-column prop="buddhistName" label="佛事状态">
         <template slot-scope="scope">
@@ -116,7 +123,7 @@
       <div class="row">
         <div class="title">寺院</div>
         <div class="content">：
-          <el-select v-model="addItem.templeId" placeholder="请选择" @change="getBuddhistList">
+          <el-select v-model.number="addItem.templeId" placeholder="请选择" @change="getBuddhistList">
             <el-option
               v-for="item in templeList"
               :key="item.id"
@@ -129,7 +136,11 @@
       <div class="row">
         <div class="title">佛事</div>
         <div class="content">：
-          <el-select v-model="addItem.buddhistId" placeholder="请选择">
+          <el-select
+            v-loading="loadingBuddhistList"
+            v-model.number="addItem.buddhistId"
+            placeholder="请选择"
+          >
             <el-option
               v-for="item in buddhistList"
               :key="item.id"
@@ -142,7 +153,7 @@
       <div class="row">
         <div class="title">支付服务费</div>
         <div class="content">：
-          <el-input style="width: 210px;" v-model="addItem.rate" placeholder=""></el-input>
+          <el-input style="width: 210px;" v-model.number="addItem.rate" placeholder=""></el-input>
           <span class="mg-l-5">%</span>
         </div>
       </div>
@@ -174,8 +185,11 @@ export default {
   name: 'Buddhist',
   data() {
     return {
+      loading: !0,
+      loadingBuddhistList: !1,
+
       buddhistId: '',
-      templeId: '',
+      templeId: 0,
 
       list: [],
 
@@ -234,6 +248,8 @@ export default {
       });
     },
     getBuddhistList() {
+      this.loadingBuddhistList = !0;
+
       const { templeId } = this.addItem;
       seeFetch('promo/index/buddhist/getBuddhistList', { templeId }).then(
         res => {
@@ -246,11 +262,13 @@ export default {
             return;
           }
 
-          this.buddhistList = res.data;
+          this.buddhistList = res.data.list;
+          this.loadingBuddhistList = !1;
         }
       );
     },
     getList() {
+      this.loading = !0;
       const { buddhistId, templeId } = this;
       const { page, pageSize } = this.pagination;
 
@@ -271,6 +289,8 @@ export default {
 
         this.pagination.total = res.data.total;
         this.list = res.data.list;
+
+        this.loading = !1;
       });
     },
     getRecordList() {
@@ -317,7 +337,7 @@ export default {
       return seeFetch('promo/index/buddhist/update', {
         templeId,
         buddhistId,
-        rate,
+        rate: rate/100,
         startTime,
       }).then(res => {
         if (!res.success) {

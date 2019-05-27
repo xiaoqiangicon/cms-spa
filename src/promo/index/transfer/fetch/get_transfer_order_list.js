@@ -11,7 +11,7 @@ const req = {
 
 const pre = params => ({
   ...params,
-  pageNum: params.pageNum - 1,
+  pageNumber: params.pageNumber - 1,
 });
 
 const refactor = {
@@ -55,7 +55,7 @@ seeFetch.config('promo/index/transfer/getTransferOrderList', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/conversionOrder/conversionOrderCommodityGetList',
+    '/conversionOrder/getConversionOrderList',
     '/promo/index/transfer/mock/get_transfer_order_list',
     '/promo/index/transfer/mock/get_transfer_order_list',
   ],

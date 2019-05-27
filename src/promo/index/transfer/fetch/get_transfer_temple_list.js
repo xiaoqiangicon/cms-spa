@@ -28,7 +28,7 @@ seeFetch.config('promo/index/transfer/getTransferTempleList', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/conversionOrder/getTempleList',
+    '/conversionOrder/getConversionOrderTemple',
     '/promo/index/transfer/mock/get_transfer_temple_list',
     '/promo/index/transfer/mock/get_transfer_temple_list',
   ],
