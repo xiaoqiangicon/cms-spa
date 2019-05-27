@@ -12,6 +12,7 @@ export const addProps = [
   { name: 'covers', full: !0, default: () => [] },
   { name: 'publishAuthor', full: !0, default: '' },
   { name: 'original', full: !0, default: 0 },
+  { name: 'copyRight', full: !0, default: '' },
   { name: 'publishTime', full: !0, default: '' },
 ];
 
@@ -23,7 +24,7 @@ export const statuses = [
 ];
 
 export const publishAccounts = [
-  { id: 1, name: '寺院法训' },
+  { id: 1, name: '寺院法讯' },
   { id: 2, name: '佛学知识' },
   { id: 3, name: '菩菩公园' },
 ];

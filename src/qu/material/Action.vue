@@ -6,32 +6,37 @@
     width="200px"
   >
     <div class="t-a-center">
-      <el-button @click="go('edit')">
+      <el-button @click="go(ACTION_EDIT)">
         编辑
       </el-button>
     </div>
     <div class="t-a-center mg-t-10">
-      <el-button @click="go('insertTextBefore')">
+      <el-button @click="go(ACTION_INSERT_TEXT_BEFORE)">
         向前插入文字
       </el-button>
     </div>
     <div class="t-a-center mg-t-10">
-      <el-button @click="go('insertImageBefore')">
+      <el-button @click="go(ACTION_INSERT_IMAGE_BEFORE)">
         向前插入图片
       </el-button>
     </div>
     <div class="t-a-center mg-t-10">
-      <el-button @click="go('insertTextAfter')">
+      <el-button @click="go(ACTION_INSERT_TEXT_AFTER)">
         向后插入文字
       </el-button>
     </div>
     <div class="t-a-center mg-t-10">
-      <el-button @click="go('insertImageAfter')">
+      <el-button @click="go(ACTION_INSERT_IMAGE_AFTER)">
         向后插入图片
       </el-button>
     </div>
     <div class="t-a-center mg-t-10">
-      <el-button @click="go('delete')">
+      <el-button @click="go(ACTION_CROP_IMAGE)">
+        裁剪图片
+      </el-button>
+    </div>
+    <div class="t-a-center mg-t-10">
+      <el-button @click="go(ACTION_DELETE)">
         删除
       </el-button>
     </div>
@@ -39,6 +44,16 @@
 </template>
 
 <script>
+import {
+  ACTION_EDIT,
+  ACTION_DELETE,
+  ACTION_INSERT_TEXT_BEFORE,
+  ACTION_INSERT_TEXT_AFTER,
+  ACTION_INSERT_IMAGE_BEFORE,
+  ACTION_INSERT_IMAGE_AFTER,
+  ACTION_CROP_IMAGE,
+} from './constant';
+
 const computedProps = {};
 
 ['action', 'actionVisible'].forEach(name => {
@@ -54,6 +69,17 @@ const computedProps = {};
 
 export default {
   name: 'Action',
+  data() {
+    return {
+      ACTION_EDIT,
+      ACTION_DELETE,
+      ACTION_INSERT_TEXT_BEFORE,
+      ACTION_INSERT_TEXT_AFTER,
+      ACTION_INSERT_IMAGE_BEFORE,
+      ACTION_INSERT_IMAGE_AFTER,
+      ACTION_CROP_IMAGE,
+    };
+  },
   computed: {
     ...computedProps,
   },
