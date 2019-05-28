@@ -88,7 +88,7 @@
     </el-dialog>
     <!-- dialogEditType -->
     <el-dialog title="编辑类型" :visible.sync="dialogEditType" :before-close="()=>{dialogEditType=!1;}">
-      <el-button class="mg-l-10" type="primary" size="small" @click="handleClickEditType">添加类型</el-button>
+      <el-button class="mg-l-10" type="primary" size="small" @click="()=>{dialogAddType=!0}">添加类型</el-button>
       <el-table :data="typeList" style="width: 100%">
         <el-table-column label="排序">
           <template slot-scope="scope">
@@ -114,6 +114,26 @@
           </template>
         </el-table-column>
       </el-table>
+      <!-- dialogAddType -->
+      <el-dialog
+        title="添加类型"
+        :visible.sync="dialogAddType"
+        :before-close="()=>{dialogAddType=!1;}"
+        append-to-body
+      >
+        <div class="row">
+          <span class="title">类型名称</span>：
+          <el-input style="width: 200px;" v-model.trim="tempAddType.name" placeholder="请输入名称"></el-input>
+        </div>
+        <div class="row">
+          <span class="title">排序</span>：
+          <el-input style="width: 200px;" v-model.number="tempAddType.sort" placeholder="请输入排序"></el-input>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogAddType = !1">取 消</el-button>
+          <el-button type="primary" @click="saveAddType">保 存</el-button>
+        </span>
+      </el-dialog>
     </el-dialog>
     <!-- dialogAdd -->
     <el-dialog title="添加奖品" :visible.sync="dialogAdd" :before-close="()=>{dialogAdd=!1;}">
@@ -173,9 +193,14 @@ export default {
         typeId: '',
         sort: '',
       },
+      tempAddType: {
+        name: '',
+        sort: '',
+      },
 
       dialogEditType: !1,
       dialogAdd: !1,
+      dialogAddType: !1,
       dialogEditRowType: !1,
     };
   },
@@ -480,6 +505,47 @@ export default {
         this.refresh();
         this.getBuddhistList();
         this.dialogAdd = !1;
+      });
+    },
+    saveAddType() {
+      const { name } = this.tempAddType;
+      let { sort } = this.tempAddType;
+
+      if (!name) {
+        Notification({
+          type: 'warning',
+          title: '提示',
+          message: '请填写类型名称',
+        });
+
+        return;
+      }
+
+      if (!sort) sort = 0;
+
+      seeFetch('fubi/index/update_type', { id: 0, name, sort }).then(res => {
+        if (!res.success) {
+          Notification({
+            type: 'error',
+            title: '提示',
+            message: res.message,
+          });
+          return;
+        }
+
+        Notification({
+          type: 'success',
+          message: '添加成功',
+        });
+
+        this.tempAddType = {
+          name: '',
+          sort: '',
+        };
+
+        this.getTypeList().then(() => {
+          this.dialogAddType = !1;
+        });
       });
     },
     onSizeChange(pageSize) {

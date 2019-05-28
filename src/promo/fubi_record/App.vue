@@ -15,7 +15,7 @@
           type="daterange"
           align="right"
           unlink-panels
-          range-separator="至 "
+          range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
           :picker-options="pickerOptions"
@@ -124,8 +124,8 @@ export default {
 
       seeFetch('promo/fubi_record/get_list', {
         buddhistId,
-        startTime: time[0],
-        endTime: time[1],
+        startTime: time ? time[0] : '',
+        endTime: time ? time[1] : '',
         searchStr,
         page,
         pageSize,
