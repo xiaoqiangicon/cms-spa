@@ -189,7 +189,7 @@ export default {
       this.$store.state.quMaterial.add.covers = item.covers
         ? item.covers.split(',')
         : [];
-      const date = getDate(new Date(new Date().getTime() + 3 * 60 * 60 * 1000));
+      const date = getDate(new Date(new Date().getTime() + 15 * 60 * 1000));
       this.$store.state.quMaterial.add.publishTime =
         item.publishTime || date.dateTime;
       this.$store.state.quMaterial.add.original = item.original || 0;
