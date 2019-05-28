@@ -70,7 +70,7 @@ const routes = [
   {
     path: '/fubi',
     component: Layout,
-    controlMark: 'pw_promo', // 这里应该是 pw_fubi
+    controlMark: 'pw_blesscoin', 
     redirect: '/fubi/index',
     name: '福币分销',
     meta: { title: '福币分销', icon: 'fa-circle', noCache: true },
