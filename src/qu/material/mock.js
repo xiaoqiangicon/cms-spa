@@ -17,7 +17,6 @@ export const list = {
     canEdit: id % 2,
     publishAuthor: '推送作者',
     original: id % 2,
-    copyRight: 'copyRight',
     createdAt: '2019-01-01 01:01:01',
   })),
 };
@@ -39,7 +38,6 @@ export const list1 = {
       canEdit: id % 2,
       printAuthor: '推送作者',
       isOriginal: id % 2,
-      copyRight: 'copyRight',
       addTime: '2019-01-01 01:01:01',
     })),
   },

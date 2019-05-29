@@ -107,7 +107,7 @@
           <el-option label="否" :value="0" />
           <el-option label="是" :value="1" />
         </el-select>
-        <p class="mg-t-10" v-if="original === 1 && copyRight">{{copyRight}}</p>
+        <p class="mg-t-10">选择是会展示原创标示和禁止转载声明，否则为转载第三方免责声明。</p>
       </div>
       <div class="row">
         <div class="row-name">
@@ -157,7 +157,7 @@
           style="width: 200px;"
         />
         <p class="mg-t-10">
-          日期时间只可选在未来，并且至少选择2小时后
+          日期时间只可选在未来，并且至少选择10分钟后
         </p>
         <p class="mg-t-10">
           发布后不可修改，请谨慎选择
@@ -443,10 +443,10 @@ export default {
         if (!publishTime) error = '发布时间不能为空';
         else {
           const date = getDate(
-            new Date(new Date().getTime() + 2 * 60 * 60 * 1000)
+            new Date(new Date().getTime() + 10 * 60 * 1000)
           );
           if (numOfDateTime(publishTime) < numOfDateTime(date.dateTime)) {
-            error = '发布时间至少应在当前时间2小时后';
+            error = '发布时间至少应在当前时间10分钟后';
           }
         }
       }
