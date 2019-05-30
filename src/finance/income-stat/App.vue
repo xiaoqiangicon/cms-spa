@@ -68,7 +68,7 @@
         <el-col :span="8">
           <el-card>
             <div slot="header" class="clearfix">
-              <span>2019 年线上盈收占比</span>
+              <span>{{filterYear}} 年线上盈收占比</span>
             </div>
             <div v-if="projects && projects.length">
               <el-row

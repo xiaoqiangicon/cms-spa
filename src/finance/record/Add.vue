@@ -172,6 +172,7 @@ export default {
       const income = parseFloat(this.income);
 
       if (!recordName) error = '记录名称不能为空';
+      else if (!incomeFromId) error = '寺院不能为空';
       else if (!income) error = '盈收金额不能为空，且需是数字';
       else if (!incomeTime) error = '入账时间不能为空';
 
