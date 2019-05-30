@@ -14,9 +14,25 @@
           filterable
           @change="doSearch"
         >
-          <el-option label="全部" :value="0" />
+          <el-option label="选择寺院" :value="0" />
           <el-option
             v-for="item in temples"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
+        <el-select
+          v-model="filterType"
+          placeholder="请选择"
+          size="small"
+          style="width: 200px;"
+          filterable
+          @change="doSearch"
+        >
+          <el-option label="相关模块" :value="-1" />
+          <el-option
+            v-for="item in relatedItems"
             :key="item.id"
             :label="item.name"
             :value="item.id"
@@ -65,6 +81,7 @@ import { Notification } from 'element-ui';
 import { addProps } from './data';
 import Add from './Add';
 import './fetch';
+import { items as relatedItems } from './constant';
 
 export default {
   name: 'App',
@@ -75,10 +92,12 @@ export default {
     return {
       loading: !0,
       filterTemple: 0,
+      filterType: -1,
       currentPage: 1,
       totalCount: 0,
       list: [],
       temples: [],
+      relatedItems,
     };
   },
   created() {
@@ -94,6 +113,7 @@ export default {
 
       seeFetch('finance/record/list', {
         templeId: this.filterTemple,
+        type: this.filterType,
         page: this.currentPage,
       }).then(res => {
         this.loading = !1;
