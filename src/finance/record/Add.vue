@@ -66,8 +66,8 @@
         <el-date-picker
           v-model="incomeTime"
           align="right"
-          type="date"
-          value-format="yyyy-MM-dd"
+          type="datetime"
+          value-format="yyyy-MM-dd HH:mm:ss"
           placeholder="选择日期"
           size="small"
           style="width: 200px;"
