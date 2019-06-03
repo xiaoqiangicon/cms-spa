@@ -116,7 +116,7 @@ export default {
       this.fetchList();
     },
     toExport() {
-      const { startDate, endDate, search } = this.data;
+      const { startDate, endDate, search } = this;
       window.location.href = `/wish/downExcelPromotionPickUp?startTime=${startDate}&endTime=${endDate}&userName=${search}`;
     },
   },

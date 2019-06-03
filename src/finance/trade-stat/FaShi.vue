@@ -105,7 +105,7 @@ export default {
       this.fetchList();
     },
     toExport() {
-      const { startDate, endDate } = this.data;
+      const { startDate, endDate } = this;
       window.location.href = `/wish/downWishOrderExcel?startTime=${startDate}&endTime=${endDate}&type=1`;
     },
   },
