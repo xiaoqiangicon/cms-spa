@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%">
+    <el-table v-loading="loading" ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%">
       <el-table-column prop="buddhistName" label="佛事名称" show-overflow-tooltip/>
       <el-table-column label="状态" show-overflow-tooltip :align="'center'">
         <template slot-scope="scope">{{scope.row.isAuto ? '自动' : '手动'}}</template>
@@ -99,6 +99,8 @@ export default {
   },
   data() {
     return {
+      loading: !0,
+
       dialogDetailVisible: !1,
       dialogCancelVisible: !1,
 
@@ -117,10 +119,12 @@ export default {
     ...computedProps,
   },
   created() {
-    this.requestList();
+    // this.requestList();
   },
   methods: {
     requestList() {
+      this.loading = !0;
+
       const { transferBuddhistId: buddhistId, transferTel: tel, transferSubId: subId } = this;
       const { page, pageSize } = this.pagination;
       const self = this;
@@ -143,6 +147,7 @@ export default {
         }
         this.tableData = res.data;
         this.pagination.total = res.total;
+        this.loading = !1;
       });
     },
     refresh() {
@@ -199,9 +204,11 @@ export default {
         orderId,
         orderNum,
         wxId,
-        feedBackImg: feedBackImg.split(','),
-        ps: isAuto ? itemData.ps : rowData.ps[itemIndex].ps,
+        feedBackImg: feedBackImg ? feedBackImg.split(',') : [],
+        ps: isAuto ? itemData.ps : rowData.ps[itemIndex] ? rowData.ps[itemIndex].ps : [],
       };
+
+      console.log(detail);
 
       this.transferOrderDetail = detail;
       this.dialogDetailVisible = !0;

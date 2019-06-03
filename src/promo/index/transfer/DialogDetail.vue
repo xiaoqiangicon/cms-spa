@@ -36,33 +36,39 @@
       <div class="title">支付流水号</div>
       ：{{transferOrderDetail.wxId}}
     </div>
-    <div class="bar"></div>
-    <div class="row">
-      <div class="title">反馈图</div>
-      <div class="content">：
-        <div v-for="item in transferOrderDetail.feedBackImg" :key="item" class="img-container">
-          <img :src="item">
+    <template v-if="transferOrderDetail.feedBackImg">
+      <div class="bar"></div>
+      <div class="row">
+        <div class="title">反馈图</div>
+        <div class="content">：
+          <template v-if="transferOrderDetail.feedBackImg.length">
+            <div v-for="item in transferOrderDetail.feedBackImg" :key="item" class="img-container">
+              <img :src="item">
+            </div>
+          </template>
+          <div v-else>无</div>
         </div>
       </div>
-    </div>
-    <div class="bar"></div>
-    <div v-for="item in transferOrderDetail.ps" :key="item.inputId" class="row">
-      <template v-if="item.type === 14 && item.value">
-        <div v-for="img in item.value.spilt(',')" :key="img" class="img-container">
-          <img :src="img">
-        </div>
-      </template>
-      <template v-else-if="item.type === 13"></template>
-      <template v-else>
-        <div class="title">{{item.name}}</div>：
-        <div class="content">{{item.value}}</div>
-      </template>
-    </div>
+    </template>
+    <template v-if="transferOrderDetail.ps">
+      <div class="bar"></div>
+      <div v-for="item in transferOrderDetail.ps" :key="item.inputId" class="row">
+        <template v-if="item.type === 14 && item.value">
+          <div v-for="img in item.value.split(',')" :key="img" class="img-container">
+            <img :src="img">
+          </div>
+        </template>
+        <template v-else-if="item.type === 13"></template>
+        <template v-else>
+          <div class="title">{{item.name}}</div>：
+          <div class="content">{{item.value}}</div>
+        </template>
+      </div>
+    </template>
   </el-dialog>
 </template>
 
 <script>
-
 import { addProps } from '../data';
 const computedProps = {};
 addProps.forEach(({ name, full }) => {

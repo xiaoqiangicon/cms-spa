@@ -18,14 +18,14 @@
         />
       </el-select>
     </div>
-    <div v-show="price">
+    <div class="mg-b-10">
       <span class="mg-r-5">转单价格</span>
-      <el-input style="width: 200px;" v-model="price" placeholder="请输入价格"></el-input>
+      <el-input style="width: 200px;" v-model.number="price" placeholder="请输入价格"></el-input>
       <span class="mg-l-10">/ 单</span>
     </div>
-    <div v-show="percent">
+    <div class="mg-b-10">
       <span class="mg-r-5">转单比例</span>
-      <el-input style="width: 200px;" v-model="percent" placeholder="请输入价格"></el-input>
+      <el-input style="width: 200px;" v-model.number="percent" placeholder="请输入价格"></el-input>
       <span class="mg-l-10">% / 单</span>
     </div>
     <div class="tip">
@@ -111,8 +111,6 @@ export default {
       originPrice: '', // 转单原价
       price: '', // 转单价格
       percent: '', // 转单百分比
-      originPriceSum: '', // 转单原价总计
-      priceSum: '', // 转单价格总计
 
       dialoguSbmitVisible: !1,
     };
@@ -128,6 +126,18 @@ export default {
       } else {
         return '';
       }
+    },
+    originPriceSum() {
+      const { originPrice, transferOrderIds } = this;
+
+      return (originPrice * transferOrderIds.length).toFixed(4);
+    },
+    priceSum() {
+      const { price, originPrice, percent, transferOrderIds } = this;
+      return (price
+        ? price * this.transferOrderIds.length
+        : (percent / 100) * this.transferOrderIds.length
+      ).toFixed(4);
     },
   },
   watch: {
@@ -175,31 +185,36 @@ export default {
       const subId = this.transferSubId
         ? this.transferSubId
         : this.transferOrderDetail.subId;
-      // 获取转单寺院的价格配置
-      const transferTempleSubList = this.transferTempleList.find(
-        item => item.id === transferTempleId
-      ).subList;
 
-      const { price, percent } = transferTempleSubList.find(
-        item => item.id === subId
-      );
       // 获取转单选择项的原价
       const { price: originPrice } = this.transferSubList.find(
         item => item.id === subId
       );
-      // 计算
+
+      // 这里有可能设置了寺院选择项 有可能没设置
+      const transferTempleSubList = this.transferTempleList.find(
+        item => item.id === transferTempleId
+      ).subList;
+      const findSub = transferTempleSubList.find(item => item.id === subId);
+      let price;
+      let percent;
+
+      if (findSub) {
+        // 设置了的读取设置配置
+        ({ price, percent } = findSub);
+      } else {
+        // 未设置赋值为原价
+        price = originPrice;
+        percent = 0;
+      }
+
       this.originPrice = originPrice;
       this.price = price;
       this.percent = percent;
-      this.originPriceSum = (
-        originPrice * this.transferOrderIds.length
-      ).toFixed(4);
-      this.priceSum = (price
-        ? price * this.transferOrderIds.length
-        : (percent / 100) * this.transferOrderIds.length
-      ).toFixed(4);
     },
     handleClickConfirm() {
+      const { originPrice, price, percent } = this;
+
       if (!this.transferTempleId) {
         Notification({
           type: 'warning',
@@ -207,9 +222,18 @@ export default {
           message: '请选择转单寺院',
         });
         return;
-      } else {
-        this.dialoguSbmitVisible = !0;
       }
+
+      if (price && percent) {
+        Notification({
+          type: 'warning',
+          title: '提示',
+          message: '转单价格和转单比例只有一项生效',
+        });
+        return;
+      }
+
+      this.dialoguSbmitVisible = !0;
     },
     handleClickSubmit() {
       const {

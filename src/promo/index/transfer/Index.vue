@@ -51,7 +51,7 @@
           </div>
         </div>
       </div>
-      <el-tabs v-model="transferActiveName" @tab-click="handleClickTab">
+      <el-tabs v-model="transferActiveName">
         <el-tab-pane label="佛事管理" name="tableBuddhist">
           <TableBuddhist ref="tableBuddhist"/>
         </el-tab-pane>
@@ -76,9 +76,10 @@ import './fetch';
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
 import DialogAddTransferBuddhist from './DialogAddTransferBuddhist';
-import TableBuddhist from './TableBuddhist';
-import TableYetTransfer from './TableYetTransfer';
-import TableNotTransfer from './TableNotTransfer';
+
+const TableBuddhist = () => import('./TableBuddhist');
+const TableYetTransfer = () => import('./TableYetTransfer');
+const TableNotTransfer = () => import('./TableNotTransfer');
 
 import { addProps } from '../data';
 const computedProps = {};
@@ -133,12 +134,14 @@ export default {
       }
     },
   },
+  watch: {
+    transferActiveName(val) {
+      this.refreshTableData(val);
+    }
+  },
   methods: {
     refreshTableData(tableName) {
       this.$refs[tableName].refresh();
-    },
-    handleClickTab(tab) {
-      this.refreshTableData(this.transferActiveName);
     },
   },
 };

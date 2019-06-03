@@ -74,6 +74,22 @@ const routes = [
     ],
   },
   {
+    path: '/fubi',
+    component: Layout,
+    controlMark: 'pw_blesscoin', 
+    redirect: '/fubi/index',
+    name: '福币分销',
+    meta: { title: '福币分销', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        path: 'index',
+        component: () => import('../fubi/index/App'),
+        name: '福币商城',
+        meta: { title: '福币商城', noCache: true },
+      },
+    ],
+  },
+  {
     path: '/promo',
     component: Layout,
     controlMark: 'pw_promo',
@@ -92,6 +108,16 @@ const routes = [
         component: () => import('../promo/statistics/App'),
         name: '事件统计',
         meta: { title: '事件统计', noCache: true },
+      },
+      {
+        path: `${domain}/event/thousand`,
+        name: '千寺祈福',
+        meta: { title: '千寺祈福'},
+      },
+      {
+        path: `${domain}/goods/index`,
+        name: '自在好物',
+        meta: { title: '自在好物'},
       },
       {
         path: 'transferSet/:id',
@@ -113,7 +139,14 @@ const routes = [
         name: '推广佛事/推广编辑',
         meta: { title: '推广佛事/推广编辑', noCache: true },
         hidden: !0,
-      }
+      },
+      {
+        path: 'fubiRecord/:id',
+        component: () => import('../promo/fubi_record/App'),
+        name: '福币分享/记录',
+        meta: { title: '福币分享/记录', noCache: true },
+        hidden: !0,
+      },
     ],
   },
   {

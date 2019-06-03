@@ -1,6 +1,7 @@
 import seeFetch from 'see-fetch';
 
 const req = {
+  buddhistId: 'commodityId',
 };
 
 const refactor = {

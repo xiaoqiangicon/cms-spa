@@ -301,25 +301,6 @@
           "controlMark": "pw_advertising"
         }
       ]
-    },
-    {
-      "id": "promo",
-      "name": "运营事件",
-      "icon": "fa-tasks",
-      "subItems": [
-        {
-          "id": "promo-qian-si",
-          "name": "千寺祈福",
-          "link": "/event/thousand",
-          "controlMark": "pw_promo"
-        },
-        {
-          "id": "pages-hao-wu",
-          "name": "自在好物",
-          "link": "/goods/index",
-          "controlMark": "pw_goods"
-        }
-      ]
     }
   ]
 }

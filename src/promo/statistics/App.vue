@@ -16,7 +16,7 @@
         </el-select>
       </div>
       <div class="table">
-        <el-table :data="tableData" stripe style="width: 100%">
+        <el-table v-loading="loading" :data="tableData" stripe style="width: 100%">
           <el-table-column prop="id" label="ID" width="100" :align="'center'"/>
           <el-table-column prop="name" label="寺院名称"/>
           <el-table-column prop="transferOrderNum" label="已转单数" :align="'center'"/>
@@ -58,6 +58,8 @@ export default {
    },
   data() {
     return {
+      loading: !0,
+
       sumData: {},
       templeList: [],
       tableData: [],
@@ -97,6 +99,8 @@ export default {
       });
     },
     getList() {
+      this.loading = !0;
+
       const { templeId } = this;
       const { page, pageSize } = this.pagination;
       seeFetch('promo/statistics/getList', {
@@ -114,6 +118,8 @@ export default {
 
         this.pagination.total = res.total;
         this.tableData = res.data;
+
+        this.loading = !1;
       });
     },
     updateDialogRemindVisible(visible) {

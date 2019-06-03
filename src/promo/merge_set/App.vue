@@ -53,7 +53,7 @@
             <el-button type="primary" @click="save">保 存</el-button>
           </div>
         </div>
-        <el-table ref="table" :data="tableData" tooltip-effect="dark" style="width: 100%">
+        <el-table v-loading="loading" ref="table" :data="tableData" tooltip-effect="dark" style="width: 100%">
           <el-table-column prop="name" label="寺院名称" show-overflow-tooltip>
             <template slot-scope="scope">
               <el-select
@@ -135,6 +135,8 @@ export default {
   },
   data() {
     return {
+      loading: !0,
+
       buddhistId: null,
       buddhistName: null,
       buddhistStatus: null,
@@ -156,12 +158,14 @@ export default {
   methods: {
     init() {
       const {
-        id: buddhistId,
-        name: buddhistName,
+        buddhistId,
+        buddhistName,
         buddhistStatus,
         subList,
         isEnd,
-      } = JSON.parse(window.sessionStorage.getItem('promo/index/transfer/item'));
+      } = JSON.parse(
+        window.sessionStorage.getItem('promo/index/transfer/item')
+      );
       this.buddhistId = buddhistId;
       this.buddhistName = buddhistName;
       this.buddhistStatus = buddhistStatus;
@@ -173,19 +177,22 @@ export default {
       });
     },
     getTransferTempleList(cb) {
-      seeFetch('promo/merge_set/getTransferTempleList', {}).then(res => {
-        if (!res.success) {
-          Notification({
-            type: 'error',
-            title: '提示',
-            message: res.message,
-          });
-          return;
-        }
+      const { buddhistId } = this;
+      seeFetch('promo/merge_set/getTransferTempleList', { buddhistId }).then(
+        res => {
+          if (!res.success) {
+            Notification({
+              type: 'error',
+              title: '提示',
+              message: res.message,
+            });
+            return;
+          }
 
-        this.transferTempleList = res.data;
-        cb && cb();
-      });
+          this.transferTempleList = res.data;
+          cb && cb();
+        }
+      );
     },
     getMergeSubList() {
       const { buddhistId } = this;
@@ -225,6 +232,8 @@ export default {
       });
     },
     createTableData(subId, cb) {
+      this.loading = !0;
+
       // 根据当前选中的选择项 从服务器获取转单寺院列表 从服务器请求寺院对应的佛事列表
       const origin = this.mergeSubList.find(item => item.id == subId);
       let promiseAry = [];
@@ -267,6 +276,7 @@ export default {
       Promise.all(promiseAry).then(res => {
         console.log('全部执行结束');
         console.log(res);
+        this.loading = !1;
         cb(res);
       });
     },

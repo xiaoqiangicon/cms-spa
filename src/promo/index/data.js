@@ -7,7 +7,20 @@ export const addProps = [
   {name: 'transferSubId', full: !0, default: 0},
   {name: 'transferTel', full: !0, default: ''},
   {name: 'transferOrderIds', full: !0, default: ''},
-  {name: 'transferOrderDetail', full: !0, default: {}},
+  {name: 'transferOrderDetail', full: !0, default: {
+    buddhistName: '',
+    subName: '',
+    buyNum: '',
+    price: '',
+    transferPrice: '',
+    addTime: '',
+    orderId: '',
+    orderNum: '',
+    wxId: '',
+    feedBackImg: [],
+    ps: [],
+
+  }},
   {name: 'dialogAddTransferBuddhistVisible', full: !0, default: !1},
 
   // buddhist

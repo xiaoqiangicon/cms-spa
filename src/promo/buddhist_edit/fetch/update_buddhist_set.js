@@ -13,7 +13,7 @@ const pre = params => ({
   type: 2, // 佛事
 });
 
-seeFetch.config('promo/index/buddhist/update', {
+seeFetch.config('promo/buddhist_edit/update_buddhist_set', {
   method: ['post'],
   stringify: [!0],
   url: [
