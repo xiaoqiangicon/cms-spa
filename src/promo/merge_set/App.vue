@@ -172,13 +172,12 @@ export default {
       this.subList = subList;
       this.isEnd = isEnd;
 
-      this.getTransferTempleList(() => {
+      this.getTempleList(() => {
         this.getMergeSubList();
       });
     },
-    getTransferTempleList(cb) {
-      const { buddhistId } = this;
-      seeFetch('promo/merge_set/getTransferTempleList', { buddhistId }).then(
+    getTempleList(cb) {
+      seeFetch('promo/merge_set/getTempleList', { }).then(
         res => {
           if (!res.success) {
             Notification({
@@ -263,7 +262,7 @@ export default {
             // 本地模拟数据的时候这里报错会导致下边的语句不执行, 因此添加判断语句
             const findItem = data.find(item => item.id === buddhistId);
             if (findItem) {
-              resItem.subSelecte = findItem.subList;
+              resItem.subSelect = findItem.subList;
             }
             console.log('单条数据处理成功');
             return resItem;
@@ -471,6 +470,7 @@ export default {
   .body {
     flex-grow: 1;
     display: flex;
+    height: 30px;
     .aside {
       flex-basis: 300px;
       flex-shrink: 0;

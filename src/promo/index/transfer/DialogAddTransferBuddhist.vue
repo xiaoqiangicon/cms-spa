@@ -142,7 +142,7 @@ export default {
       this.subList = [];
     },
     save() {
-      const { subList } = this;
+      const { subList, buddhistId } = this;
 
       if (!subList.length) {
         Notification({
@@ -159,7 +159,7 @@ export default {
         type: 'warning',
       })
         .then(() => {
-          seeFetch('promo/index/transfer/addBuddhist', { subList }).then(
+          seeFetch('promo/index/transfer/addBuddhist', { subList, buddhistId }).then(
             res => {
               if (!res.success) {
                 Notification({

@@ -7,16 +7,14 @@ export default {
     conversionSubdivide: [
       {
         templeId: 1,
-        commodityId: 1,
-        subdivideId: 1,
-        name: '选择项1',
+        buddhistId: 1,
+        subId: 1,
         price: 1,
       },
       {
         templeId: 2,
-        commodityId: 2,
-        subdivideId: 2,
-        name: '选择项2',
+        buddhistId: 2,
+        subId: 2,
         price: 2,
       }
     ],

@@ -13,9 +13,8 @@ const refactor = {
       _subList: [
         {
           // templeId: 'templeId',
-          buddhistId: 'commodityId',
-          subId: 'subdivideId',
-          subName: 'name',
+          // buddhistId: 'buddhistId',
+          // subId: 'subId',
           // price: 'price',
         }
       ]

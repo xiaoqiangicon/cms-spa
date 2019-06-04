@@ -1,7 +1,6 @@
 import seeFetch from 'see-fetch';
 
 const req = {
-  buddhistId: 'commodityId',
 };
 
 const refactor = {
@@ -13,13 +12,13 @@ const refactor = {
   ],
 };
 
-seeFetch.config('promo/merge_set/getTransferTempleList', {
+seeFetch.config('promo/merge_set/getTempleList', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/conversionOrder/getConversionOrderTemple',
-    '/promo/merge_set/mock/get_transfer_temple_list',
-    '/promo/merge_set/mock/get_transfer_temple_list',
+    '/conversionOrder/getTempleList',
+    '/promo/merge_set/mock/get_temple_list',
+    '/promo/merge_set/mock/get_temple_list',
   ],
   req: [req, req],
   refactor: [refactor, refactor],

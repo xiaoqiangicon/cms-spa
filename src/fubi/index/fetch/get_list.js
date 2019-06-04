@@ -18,6 +18,7 @@ const refactor = {
     list: [
       {
         // id, sort
+        buddhistId: 'commodityId',
         typeId: 'blessShopType',
         // name: 'name',
         fuBiMoney: 'payBlessCoin',

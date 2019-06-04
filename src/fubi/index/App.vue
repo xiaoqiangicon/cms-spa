@@ -283,7 +283,7 @@ export default {
       this.dialogAdd = !0;
     },
     handleClickRowSort(rowData) {
-      const { id, typeId } = rowData;
+      const { buddhistId, typeId } = rowData;
 
       this.$prompt('请填写新的序号', '修改序号', {
         confirmButtonText: '保存',
@@ -292,7 +292,7 @@ export default {
         inputErrorMessage: '请输入数字',
       })
         .then(({ value: sort }) => {
-          seeFetch('fubi/index/update', { id, sort, typeId }).then(res => {
+          seeFetch('fubi/index/update', { buddhistId, sort, typeId }).then(res => {
             if (!res.success) {
               Notification({
                 type: 'error',
@@ -320,9 +320,9 @@ export default {
       this.dialogEditRowType = !0;
     },
     saveRowType() {
-      const { id, sort, typeId } = this.tempRow;
+      const { buddhistId, sort, typeId } = this.tempRow;
 
-      seeFetch('fubi/index/update', { id, sort, typeId }).then(res => {
+      seeFetch('fubi/index/update', { buddhistId, sort, typeId }).then(res => {
         if (!res.success) {
           Notification({
             type: 'error',

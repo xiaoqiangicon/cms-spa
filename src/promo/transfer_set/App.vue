@@ -513,6 +513,7 @@ export default {
   .body {
     flex-grow: 1;
     display: flex;
+    height: 30px;
     .aside {
       flex-basis: 300px;
       flex-shrink: 0;
