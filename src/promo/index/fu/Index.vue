@@ -11,36 +11,75 @@
           placeholder="请选择"
           @change="handleChangeType"
         >
-          <el-option label="全部" :value="0"></el-option>
-          <el-option label="转单佛事" :value="1"></el-option>
-          <el-option label="推广佛事" :value="2"></el-option>
+          <el-option
+            label="全部"
+            :value="0"
+          />
+          <el-option
+            label="转单佛事"
+            :value="1"
+          />
+          <el-option
+            label="推广佛事"
+            :value="2"
+          />
         </el-select>
       </div>
     </div>
     <div class="tabs mg-t-20">
-      <el-tabs v-model="curTab" @tab-click="handleClickTabs">
-        <el-tab-pane label="进行中" name="ing"></el-tab-pane>
-        <el-tab-pane label="已结束" name="end"></el-tab-pane>
+      <el-tabs
+        v-model="curTab"
+        @tab-click="handleClickTabs"
+      >
+        <el-tab-pane
+          label="进行中"
+          name="ing"
+        />
+        <el-tab-pane
+          label="已结束"
+          name="end"
+        />
       </el-tabs>
     </div>
     <div class="table">
-      <el-table v-loading="loading" :data="tableData" style="width: 100%">
-        <el-table-column v-if="!isEnd" label="排序" width="100" align="center">
-          <template slot="header" slot-scope="scope"
-            >排序
+      <el-table
+        v-loading="loading"
+        :data="tableData"
+        style="width: 100%"
+      >
+        <el-table-column
+          v-if="!isEnd"
+          label="排序"
+          width="100"
+          align="center"
+        >
+          <template
+            slot="header"
+            slot-scope="scope"
+          >
+            排序
             <el-tooltip
               class="item"
               effect="dark"
               content="排序影响“分享列表”的顺序"
               placement="top-start"
             >
-              <i class="el-icon-info" style="color: #409EFF;"></i>
+              <i
+                class="el-icon-info"
+                style="color: #409EFF;"
+              />
             </el-tooltip>
           </template>
           <template slot-scope="scope">
-            <div style="cursor:pointer;" @click="handleClickRowSort(scope.row)">
+            <div
+              style="cursor:pointer;"
+              @click="handleClickRowSort(scope.row)"
+            >
               {{ scope.row.sort }}
-              <i style="color: #409EFF;" class="el-icon-edit"></i>
+              <i
+                style="color: #409EFF;"
+                class="el-icon-edit"
+              />
             </div>
           </template>
         </el-table-column>
@@ -49,45 +88,59 @@
           label="ID"
           width="100"
           align="center"
-        ></el-table-column>
-        <el-table-column prop="buddhistName" label="佛事名称"></el-table-column>
-        <el-table-column prop="templeName" label="寺院名称"></el-table-column>
-        <el-table-column label="类型" align="center">
-          <template slot-scope="scope">{{
-            scope.row.type === 1 ? '转单佛事' : '推广佛事'
-          }}</template>
+        />
+        <el-table-column
+          prop="buddhistName"
+          label="佛事名称"
+        />
+        <el-table-column
+          prop="templeName"
+          label="寺院名称"
+        />
+        <el-table-column
+          label="类型"
+          align="center"
+        >
+          <template slot-scope="scope">
+            {{
+              scope.row.type === 1 ? '转单佛事' : '推广佛事'
+            }}
+          </template>
         </el-table-column>
         <el-table-column
           prop="orderNum"
           label="订单数量"
           :align="'center'"
-        ></el-table-column>
+        />
         <el-table-column
           prop="sharePay"
           label="分享支付（元）"
           :align="'center'"
-        ></el-table-column>
+        />
         <el-table-column
           prop="fuBiMoney"
           label="产生福币（元）"
           :align="'center'"
-        ></el-table-column>
-        <el-table-column label="操作" align="center">
+        />
+        <el-table-column
+          label="操作"
+          align="center"
+        >
           <template slot-scope="scope">
             <span v-if="!isEnd">
               <el-button
                 type="text"
                 size="small"
                 @click="handleClickManage(scope.row)"
-                >管理</el-button
-              >-
+              >管理</el-button>-
             </span>
             <el-button
               type="text"
               size="small"
               @click="handleClickRecord(scope.row)"
-              >记录</el-button
             >
+              记录
+            </el-button>
           </template>
         </el-table-column>
       </el-table>

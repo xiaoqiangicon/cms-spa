@@ -9,45 +9,65 @@
     "
   >
     <div class="row">
-      <div class="title">佛事名称</div>
+      <div class="title">
+        佛事名称
+      </div>
       ：{{ transferOrderDetail.buddhistName }}
     </div>
     <div class="row">
-      <div class="title">规格</div>
+      <div class="title">
+        规格
+      </div>
       ：{{ transferOrderDetail.subName }}
     </div>
     <div class="row">
-      <div class="title">数量</div>
+      <div class="title">
+        数量
+      </div>
       ：{{ transferOrderDetail.buyNum }}
     </div>
     <div class="row">
-      <div class="title">支付</div>
+      <div class="title">
+        支付
+      </div>
       ：{{ transferOrderDetail.price }}
     </div>
     <div class="row">
-      <div class="title">转单价格</div>
+      <div class="title">
+        转单价格
+      </div>
       ：{{ transferOrderDetail.transferPrice }}
     </div>
     <div class="row">
-      <div class="title">下单时间</div>
+      <div class="title">
+        下单时间
+      </div>
       ：{{ transferOrderDetail.addTime }}
     </div>
     <div class="row">
-      <div class="title">订单号</div>
+      <div class="title">
+        订单号
+      </div>
       ：{{ transferOrderDetail.orderId }}
     </div>
     <div class="row">
-      <div class="title">外部订单号</div>
+      <div class="title">
+        外部订单号
+      </div>
       ：{{ transferOrderDetail.orderNum }}
     </div>
     <div class="row">
-      <div class="title">支付流水号</div>
+      <div class="title">
+        支付流水号
+      </div>
       ：{{ transferOrderDetail.wxId }}
     </div>
     <template v-if="transferOrderDetail.feedBackImg">
-      <div class="bar"></div>
+      <div class="bar" />
       <div class="row">
-        <div class="title">反馈图</div>
+        <div class="title">
+          反馈图
+        </div>
         <div class="content">
           ：
           <template v-if="transferOrderDetail.feedBackImg.length">
@@ -56,15 +76,17 @@
               :key="item"
               class="img-container"
             >
-              <img :src="item" />
+              <img :src="item">
             </div>
           </template>
-          <div v-else>无</div>
+          <div v-else>
+            无
+          </div>
         </div>
       </div>
     </template>
     <template v-if="transferOrderDetail.ps">
-      <div class="bar"></div>
+      <div class="bar" />
       <div
         v-for="item in transferOrderDetail.ps"
         :key="item.inputId"
@@ -76,14 +98,18 @@
             :key="img"
             class="img-container"
           >
-            <img :src="img" />
+            <img :src="img">
           </div>
         </template>
-        <template v-else-if="item.type === 13"></template>
+        <template v-else-if="item.type === 13" />
         <template v-else>
-          <div class="title">{{ item.name }}</div>
+          <div class="title">
+            {{ item.name }}
+          </div>
           ：
-          <div class="content">{{ item.value }}</div>
+          <div class="content">
+            {{ item.value }}
+          </div>
         </template>
       </div>
     </template>
@@ -92,6 +118,7 @@
 
 <script>
 import { addProps } from '../data';
+
 const computedProps = {};
 addProps.forEach(({ name, full }) => {
   if (full) {
@@ -114,7 +141,7 @@ addProps.forEach(({ name, full }) => {
 });
 
 export default {
-  name: 'dialogDetail',
+  name: 'DialogDetail',
   props: ['visible'],
   data() {
     return {

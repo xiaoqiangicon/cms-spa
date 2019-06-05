@@ -21,13 +21,19 @@
               @click="showActions(index)"
             >
               <span v-if="item.type === 1">{{ item.content }}</span>
-              <img v-if="item.type === 2" :src="item.content" />
+              <img
+                v-if="item.type === 2"
+                :src="item.content"
+              >
             </p>
           </transition-group>
         </draggable>
       </div>
       <div class="row">
-        <el-button size="small" @click="remakeContent">
+        <el-button
+          size="small"
+          @click="remakeContent"
+        >
           重新加载内容
         </el-button>
       </div>
@@ -57,17 +63,26 @@
             class="image"
             @click="delImage(index)"
           >
-            <img :src="image" class="image-img" />
+            <img
+              :src="image"
+              class="image-img"
+            >
             <button class="clean image-close">
               X
             </button>
           </div>
         </div>
         <div>
-          <el-button size="small" @click="selectImages">
+          <el-button
+            size="small"
+            @click="selectImages"
+          >
             选取内容的图片
           </el-button>
-          <el-button size="small" class="mg-l-10 ps-relative">
+          <el-button
+            size="small"
+            class="mg-l-10 ps-relative"
+          >
             上传图片
             <div ref="upload" />
           </el-button>
@@ -87,8 +102,16 @@
           filterable
           style="width: 100%"
         >
-          <el-option label="请选择" value="" />
-          <el-option v-for="r in regions" :key="r" :label="r" :value="r" />
+          <el-option
+            label="请选择"
+            value=""
+          />
+          <el-option
+            v-for="r in regions"
+            :key="r"
+            :label="r"
+            :value="r"
+          />
         </el-select>
         <p class="mg-t-10">
           如稿件讲述的是某地域的事件，请添加该地域的标签
@@ -104,8 +127,14 @@
           size="small"
           style="width: 100%"
         >
-          <el-option label="否" :value="0" />
-          <el-option label="是" :value="1" />
+          <el-option
+            label="否"
+            :value="0"
+          />
+          <el-option
+            label="是"
+            :value="1"
+          />
         </el-select>
         <p class="mg-t-10">
           选择是会展示原创标示和禁止转载声明，否则为转载第三方免责声明。
@@ -166,14 +195,24 @@
         </p>
       </div>
     </div>
-    <span slot="footer" v-loading="saving" class="dialog-footer">
+    <span
+      slot="footer"
+      v-loading="saving"
+      class="dialog-footer"
+    >
       <el-button @click="clickCancel">
         取 消
       </el-button>
-      <el-button type="primary" @click="clickOk(1)">
+      <el-button
+        type="primary"
+        @click="clickOk(1)"
+      >
         保存
       </el-button>
-      <el-button type="primary" @click="clickOk(2)">
+      <el-button
+        type="primary"
+        @click="clickOk(2)"
+      >
         发布
       </el-button>
     </span>

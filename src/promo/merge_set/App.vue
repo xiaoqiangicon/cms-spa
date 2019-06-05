@@ -1,14 +1,15 @@
 <template>
   <div class="container">
     <el-card class="header">
-      <div class="f-s-18 mg-b-10">{{ buddhistName }}</div>
+      <div class="f-s-18 mg-b-10">
+        {{ buddhistName }}
+      </div>
       <div class="gray">
         <div>
-          <span class="mg-r-10">佛事ID：{{ buddhistId }}</span
-          >|
-          <span class="mg-l-10"
-            >佛事状态：{{ isEnd ? '已结束' : '进行中' }}</span
-          >
+          <span class="mg-r-10">佛事ID：{{ buddhistId }}</span>|
+          <span
+            class="mg-l-10"
+          >佛事状态：{{ isEnd ? '已结束' : '进行中' }}</span>
         </div>
         <div class="tip mg-t-20">
           组合订单：是用于APP“超度”和“祈福”模块的订单自动调度到寺院的功能。其中转单系统与推广佛事为互斥关系，但两者都可设置分享激励
@@ -24,19 +25,24 @@
             size="small"
             type="primary"
             @click="addDialogVisible = true"
-            >添加组合项</el-button
           >
+            添加组合项
+          </el-button>
         </div>
         <div class="list">
           <div
-            class="item"
-            @click="changeSub(item.id)"
-            :class="{ active: item.id === subId }"
             v-for="item in mergeSubList"
             :key="item.id"
+            class="item"
+            :class="{ active: item.id === subId }"
+            @click="changeSub(item.id)"
           >
-            <div class="id">{{ item.id }}</div>
-            <div class="name">{{ item.name }}</div>
+            <div class="id">
+              {{ item.id }}
+            </div>
+            <div class="name">
+              {{ item.name }}
+            </div>
             <div class="opt">
               <el-tooltip
                 v-if="item.isOrder && item.isZizaijiaCommodity"
@@ -49,7 +55,7 @@
                   icon="el-icon-warning"
                   style="color: #FAAD14;"
                   circle
-                ></el-button>
+                />
               </el-tooltip>
               <el-button
                 v-else
@@ -57,7 +63,7 @@
                 icon="el-icon-delete"
                 circle
                 @click="delSub(item.id)"
-              ></el-button>
+              />
             </div>
           </div>
         </div>
@@ -66,54 +72,74 @@
         <div class="head">
           <span class="f-s-18">选择项详情</span>
           <div class="fl-right">
-            <el-button type="primary" @click="add">添 加</el-button>
-            <el-button type="primary" @click="save">保 存</el-button>
+            <el-button
+              type="primary"
+              @click="add"
+            >
+              添 加
+            </el-button>
+            <el-button
+              type="primary"
+              @click="save"
+            >
+              保 存
+            </el-button>
           </div>
         </div>
         <el-table
-          v-loading="loading"
           ref="table"
+          v-loading="loading"
           :data="tableData"
           tooltip-effect="dark"
           style="width: 100%"
         >
-          <el-table-column prop="name" label="寺院名称" show-overflow-tooltip>
+          <el-table-column
+            prop="name"
+            label="寺院名称"
+            show-overflow-tooltip
+          >
             <template slot-scope="scope">
               <el-select
                 v-model="scope.row.templeId"
                 placeholder="请选择"
                 size="small"
-                @change="handleChangeRowTemple(scope)"
                 filterable
+                @change="handleChangeRowTemple(scope)"
               >
                 <el-option
                   v-for="item in transferTempleList"
                   :key="item.id"
                   :label="item.name"
                   :value="item.id"
-                ></el-option>
+                />
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column prop="price" label="佛事名称">
+          <el-table-column
+            prop="price"
+            label="佛事名称"
+          >
             <template slot-scope="scope">
               <el-select
                 v-model="scope.row.buddhistId"
                 placeholder="请选择"
                 size="small"
-                @change="handleChangeRowBuddhist(scope)"
                 filterable
+                @change="handleChangeRowBuddhist(scope)"
               >
                 <el-option
                   v-for="item in scope.row.buddhistSelect"
                   :key="item.id"
                   :label="item.name"
                   :value="item.id"
-                ></el-option>
+                />
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column prop="transferRate" label="选择项">
+          <el-table-column
+            prop="transferRate"
+            label="选择项"
+          >
             <template slot-scope="scope">
               <el-select
                 v-model="scope.row.subId"
@@ -126,13 +152,19 @@
                   :key="item.id"
                   :label="item.name"
                   :value="item.id"
-                ></el-option>
+                />
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column prop="transferPrice" label="转单价格（元）">
+          <el-table-column
+            prop="transferPrice"
+            label="转单价格（元）"
+          >
             <template slot-scope="scope">
-              <el-input v-model="scope.row.price" placeholder=""></el-input>
+              <el-input
+                v-model="scope.row.price"
+                placeholder=""
+              />
             </template>
           </el-table-column>
         </el-table>
@@ -140,7 +172,7 @@
     </div>
     <Add
       :visible="addDialogVisible"
-      :subList="subList"
+      :sub-list="subList"
       @updateVisible="updateDialogVisible"
       @save="addMergeSub"
     />
@@ -152,9 +184,9 @@ import clone from 'clone';
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
 import './fetch/index';
-import Add from './Add';
 import { setTimeout } from 'timers';
 import { Promise } from 'q';
+import Add from './Add';
 
 export default {
   name: 'App',
@@ -264,10 +296,10 @@ export default {
 
       // 根据当前选中的选择项 从服务器获取转单寺院列表 从服务器请求寺院对应的佛事列表
       const origin = this.mergeSubList.find(item => item.id == subId);
-      let promiseAry = [];
+      const promiseAry = [];
 
       origin.subList.forEach(({ templeId, buddhistId, subId, price }) => {
-        let resItem = {
+        const resItem = {
           templeId,
           buddhistId,
           subId,
@@ -276,7 +308,7 @@ export default {
           subSelect: [],
         };
 
-        let getData = new Promise((resolve, reject) => {
+        const getData = new Promise((resolve, reject) => {
           if (this.templeBuddhistMap[templeId] === undefined) {
             resolve(this.getBuddhistList(templeId));
           } else {
@@ -285,8 +317,7 @@ export default {
           }
         });
 
-        let handleData = () => {
-          return getData.then(data => {
+        const handleData = () => getData.then(data => {
             resItem.buddhistSelect = data;
             // 本地模拟数据的时候这里报错会导致下边的语句不执行, 因此添加判断语句
             const findItem = data.find(item => item.id === buddhistId);
@@ -296,7 +327,6 @@ export default {
             console.log('单条数据处理成功');
             return resItem;
           });
-        };
 
         promiseAry.push(handleData());
       });
@@ -385,7 +415,7 @@ export default {
             title: '提示',
             message: res.message,
           });
-          return;
+          
         }
       });
 
@@ -443,7 +473,7 @@ export default {
                 title: '提示',
                 message: res.message,
               });
-              return;
+              
             }
           });
 

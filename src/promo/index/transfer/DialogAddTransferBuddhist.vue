@@ -1,5 +1,8 @@
 <template>
-  <el-dialog title="添加佛事" :visible.sync="dialogAddTransferBuddhistVisible">
+  <el-dialog
+    title="添加佛事"
+    :visible.sync="dialogAddTransferBuddhistVisible"
+  >
     <div class="mg-b-10 f-s-18">
       请选择转单佛事
     </div>
@@ -21,8 +24,15 @@
     <div class="mg-t-10 f-s-18 mg-b-10">
       请设置规格类型
     </div>
-    <el-checkbox-group v-model="subList" size="mini">
-      <div v-for="item in subdivideList" :key="item.id" class="mg-b-10">
+    <el-checkbox-group
+      v-model="subList"
+      size="mini"
+    >
+      <div
+        v-for="item in subdivideList"
+        :key="item.id"
+        class="mg-b-10"
+      >
         <el-tooltip
           v-if="
             (!!item.isZizaijiaCommodity && !!item.isOrder) || item.price <= 0
@@ -32,8 +42,8 @@
             !!item.isZizaijiaCommodity && !!item.isOrder
               ? '自营佛事且已产生订单'
               : item.price === 0
-              ? '无需支付'
-              : '随喜'
+                ? '无需支付'
+                : '随喜'
           "
           placement="right"
         >
@@ -46,16 +56,25 @@
             {{ item.subdivideName }}
           </el-checkbox>
         </el-tooltip>
-        <el-checkbox v-else :label="item.id">
+        <el-checkbox
+          v-else
+          :label="item.id"
+        >
           {{ item.subdivideName }}
         </el-checkbox>
       </div>
     </el-checkbox-group>
-    <div slot="footer" class="dialog-footer">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="dialogAddTransferBuddhistVisible = false">
         取 消
       </el-button>
-      <el-button type="primary" @click="save">
+      <el-button
+        type="primary"
+        @click="save"
+      >
         保 存
       </el-button>
     </div>

@@ -29,22 +29,31 @@
         "
       >
         <span class="fl-left">{{ item.name }}</span>
-        <span class="fl-right" style="color:#8492a6;font-size:13px;">
+        <span
+          class="fl-right"
+          style="color:#8492a6;font-size:13px;"
+        >
           {{
             item.isConversion
               ? '已组合'
               : item.conversionSubdivide
-              ? ''
-              : item.isZizaijiaCommodity && item.isOrder
-              ? ''
-              : ''
+                ? ''
+                : item.isZizaijiaCommodity && item.isOrder
+                  ? ''
+                  : ''
           }}
         </span>
       </el-option>
     </el-select>
-    <span slot="footer" class="dialog-footer">
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="sVisible = false">取 消</el-button>
-      <el-button type="primary" @click="save">保 存</el-button>
+      <el-button
+        type="primary"
+        @click="save"
+      >保 存</el-button>
     </span>
   </el-dialog>
 </template>

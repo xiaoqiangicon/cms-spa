@@ -9,34 +9,42 @@
               v-model.number="typeId"
               placeholder="请选择"
               size="small"
-              @change="handleChangeType"
               filterable
+              @change="handleChangeType"
             >
-              <el-option label="全部" :value="0"></el-option>
+              <el-option
+                label="全部"
+                :value="0"
+              />
               <el-option
                 v-for="item in typeList"
                 :key="item.id"
                 :label="item.name"
                 :value="item.id"
-              ></el-option>
+              />
             </el-select>
             <el-button
               class="mg-l-10"
               type="primary"
               size="small"
               @click="handleClickEditType"
-              >编辑类型</el-button
             >
+              编辑类型
+            </el-button>
             <el-button
               class="fl-right"
               type="primary"
               size="small"
               @click="handleClickAdd"
-              >添加奖品</el-button
             >
+              添加奖品
+            </el-button>
           </div>
           <div class="table">
-            <el-table :data="tableData" style="width: 100%">
+            <el-table
+              :data="tableData"
+              style="width: 100%"
+            >
               <el-table-column label="排序">
                 <template slot-scope="scope">
                   <div
@@ -44,11 +52,17 @@
                     @click="handleClickRowSort(scope.row)"
                   >
                     {{ scope.row.sort }}
-                    <i style="color: #409EFF;" class="el-icon-edit"></i>
+                    <i
+                      style="color: #409EFF;"
+                      class="el-icon-edit"
+                    />
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column prop="name" label="标题" />
+              <el-table-column
+                prop="name"
+                label="标题"
+              />
               <el-table-column label="类型">
                 <template slot-scope="scope">
                   <div
@@ -58,28 +72,38 @@
                     {{
                       typeList.find(item => item.id === scope.row.typeId)
                         ? typeList.find(item => item.id === scope.row.typeId)
-                            .name
+                          .name
                         : ''
                     }}
-                    <i style="color: #409EFF;" class="el-icon-edit"></i>
+                    <i
+                      style="color: #409EFF;"
+                      class="el-icon-edit"
+                    />
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column prop="fuBiMoney" label="兑换福币（元）" />
+              <el-table-column
+                prop="fuBiMoney"
+                label="兑换福币（元）"
+              />
               <el-table-column
                 prop="exchangeTimes"
                 label="兑换次数"
                 align="center"
               />
-              <el-table-column label="操作" align="center">
+              <el-table-column
+                label="操作"
+                align="center"
+              >
                 <template slot-scope="scope">
                   <div>
                     <el-button
                       type="text"
                       size="small"
                       @click="handleClickRowDelete(scope.row)"
-                      >删除</el-button
                     >
+                      删除
+                    </el-button>
                   </div>
                 </template>
               </el-table-column>
@@ -118,11 +142,17 @@
           :key="item.id"
           :label="item.name"
           :value="item.id"
-        ></el-option>
+        />
       </el-select>
-      <span slot="footer" class="dialog-footer">
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="saveRowType">保 存</el-button>
+        <el-button
+          type="primary"
+          @click="saveRowType"
+        >保 存</el-button>
       </span>
     </el-dialog>
     <!-- dialogEditType -->
@@ -144,9 +174,13 @@
             dialogAddType = !0;
           }
         "
-        >添加类型</el-button
       >
-      <el-table :data="typeList" style="width: 100%">
+        添加类型
+      </el-button>
+      <el-table
+        :data="typeList"
+        style="width: 100%"
+      >
         <el-table-column label="排序">
           <template slot-scope="scope">
             <div
@@ -154,7 +188,10 @@
               @click="handleClickTypeRowSort(scope.row)"
             >
               {{ scope.row.sort }}
-              <i style="color: #409EFF;" class="el-icon-edit"></i>
+              <i
+                style="color: #409EFF;"
+                class="el-icon-edit"
+              />
             </div>
           </template>
         </el-table-column>
@@ -165,19 +202,26 @@
               @click="handleClickTypeRowTypeName(scope.row)"
             >
               {{ scope.row.name }}
-              <i style="color: #409EFF;" class="el-icon-edit"></i>
+              <i
+                style="color: #409EFF;"
+                class="el-icon-edit"
+              />
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column
+          label="操作"
+          align="center"
+        >
           <template slot-scope="scope">
             <div>
               <el-button
                 type="text"
                 size="small"
                 @click="handleClickTypeRowDelete(scope.row)"
-                >删除</el-button
               >
+                删除
+              </el-button>
             </div>
           </template>
         </el-table-column>
@@ -196,22 +240,28 @@
         <div class="row">
           <span class="title">类型名称</span>：
           <el-input
-            style="width: 200px;"
             v-model.trim="tempAddType.name"
+            style="width: 200px;"
             placeholder="请输入名称"
-          ></el-input>
+          />
         </div>
         <div class="row">
           <span class="title">排序</span>：
           <el-input
-            style="width: 200px;"
             v-model.number="tempAddType.sort"
+            style="width: 200px;"
             placeholder="请输入排序"
-          ></el-input>
+          />
         </div>
-        <span slot="footer" class="dialog-footer">
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
           <el-button @click="dialogAddType = !1">取 消</el-button>
-          <el-button type="primary" @click="saveAddType">保 存</el-button>
+          <el-button
+            type="primary"
+            @click="saveAddType"
+          >保 存</el-button>
         </span>
       </el-dialog>
     </el-dialog>
@@ -238,7 +288,7 @@
             :key="item.id"
             :label="item.name"
             :value="item.id"
-          ></el-option>
+          />
         </el-select>
       </div>
       <div class="row">
@@ -254,20 +304,26 @@
             :key="item.id"
             :label="item.name"
             :value="item.id"
-          ></el-option>
+          />
         </el-select>
       </div>
       <div class="row">
         <span class="title">排序</span>：
         <el-input
-          style="width: 200px;"
           v-model.number="tempAdd.sort"
+          style="width: 200px;"
           placeholder="请输入排序"
-        ></el-input>
+        />
       </div>
-      <span slot="footer" class="dialog-footer">
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button @click="dialogAdd = !1">取 消</el-button>
-        <el-button type="primary" @click="saveAdd">保 存</el-button>
+        <el-button
+          type="primary"
+          @click="saveAdd"
+        >保 存</el-button>
       </span>
     </el-dialog>
   </div>
@@ -278,7 +334,7 @@ import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
 
 export default {
-  name: 'fubiIndex',
+  name: 'FubiIndex',
   data() {
     return {
       typeList: [],

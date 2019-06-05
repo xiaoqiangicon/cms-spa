@@ -9,23 +9,43 @@
     "
   >
     <div class="row">
-      <div class="title">佛事名称</div>
-      <div class="content">：{{ transferOrderDetail.buddhistName }}</div>
+      <div class="title">
+        佛事名称
+      </div>
+      <div class="content">
+        ：{{ transferOrderDetail.buddhistName }}
+      </div>
     </div>
     <div class="row">
-      <div class="title">选择项名称</div>
-      <div class="content">：{{ transferOrderDetail.subName }}</div>
+      <div class="title">
+        选择项名称
+      </div>
+      <div class="content">
+        ：{{ transferOrderDetail.subName }}
+      </div>
     </div>
     <div class="row">
-      <div class="title">撤回寺院</div>
-      <div class="content">：{{ transferOrderDetail.templeName }}</div>
+      <div class="title">
+        撤回寺院
+      </div>
+      <div class="content">
+        ：{{ transferOrderDetail.templeName }}
+      </div>
     </div>
     <div class="tip">
       <div>温馨提示</div>
       <div>撤回后，请在“未转单列表”查看此订单</div>
     </div>
-    <div class="mg-t-20" style="text-align: center;">
-      <el-button type="primary" @click="handleCancel">确认撤回</el-button>
+    <div
+      class="mg-t-20"
+      style="text-align: center;"
+    >
+      <el-button
+        type="primary"
+        @click="handleCancel"
+      >
+        确认撤回
+      </el-button>
     </div>
   </el-dialog>
 </template>
@@ -35,6 +55,7 @@ import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
 
 import { addProps } from '../data';
+
 const computedProps = {};
 addProps.forEach(({ name, full }) => {
   if (full) {
@@ -57,7 +78,7 @@ addProps.forEach(({ name, full }) => {
 });
 
 export default {
-  name: 'dialogRetract',
+  name: 'DialogRetract',
   props: ['visible'],
   data() {
     return {

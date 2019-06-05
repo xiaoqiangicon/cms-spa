@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-table
-      v-loading="loading"
       ref="multipleTable"
+      v-loading="loading"
       :data="tableData"
       tooltip-effect="dark"
       style="width: 100%"
@@ -12,65 +12,111 @@
         label="佛事名称"
         show-overflow-tooltip
       />
-      <el-table-column label="状态" show-overflow-tooltip :align="'center'">
-        <template slot-scope="scope">{{
-          scope.row.isAuto ? '自动' : '手动'
-        }}</template>
-      </el-table-column>
-      <el-table-column prop="buyNum" label="数量" :align="'center'" />
-      <el-table-column prop="price" label="支付金额（元）" :align="'center'" />
-      <el-table-column label="所属寺院" show-overflow-tooltip :align="'center'">
+      <el-table-column
+        label="状态"
+        show-overflow-tooltip
+        :align="'center'"
+      >
         <template slot-scope="scope">
-          <div v-for="item in scope.row.orderList" :key="item.addTime">
+          {{
+            scope.row.isAuto ? '自动' : '手动'
+          }}
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="buyNum"
+        label="数量"
+        :align="'center'"
+      />
+      <el-table-column
+        prop="price"
+        label="支付金额（元）"
+        :align="'center'"
+      />
+      <el-table-column
+        label="所属寺院"
+        show-overflow-tooltip
+        :align="'center'"
+      >
+        <template slot-scope="scope">
+          <div
+            v-for="item in scope.row.orderList"
+            :key="item.addTime"
+          >
             {{ item.templeName }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="支付时间" show-overflow-tooltip :align="'center'">
+      <el-table-column
+        label="支付时间"
+        show-overflow-tooltip
+        :align="'center'"
+      >
         <template slot-scope="scope">
-          <div v-for="item in scope.row.orderList" :key="item.addTime">
+          <div
+            v-for="item in scope.row.orderList"
+            :key="item.addTime"
+          >
             {{ item.addTime }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="转单金额（元）" :align="'center'">
+      <el-table-column
+        label="转单金额（元）"
+        :align="'center'"
+      >
         <template slot-scope="scope">
-          <div v-for="item in scope.row.orderList" :key="item.addTime">
+          <div
+            v-for="item in scope.row.orderList"
+            :key="item.addTime"
+          >
             {{ item.transferPrice }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="详情" width="100" :align="'center'">
+      <el-table-column
+        label="详情"
+        width="100"
+        :align="'center'"
+      >
         <template slot-scope="scope">
-          <div v-for="(item, index) in scope.row.orderList" :key="item.addTime">
+          <div
+            v-for="(item, index) in scope.row.orderList"
+            :key="item.addTime"
+          >
             <el-button
               type="text"
               size="small"
               @click="handleClickDetail(scope.row, item, index)"
-              >详情</el-button
             >
+              详情
+            </el-button>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="100" :align="'center'">
+      <el-table-column
+        label="操作"
+        width="100"
+        :align="'center'"
+      >
         <template slot-scope="scope">
           <div>
             <span
-              class="disabled"
               v-if="
                 !!scope.row.isAuto ||
                   (!scope.row.isAuto && !!scope.row.orderList[0].isFinish)
               "
+              class="disabled"
               @click="handleClickRetract(scope.row)"
-              >撤回</span
-            >
+            >撤回</span>
             <el-button
               v-else
               type="text"
               size="small"
               @click="handleClickRetract(scope.row)"
-              >撤回</el-button
             >
+              撤回
+            </el-button>
           </div>
         </template>
       </el-table-column>
@@ -103,6 +149,7 @@ import DialogDetail from './DialogDetail';
 import DialogRetract from './DialogRetract';
 
 import { addProps } from '../data';
+
 const computedProps = {};
 addProps.forEach(({ name, full }) => {
   if (full) {

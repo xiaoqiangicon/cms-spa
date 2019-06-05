@@ -1,18 +1,20 @@
 <template>
   <div class="container">
     <el-card class="header">
-      <div class="f-s-18 mg-b-10">{{ buddhistName }}</div>
+      <div class="f-s-18 mg-b-10">
+        {{ buddhistName }}
+      </div>
       <div class="gray">
-        <span class="mg-r-10">佛事ID：{{ buddhistId }}</span
-        >|
+        <span class="mg-r-10">佛事ID：{{ buddhistId }}</span>|
         <span class="mg-l-10">佛事状态：{{ isEnd ? '已结束' : '进行中' }}</span>
       </div>
       <el-button
         style="position: absolute; bottom: 40px;right: 40px;"
         type="primary"
         @click="save"
-        >保 存</el-button
       >
+        保 存
+      </el-button>
     </el-card>
     <div class="body">
       <div class="aside card">
@@ -23,26 +25,31 @@
             size="small"
             type="primary"
             @click="dialogAddVisible = true"
-            >添加寺院</el-button
           >
+            添加寺院
+          </el-button>
         </div>
         <div class="list">
           <div
-            class="item"
-            @click="changeTemple(item.id)"
-            :class="{ active: item.id === templeId }"
             v-for="item in transferTempleList"
             :key="item.id"
+            class="item"
+            :class="{ active: item.id === templeId }"
+            @click="changeTemple(item.id)"
           >
-            <div class="id">{{ item.id }}</div>
-            <div class="name">{{ item.name }}</div>
+            <div class="id">
+              {{ item.id }}
+            </div>
+            <div class="name">
+              {{ item.name }}
+            </div>
             <div class="opt">
               <el-button
                 size="mini"
                 icon="el-icon-delete"
                 circle
                 @click="delTemple(item.id)"
-              ></el-button>
+              />
             </div>
           </div>
         </div>
@@ -59,12 +66,19 @@
             type="selection"
             width="55"
             :selectable="tableSelectable"
-          ></el-table-column>
-          <el-table-column prop="name" label="选择项名称" show-overflow-tooltip>
+          />
+          <el-table-column
+            prop="name"
+            label="选择项名称"
+            show-overflow-tooltip
+          >
             <template slot-scope="scope">
-              <el-tag v-if="scope.row.isZizaijiaCommodity" size="mini"
-                >自营</el-tag
+              <el-tag
+                v-if="scope.row.isZizaijiaCommodity"
+                size="mini"
               >
+                自营
+              </el-tag>
               <el-tooltip
                 v-if="scope.row.isZizaijiaCommodity && scope.row.isOrder"
                 class="item"
@@ -72,62 +86,91 @@
                 content="佛事被标记为自营佛事且已存在历史订单，不可勾选和修改"
                 placement="top-start"
               >
-                <i class="el-icon-info" style="color: #FAAD14;"></i>
+                <i
+                  class="el-icon-info"
+                  style="color: #FAAD14;"
+                />
               </el-tooltip>
               {{ scope.row.name }}
             </template>
           </el-table-column>
-          <el-table-column prop="price" label="价格（元）">
-            <template slot-scope="scope">{{
-              scope.row.price > 0
-                ? scope.row.price
-                : scope.row.price === 0
-                ? '无需支付'
-                : '随喜'
-            }}</template>
+          <el-table-column
+            prop="price"
+            label="价格（元）"
+          >
+            <template slot-scope="scope">
+              {{
+                scope.row.price > 0
+                  ? scope.row.price
+                  : scope.row.price === 0
+                    ? '无需支付'
+                    : '随喜'
+              }}
+            </template>
           </el-table-column>
-          <el-table-column prop="transferRate" label="转单比例">
-            <template slot="header" slot-scope="scope"
-              >转单比例
+          <el-table-column
+            prop="transferRate"
+            label="转单比例"
+          >
+            <template
+              slot="header"
+              slot-scope="scope"
+            >
+              转单比例
               <el-tooltip
                 class="item"
                 effect="dark"
                 content="转单比例和转单金额是互斥关系，若填写了其中一个则其“填写项”为不可填写状态。"
                 placement="top-start"
               >
-                <i class="el-icon-info" style="color: #409eff;"></i>
+                <i
+                  class="el-icon-info"
+                  style="color: #409eff;"
+                />
               </el-tooltip>
             </template>
             <template slot-scope="scope">
               <el-input
+                v-model.number="scope.row.transferRate"
                 :disabled="!scope.row.selected"
                 style="width: 80px;"
-                v-model.number="scope.row.transferRate"
                 placeholder=""
-              ></el-input>
-              <span class="mg-l-5" slot="suffix">%</span>
+              />
+              <span
+                slot="suffix"
+                class="mg-l-5"
+              >%</span>
             </template>
           </el-table-column>
-          <el-table-column prop="transferPrice" label="转单金额（元）">
+          <el-table-column
+            prop="transferPrice"
+            label="转单金额（元）"
+          >
             <template slot-scope="scope">
               <el-input
+                v-model.number="scope.row.transferPrice"
                 :disabled="!scope.row.selected"
                 style="width: 80px;"
-                v-model.number="scope.row.transferPrice"
                 placeholder=""
-              ></el-input>
+              />
             </template>
           </el-table-column>
           <el-table-column label="分享福币（%）">
-            <template slot="header" slot-scope="scope"
-              >分享福币（%）
+            <template
+              slot="header"
+              slot-scope="scope"
+            >
+              分享福币（%）
               <el-tooltip
                 class="item"
                 effect="dark"
                 content="设置福币分成：用户分享当前佛事后，从分享链接支付的订单会按设置的比例的福币给他。"
                 placement="top-start"
               >
-                <i class="el-icon-info" style="color: #409eff;"></i>
+                <i
+                  class="el-icon-info"
+                  style="color: #409eff;"
+                />
               </el-tooltip>
             </template>
             <template slot-scope="scope">
@@ -140,9 +183,14 @@
                   subList.find(subItem => subItem.id === scope.row.id)
                     .shareFuBiPercent
                 }}%
-                <i style="color: #409EFF;" class="el-icon-edit"></i>
+                <i
+                  style="color: #409EFF;"
+                  class="el-icon-edit"
+                />
               </div>
-              <div v-else>-</div>
+              <div v-else>
+                -
+              </div>
             </template>
           </el-table-column>
         </el-table>
@@ -161,20 +209,26 @@
       <div>
         <span class="mg-r-5">分享福币</span>
         <el-input
-          style="width: 100px;"
           v-model.number="tempCurSubItem.shareFuBiPercent"
+          style="width: 100px;"
           placeholder=""
-        ></el-input>
+        />
         <span class="mg-l-5">%</span>
       </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitFuBiSet">保 存</el-button>
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="primary"
+          @click="submitFuBiSet"
+        >保 存</el-button>
       </span>
     </el-dialog>
     <!-- DialogAdd -->
     <Add
       :visible="dialogAddVisible"
-      :templeList="templeList"
+      :temple-list="templeList"
       @updateVisible="updateDialogAddVisible"
       @save="addTemple"
     />
@@ -186,8 +240,8 @@ import clone from 'clone';
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
 import './fetch/index';
-import Add from './Add';
 import { setTimeout } from 'timers';
+import Add from './Add';
 
 export default {
   name: 'App',
@@ -292,7 +346,7 @@ export default {
     // 服务器 subList {id, name, price, transferPrice, transferRate, shareFuBiPercent}
     createHandleData(item) {
       const { subList } = this;
-      let res = { ...item };
+      const res = { ...item };
       res.subList = clone(subList);
 
       res.subList.forEach(sub => {
@@ -320,11 +374,11 @@ export default {
     // 服务器 subList {id, transferPrice, transferRate}
     createSubmitData() {
       const { buddhistId, transferTempleList } = this;
-      let params = { buddhistId };
+      const params = { buddhistId };
 
       params.transferTempleList = clone(transferTempleList);
       params.transferTempleList = params.transferTempleList.map(item => {
-        let res = { id: item.id, subList: [] };
+        const res = { id: item.id, subList: [] };
 
         item.subList.forEach(sub => {
           if (sub.selected && sub.price > 0) {

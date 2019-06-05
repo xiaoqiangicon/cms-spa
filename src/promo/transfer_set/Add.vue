@@ -24,9 +24,15 @@
         :value="item.id"
       />
     </el-select>
-    <span slot="footer" class="dialog-footer">
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="sVisible = false">取 消</el-button>
-      <el-button type="primary" @click="save">添 加</el-button>
+      <el-button
+        type="primary"
+        @click="save"
+      >添 加</el-button>
     </span>
   </el-dialog>
 </template>

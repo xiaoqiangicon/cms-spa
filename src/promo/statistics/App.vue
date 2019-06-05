@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <el-card>
-      <div class="tabs">转单寺院</div>
+      <div class="tabs">
+        转单寺院
+      </div>
       <div class="filter">
         寺院名
         <el-select
@@ -12,7 +14,10 @@
           filterable
           @change="refresh"
         >
-          <el-option :value="0" label="全部" />
+          <el-option
+            :value="0"
+            label="全部"
+          />
           <el-option
             v-for="item in templeList"
             :key="item.id"
@@ -28,8 +33,16 @@
           stripe
           style="width: 100%"
         >
-          <el-table-column prop="id" label="ID" width="100" :align="'center'" />
-          <el-table-column prop="name" label="寺院名称" />
+          <el-table-column
+            prop="id"
+            label="ID"
+            width="100"
+            :align="'center'"
+          />
+          <el-table-column
+            prop="name"
+            label="寺院名称"
+          />
           <el-table-column
             prop="transferOrderNum"
             label="已转单数"
@@ -45,15 +58,20 @@
             label="盈收金额（元）"
             :align="'center'"
           />
-          <el-table-column label="操作" width="100" :align="'center'">
+          <el-table-column
+            label="操作"
+            width="100"
+            :align="'center'"
+          >
             <template slot-scope="scope">
               <div>
                 <el-button
                   type="text"
                   size="small"
                   @click="handleClickRemind(scope.row)"
-                  >转单通知</el-button
                 >
+                  转单通知
+                </el-button>
               </div>
             </template>
           </el-table-column>
@@ -70,7 +88,7 @@
       </div>
     </el-card>
     <DialogRemind
-      :templeId="curTempleId"
+      :temple-id="curTempleId"
       :visible="dialogRemindVisible"
       @updateVisible="updateDialogRemindVisible"
     />

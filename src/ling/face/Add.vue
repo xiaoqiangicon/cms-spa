@@ -10,19 +10,30 @@
         <div class="row-name">
           表情图片：
         </div>
-        <Upload :images="covers" :multiple="false" />
+        <Upload
+          :images="covers"
+          :multiple="false"
+        />
       </div>
       <div class="row">
         <div class="row-name">
           发言内容：
         </div>
-        <el-input v-model="content" size="small" style="width: 200px;" />
+        <el-input
+          v-model="content"
+          size="small"
+          style="width: 200px;"
+        />
       </div>
       <div class="row">
         <div class="row-name">
           优先级：
         </div>
-        <el-input v-model="priority" size="small" style="width: 200px;" />
+        <el-input
+          v-model="priority"
+          size="small"
+          style="width: 200px;"
+        />
       </div>
       <div class="row">
         <div class="row-name">
@@ -43,11 +54,18 @@
         </el-select>
       </div>
     </div>
-    <span slot="footer" class="dialog-footer">
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="clickCancel">
         取 消
       </el-button>
-      <el-button v-loading="saving" type="primary" @click="clickOk">
+      <el-button
+        v-loading="saving"
+        type="primary"
+        @click="clickOk"
+      >
         确 定
       </el-button>
     </span>

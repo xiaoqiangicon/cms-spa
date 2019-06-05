@@ -9,42 +9,72 @@
       </div>
     </el-card>
     <el-card>
-      <el-table :data="buddhistData.subList" style="width: 100%">
-        <el-table-column prop="name" label="选择项名称"></el-table-column>
+      <el-table
+        :data="buddhistData.subList"
+        style="width: 100%"
+      >
+        <el-table-column
+          prop="name"
+          label="选择项名称"
+        />
         <el-table-column
           prop="price"
           label="价格（元）"
           align="center"
-        ></el-table-column>
-        <el-table-column label="推广服务费" align="center">
-          <template slot="header" slot-scope="scope"
-            >推广服务费
+        />
+        <el-table-column
+          label="推广服务费"
+          align="center"
+        >
+          <template
+            slot="header"
+            slot-scope="scope"
+          >
+            推广服务费
             <el-tooltip
               class="item"
               effect="dark"
               content="转单价格请在“推广设置”中设置"
               placement="top-start"
             >
-              <i class="el-icon-info" style="color: #409EFF;"></i>
+              <i
+                class="el-icon-info"
+                style="color: #409EFF;"
+              />
             </el-tooltip>
-            <el-button type="primary" size="mini" @click="handleClickEditRate"
-              >编辑</el-button
+            <el-button
+              type="primary"
+              size="mini"
+              @click="handleClickEditRate"
             >
+              编辑
+            </el-button>
           </template>
-          <template slot-scope="scope"
-            >{{ Number(100 * buddhistData.rate).toFixed(2) }}%</template
+          <template
+            slot-scope="scope"
           >
+            {{ Number(100 * buddhistData.rate).toFixed(2) }}%
+          </template>
         </el-table-column>
-        <el-table-column label="分享福币" align="center">
-          <template slot="header" slot-scope="scope"
-            >分享福币（%）
+        <el-table-column
+          label="分享福币"
+          align="center"
+        >
+          <template
+            slot="header"
+            slot-scope="scope"
+          >
+            分享福币（%）
             <el-tooltip
               class="item"
               effect="dark"
               content="设置福币分成：用户分享当前佛事后，从分享链接支付的订单会按设置的比例的福币给他。"
               placement="top-start"
             >
-              <i class="el-icon-info" style="color: #409EFF;"></i>
+              <i
+                class="el-icon-info"
+                style="color: #409EFF;"
+              />
             </el-tooltip>
           </template>
           <template slot-scope="scope">
@@ -54,9 +84,14 @@
               @click="handleClickEditFuBiPercent(scope.row)"
             >
               {{ scope.row.shareFuBiPercent }}%
-              <i style="color: #409EFF;" class="el-icon-edit"></i>
+              <i
+                style="color: #409EFF;"
+                class="el-icon-edit"
+              />
             </div>
-            <div v-else>-</div>
+            <div v-else>
+              -
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -74,14 +109,20 @@
       <div>
         <span class="mg-r-5">分享福币</span>
         <el-input
-          style="width: 100px;"
           v-model.number="tempCurSubItem.shareFuBiPercent"
+          style="width: 100px;"
           placeholder=""
-        ></el-input>
+        />
         <span class="mg-l-5">%</span>
       </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitFuBiSet">保 存</el-button>
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="primary"
+          @click="submitFuBiSet"
+        >保 存</el-button>
       </span>
     </el-dialog>
     <!-- DialogEdit -->
@@ -95,31 +136,41 @@
       "
     >
       <div class="row">
-        <div class="title">支付服务费</div>
+        <div class="title">
+          支付服务费
+        </div>
         <div class="content">
           ：
           <el-input
-            style="width: 210px;"
             v-model.number="tempRateHandle"
+            style="width: 210px;"
             placeholder=""
-          ></el-input>
+          />
           <span class="mg-l-5">%</span>
         </div>
       </div>
       <div class="row">
-        <div class="title">生效时间</div>
+        <div class="title">
+          生效时间
+        </div>
         <div class="content">
           ：
           <el-date-picker
-            value-format="yyyy-MM-dd HH:mm:ss"
             v-model="tempStartTime"
+            value-format="yyyy-MM-dd HH:mm:ss"
             type="datetime"
             placeholder="选择日期时间"
-          ></el-date-picker>
+          />
         </div>
       </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submit">保 存</el-button>
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="primary"
+          @click="submit"
+        >保 存</el-button>
       </span>
     </el-dialog>
   </div>
@@ -131,7 +182,7 @@ import './fetch/index';
 import seeFetch from 'see-fetch';
 
 export default {
-  name: 'buddhistEdit',
+  name: 'BuddhistEdit',
   data() {
     return {
       buddhistData: {}, // buddhistId buddhistName templeName isPromotion promotionPercent rate startTime subList

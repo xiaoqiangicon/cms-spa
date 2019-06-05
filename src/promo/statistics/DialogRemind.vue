@@ -8,23 +8,40 @@
       }
     "
   >
-    <div class="mg-b-20">添加需要订单提醒的微信号</div>
+    <div class="mg-b-20">
+      添加需要订单提醒的微信号
+    </div>
     <!-- <div class="cell" v-for="item in managerList" :key="item.id">
       <div class="avatar"></div>
       <div class="nickname">{{item.nickname}}</div>
     </div>-->
     <el-checkbox-group v-model="userId">
-      <div class="cell" v-for="manager in managerList" :key="manager.id">
+      <div
+        v-for="manager in managerList"
+        :key="manager.id"
+        class="cell"
+      >
         <el-checkbox :label="manager.id">
           <div class="avatar">
-            <img :src="manager.avatar" alt="" />
+            <img
+              :src="manager.avatar"
+              alt=""
+            >
           </div>
-          <div class="nickname">{{ manager.nickname }}</div>
+          <div class="nickname">
+            {{ manager.nickname }}
+          </div>
         </el-checkbox>
       </div>
     </el-checkbox-group>
-    <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="submit">保 存</el-button>
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        @click="submit"
+      >保 存</el-button>
     </span>
   </el-dialog>
 </template>
@@ -33,7 +50,7 @@ import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
 
 export default {
-  name: 'dialogRemind',
+  name: 'DialogRemind',
   props: ['visible', 'templeId'],
   data() {
     return {

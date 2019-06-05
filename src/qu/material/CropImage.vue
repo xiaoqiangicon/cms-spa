@@ -9,17 +9,24 @@
       <vueCropper
         ref="cropper"
         :img="cropImageUrl"
-        outputType="png"
-        :autoCrop="!0"
-        :centerBox="!0"
-        :outputSize="0.8"
-      ></vueCropper>
+        output-type="png"
+        :auto-crop="!0"
+        :center-box="!0"
+        :output-size="0.8"
+      />
     </div>
-    <span slot="footer" class="dialog-footer">
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="clickCancel">
         取 消
       </el-button>
-      <el-button v-loading="loading" type="primary" @click="clickOk">
+      <el-button
+        v-loading="loading"
+        type="primary"
+        @click="clickOk"
+      >
         确 定
       </el-button>
     </span>
@@ -48,13 +55,13 @@ const computedProps = {};
 export default {
   name: 'CropImage',
   components: { VueCropper },
-  computed: {
-    ...computedProps,
-  },
   data() {
     return {
       loading: !1,
     };
+  },
+  computed: {
+    ...computedProps,
   },
   watch: {
     cropImageVisible(value) {
