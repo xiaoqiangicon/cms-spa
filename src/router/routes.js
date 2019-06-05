@@ -228,15 +228,15 @@ const routes = [
       {
         path: 'income-stat',
         component: () => import('../finance/income-stat/App'),
-        name: '盈收统计',
-        meta: { title: '盈收统计', noCache: true },
+        name: '营收统计',
+        meta: { title: '营收统计', noCache: true },
         controlMark: 'pw_cash_stat',
       },
       {
         path: 'income',
-        name: '盈收管理',
+        name: '营收管理',
         component: () => import('../finance/income/App'),
-        meta: { title: '盈收管理', noCache: true },
+        meta: { title: '营收管理', noCache: true },
         controlMark: 'pw_rate',
       },
       {

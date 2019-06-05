@@ -17,6 +17,7 @@
       </div>
       <div class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="id" label="id" />
           <el-table-column prop="name" label="公众号名称" />
           <el-table-column prop="account" label="微信号" />
           <el-table-column prop="interval" label="拉取间隔天数" />
