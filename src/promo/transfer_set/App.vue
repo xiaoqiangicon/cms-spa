@@ -70,9 +70,6 @@
           />
           <el-table-column prop="name" label="选择项名称" show-overflow-tooltip>
             <template slot-scope="scope">
-              <el-tag v-if="scope.row.isZizaijiaCommodity" size="mini">
-                自营
-              </el-tag>
               <el-tooltip
                 v-if="scope.row.isZizaijiaCommodity && scope.row.isOrder"
                 class="item"

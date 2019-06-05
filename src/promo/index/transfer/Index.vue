@@ -11,8 +11,9 @@
               type="primary"
               size="small"
               @click="dialogAddTransferBuddhistVisible = true"
-              >添加转单佛事</el-button
             >
+              添加转单佛事
+            </el-button>
           </div>
         </div>
         <div v-else>
@@ -46,8 +47,9 @@
                   size="small"
                   type="primary"
                   @click="refreshTableData(transferActiveName)"
-                  >搜索</el-button
                 >
+                  搜索
+                </el-button>
               </div>
               <div class="fl-right mg-r-10" style="width:  120px;">
                 <el-input
@@ -86,15 +88,18 @@
 
 <script>
 import './fetch';
-import seeFetch from 'see-fetch';
-import { Notification } from 'element-ui';
 import DialogAddTransferBuddhist from './DialogAddTransferBuddhist';
 
-const TableBuddhist = () => import('./TableBuddhist');
-const TableYetTransfer = () => import('./TableYetTransfer');
-const TableNotTransfer = () => import('./TableNotTransfer');
+import TableBuddhist from './TableBuddhist';
+import TableYetTransfer from './TableYetTransfer';
+import TableNotTransfer from './TableNotTransfer';
+
+// const TableBuddhist = () => import('./TableBuddhist');
+// const TableYetTransfer = () => import('./TableYetTransfer');
+// const TableNotTransfer = () => import('./TableNotTransfer');
 
 import { addProps } from '../data';
+
 const computedProps = {};
 addProps.forEach(({ name, full }) => {
   if (full) {
@@ -110,6 +115,7 @@ addProps.forEach(({ name, full }) => {
       },
     };
   } else {
+    /* eslint-disable */
     computedProps[name] = function() {
       return this.$store.state.promoIndex.add[name];
     };
@@ -132,27 +138,27 @@ export default {
 
       buddhistList: [],
       subList: [],
-
-      transferActiveName: 'tableBuddhist',
     };
   },
   computed: {
     ...computedProps,
     buddhistName() {
       const findItem = this.buddhistList.find(
-        item => item.id === parseInt(this.buddhistId)
+        item => item.id === parseInt(this.buddhistId, 10)
       );
       if (findItem) {
         return findItem.name;
-      } else {
-        return '';
       }
+      return '';
     },
   },
   watch: {
     transferActiveName(val) {
       this.refreshTableData(val);
     },
+  },
+  created() {
+    this.transferActiveName = 'tableBuddhist';
   },
   methods: {
     refreshTableData(tableName) {
