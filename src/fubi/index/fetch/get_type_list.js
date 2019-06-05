@@ -1,15 +1,14 @@
 /* eslint-disable no-param-reassign, prefer-destructuring */
 import seeFetch from 'see-fetch';
 
-const req = {
-};
+const req = {};
 
 const refactor = {
   data: [
     {
       // id, name, sort, addTime, updateTime, status
-    }
-  ]
+    },
+  ],
 };
 
 seeFetch.config('fubi/index/get_type_list', {

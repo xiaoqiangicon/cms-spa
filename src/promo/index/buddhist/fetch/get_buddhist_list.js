@@ -11,10 +11,10 @@ const refactor = {
       {
         // id: 'id',
         // name: 'name',
-        // isPromotion: 'isPromotion', 
-      }
-    ]
-  }
+        // isPromotion: 'isPromotion',
+      },
+    ],
+  },
 };
 
 const pre = params => ({

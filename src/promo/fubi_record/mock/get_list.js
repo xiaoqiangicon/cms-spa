@@ -7,10 +7,10 @@ export default {
       id,
       payTime: `2019-02-12 12:21:21`,
       name: `名称${id}`,
-      price: Math.ceil(Math.random()*1000),
+      price: Math.ceil(Math.random() * 1000),
       nickName: `拥有者${id}`,
       mobile: 1232312131,
-      shareBlessCoin: Math.ceil(Math.random()*1000),
+      shareBlessCoin: Math.ceil(Math.random() * 1000),
     })),
-  }
+  },
 };

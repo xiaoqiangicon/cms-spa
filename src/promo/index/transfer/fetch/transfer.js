@@ -22,5 +22,5 @@ seeFetch.config('promo/index/transfer/transfer', {
     '/promo/index/transfer/mock/success',
   ],
   req: [req, req],
-  pre: [pre, pre]
+  pre: [pre, pre],
 });

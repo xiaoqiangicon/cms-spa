@@ -45,7 +45,7 @@ export default {
     ],
     templeList: ['寺院1', '寺院2'],
     time: '2017-12-21 19:12:36',
-    isEnd: Math.floor(Math.random()*2),
-    isShareBlessCoin: Math.floor(Math.random()*2),
+    isEnd: Math.floor(Math.random() * 2),
+    isShareBlessCoin: Math.floor(Math.random() * 2),
   })),
 };

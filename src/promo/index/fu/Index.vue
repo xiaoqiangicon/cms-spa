@@ -1,54 +1,145 @@
 <template>
   <div>
     <div class="filter clearfix">
-      <div
-        class="tip fl-right"
-      >分享激励：可为指定佛事设置一定分成比例或功德金额，用户将佛事分享出去后，若有人通过分享链接产生支付订单则这个用户会获得相应的功德金。功德金可用来兑换实物道具或可直接抵用佛事的支付金额等。</div>
+      <div class="tip fl-right">
+        分享激励：可为指定佛事设置一定分成比例或功德金额，用户将佛事分享出去后，若有人通过分享链接产生支付订单则这个用户会获得相应的功德金。功德金可用来兑换实物道具或可直接抵用佛事的支付金额等。
+      </div>
       <div class="mg-t-30">
         <span>类型：</span>
-        <el-select v-model="type" placeholder="请选择" @change="handleChangeType">
-          <el-option label="全部" :value="0"></el-option>
-          <el-option label="转单佛事" :value="1"></el-option>
-          <el-option label="推广佛事" :value="2"></el-option>
+        <el-select
+          v-model="type"
+          placeholder="请选择"
+          @change="handleChangeType"
+        >
+          <el-option
+            label="全部"
+            :value="0"
+          />
+          <el-option
+            label="转单佛事"
+            :value="1"
+          />
+          <el-option
+            label="推广佛事"
+            :value="2"
+          />
         </el-select>
       </div>
     </div>
     <div class="tabs mg-t-20">
-      <el-tabs v-model="curTab" @tab-click="handleClickTabs">
-        <el-tab-pane label="进行中" name="ing"></el-tab-pane>
-        <el-tab-pane label="已结束" name="end"></el-tab-pane>
+      <el-tabs
+        v-model="curTab"
+        @tab-click="handleClickTabs"
+      >
+        <el-tab-pane
+          label="进行中"
+          name="ing"
+        />
+        <el-tab-pane
+          label="已结束"
+          name="end"
+        />
       </el-tabs>
     </div>
     <div class="table">
-      <el-table v-loading="loading" :data="tableData" style="width: 100%">
-        <el-table-column v-if="!isEnd" label="排序" width="100" align="center">
-          <template slot="header" slot-scope="scope">排序
-            <el-tooltip class="item" effect="dark" content="排序影响“分享列表”的顺序" placement="top-start">
-              <i class="el-icon-info" style="color: #409EFF;"></i>
+      <el-table
+        v-loading="loading"
+        :data="tableData"
+        style="width: 100%"
+      >
+        <el-table-column
+          v-if="!isEnd"
+          label="排序"
+          width="100"
+          align="center"
+        >
+          <template
+            slot="header"
+          >
+            排序
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="排序影响“分享列表”的顺序"
+              placement="top-start"
+            >
+              <i
+                class="el-icon-info"
+                style="color: #409EFF;"
+              />
             </el-tooltip>
           </template>
           <template slot-scope="scope">
-            <div style="cursor:pointer;" @click="handleClickRowSort(scope.row)">
-              {{scope.row.sort}}
-              <i style="color: #409EFF;" class="el-icon-edit"></i>
+            <div
+              style="cursor:pointer;"
+              @click="handleClickRowSort(scope.row)"
+            >
+              {{ scope.row.sort }}
+              <i
+                style="color: #409EFF;"
+                class="el-icon-edit"
+              />
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="buddhistId" label="ID" width="100" align="center"></el-table-column>
-        <el-table-column prop="buddhistName" label="佛事名称"></el-table-column>
-        <el-table-column prop="templeName" label="寺院名称"></el-table-column>
-        <el-table-column label="类型" align="center">
-          <template slot-scope="scope">{{scope.row.type === 1 ? '转单佛事' : '推广佛事'}}</template>
+        <el-table-column
+          prop="buddhistId"
+          label="ID"
+          width="100"
+          align="center"
+        />
+        <el-table-column
+          prop="buddhistName"
+          label="佛事名称"
+        />
+        <el-table-column
+          prop="templeName"
+          label="寺院名称"
+        />
+        <el-table-column
+          label="类型"
+          align="center"
+        >
+          <template slot-scope="scope">
+            {{
+              scope.row.type === 1 ? '转单佛事' : '推广佛事'
+            }}
+          </template>
         </el-table-column>
-        <el-table-column prop="orderNum" label="订单数量" :align="'center'"></el-table-column>
-        <el-table-column prop="sharePay" label="分享支付（元）" :align="'center'"></el-table-column>
-        <el-table-column prop="fuBiMoney" label="产生福币（元）" :align="'center'"></el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column
+          prop="orderNum"
+          label="订单数量"
+          :align="'center'"
+        />
+        <el-table-column
+          prop="sharePay"
+          label="分享支付（元）"
+          :align="'center'"
+        />
+        <el-table-column
+          prop="fuBiMoney"
+          label="产生福币（元）"
+          :align="'center'"
+        />
+        <el-table-column
+          label="操作"
+          align="center"
+        >
           <template slot-scope="scope">
             <span v-if="!isEnd">
-              <el-button type="text" size="small" @click="handleClickManage(scope.row)">管理</el-button>-
+              <el-button
+                type="text"
+                size="small"
+                @click="handleClickManage(scope.row)"
+              >管理</el-button>-
             </span>
-            <el-button type="text" size="small" @click="handleClickRecord(scope.row)">记录</el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click="handleClickRecord(scope.row)"
+            >
+              记录
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -135,7 +226,7 @@ export default {
       this.refresh();
     },
     handleClickRowSort(rowData) {
-      const {buddhistId} = rowData;
+      const { buddhistId } = rowData;
       this.$prompt('请填写新的序号', '修改序号', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -143,26 +234,29 @@ export default {
         inputErrorMessage: '请输入数字',
       })
         .then(({ value: sort }) => {
-          seeFetch('promo/index/fu/update_sort', { buddhistId, sort }).then(res => {
-            if (!res.success) {
+          seeFetch('promo/index/fu/update_sort', { buddhistId, sort }).then(
+            res => {
+              if (!res.success) {
+                Notification({
+                  type: 'error',
+                  title: '提示',
+                  message: res.message,
+                });
+                return;
+              }
+
               Notification({
-                type: 'error',
+                type: 'success',
                 title: '提示',
-                message: res.message,
+                message: '修改成功',
               });
-              return;
+              /* eslint-disable */
+              rowData.sort = sort;
             }
-
-            Notification({
-              type: 'success',
-              title: '提示',
-              message: '修改成功',
-            });
-
-            rowData.sort = sort;
-          });
+          );
         })
         .catch(() => {
+          /* eslint-disable */
           console.log('出错');
         });
     },
@@ -185,7 +279,10 @@ export default {
     },
     handleClickRecord(rowData) {
       const { buddhistId } = rowData;
-      window.sessionStorage.setItem('promo/index/fu/item', JSON.stringify(rowData));
+      window.sessionStorage.setItem(
+        'promo/index/fu/item',
+        JSON.stringify(rowData)
+      );
       this.$router.push(`/promo/fubiRecord/${buddhistId}`);
     },
     onSizeChange(pageSize) {

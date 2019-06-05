@@ -1,14 +1,26 @@
 <template>
   <div class="container">
-    <el-tabs type="border-card" v-model="activeName">
-      <el-tab-pane label="转单系统" name="transfer">
-        <Transfer/>
+    <el-tabs
+      v-model="activeName"
+      type="border-card"
+    >
+      <el-tab-pane
+        label="转单系统"
+        name="transfer"
+      >
+        <Transfer />
       </el-tab-pane>
-      <el-tab-pane label="推广佛事" name="buddhist">
-        <Buddhist/>
+      <el-tab-pane
+        label="推广佛事"
+        name="buddhist"
+      >
+        <Buddhist />
       </el-tab-pane>
-      <el-tab-pane label="分享福币" name="fu">
-        <Fu/>
+      <el-tab-pane
+        label="分享福币"
+        name="fu"
+      >
+        <Fu />
       </el-tab-pane>
     </el-tabs>
   </div>

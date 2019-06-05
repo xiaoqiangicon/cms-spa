@@ -1,7 +1,7 @@
 import seeFetch from 'see-fetch';
 
 const req = {
-  buddhistId: 'commodityId'
+  buddhistId: 'commodityId',
 };
 
 const refactor = {
@@ -18,8 +18,8 @@ const refactor = {
           transferPrice: 'price',
           transferRate: 'percent',
           // fuBiRate: 'fuBiRate',
-        }
-      ]
+        },
+      ],
     },
   ],
 };

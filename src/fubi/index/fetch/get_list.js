@@ -23,9 +23,9 @@ const refactor = {
         // name: 'name',
         fuBiMoney: 'payBlessCoin',
         exchangeTimes: 'payBlessCoinCnt',
-      }
-    ]
-  }
+      },
+    ],
+  },
 };
 
 seeFetch.config('fubi/index/get_list', {

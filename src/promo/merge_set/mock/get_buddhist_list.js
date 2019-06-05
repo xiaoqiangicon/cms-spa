@@ -40,7 +40,7 @@ export default {
         isOrder: 0,
         isZizaijiaCommodity: 0,
         price: 10,
-      }
+      },
     ],
   })),
 };

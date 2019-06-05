@@ -1,15 +1,14 @@
 /* eslint-disable no-param-reassign, prefer-destructuring */
 import seeFetch from 'see-fetch';
 
-const req = {
-};
+const req = {};
 
 const refactor = {
   data: [
     {
       // id, name
-    }
-  ]
+    },
+  ],
 };
 
 seeFetch.config('fubi/index/get_buddhist_list', {

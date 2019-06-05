@@ -28,16 +28,17 @@ const refactor = {
       subList: 'subdivide', // 选择项列表
       _subList: [
         {
+          // conversionSubdivide: 'conversionSubdivide', // 选择项能否勾选的判断条件
           // id: 'id',
           // name: 'name',
           shareFuBiPercent: 'shareBlessCoinPercentage',
-        }
-      ]
+        },
+      ],
     },
   ],
 };
 
-const post = () => { };
+const post = () => {};
 
 seeFetch.config('promo/index/transfer/getTransferBuddhistList', {
   method: ['post'],

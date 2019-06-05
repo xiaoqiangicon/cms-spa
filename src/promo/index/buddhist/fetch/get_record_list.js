@@ -17,11 +17,11 @@ const refactor = {
       // startTime: 'startTime',
       updateTime: 'addTime',
       updateUser: 'managerName',
-    }
+    },
   ],
 };
 
-const post = () => { };
+const post = () => {};
 
 seeFetch.config('promo/index/buddhist/getRecordList', {
   method: ['post'],

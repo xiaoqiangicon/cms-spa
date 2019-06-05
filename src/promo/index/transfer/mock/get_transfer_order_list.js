@@ -38,7 +38,7 @@ export default {
         ],
         subdirideId: 2798,
         subdirideName: '邮寄佛事1',
-      }
+      },
     ],
     price: 10,
     subdivideId: 1,
@@ -59,8 +59,7 @@ export default {
       {
         addTime: '2019-03-21 15:35:52',
         conversionOrderPrice: 21,
-        disposePicUrl:
-          '',
+        disposePicUrl: '',
         isFinish: Math.floor(Math.random() * 2),
         posiscript: [
           { name: '联系人', value: '麦一', type: 4, inputId: 46368 },

@@ -23,17 +23,19 @@ const refactor = {
         sort: 'blessCoinSort',
         // templeName: 'templeName',
         // type: 'type', 1 转单佛事 2 推广佛事
-        orderNum: 'conversionOrderNum', // 订单数
+        orderNum: 'shareBlessCoinPayCnt', // 订单数
         sharePay: 'shareBlessCoinPay', // 分享支付
         fuBiMoney: 'shareBlessCoin', // 产生福币
 
         // 跳转 转单设置 需要的字段
         subList: 'subdivide',
-        _subList: [{
-          // id: 'id',
-          // name: 'name',
-          shareFuBiPercent: 'shareBlessCoinPercentage',
-        }],
+        _subList: [
+          {
+            // id: 'id',
+            // name: 'name',
+            shareFuBiPercent: 'shareBlessCoinPercentage',
+          },
+        ],
         // isEnd: 'isEnd',
         promotionPercent: 'promotionPercentage',
 
@@ -41,9 +43,9 @@ const refactor = {
         isPromotion: 'isPromotion',
         rate: 'rate',
         startTime: 'startTime',
-      }
-    ]
-  }
+      },
+    ],
+  },
 };
 
 seeFetch.config('promo/index/fu/get_list', {

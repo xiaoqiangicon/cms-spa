@@ -52,5 +52,5 @@ export default {
       rate: Math.random(),
       startTime: '2019-02-22 11:22:22',
     })),
-  }
+  },
 };

@@ -13,7 +13,4 @@ export const addProps = [
   { name: 'covers', full: !0, default: () => [] },
 ];
 
-export const types = [
-  {id: 0, name: '开放'},
-  {id: 1, name: '限制'},
-];
+export const types = [{ id: 0, name: '开放' }, { id: 1, name: '限制' }];

@@ -1,7 +1,6 @@
 import seeFetch from 'see-fetch';
 
-const req = {
-};
+const req = {};
 
 const refactor = {
   data: [

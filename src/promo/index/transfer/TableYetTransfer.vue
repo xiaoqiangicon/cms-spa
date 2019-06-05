@@ -1,43 +1,122 @@
 <template>
   <div>
-    <el-table v-loading="loading" ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%">
-      <el-table-column prop="buddhistName" label="佛事名称" show-overflow-tooltip/>
-      <el-table-column label="状态" show-overflow-tooltip :align="'center'">
-        <template slot-scope="scope">{{scope.row.isAuto ? '自动' : '手动'}}</template>
-      </el-table-column>
-      <el-table-column prop="buyNum" label="数量" :align="'center'"/>
-      <el-table-column prop="price" label="支付金额（元）" :align="'center'"/>
-      <el-table-column label="所属寺院" show-overflow-tooltip :align="'center'">
+    <el-table
+      ref="multipleTable"
+      v-loading="loading"
+      :data="tableData"
+      tooltip-effect="dark"
+      style="width: 100%"
+    >
+      <el-table-column
+        prop="buddhistName"
+        label="佛事名称"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="状态"
+        show-overflow-tooltip
+        :align="'center'"
+      >
         <template slot-scope="scope">
-          <div v-for="item in scope.row.orderList" :key="item.addTime">{{item.templeName}}</div>
+          {{
+            scope.row.isAuto ? '自动' : '手动'
+          }}
         </template>
       </el-table-column>
-      <el-table-column label="支付时间" show-overflow-tooltip :align="'center'">
+      <el-table-column
+        prop="buyNum"
+        label="数量"
+        :align="'center'"
+      />
+      <el-table-column
+        prop="price"
+        label="支付金额（元）"
+        :align="'center'"
+      />
+      <el-table-column
+        label="所属寺院"
+        show-overflow-tooltip
+        :align="'center'"
+      >
         <template slot-scope="scope">
-          <div v-for="item in scope.row.orderList" :key="item.addTime">{{item.addTime}}</div>
+          <div
+            v-for="item in scope.row.orderList"
+            :key="item.addTime"
+          >
+            {{ item.templeName }}
+          </div>
         </template>
       </el-table-column>
-      <el-table-column label="转单金额（元）" :align="'center'">
+      <el-table-column
+        label="支付时间"
+        show-overflow-tooltip
+        :align="'center'"
+      >
         <template slot-scope="scope">
-          <div v-for="item in scope.row.orderList" :key="item.addTime">{{item.transferPrice}}</div>
+          <div
+            v-for="item in scope.row.orderList"
+            :key="item.addTime"
+          >
+            {{ item.addTime }}
+          </div>
         </template>
       </el-table-column>
-      <el-table-column label="详情" width="100" :align="'center'">
+      <el-table-column
+        label="转单金额（元）"
+        :align="'center'"
+      >
         <template slot-scope="scope">
-          <div v-for="(item, index) in scope.row.orderList" :key="item.addTime">
+          <div
+            v-for="item in scope.row.orderList"
+            :key="item.addTime"
+          >
+            {{ item.transferPrice }}
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="详情"
+        width="100"
+        :align="'center'"
+      >
+        <template slot-scope="scope">
+          <div
+            v-for="(item, index) in scope.row.orderList"
+            :key="item.addTime"
+          >
             <el-button
               type="text"
               size="small"
               @click="handleClickDetail(scope.row, item, index)"
-            >详情</el-button>
+            >
+              详情
+            </el-button>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="100" :align="'center'">
+      <el-table-column
+        label="操作"
+        width="100"
+        :align="'center'"
+      >
         <template slot-scope="scope">
           <div>
-            <span class="disabled" v-if="!!scope.row.isAuto || (!scope.row.isAuto && !!scope.row.orderList[0].isFinish)" @click="handleClickRetract(scope.row)">撤回</span>
-            <el-button v-else type="text" size="small" @click="handleClickRetract(scope.row)">撤回</el-button>
+            <span
+              v-if="
+                !!scope.row.isAuto ||
+                  (!scope.row.isAuto && !!scope.row.orderList[0].isFinish)
+              "
+              class="disabled"
+              @click="handleClickRetract(scope.row)"
+            >撤回</span>
+            <el-button
+              v-else
+              type="text"
+              size="small"
+              @click="handleClickRetract(scope.row)"
+            >
+              撤回
+            </el-button>
           </div>
         </template>
       </el-table-column>
@@ -70,6 +149,7 @@ import DialogDetail from './DialogDetail';
 import DialogRetract from './DialogRetract';
 
 import { addProps } from '../data';
+
 const computedProps = {};
 addProps.forEach(({ name, full }) => {
   if (full) {
@@ -85,6 +165,7 @@ addProps.forEach(({ name, full }) => {
       },
     };
   } else {
+    /* eslint-disable */
     computedProps[name] = function() {
       return this.$store.state.promoIndex.add[name];
     };
@@ -125,9 +206,12 @@ export default {
     requestList() {
       this.loading = !0;
 
-      const { transferBuddhistId: buddhistId, transferTel: tel, transferSubId: subId } = this;
+      const {
+        transferBuddhistId: buddhistId,
+        transferTel: tel,
+        transferSubId: subId,
+      } = this;
       const { page, pageSize } = this.pagination;
-      const self = this;
 
       seeFetch('promo/index/transfer/getTransferOrderList', {
         buddhistId,
@@ -205,10 +289,13 @@ export default {
         orderNum,
         wxId,
         feedBackImg: feedBackImg ? feedBackImg.split(',') : [],
-        ps: isAuto ? itemData.ps : rowData.ps[itemIndex] ? rowData.ps[itemIndex].ps : [],
+        /* eslint-disable */
+        ps: isAuto
+          ? itemData.ps
+          : rowData.ps[itemIndex]
+          ? rowData.ps[itemIndex].ps
+          : [],
       };
-
-      console.log(detail);
 
       this.transferOrderDetail = detail;
       this.dialogDetailVisible = !0;

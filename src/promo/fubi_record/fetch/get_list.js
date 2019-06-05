@@ -24,9 +24,9 @@ const refactor = {
         fuBiMoney: 'shareBlessCoin', // 获得福币金额
         nickname: 'nickName', // 获得福币的用户名
         tel: 'mobile', // 获得福币的用户手机号码
-      }
-    ]
-  }
+      },
+    ],
+  },
 };
 
 seeFetch.config('promo/fubi_record/get_list', {
