@@ -14,6 +14,7 @@ import lingGift from '../ling/gift/state';
 import lingBubble from '../ling/bubble/state';
 import lingEntry from '../ling/entry/state';
 import lingFate from '../ling/fate/state';
+import lingFace from '../ling/face/state';
 
 // 善款中心
 import financePending from '../finance/pending/state';
@@ -46,6 +47,7 @@ const store = new Vuex.Store({
     lingBubble,
     lingEntry,
     lingFate,
+    lingFace,
 
     // 善款中心
     financePending,

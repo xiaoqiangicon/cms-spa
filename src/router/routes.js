@@ -65,6 +65,12 @@ const routes = [
         name: '祈福牌管理',
         meta: { title: '祈福牌管理' },
       },
+      {
+        path: 'face',
+        component: () => import('../ling/face/App'),
+        name: '互动发言',
+        meta: { title: '互动发言', noCache: true },
+      },
     ],
   },
   {
