@@ -53,9 +53,7 @@
           width="100"
           align="center"
         >
-          <template
-            slot="header"
-          >
+          <template slot="header">
             排序
             <el-tooltip
               class="item"
@@ -101,9 +99,7 @@
           align="center"
         >
           <template slot-scope="scope">
-            {{
-              scope.row.type === 1 ? '转单佛事' : '推广佛事'
-            }}
+            {{ scope.row.type === 1 ? '转单佛事' : '推广佛事' }}
           </template>
         </el-table-column>
         <el-table-column

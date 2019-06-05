@@ -149,7 +149,6 @@ addProps.forEach(({ name, full }) => {
       },
     };
   } else {
-
     /* eslint-disable */
     computedProps[name] = function() {
       return this.$store.state.promoIndex.add[name];
@@ -185,8 +184,7 @@ export default {
       if (findItem) {
         return findItem.name;
       }
-        return '';
-
+      return '';
     },
     originPriceSum() {
       const { originPrice, transferOrderIds } = this;

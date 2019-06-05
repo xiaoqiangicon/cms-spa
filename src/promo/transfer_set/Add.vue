@@ -47,7 +47,7 @@ export default {
     visible: Boolean,
     templeList: {
       type: Array,
-      default: () => ([]),
+      default: () => [],
     },
   },
   data() {

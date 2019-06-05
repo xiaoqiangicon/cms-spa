@@ -93,9 +93,7 @@
         label="推广服务费"
         :align="'center'"
       >
-        <template
-          slot-scope="scope"
-        >
+        <template slot-scope="scope">
           {{ Number(100 * scope.row.rate).toFixed(2) }}%
         </template>
       </el-table-column>
@@ -113,9 +111,7 @@
         label="分享福币"
         :align="'center'"
       >
-        <template
-          slot="header"
-        >
+        <template slot="header">
           分享福币
           <el-tooltip
             class="item"
@@ -204,9 +200,7 @@
           label="服务费用"
           align="center"
         >
-          <template
-            slot-scope="scope"
-          >
+          <template slot-scope="scope">
             {{ Number(100 * scope.row.rate).toFixed(2) }}%
           </template>
         </el-table-column>
@@ -594,7 +588,9 @@ export default {
       }
 
       // 分销推广不超过 100
-      const {isPromotion} = this.buddhistList.find(item => item.id === buddhistId);
+      const { isPromotion } = this.buddhistList.find(
+        item => item.id === buddhistId
+      );
 
       if (isPromotion && rate > 100) {
         Notification({

@@ -91,8 +91,8 @@ import { Notification } from 'element-ui';
 import DialogAddTransferBuddhist from './DialogAddTransferBuddhist';
 
 const TableBuddhist = () => import('./TableBuddhist');
-const TableYetTransfer = () => import('./TableYetTransfer'); 
-const TableNotTransfer = () => import('./TableNotTransfer'); 
+const TableYetTransfer = () => import('./TableYetTransfer');
+const TableNotTransfer = () => import('./TableNotTransfer');
 
 import { addProps } from '../data';
 const computedProps = {};

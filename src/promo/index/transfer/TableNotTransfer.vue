@@ -36,9 +36,7 @@
         :align="'center'"
       >
         <template slot-scope="scope">
-          {{
-            scope.row.isAuto ? '自动' : '手动'
-          }}
+          {{ scope.row.isAuto ? '自动' : '手动' }}
         </template>
       </el-table-column>
       <el-table-column

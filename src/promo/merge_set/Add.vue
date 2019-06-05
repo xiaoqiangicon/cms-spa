@@ -68,7 +68,7 @@ export default {
     visible: Boolean,
     subList: {
       type: Array,
-      default:  () => [],
+      default: () => [],
     },
   },
   data() {
