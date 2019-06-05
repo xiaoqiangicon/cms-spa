@@ -29,6 +29,7 @@
       </div>
       <div class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="id" label="id" />
           <el-table-column prop="title" label="标题" />
           <el-table-column label="封面">
             <template slot-scope="item">

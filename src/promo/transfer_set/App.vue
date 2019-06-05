@@ -5,7 +5,8 @@
         {{ buddhistName }}
       </div>
       <div class="gray">
-        <span class="mg-r-10">佛事ID：{{ buddhistId }}</span>|
+        <span class="mg-r-10">佛事ID：{{ buddhistId }}</span
+        >|
         <span class="mg-l-10">佛事状态：{{ isEnd ? '已结束' : '进行中' }}</span>
       </div>
       <el-button
@@ -67,16 +68,9 @@
             width="55"
             :selectable="tableSelectable"
           />
-          <el-table-column
-            prop="name"
-            label="选择项名称"
-            show-overflow-tooltip
-          >
+          <el-table-column prop="name" label="选择项名称" show-overflow-tooltip>
             <template slot-scope="scope">
-              <el-tag
-                v-if="scope.row.isZizaijiaCommodity"
-                size="mini"
-              >
+              <el-tag v-if="scope.row.isZizaijiaCommodity" size="mini">
                 自营
               </el-tag>
               <el-tooltip
@@ -86,32 +80,23 @@
                 content="佛事被标记为自营佛事且已存在历史订单，不可勾选和修改"
                 placement="top-start"
               >
-                <i
-                  class="el-icon-info"
-                  style="color: #FAAD14;"
-                />
+                <i class="el-icon-info" style="color: #FAAD14;" />
               </el-tooltip>
               {{ scope.row.name }}
             </template>
           </el-table-column>
-          <el-table-column
-            prop="price"
-            label="价格（元）"
-          >
+          <el-table-column prop="price" label="价格（元）">
             <template slot-scope="scope">
               {{
                 scope.row.price > 0
                   ? scope.row.price
                   : scope.row.price === 0
-                    ? '无需支付'
-                    : '随喜'
+                  ? '无需支付'
+                  : '随喜'
               }}
             </template>
           </el-table-column>
-          <el-table-column
-            prop="transferRate"
-            label="转单比例"
-          >
+          <el-table-column prop="transferRate" label="转单比例">
             <template slot="header">
               转单比例
               <el-tooltip
@@ -120,10 +105,7 @@
                 content="转单比例和转单金额是互斥关系，若填写了其中一个则其“填写项”为不可填写状态。"
                 placement="top-start"
               >
-                <i
-                  class="el-icon-info"
-                  style="color: #409eff;"
-                />
+                <i class="el-icon-info" style="color: #409eff;" />
               </el-tooltip>
             </template>
             <template slot-scope="scope">
@@ -133,16 +115,10 @@
                 style="width: 80px;"
                 placeholder=""
               />
-              <span
-                slot="suffix"
-                class="mg-l-5"
-              >%</span>
+              <span slot="suffix" class="mg-l-5">%</span>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="transferPrice"
-            label="转单金额（元）"
-          >
+          <el-table-column prop="transferPrice" label="转单金额（元）">
             <template slot-scope="scope">
               <el-input
                 v-model.number="scope.row.transferPrice"
@@ -161,10 +137,7 @@
                 content="设置福币分成：用户分享当前佛事后，从分享链接支付的订单会按设置的比例的福币给他。"
                 placement="top-start"
               >
-                <i
-                  class="el-icon-info"
-                  style="color: #409eff;"
-                />
+                <i class="el-icon-info" style="color: #409eff;" />
               </el-tooltip>
             </template>
             <template slot-scope="scope">
@@ -177,10 +150,7 @@
                   subList.find(subItem => subItem.id === scope.row.id)
                     .shareFuBiPercent
                 }}%
-                <i
-                  style="color: #409EFF;"
-                  class="el-icon-edit"
-                />
+                <i style="color: #409EFF;" class="el-icon-edit" />
               </div>
               <div v-else>
                 -
@@ -209,14 +179,8 @@
         />
         <span class="mg-l-5">%</span>
       </div>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          type="primary"
-          @click="submitFuBiSet"
-        >保 存</el-button>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitFuBiSet">保 存</el-button>
       </span>
     </el-dialog>
     <!-- DialogAdd -->
@@ -609,7 +573,6 @@ export default {
           height: 40px;
           line-height: 40px;
           margin: 0 20px 10px 20px;
-
           cursor: pointer;
           border-radius: 4px;
           &.active {

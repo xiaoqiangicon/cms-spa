@@ -6,10 +6,11 @@
       </div>
       <div class="gray">
         <div>
-          <span class="mg-r-10">佛事ID：{{ buddhistId }}</span>|
-          <span
-            class="mg-l-10"
-          >佛事状态：{{ isEnd ? '已结束' : '进行中' }}</span>
+          <span class="mg-r-10">佛事ID：{{ buddhistId }}</span
+          >|
+          <span class="mg-l-10"
+            >佛事状态：{{ isEnd ? '已结束' : '进行中' }}</span
+          >
         </div>
         <div class="tip mg-t-20">
           组合订单：是用于APP“超度”和“祈福”模块的订单自动调度到寺院的功能。其中转单系统与推广佛事为互斥关系，但两者都可设置分享激励
@@ -72,16 +73,10 @@
         <div class="head">
           <span class="f-s-18">选择项详情</span>
           <div class="fl-right">
-            <el-button
-              type="primary"
-              @click="add"
-            >
+            <el-button type="primary" @click="add">
               添 加
             </el-button>
-            <el-button
-              type="primary"
-              @click="save"
-            >
+            <el-button type="primary" @click="save">
               保 存
             </el-button>
           </div>
@@ -93,11 +88,7 @@
           tooltip-effect="dark"
           style="width: 100%"
         >
-          <el-table-column
-            prop="name"
-            label="寺院名称"
-            show-overflow-tooltip
-          >
+          <el-table-column prop="name" label="寺院名称" show-overflow-tooltip>
             <template slot-scope="scope">
               <el-select
                 v-model="scope.row.templeId"
@@ -115,10 +106,7 @@
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="price"
-            label="佛事名称"
-          >
+          <el-table-column prop="price" label="佛事名称">
             <template slot-scope="scope">
               <el-select
                 v-model="scope.row.buddhistId"
@@ -136,10 +124,7 @@
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="transferRate"
-            label="选择项"
-          >
+          <el-table-column prop="transferRate" label="选择项">
             <template slot-scope="scope">
               <el-select
                 v-model="scope.row.subId"
@@ -156,15 +141,9 @@
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="transferPrice"
-            label="转单价格（元）"
-          >
+          <el-table-column prop="transferPrice" label="转单价格（元）">
             <template slot-scope="scope">
-              <el-input
-                v-model="scope.row.price"
-                placeholder=""
-              />
+              <el-input v-model="scope.row.price" placeholder="" />
             </template>
           </el-table-column>
         </el-table>
@@ -245,7 +224,7 @@ export default {
         }
 
         this.transferTempleList = res.data;
-        if(cb) cb();
+        if (cb) cb();
       });
     },
     getMergeSubList() {
@@ -305,7 +284,7 @@ export default {
           subSelect: [],
         };
 
-        const getData = new Promise((resolve) => {
+        const getData = new Promise(resolve => {
           if (this.templeBuddhistMap[templeId] === undefined) {
             resolve(this.getBuddhistList(templeId));
           } else {
@@ -547,7 +526,6 @@ export default {
           height: 40px;
           line-height: 40px;
           margin: 0 20px 10px 20px;
-
           cursor: pointer;
           border-radius: 4px;
           &.active {
@@ -573,6 +551,7 @@ export default {
         padding-bottom: 20px;
         border-bottom: 2px solid #ebeef5;
       }
+
       height: 100%;
       flex-grow: 1;
       flex-shrink: 1;

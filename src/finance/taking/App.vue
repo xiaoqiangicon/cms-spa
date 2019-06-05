@@ -93,7 +93,7 @@
       </div>
       <el-card class="mg-t-20">
         <div slot="header" class="clearfix">
-          <span>提现计算</span>
+          <span>提现计算（订单状态：{{ typeText }}）</span>
         </div>
         <div>以上已勾选账单金额：{{ totalAmount }}元</div>
         <div v-if="totalIncreaseCharge" class="mg-t-10">
@@ -275,6 +275,8 @@ export default {
       answer: '',
       // 当前id
       id: 0,
+      // 订单状态
+      typeText: '',
     };
   },
   created() {
@@ -296,6 +298,7 @@ export default {
       this.isQuestion = res.data.isQuestion;
       this.question = res.data.question;
       this.answer = res.data.answer;
+      this.typeText = res.data.typeText;
 
       this.fetchRemarks();
       this.fetchList();

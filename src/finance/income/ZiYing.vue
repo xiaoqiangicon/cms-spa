@@ -46,7 +46,7 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column label="企业分成">
+        <el-table-column label="留存比例">
           <template slot-scope="item">
             {{ item.row.corporationProfitRate }}%
           </template>
