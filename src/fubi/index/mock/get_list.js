@@ -8,8 +8,8 @@ export default {
       sort: id,
       name: `名称${id}`,
       blessShopType: id,
-      payBlessCoin: Math.ceil(Math.random()*1000),
-      payBlessCoinCnt: Math.floor(Math.random()*20)
+      payBlessCoin: Math.ceil(Math.random() * 1000),
+      payBlessCoinCnt: Math.floor(Math.random() * 20),
     })),
-  }
+  },
 };

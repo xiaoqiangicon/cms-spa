@@ -7,7 +7,8 @@
         size="mini"
         @click="handleClickGroupTransfer"
         :disabled="multipleSelection.length <= 0"
-      >转单</el-button>
+        >转单</el-button
+      >
     </div>
     <el-table
       v-loading="loading"
@@ -17,26 +18,43 @@
       style="width: 100%"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column :selectable="tableRowSelectable" type="selection" width="55" align=" left"/>
-      <el-table-column prop="buddhistName" label="佛事名称" show-overflow-tooltip/>
+      <el-table-column
+        :selectable="tableRowSelectable"
+        type="selection"
+        width="55"
+        align=" left"
+      />
+      <el-table-column
+        prop="buddhistName"
+        label="佛事名称"
+        show-overflow-tooltip
+      />
       <el-table-column label="状态" show-overflow-tooltip :align="'center'">
-        <template slot-scope="scope">{{scope.row.isAuto ? '自动' : '手动'}}</template>
+        <template slot-scope="scope">{{
+          scope.row.isAuto ? '自动' : '手动'
+        }}</template>
       </el-table-column>
-      <el-table-column prop="buyNum" label="数量" :align="'center'"/>
-      <el-table-column prop="price" label="支付金额（元）" :align="'center'"/>
+      <el-table-column prop="buyNum" label="数量" :align="'center'" />
+      <el-table-column prop="price" label="支付金额（元）" :align="'center'" />
       <el-table-column label="所属寺院" show-overflow-tooltip :align="'center'">
         <template slot-scope="scope">
-          <div v-for="item in scope.row.orderList" :key="item.addTime">{{item.templeName}}</div>
+          <div v-for="item in scope.row.orderList" :key="item.addTime">
+            {{ item.templeName }}
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="支付时间" show-overflow-tooltip :align="'center'">
         <template slot-scope="scope">
-          <div v-for="item in scope.row.orderList" :key="item.addTime">{{item.addTime}}</div>
+          <div v-for="item in scope.row.orderList" :key="item.addTime">
+            {{ item.addTime }}
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="转单金额（元）" :align="'center'">
         <template slot-scope="scope">
-          <div v-for="item in scope.row.orderList" :key="item.addTime">{{item.transferPrice}}</div>
+          <div v-for="item in scope.row.orderList" :key="item.addTime">
+            {{ item.transferPrice }}
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="详情" width="100" :align="'center'">
@@ -46,14 +64,20 @@
               type="text"
               size="small"
               @click="handleClickDetail(scope.row, item, index)"
-            >详情</el-button>
+              >详情</el-button
+            >
           </div>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="100" align="right">
         <template slot-scope="scope">
           <div>
-            <el-button type="text" size="small" @click="handleClickSingleTransfer(scope.row)">转单</el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click="handleClickSingleTransfer(scope.row)"
+              >转单</el-button
+            >
           </div>
         </template>
       </el-table-column>
@@ -67,7 +91,10 @@
       @size-change="onSizeChange"
       @current-change="onCurrentChange"
     />
-    <DialogDetail :visible="dialogDetailVisible" @updateVisible="updateDialogDetailVisible"/>
+    <DialogDetail
+      :visible="dialogDetailVisible"
+      @updateVisible="updateDialogDetailVisible"
+    />
     <DialogTransfer
       :visible="dialogTransferVisible"
       @submit="refresh"
@@ -204,15 +231,14 @@ export default {
         item => item.id === subId
       );
 
-      if(originPrice <= 0) {
+      if (originPrice <= 0) {
         Notification({
           type: 'warning',
           title: '提示',
           message: '当前未转单项属于无需支付或随喜，禁止转单',
-        })
+        });
         return;
       }
-
 
       this.dialogTransferVisible = !0;
     },

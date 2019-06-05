@@ -28,24 +28,26 @@
 
 <script>
 import { Notification } from 'element-ui';
-import {VueCropper} from 'vue-cropper';
+import { VueCropper } from 'vue-cropper';
 
 const computedProps = {};
 
-['cropImageVisible', 'cropImageUrl', 'imageCropped', 'cropImageResult'].forEach(name => {
-  computedProps[name] = {
-    get() {
-      return this.$store.state.quMaterial[name];
-    },
-    set(value) {
-      this.$store.state.quMaterial[name] = value;
-    },
-  };
-});
+['cropImageVisible', 'cropImageUrl', 'imageCropped', 'cropImageResult'].forEach(
+  name => {
+    computedProps[name] = {
+      get() {
+        return this.$store.state.quMaterial[name];
+      },
+      set(value) {
+        this.$store.state.quMaterial[name] = value;
+      },
+    };
+  }
+);
 
 export default {
   name: 'CropImage',
-  components: {VueCropper},
+  components: { VueCropper },
   computed: {
     ...computedProps,
   },
@@ -62,7 +64,7 @@ export default {
           this.$refs.cropper.startCrop();
         }, 300);
       }
-    }
+    },
   },
   methods: {
     clickCancel() {
@@ -74,17 +76,20 @@ export default {
       this.loading = !0;
 
       this.$refs.cropper.getCropData(data => {
-        window.fetch(window.uploadBase64Url, {
-          method: 'post',
-          body: JSON.stringify({img: data}),
-        })
+        window
+          .fetch(window.uploadBase64Url, {
+            method: 'post',
+            body: JSON.stringify({ img: data }),
+          })
           .then(res => res.json())
           .then(res => {
             this.loading = !1;
-          this.$store.state.quMaterial.cropImageVisible = !1;
-          this.$store.state.quMaterial.cropImageResult = window.uploadBase64Handle(res);
-          this.$store.state.quMaterial.imageCropped += 1;
-        });
+            this.$store.state.quMaterial.cropImageVisible = !1;
+            this.$store.state.quMaterial.cropImageResult = window.uploadBase64Handle(
+              res
+            );
+            this.$store.state.quMaterial.imageCropped += 1;
+          });
       });
     },
   },

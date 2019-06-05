@@ -31,13 +31,13 @@ const refactor = {
           // id: 'id',
           // name: 'name',
           shareFuBiPercent: 'shareBlessCoinPercentage',
-        }
-      ]
+        },
+      ],
     },
   ],
 };
 
-const post = () => { };
+const post = () => {};
 
 seeFetch.config('promo/index/transfer/getTransferBuddhistList', {
   method: ['post'],

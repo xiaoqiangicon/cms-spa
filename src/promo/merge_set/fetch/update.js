@@ -9,8 +9,8 @@ const req = {
       buddhistId: 'commodityId',
       subId: 'subdivideId',
       // price: 'price',
-    }
-  ]
+    },
+  ],
 };
 
 seeFetch.config('promo/merge_set/update', {

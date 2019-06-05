@@ -3,11 +3,26 @@
     title="添加寺院"
     :visible.sync="sVisible"
     width="30%"
-    :before-close="()=>{sVisible = false}"
+    :before-close="
+      () => {
+        sVisible = false;
+      }
+    "
   >
     <span class="mg-r-10">请选择</span>
-    <el-select v-model="templeId" placeholder="请选择" size="small" style="width: 200px;" filterable>
-      <el-option v-for="item in templeList" :key="item.id" :label="item.name" :value="item.id"/>
+    <el-select
+      v-model="templeId"
+      placeholder="请选择"
+      size="small"
+      style="width: 200px;"
+      filterable
+    >
+      <el-option
+        v-for="item in templeList"
+        :key="item.id"
+        :label="item.name"
+        :value="item.id"
+      />
     </el-select>
     <span slot="footer" class="dialog-footer">
       <el-button @click="sVisible = false">取 消</el-button>
@@ -57,8 +72,3 @@ export default {
   },
 };
 </script>
-
-<style lang="less" scoped>
-</style>
-
-

@@ -4,10 +4,15 @@
       <div class="f-s-18 mg-b-10">{{ buddhistName }}</div>
       <div class="gray">
         <div>
-          <span class="mg-r-10">佛事ID：{{ buddhistId }}</span>|
-          <span class="mg-l-10">佛事状态：{{isEnd ? '已结束' : '进行中'}}</span>
+          <span class="mg-r-10">佛事ID：{{ buddhistId }}</span
+          >|
+          <span class="mg-l-10"
+            >佛事状态：{{ isEnd ? '已结束' : '进行中' }}</span
+          >
         </div>
-        <div class="tip mg-t-20">组合订单：是用于APP“超度”和“祈福”模块的订单自动调度到寺院的功能。其中转单系统与推广佛事为互斥关系，但两者都可设置分享激励</div>
+        <div class="tip mg-t-20">
+          组合订单：是用于APP“超度”和“祈福”模块的订单自动调度到寺院的功能。其中转单系统与推广佛事为互斥关系，但两者都可设置分享激励
+        </div>
       </div>
     </el-card>
     <div class="body">
@@ -19,18 +24,19 @@
             size="small"
             type="primary"
             @click="addDialogVisible = true"
-          >添加组合项</el-button>
+            >添加组合项</el-button
+          >
         </div>
         <div class="list">
           <div
             class="item"
             @click="changeSub(item.id)"
-            :class="{active: item.id === subId}"
+            :class="{ active: item.id === subId }"
             v-for="item in mergeSubList"
             :key="item.id"
           >
-            <div class="id">{{item.id}}</div>
-            <div class="name">{{item.name}}</div>
+            <div class="id">{{ item.id }}</div>
+            <div class="name">{{ item.name }}</div>
             <div class="opt">
               <el-tooltip
                 v-if="item.isOrder && item.isZizaijiaCommodity"
@@ -38,9 +44,20 @@
                 content="选择项被标记为自营佛事且有历史订单，不可删除"
                 placement="top-end"
               >
-                <el-button size="mini" icon="el-icon-warning" style="color: #FAAD14;" circle></el-button>
+                <el-button
+                  size="mini"
+                  icon="el-icon-warning"
+                  style="color: #FAAD14;"
+                  circle
+                ></el-button>
               </el-tooltip>
-              <el-button v-else size="mini" icon="el-icon-delete" circle @click="delSub(item.id)"></el-button>
+              <el-button
+                v-else
+                size="mini"
+                icon="el-icon-delete"
+                circle
+                @click="delSub(item.id)"
+              ></el-button>
             </div>
           </div>
         </div>
@@ -53,7 +70,13 @@
             <el-button type="primary" @click="save">保 存</el-button>
           </div>
         </div>
-        <el-table v-loading="loading" ref="table" :data="tableData" tooltip-effect="dark" style="width: 100%">
+        <el-table
+          v-loading="loading"
+          ref="table"
+          :data="tableData"
+          tooltip-effect="dark"
+          style="width: 100%"
+        >
           <el-table-column prop="name" label="寺院名称" show-overflow-tooltip>
             <template slot-scope="scope">
               <el-select
@@ -92,7 +115,12 @@
           </el-table-column>
           <el-table-column prop="transferRate" label="选择项">
             <template slot-scope="scope">
-              <el-select v-model="scope.row.subId" placeholder="请选择" size="small" filterable>
+              <el-select
+                v-model="scope.row.subId"
+                placeholder="请选择"
+                size="small"
+                filterable
+              >
                 <el-option
                   v-for="item in scope.row.subSelect"
                   :key="item.id"
@@ -493,7 +521,6 @@ export default {
           height: 40px;
           line-height: 40px;
           margin: 0 20px 10px 20px;
-
           cursor: pointer;
           border-radius: 4px;
           &.active {
@@ -519,6 +546,7 @@ export default {
         padding-bottom: 20px;
         border-bottom: 2px solid #ebeef5;
       }
+
       height: 100%;
       flex-grow: 1;
       flex-shrink: 1;

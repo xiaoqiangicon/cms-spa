@@ -5,5 +5,5 @@ export default {
     id,
     name: `类型名称${id}`,
     sort: `${id}`,
-  }))
+  })),
 };

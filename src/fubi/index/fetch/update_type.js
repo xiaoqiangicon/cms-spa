@@ -7,7 +7,6 @@ const req = {
   // sort: 'sort',
 };
 
-
 seeFetch.config('fubi/index/update_type', {
   method: ['post'],
   stringify: [!0],

@@ -76,7 +76,7 @@ const routes = [
   {
     path: '/fubi',
     component: Layout,
-    controlMark: 'pw_blesscoin', 
+    controlMark: 'pw_blesscoin',
     redirect: '/fubi/index',
     name: '福币分销',
     meta: { title: '福币分销', icon: 'fa-circle', noCache: true },
@@ -112,12 +112,12 @@ const routes = [
       {
         path: `${domain}/event/thousand`,
         name: '千寺祈福',
-        meta: { title: '千寺祈福'},
+        meta: { title: '千寺祈福' },
       },
       {
         path: `${domain}/goods/index`,
         name: '自在好物',
-        meta: { title: '自在好物'},
+        meta: { title: '自在好物' },
       },
       {
         path: 'transferSet/:id',

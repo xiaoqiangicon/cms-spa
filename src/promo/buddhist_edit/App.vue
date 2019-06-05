@@ -1,28 +1,43 @@
 <template>
   <div class="container">
     <el-card class="info">
-      <h2>{{buddhistData.buddhistName}}</h2>
+      <h2>{{ buddhistData.buddhistName }}</h2>
       <div class="mg-b-20">
-        {{buddhistData.templeName}}
+        {{ buddhistData.templeName }}
         <span class="mg-l-5 mg-r-5">|</span>
-        佛事ID：{{buddhistData.buddhistId}}
+        佛事ID：{{ buddhistData.buddhistId }}
       </div>
     </el-card>
     <el-card>
       <el-table :data="buddhistData.subList" style="width: 100%">
         <el-table-column prop="name" label="选择项名称"></el-table-column>
-        <el-table-column prop="price" label="价格（元）" align="center"></el-table-column>
+        <el-table-column
+          prop="price"
+          label="价格（元）"
+          align="center"
+        ></el-table-column>
         <el-table-column label="推广服务费" align="center">
-          <template slot="header" slot-scope="scope">推广服务费
-            <el-tooltip class="item" effect="dark" content="转单价格请在“推广设置”中设置" placement="top-start">
+          <template slot="header" slot-scope="scope"
+            >推广服务费
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="转单价格请在“推广设置”中设置"
+              placement="top-start"
+            >
               <i class="el-icon-info" style="color: #409EFF;"></i>
             </el-tooltip>
-            <el-button type="primary" size="mini" @click="handleClickEditRate">编辑</el-button>
+            <el-button type="primary" size="mini" @click="handleClickEditRate"
+              >编辑</el-button
+            >
           </template>
-          <template slot-scope="scope">{{Number(100*buddhistData.rate).toFixed(2)}}%</template>
+          <template slot-scope="scope"
+            >{{ Number(100 * buddhistData.rate).toFixed(2) }}%</template
+          >
         </el-table-column>
         <el-table-column label="分享福币" align="center">
-          <template slot="header" slot-scope="scope">分享福币（%）
+          <template slot="header" slot-scope="scope"
+            >分享福币（%）
             <el-tooltip
               class="item"
               effect="dark"
@@ -38,7 +53,7 @@
               style="cursor: pointer;"
               @click="handleClickEditFuBiPercent(scope.row)"
             >
-              {{scope.row.shareFuBiPercent}}%
+              {{ scope.row.shareFuBiPercent }}%
               <i style="color: #409EFF;" class="el-icon-edit"></i>
             </div>
             <div v-else>-</div>
@@ -50,11 +65,19 @@
     <el-dialog
       :title="curSubItem.name"
       :visible.sync="dialogEditFuBiVisible"
-      :before-close="()=>{dialogEditFuBiVisible=!1;}"
+      :before-close="
+        () => {
+          dialogEditFuBiVisible = !1;
+        }
+      "
     >
       <div>
         <span class="mg-r-5">分享福币</span>
-        <el-input style="width: 100px;" v-model.number="tempCurSubItem.shareFuBiPercent" placeholder=""></el-input>
+        <el-input
+          style="width: 100px;"
+          v-model.number="tempCurSubItem.shareFuBiPercent"
+          placeholder=""
+        ></el-input>
         <span class="mg-l-5">%</span>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -65,18 +88,28 @@
     <el-dialog
       title="提示"
       :visible.sync="dialogEditVisible"
-      :before-close="()=>{dialogEditVisible=!1;}"
+      :before-close="
+        () => {
+          dialogEditVisible = !1;
+        }
+      "
     >
       <div class="row">
         <div class="title">支付服务费</div>
-        <div class="content">：
-          <el-input style="width: 210px;" v-model.number="tempRateHandle" placeholder=""></el-input>
+        <div class="content">
+          ：
+          <el-input
+            style="width: 210px;"
+            v-model.number="tempRateHandle"
+            placeholder=""
+          ></el-input>
           <span class="mg-l-5">%</span>
         </div>
       </div>
       <div class="row">
         <div class="title">生效时间</div>
-        <div class="content">：
+        <div class="content">
+          ：
           <el-date-picker
             value-format="yyyy-MM-dd HH:mm:ss"
             v-model="tempStartTime"
@@ -208,7 +241,7 @@ export default {
     submitFuBiSet() {
       const { promotionPercent } = this.buddhistData;
       const { id: subId } = this.tempCurSubItem;
-      let {shareFuBiPercent} = this.tempCurSubItem;
+      let { shareFuBiPercent } = this.tempCurSubItem;
 
       if (promotionPercent + shareFuBiPercent > 100) {
         Notification({
@@ -229,7 +262,10 @@ export default {
         shareFuBiPercent = 0;
       }
 
-      seeFetch('promo/buddhist_edit/update_sub_set', { subId, shareFuBiPercent }).then(res => {
+      seeFetch('promo/buddhist_edit/update_sub_set', {
+        subId,
+        shareFuBiPercent,
+      }).then(res => {
         if (!res.success) {
           Notification({
             type: 'error',
@@ -268,5 +304,3 @@ export default {
   }
 }
 </style>
-
-

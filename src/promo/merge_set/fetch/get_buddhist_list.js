@@ -15,8 +15,8 @@ const refactor = {
           // id: 'id',
           name: 'subdivideName',
           // price: 'price',
-        }
-      ]
+        },
+      ],
     },
   ],
 };

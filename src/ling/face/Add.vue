@@ -16,13 +16,13 @@
         <div class="row-name">
           发言内容：
         </div>
-        <el-input v-model="content" size="small" style="width: 200px;"/>
+        <el-input v-model="content" size="small" style="width: 200px;" />
       </div>
       <div class="row">
         <div class="row-name">
           优先级：
         </div>
-        <el-input v-model="priority" size="small" style="width: 200px;"/>
+        <el-input v-model="priority" size="small" style="width: 200px;" />
       </div>
       <div class="row">
         <div class="row-name">
@@ -34,7 +34,12 @@
           size="small"
           style="width: 200px;"
         >
-          <el-option v-for="type in types" :key="type.id" :value="type.id" :label="type.name" />
+          <el-option
+            v-for="type in types"
+            :key="type.id"
+            :value="type.id"
+            :label="type.name"
+          />
         </el-select>
       </div>
     </div>

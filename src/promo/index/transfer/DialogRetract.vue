@@ -1,16 +1,24 @@
 <template>
-  <el-dialog title="撤回转单" :visible.sync="visible" :before-close="()=>{sVisible = false}">
+  <el-dialog
+    title="撤回转单"
+    :visible.sync="visible"
+    :before-close="
+      () => {
+        sVisible = false;
+      }
+    "
+  >
     <div class="row">
       <div class="title">佛事名称</div>
-      <div class="content">：{{transferOrderDetail.buddhistName}}</div>
+      <div class="content">：{{ transferOrderDetail.buddhistName }}</div>
     </div>
     <div class="row">
       <div class="title">选择项名称</div>
-      <div class="content">：{{transferOrderDetail.subName}}</div>
+      <div class="content">：{{ transferOrderDetail.subName }}</div>
     </div>
     <div class="row">
       <div class="title">撤回寺院</div>
-      <div class="content">：{{transferOrderDetail.templeName}}</div>
+      <div class="content">：{{ transferOrderDetail.templeName }}</div>
     </div>
     <div class="tip">
       <div>温馨提示</div>
@@ -112,5 +120,3 @@ export default {
   border-radius: 4px;
 }
 </style>
-
-

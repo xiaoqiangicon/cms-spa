@@ -27,10 +27,10 @@ const pre = params => {
       subdivideId: sub.id,
       price: sub.transferPrice,
       percent: sub.transferRate,
-    }))
-  }))
-  return res
-}
+    })),
+  }));
+  return res;
+};
 
 seeFetch.config('promo/transfer_set/update_transfer_set', {
   method: ['post'],

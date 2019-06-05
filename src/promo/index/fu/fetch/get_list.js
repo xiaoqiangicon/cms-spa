@@ -29,11 +29,13 @@ const refactor = {
 
         // 跳转 转单设置 需要的字段
         subList: 'subdivide',
-        _subList: [{
-          // id: 'id',
-          // name: 'name',
-          shareFuBiPercent: 'shareBlessCoinPercentage',
-        }],
+        _subList: [
+          {
+            // id: 'id',
+            // name: 'name',
+            shareFuBiPercent: 'shareBlessCoinPercentage',
+          },
+        ],
         // isEnd: 'isEnd',
         promotionPercent: 'promotionPercentage',
 
@@ -41,9 +43,9 @@ const refactor = {
         isPromotion: 'isPromotion',
         rate: 'rate',
         startTime: 'startTime',
-      }
-    ]
-  }
+      },
+    ],
+  },
 };
 
 seeFetch.config('promo/index/fu/get_list', {

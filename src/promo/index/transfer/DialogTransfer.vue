@@ -1,5 +1,13 @@
 <template>
-  <el-dialog title="转单设置" :visible.sync="visible" :before-close="()=>{sVisible = false}">
+  <el-dialog
+    title="转单设置"
+    :visible.sync="visible"
+    :before-close="
+      () => {
+        sVisible = false;
+      }
+    "
+  >
     <div class="mg-b-20">
       <span class="mg-r-10">请 选 择</span>
       <el-select
@@ -20,12 +28,20 @@
     </div>
     <div class="mg-b-10">
       <span class="mg-r-5">转单价格</span>
-      <el-input style="width: 200px;" v-model.number="price" placeholder="请输入价格"></el-input>
+      <el-input
+        style="width: 200px;"
+        v-model.number="price"
+        placeholder="请输入价格"
+      ></el-input>
       <span class="mg-l-10">/ 单</span>
     </div>
     <div class="mg-b-10">
       <span class="mg-r-5">转单比例</span>
-      <el-input style="width: 200px;" v-model.number="percent" placeholder="请输入价格"></el-input>
+      <el-input
+        style="width: 200px;"
+        v-model.number="percent"
+        placeholder="请输入价格"
+      ></el-input>
       <span class="mg-l-10">% / 单</span>
     </div>
     <div class="tip">
@@ -38,35 +54,41 @@
     <el-dialog
       title="转单确认"
       :visible.sync="dialoguSbmitVisible"
-      :before-close="()=>{dialoguSbmitVisible = false}"
+      :before-close="
+        () => {
+          dialoguSbmitVisible = false;
+        }
+      "
       append-to-body
     >
       <div class="row">
         <div class="title">佛事名称</div>
-        <div class="content">{{transferBuddhistName}}</div>
+        <div class="content">{{ transferBuddhistName }}</div>
       </div>
       <div class="row">
         <div class="title">转移寺院</div>
-        <div class="content">{{transferTempleName}}</div>
+        <div class="content">{{ transferTempleName }}</div>
       </div>
       <div class="row">
         <div class="title">转单数量</div>
-        <div class="content">{{transferOrderIds.length}}</div>
+        <div class="content">{{ transferOrderIds.length }}</div>
       </div>
       <div class="row">
         <div class="title">总计原价（元）</div>
-        <div class="content">{{originPriceSum}}</div>
+        <div class="content">{{ originPriceSum }}</div>
       </div>
       <div class="row">
         <div class="title">转单价格（元）</div>
-        <div class="content">{{priceSum}}</div>
+        <div class="content">{{ priceSum }}</div>
       </div>
       <div class="tip">
         <div>温馨提示</div>
         <div>“确认转单”前请确认寺院名称以及转单价格</div>
       </div>
       <div class="mg-t-20" style="text-align:center;">
-        <el-button type="primary" @click="handleClickSubmit">确认转单</el-button>
+        <el-button type="primary" @click="handleClickSubmit"
+          >确认转单</el-button
+        >
       </div>
     </el-dialog>
   </el-dialog>
@@ -292,5 +314,3 @@ export default {
   }
 }
 </style>
-
-

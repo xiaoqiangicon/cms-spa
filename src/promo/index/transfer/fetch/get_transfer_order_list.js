@@ -29,12 +29,14 @@ const refactor = {
       wxId: 'wxTransactionId', // 支付流水号
       orderList: 'conversionOrder',
       ps: 'posiscript',
-      _ps: [{
-        feedBackImg: 'pic_url',
-        ps: 'posiscript',
-        subId: 'subdirideId',
-        subName: 'subdirideName',
-      }],
+      _ps: [
+        {
+          feedBackImg: 'pic_url',
+          ps: 'posiscript',
+          subId: 'subdirideId',
+          subName: 'subdirideName',
+        },
+      ],
       _orderList: [
         {
           addTime: 'addTime', // 转单时间
@@ -42,14 +44,14 @@ const refactor = {
           isFinish: 'isFinish', // 已被处理
           templeName: 'templeName', // 所属寺院
           feedBackImg: 'disposePicUrl', // 反馈图片
-          ps: 'posiscript'
+          ps: 'posiscript',
         },
       ],
     },
   ],
 };
 
-const post = () => { };
+const post = () => {};
 
 seeFetch.config('promo/index/transfer/getTransferOrderList', {
   method: ['post'],

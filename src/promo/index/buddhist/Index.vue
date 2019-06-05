@@ -13,25 +13,51 @@
         filterable
       >
         <el-option :key="0" label="全部" :value="0"></el-option>
-        <el-option v-for="item in templeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+        <el-option
+          v-for="item in templeList"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        ></el-option>
       </el-select>
-      <el-input placeholder="请输入佛事ID" v-model.number="buddhistId" size="small" style="width:200px;">
-        <el-button slot="append" icon="el-icon-search" @click="refresh"></el-button>
+      <el-input
+        placeholder="请输入佛事ID"
+        v-model.number="buddhistId"
+        size="small"
+        style="width:200px;"
+      >
+        <el-button
+          slot="append"
+          icon="el-icon-search"
+          @click="refresh"
+        ></el-button>
       </el-input>
       <el-button
         class="fl-right"
         size="small"
         type="primary"
-        @click="()=>{dialogAddVisible=!0;}"
-      >添加推广佛事</el-button>
+        @click="
+          () => {
+            dialogAddVisible = !0;
+          }
+        "
+        >添加推广佛事</el-button
+      >
     </div>
     <el-table v-loading="loading" :data="list" style="width: 100%">
-      <el-table-column prop="templeId" label="寺院ID" width="100" :align="'left'"></el-table-column>
+      <el-table-column
+        prop="templeId"
+        label="寺院ID"
+        width="100"
+        :align="'left'"
+      ></el-table-column>
       <el-table-column prop="buddhistName" label="佛事状态">
         <template slot-scope="scope">
           <span v-if="!scope.row.isEnd" style="color: #67C23A;">进行中</span>
           <template v-else>
-            <span v-if="scope.row.isFinish" style="color: #909399;">已确认</span>
+            <span v-if="scope.row.isFinish" style="color: #909399;"
+              >已确认</span
+            >
             <span v-else style="color: #E6A23C;">已结束</span>
           </template>
         </template>
@@ -39,12 +65,23 @@
       <el-table-column prop="buddhistName" label="佛事名称"></el-table-column>
       <el-table-column prop="templeName" label="寺院名称"></el-table-column>
       <el-table-column label="推广服务费" :align="'center'">
-        <template slot-scope="scope">{{Number(100*scope.row.rate).toFixed(2)}}%</template>
+        <template slot-scope="scope"
+          >{{ Number(100 * scope.row.rate).toFixed(2) }}%</template
+        >
       </el-table-column>
-      <el-table-column prop="startTime" label="推广生效时间" :align="'center'"></el-table-column>
-      <el-table-column prop="updateUser" label="最后编辑人" :align="'center'"></el-table-column>
+      <el-table-column
+        prop="startTime"
+        label="推广生效时间"
+        :align="'center'"
+      ></el-table-column>
+      <el-table-column
+        prop="updateUser"
+        label="最后编辑人"
+        :align="'center'"
+      ></el-table-column>
       <el-table-column label="分享福币" :align="'center'">
-        <template slot="header" slot-scope="scope">分享福币
+        <template slot="header" slot-scope="scope"
+          >分享福币
           <el-tooltip
             class="item"
             effect="dark"
@@ -62,13 +99,28 @@
       <el-table-column label="操作" :align="'right'">
         <template slot-scope="scope">
           <div v-show="scope.row.isEnd && !scope.row.isFinish">
-            <el-button type="text" size="small" @click="handleClickWithdraw(scope.row)">确认提现</el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click="handleClickWithdraw(scope.row)"
+              >确认提现</el-button
+            >
           </div>
           <div>
-            <el-button type="text" size="small" @click="handleClickEdit(scope.row)">推广编辑</el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click="handleClickEdit(scope.row)"
+              >推广编辑</el-button
+            >
           </div>
           <div>
-            <el-button type="text" size="small" @click="handleClickRecord(scope.row)">记录</el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click="handleClickRecord(scope.row)"
+              >记录</el-button
+            >
           </div>
         </template>
       </el-table-column>
@@ -85,29 +137,51 @@
     <el-dialog
       title="记录"
       :visible.sync="dialogRecordVisible"
-      :before-close="() => {dialogRecordVisible=!1;}"
+      :before-close="
+        () => {
+          dialogRecordVisible = !1;
+        }
+      "
     >
       <el-table :data="recordList" style="width: 100%">
-        <el-table-column prop="startTime" label="生效时间" align="left"></el-table-column>
+        <el-table-column
+          prop="startTime"
+          label="生效时间"
+          align="left"
+        ></el-table-column>
         <el-table-column prop="rate" label="服务费用" align="center">
-          <template slot-scope="scope">{{Number(100*scope.row.rate).toFixed(2)}}%</template>
+          <template slot-scope="scope"
+            >{{ Number(100 * scope.row.rate).toFixed(2) }}%</template
+          >
         </el-table-column>
-        <el-table-column prop="updateTime" label="编辑时间" align="center"></el-table-column>
-        <el-table-column prop="updateUser" label="编辑用户" align="right"></el-table-column>
+        <el-table-column
+          prop="updateTime"
+          label="编辑时间"
+          align="center"
+        ></el-table-column>
+        <el-table-column
+          prop="updateUser"
+          label="编辑用户"
+          align="right"
+        ></el-table-column>
       </el-table>
     </el-dialog>
     <el-dialog
       title="确认"
       :visible.sync="dialogWithdrawVisible"
-      :before-close="() => {dialogWithdrawVisible = !1;}"
+      :before-close="
+        () => {
+          dialogWithdrawVisible = !1;
+        }
+      "
     >
       <div class="row">
         <div class="title">佛事名称</div>
-        <div class="content">：{{curItem.buddhistName}}</div>
+        <div class="content">：{{ curItem.buddhistName }}</div>
       </div>
       <div class="row">
         <div class="title">佛事ID</div>
-        <div class="content">：{{curItem.buddhistId}}</div>
+        <div class="content">：{{ curItem.buddhistId }}</div>
       </div>
       <div class="f-s-18" style="color: #F56C6C;">确认结算后不可取消</div>
       <span slot="footer" class="dialog-footer">
@@ -118,12 +192,21 @@
     <el-dialog
       title="添加"
       :visible.sync="dialogAddVisible"
-      :before-close="() => {dialogAddVisible = !1;}"
+      :before-close="
+        () => {
+          dialogAddVisible = !1;
+        }
+      "
     >
       <div class="row">
         <div class="title">寺院</div>
-        <div class="content">：
-          <el-select v-model.number="addItem.templeId" placeholder="请选择" @change="getBuddhistList">
+        <div class="content">
+          ：
+          <el-select
+            v-model.number="addItem.templeId"
+            placeholder="请选择"
+            @change="getBuddhistList"
+          >
             <el-option
               v-for="item in templeList"
               :key="item.id"
@@ -135,7 +218,8 @@
       </div>
       <div class="row">
         <div class="title">佛事</div>
-        <div class="content">：
+        <div class="content">
+          ：
           <el-select
             v-loading="loadingBuddhistList"
             v-model.number="addItem.buddhistId"
@@ -152,14 +236,20 @@
       </div>
       <div class="row">
         <div class="title">支付服务费</div>
-        <div class="content">：
-          <el-input style="width: 210px;" v-model.number="addItem.rate" placeholder=""></el-input>
+        <div class="content">
+          ：
+          <el-input
+            style="width: 210px;"
+            v-model.number="addItem.rate"
+            placeholder=""
+          ></el-input>
           <span class="mg-l-5">%</span>
         </div>
       </div>
       <div class="row">
         <div class="title">生效时间</div>
-        <div class="content">：
+        <div class="content">
+          ：
           <el-date-picker
             value-format="yyyy-MM-dd HH:mm:ss"
             v-model="addItem.startTime"
@@ -337,7 +427,7 @@ export default {
       return seeFetch('promo/index/buddhist/update', {
         templeId,
         buddhistId,
-        rate: rate/100,
+        rate: rate / 100,
         startTime,
       }).then(res => {
         if (!res.success) {

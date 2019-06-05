@@ -1,7 +1,7 @@
 import seeFetch from 'see-fetch';
 
 const req = {
-  buddhistId: 'commodityId'
+  buddhistId: 'commodityId',
 };
 
 const refactor = {
@@ -17,8 +17,8 @@ const refactor = {
           subId: 'subdivideId',
           subName: 'name',
           // price: 'price',
-        }
-      ]
+        },
+      ],
     },
   ],
 };

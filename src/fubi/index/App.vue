@@ -20,41 +20,66 @@
                 :value="item.id"
               ></el-option>
             </el-select>
-            <el-button class="mg-l-10" type="primary" size="small" @click="handleClickEditType">编辑类型</el-button>
-            <el-button class="fl-right" type="primary" size="small" @click="handleClickAdd">添加奖品</el-button>
+            <el-button
+              class="mg-l-10"
+              type="primary"
+              size="small"
+              @click="handleClickEditType"
+              >编辑类型</el-button
+            >
+            <el-button
+              class="fl-right"
+              type="primary"
+              size="small"
+              @click="handleClickAdd"
+              >添加奖品</el-button
+            >
           </div>
           <div class="table">
             <el-table :data="tableData" style="width: 100%">
               <el-table-column label="排序">
                 <template slot-scope="scope">
-                  <div style="cursor:pointer;" @click="handleClickRowSort(scope.row)">
-                    {{scope.row.sort}}
+                  <div
+                    style="cursor:pointer;"
+                    @click="handleClickRowSort(scope.row)"
+                  >
+                    {{ scope.row.sort }}
                     <i style="color: #409EFF;" class="el-icon-edit"></i>
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column prop="name" label="标题"/>
+              <el-table-column prop="name" label="标题" />
               <el-table-column label="类型">
                 <template slot-scope="scope">
-                  <div style="cursor:pointer;" @click="handleClickRowType(scope.row)">
+                  <div
+                    style="cursor:pointer;"
+                    @click="handleClickRowType(scope.row)"
+                  >
                     {{
-                    typeList.find(item => item.id === scope.row.typeId) ?
-                    typeList.find(item => item.id === scope.row.typeId).name :
-                    ''
+                      typeList.find(item => item.id === scope.row.typeId)
+                        ? typeList.find(item => item.id === scope.row.typeId)
+                            .name
+                        : ''
                     }}
-                    <i
-                      style="color: #409EFF;"
-                      class="el-icon-edit"
-                    ></i>
+                    <i style="color: #409EFF;" class="el-icon-edit"></i>
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column prop="fuBiMoney" label="兑换福币（元）"/>
-              <el-table-column prop="exchangeTimes" label="兑换次数" align="center"/>
+              <el-table-column prop="fuBiMoney" label="兑换福币（元）" />
+              <el-table-column
+                prop="exchangeTimes"
+                label="兑换次数"
+                align="center"
+              />
               <el-table-column label="操作" align="center">
                 <template slot-scope="scope">
                   <div>
-                    <el-button type="text" size="small" @click="handleClickRowDelete(scope.row)">删除</el-button>
+                    <el-button
+                      type="text"
+                      size="small"
+                      @click="handleClickRowDelete(scope.row)"
+                      >删除</el-button
+                    >
                   </div>
                 </template>
               </el-table-column>
@@ -76,10 +101,24 @@
     <el-dialog
       title="修改类型"
       :visible.sync="dialogEditRowType"
-      :before-close="()=>{dialogEditRowType=!1;}"
+      :before-close="
+        () => {
+          dialogEditRowType = !1;
+        }
+      "
     >
-      <el-select v-model="tempRow.typeId" placeholder="请选择" size="small" filterable>
-        <el-option v-for="item in typeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+      <el-select
+        v-model="tempRow.typeId"
+        placeholder="请选择"
+        size="small"
+        filterable
+      >
+        <el-option
+          v-for="item in typeList"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        ></el-option>
       </el-select>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
@@ -87,21 +126,45 @@
       </span>
     </el-dialog>
     <!-- dialogEditType -->
-    <el-dialog title="编辑类型" :visible.sync="dialogEditType" :before-close="()=>{dialogEditType=!1;}">
-      <el-button class="mg-l-10" type="primary" size="small" @click="()=>{dialogAddType=!0}">添加类型</el-button>
+    <el-dialog
+      title="编辑类型"
+      :visible.sync="dialogEditType"
+      :before-close="
+        () => {
+          dialogEditType = !1;
+        }
+      "
+    >
+      <el-button
+        class="mg-l-10"
+        type="primary"
+        size="small"
+        @click="
+          () => {
+            dialogAddType = !0;
+          }
+        "
+        >添加类型</el-button
+      >
       <el-table :data="typeList" style="width: 100%">
         <el-table-column label="排序">
           <template slot-scope="scope">
-            <div style="cursor:pointer;" @click="handleClickTypeRowSort(scope.row)">
-              {{scope.row.sort}}
+            <div
+              style="cursor:pointer;"
+              @click="handleClickTypeRowSort(scope.row)"
+            >
+              {{ scope.row.sort }}
               <i style="color: #409EFF;" class="el-icon-edit"></i>
             </div>
           </template>
         </el-table-column>
         <el-table-column label="类型名称">
           <template slot-scope="scope">
-            <div style="cursor:pointer;" @click="handleClickTypeRowTypeName(scope.row)">
-              {{scope.row.name}}
+            <div
+              style="cursor:pointer;"
+              @click="handleClickTypeRowTypeName(scope.row)"
+            >
+              {{ scope.row.name }}
               <i style="color: #409EFF;" class="el-icon-edit"></i>
             </div>
           </template>
@@ -109,7 +172,12 @@
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <div>
-              <el-button type="text" size="small" @click="handleClickTypeRowDelete(scope.row)">删除</el-button>
+              <el-button
+                type="text"
+                size="small"
+                @click="handleClickTypeRowDelete(scope.row)"
+                >删除</el-button
+              >
             </div>
           </template>
         </el-table-column>
@@ -118,16 +186,28 @@
       <el-dialog
         title="添加类型"
         :visible.sync="dialogAddType"
-        :before-close="()=>{dialogAddType=!1;}"
+        :before-close="
+          () => {
+            dialogAddType = !1;
+          }
+        "
         append-to-body
       >
         <div class="row">
           <span class="title">类型名称</span>：
-          <el-input style="width: 200px;" v-model.trim="tempAddType.name" placeholder="请输入名称"></el-input>
+          <el-input
+            style="width: 200px;"
+            v-model.trim="tempAddType.name"
+            placeholder="请输入名称"
+          ></el-input>
         </div>
         <div class="row">
           <span class="title">排序</span>：
-          <el-input style="width: 200px;" v-model.number="tempAddType.sort" placeholder="请输入排序"></el-input>
+          <el-input
+            style="width: 200px;"
+            v-model.number="tempAddType.sort"
+            placeholder="请输入排序"
+          ></el-input>
         </div>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogAddType = !1">取 消</el-button>
@@ -136,10 +216,23 @@
       </el-dialog>
     </el-dialog>
     <!-- dialogAdd -->
-    <el-dialog title="添加奖品" :visible.sync="dialogAdd" :before-close="()=>{dialogAdd=!1;}">
+    <el-dialog
+      title="添加奖品"
+      :visible.sync="dialogAdd"
+      :before-close="
+        () => {
+          dialogAdd = !1;
+        }
+      "
+    >
       <div class="row">
         <span class="title">佛事名称</span>：
-        <el-select v-model.number="tempAdd.buddhistId" placeholder="请选择佛事" size="small" filterable>
+        <el-select
+          v-model.number="tempAdd.buddhistId"
+          placeholder="请选择佛事"
+          size="small"
+          filterable
+        >
           <el-option
             v-for="item in buddhistList"
             :key="item.id"
@@ -150,13 +243,27 @@
       </div>
       <div class="row">
         <span class="title">类型</span>：
-        <el-select v-model.number="tempAdd.typeId" placeholder="请选择类型" size="small" filterable>
-          <el-option v-for="item in typeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+        <el-select
+          v-model.number="tempAdd.typeId"
+          placeholder="请选择类型"
+          size="small"
+          filterable
+        >
+          <el-option
+            v-for="item in typeList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          ></el-option>
         </el-select>
       </div>
       <div class="row">
         <span class="title">排序</span>：
-        <el-input style="width: 200px;" v-model.number="tempAdd.sort" placeholder="请输入排序"></el-input>
+        <el-input
+          style="width: 200px;"
+          v-model.number="tempAdd.sort"
+          placeholder="请输入排序"
+        ></el-input>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogAdd = !1">取 消</el-button>
@@ -576,4 +683,3 @@ export default {
   }
 }
 </style>
-

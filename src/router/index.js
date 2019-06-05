@@ -37,12 +37,12 @@ export const constantRouterMap = [
   // },
   {
     path: '/404',
-    component: () => import('@/sys/views/errorPage/404'),
+    component: () => import('../sys/views/errorPage/404'),
     hidden: true,
   },
   {
     path: '/401',
-    component: () => import('@/sys/views/errorPage/401'),
+    component: () => import('../sys/views/errorPage/401'),
     hidden: true,
   },
   {
@@ -53,7 +53,7 @@ export const constantRouterMap = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/sys/views/dashboard/index'),
+        component: () => import('../sys/views/dashboard/index'),
         name: 'Dashboard',
         meta: { title: 'dashboard', noCache: true },
       },

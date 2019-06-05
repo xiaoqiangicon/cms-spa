@@ -18,7 +18,7 @@ export default {
         subdivideId: 2,
         name: '选择项2',
         price: 2,
-      }
+      },
     ],
     isOrder: Math.floor(Math.random() * 2),
     isZizaijiaCommodity: Math.floor(Math.random() * 2),

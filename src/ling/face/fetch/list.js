@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign, prefer-destructuring */
 import seeFetch from 'see-fetch';
-import {types} from '../data';
+import { types } from '../data';
 
 const req = {
   page: 'pageNum',
@@ -40,11 +40,7 @@ const localPost = res => {
 seeFetch.config('ling/face/list', {
   method: ['post'],
   stringify: [!0],
-  url: [
-    '/wish/emotionList',
-    '/ling/face/mock/list1',
-    '/ling/face/mock/list',
-  ],
+  url: ['/wish/emotionList', '/ling/face/mock/list1', '/ling/face/mock/list'],
   req: [req, req],
   pre: [pre, pre],
   refactor: [refactor, refactor],

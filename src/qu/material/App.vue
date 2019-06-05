@@ -66,7 +66,10 @@
               </el-button>
               <el-button
                 v-if="item.row.status !== -1"
-                type="text" size="small" @click="toDelete(item)">
+                type="text"
+                size="small"
+                @click="toDelete(item)"
+              >
                 删除
               </el-button>
             </template>

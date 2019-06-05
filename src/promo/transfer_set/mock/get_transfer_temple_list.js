@@ -11,7 +11,7 @@ export default {
         commodityId: 11,
         price: 0,
         percent: 2,
-      }
-    ]
+      },
+    ],
   })),
 };

@@ -1,5 +1,13 @@
 <template>
-  <el-dialog title="订单提醒" :visible.sync="sVisible" :before-close="() => {sVisible = false}">
+  <el-dialog
+    title="订单提醒"
+    :visible.sync="sVisible"
+    :before-close="
+      () => {
+        sVisible = false;
+      }
+    "
+  >
     <div class="mg-b-20">添加需要订单提醒的微信号</div>
     <!-- <div class="cell" v-for="item in managerList" :key="item.id">
       <div class="avatar"></div>
@@ -9,9 +17,9 @@
       <div class="cell" v-for="manager in managerList" :key="manager.id">
         <el-checkbox :label="manager.id">
           <div class="avatar">
-            <img :src="manager.avatar" alt="">
+            <img :src="manager.avatar" alt="" />
           </div>
-          <div class="nickname">{{manager.nickname}}</div>
+          <div class="nickname">{{ manager.nickname }}</div>
         </el-checkbox>
       </div>
     </el-checkbox-group>
@@ -123,5 +131,3 @@ export default {
   margin-left: 10px;
 }
 </style>
-
-

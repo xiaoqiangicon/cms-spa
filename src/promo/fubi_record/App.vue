@@ -3,8 +3,10 @@
     <el-card class="info">
       <div class="f-s-18 mg-b-10">{{ buddhistData.buddhistName }}</div>
       <div class="gray">
-        <span class="mg-r-10">佛事状态：{{buddhistData.isEnd ? '已结束' : '进行中'}}</span>|
-        <span class="mg-l-10">寺院名称：{{buddhistData.templeName}}</span>
+        <span class="mg-r-10"
+          >佛事状态：{{ buddhistData.isEnd ? '已结束' : '进行中' }}</span
+        >|
+        <span class="mg-l-10">寺院名称：{{ buddhistData.templeName }}</span>
       </div>
     </el-card>
     <el-card class="mg-t-20">
@@ -21,22 +23,29 @@
           :picker-options="pickerOptions"
           value-format="yyyy-MM-dd"
         ></el-date-picker>
-        <el-input size="small" style="width:200px;" v-model="searchStr" placeholder="分享人名字/手机号码"></el-input>
-        <el-button class="fl-right" type="primary" size="small" @click="refresh">搜索</el-button>
+        <el-input
+          size="small"
+          style="width:200px;"
+          v-model="searchStr"
+          placeholder="分享人名字/手机号码"
+        ></el-input>
+        <el-button class="fl-right" type="primary" size="small" @click="refresh"
+          >搜索</el-button
+        >
       </div>
       <div class="table">
         <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="payTime" label="下单时间"/>
-          <el-table-column prop="name" label="名称"/>
-          <el-table-column prop="payMoney" label="支付金额（元）"/>
+          <el-table-column prop="payTime" label="下单时间" />
+          <el-table-column prop="name" label="名称" />
+          <el-table-column prop="payMoney" label="支付金额（元）" />
           <el-table-column label="所属分享人">
             <template slot-scope="scope">
-              <div>{{scope.row.nickname}}</div>
-              <div>{{scope.row.tel}}</div>
+              <div>{{ scope.row.nickname }}</div>
+              <div>{{ scope.row.tel }}</div>
             </template>
           </el-table-column>
           <el-table-column label="获得福币（元）" align="center">
-            <template slot-scope="scope">{{scope.row.fuBiMoney}}</template>
+            <template slot-scope="scope">{{ scope.row.fuBiMoney }}</template>
           </el-table-column>
         </el-table>
         <el-pagination
@@ -174,4 +183,3 @@ export default {
   color: #aeafae;
 }
 </style>
-

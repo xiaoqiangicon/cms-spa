@@ -1,23 +1,44 @@
 <template>
   <div>
     <el-table v-loading="loading" :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="buddhistId" label="ID" width="100" :align="'left'"/>
-      <el-table-column prop="buddhistName" label="佛事名称"/>
+      <el-table-column
+        prop="buddhistId"
+        label="ID"
+        width="100"
+        :align="'left'"
+      />
+      <el-table-column prop="buddhistName" label="佛事名称" />
       <el-table-column label="关联寺院" :align="'center'">
         <template slot-scope="scope">
           <el-tooltip v-if="scope.row.templeList.length" placement="right">
             <div slot="content">
-              <div v-for="item in scope.row.templeList" :key="item">{{ item }}</div>
+              <div v-for="item in scope.row.templeList" :key="item">
+                {{ item }}
+              </div>
             </div>
-            <div style="color: #409EFF;cursor: pointer;">{{ scope.row.templeList.length }}</div>
+            <div style="color: #409EFF;cursor: pointer;">
+              {{ scope.row.templeList.length }}
+            </div>
           </el-tooltip>
           <div v-else>0</div>
         </template>
       </el-table-column>
-      <el-table-column prop="orderNum" label="待转单数" :align="'center'"/>
-      <el-table-column prop="conversionOrderNum" label="已转单数" :align="'center'"/>
-      <el-table-column prop="conversionOrderPrice" label="订单金额（元）" :align="'center'"/>
-      <el-table-column prop="profitConversionOrderPrice" label="盈收金额（元）" :align="'center'"/>
+      <el-table-column prop="orderNum" label="待转单数" :align="'center'" />
+      <el-table-column
+        prop="conversionOrderNum"
+        label="已转单数"
+        :align="'center'"
+      />
+      <el-table-column
+        prop="conversionOrderPrice"
+        label="订单金额（元）"
+        :align="'center'"
+      />
+      <el-table-column
+        prop="profitConversionOrderPrice"
+        label="盈收金额（元）"
+        :align="'center'"
+      />
       <el-table-column label="分享福币" :align="'center'">
         <template slot-scope="scope">
           <span v-if="scope.row.isShareFuBi">已设置</span>
@@ -27,13 +48,25 @@
       <el-table-column label="操作" width="100" align="center">
         <template slot-scope="scope">
           <div>
-            <el-button type="text" size="small" @click="toTransferList(scope.row)">转单列表</el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click="toTransferList(scope.row)"
+              >转单列表</el-button
+            >
           </div>
           <div>
-            <el-button type="text" size="small" @click="toTransferSet(scope.row)">转单设置</el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click="toTransferSet(scope.row)"
+              >转单设置</el-button
+            >
           </div>
           <div>
-            <el-button type="text" size="small" @click="toMergeSet(scope.row)">组合设置</el-button>
+            <el-button type="text" size="small" @click="toMergeSet(scope.row)"
+              >组合设置</el-button
+            >
           </div>
         </template>
       </el-table-column>

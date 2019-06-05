@@ -3,14 +3,16 @@
     <el-card class="header">
       <div class="f-s-18 mg-b-10">{{ buddhistName }}</div>
       <div class="gray">
-        <span class="mg-r-10">佛事ID：{{ buddhistId }}</span>|
-        <span class="mg-l-10">佛事状态：{{isEnd ? '已结束' : '进行中'}}</span>
+        <span class="mg-r-10">佛事ID：{{ buddhistId }}</span
+        >|
+        <span class="mg-l-10">佛事状态：{{ isEnd ? '已结束' : '进行中' }}</span>
       </div>
       <el-button
         style="position: absolute; bottom: 40px;right: 40px;"
         type="primary"
         @click="save"
-      >保 存</el-button>
+        >保 存</el-button
+      >
     </el-card>
     <div class="body">
       <div class="aside card">
@@ -21,20 +23,26 @@
             size="small"
             type="primary"
             @click="dialogAddVisible = true"
-          >添加寺院</el-button>
+            >添加寺院</el-button
+          >
         </div>
         <div class="list">
           <div
             class="item"
             @click="changeTemple(item.id)"
-            :class="{active: item.id === templeId}"
+            :class="{ active: item.id === templeId }"
             v-for="item in transferTempleList"
             :key="item.id"
           >
-            <div class="id">{{item.id}}</div>
-            <div class="name">{{item.name}}</div>
+            <div class="id">{{ item.id }}</div>
+            <div class="name">{{ item.name }}</div>
             <div class="opt">
-              <el-button size="mini" icon="el-icon-delete" circle @click="delTemple(item.id)"></el-button>
+              <el-button
+                size="mini"
+                icon="el-icon-delete"
+                circle
+                @click="delTemple(item.id)"
+              ></el-button>
             </div>
           </div>
         </div>
@@ -47,10 +55,16 @@
           style="width: 100%"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column type="selection" width="55" :selectable="tableSelectable"></el-table-column>
+          <el-table-column
+            type="selection"
+            width="55"
+            :selectable="tableSelectable"
+          ></el-table-column>
           <el-table-column prop="name" label="选择项名称" show-overflow-tooltip>
             <template slot-scope="scope">
-              <el-tag v-if="scope.row.isZizaijiaCommodity" size="mini">自营</el-tag>
+              <el-tag v-if="scope.row.isZizaijiaCommodity" size="mini"
+                >自营</el-tag
+              >
               <el-tooltip
                 v-if="scope.row.isZizaijiaCommodity && scope.row.isOrder"
                 class="item"
@@ -64,12 +78,17 @@
             </template>
           </el-table-column>
           <el-table-column prop="price" label="价格（元）">
-            <template
-              slot-scope="scope"
-            >{{scope.row.price > 0 ? scope.row.price : scope.row.price === 0 ? '无需支付' : '随喜'}}</template>
+            <template slot-scope="scope">{{
+              scope.row.price > 0
+                ? scope.row.price
+                : scope.row.price === 0
+                ? '无需支付'
+                : '随喜'
+            }}</template>
           </el-table-column>
           <el-table-column prop="transferRate" label="转单比例">
-            <template slot="header" slot-scope="scope">转单比例
+            <template slot="header" slot-scope="scope"
+              >转单比例
               <el-tooltip
                 class="item"
                 effect="dark"
@@ -100,7 +119,8 @@
             </template>
           </el-table-column>
           <el-table-column label="分享福币（%）">
-            <template slot="header" slot-scope="scope">分享福币（%）
+            <template slot="header" slot-scope="scope"
+              >分享福币（%）
               <el-tooltip
                 class="item"
                 effect="dark"
@@ -116,11 +136,11 @@
                 style="cursor: pointer;"
                 @click="handleClickEditFuBiPercent(scope.row)"
               >
-                {{subList.find(subItem => subItem.id === scope.row.id).shareFuBiPercent}}%
-                <i
-                  style="color: #409EFF;"
-                  class="el-icon-edit"
-                ></i>
+                {{
+                  subList.find(subItem => subItem.id === scope.row.id)
+                    .shareFuBiPercent
+                }}%
+                <i style="color: #409EFF;" class="el-icon-edit"></i>
               </div>
               <div v-else>-</div>
             </template>
@@ -132,7 +152,11 @@
     <el-dialog
       :title="curSubItem.name"
       :visible.sync="dialogEditFuBiVisible"
-      :before-close="()=>{dialogEditFuBiVisible=!1;}"
+      :before-close="
+        () => {
+          dialogEditFuBiVisible = !1;
+        }
+      "
     >
       <div>
         <span class="mg-r-5">分享福币</span>
@@ -535,7 +559,6 @@ export default {
           height: 40px;
           line-height: 40px;
           margin: 0 20px 10px 20px;
-
           cursor: pointer;
           border-radius: 4px;
           &.active {
