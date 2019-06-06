@@ -54,7 +54,7 @@
       </div>
       <div class="row">
         <div class="row-name">
-          盈收金额：
+          营收金额：
         </div>
         <el-input v-model="income" size="small" style="width: 200px;" />
         <span class="l-hg-32">元</span>
@@ -173,7 +173,7 @@ export default {
 
       if (!recordName) error = '记录名称不能为空';
       else if (!incomeFromId) error = '寺院不能为空';
-      else if (!income) error = '盈收金额不能为空，且需是数字';
+      else if (!income) error = '营收金额不能为空，且需是数字';
       else if (!incomeTime) error = '入账时间不能为空';
 
       if (error) {
