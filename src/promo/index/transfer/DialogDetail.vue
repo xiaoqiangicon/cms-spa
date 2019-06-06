@@ -1,123 +1,153 @@
 <template>
-  <el-dialog
-    title="订单详情"
-    :visible.sync="visible"
-    :before-close="
-      () => {
-        sVisible = false;
-      }
-    "
-  >
-    <div class="row">
-      <div class="title">
-        佛事名称
-      </div>
-      ：{{ transferOrderDetail.buddhistName }}
-    </div>
-    <div class="row">
-      <div class="title">
-        规格
-      </div>
-      ：{{ transferOrderDetail.subName }}
-    </div>
-    <div class="row">
-      <div class="title">
-        数量
-      </div>
-      ：{{ transferOrderDetail.buyNum }}
-    </div>
-    <div class="row">
-      <div class="title">
-        支付
-      </div>
-      ：{{ transferOrderDetail.price }}
-    </div>
-    <div class="row">
-      <div class="title">
-        转单价格
-      </div>
-      ：{{ transferOrderDetail.transferPrice }}
-    </div>
-    <div class="row">
-      <div class="title">
-        下单时间
-      </div>
-      ：{{ transferOrderDetail.addTime }}
-    </div>
-    <div class="row">
-      <div class="title">
-        订单号
-      </div>
-      ：{{ transferOrderDetail.orderId }}
-    </div>
-    <div class="row">
-      <div class="title">
-        外部订单号
-      </div>
-      ：{{ transferOrderDetail.orderNum }}
-    </div>
-    <div class="row">
-      <div class="title">
-        支付流水号
-      </div>
-      ：{{ transferOrderDetail.wxId }}
-    </div>
-    <template v-if="transferOrderDetail.feedBackImg">
-      <div class="bar" />
+  <div>
+    <el-dialog
+      title="订单详情"
+      :visible.sync="visible"
+      :before-close="
+        () => {
+          sVisible = false;
+        }
+      "
+    >
       <div class="row">
         <div class="title">
-          反馈图
+          佛事名称
         </div>
-        <div class="content">
-          ：
-          <template v-if="transferOrderDetail.feedBackImg.length">
+        ：{{ transferOrderDetail.buddhistName }}
+      </div>
+      <div class="row">
+        <div class="title">
+          规格
+        </div>
+        ：{{ transferOrderDetail.subName }}
+      </div>
+      <div class="row">
+        <div class="title">
+          数量
+        </div>
+        ：{{ transferOrderDetail.buyNum }}
+      </div>
+      <div class="row">
+        <div class="title">
+          支付
+        </div>
+        ：{{ transferOrderDetail.price }}
+      </div>
+      <div class="row">
+        <div class="title">
+          转单价格
+        </div>
+        ：{{ transferOrderDetail.transferPrice }}
+      </div>
+      <div class="row">
+        <div class="title">
+          下单时间
+        </div>
+        ：{{ transferOrderDetail.addTime }}
+      </div>
+      <div class="row">
+        <div class="title">
+          订单号
+        </div>
+        ：{{ transferOrderDetail.orderId }}
+      </div>
+      <div class="row">
+        <div class="title">
+          外部订单号
+        </div>
+        ：{{ transferOrderDetail.orderNum }}
+      </div>
+      <div class="row">
+        <div class="title">
+          支付流水号
+        </div>
+        ：{{ transferOrderDetail.wxId }}
+      </div>
+      <template v-if="transferOrderDetail.feedBackImg">
+        <div class="bar" />
+        <div class="row">
+          <div class="title">
+            反馈图
+          </div>
+          <div class="content">
+            ：
+            <template v-if="transferOrderDetail.feedBackImg.length">
+              <div
+                v-for="item in transferOrderDetail.feedBackImg"
+                :key="item"
+                class="img-container"
+              >
+                <img :src="item" />
+              </div>
+            </template>
+            <div v-else>
+              无
+            </div>
+          </div>
+        </div>
+      </template>
+      <template v-if="transferOrderDetail.feedBackVideo">
+        <div class="bar" />
+        <div class="row">
+          <div class="title">
+            反馈视频
+          </div>
+          <div class="content">
+            ：
+            <template v-if="transferOrderDetail.feedBackVideo.length">
+              <div
+                v-for="item in transferOrderDetail.feedBackVideo"
+                :key="item"
+                class="img-container"
+              >
+                <img
+                  :src="item + '?vframe/jpg/offset/1'"
+                  @click="onClickPlayVideo(item)"
+                />
+              </div>
+            </template>
+            <div v-else>
+              无
+            </div>
+          </div>
+        </div>
+      </template>
+      <template v-if="transferOrderDetail.ps">
+        <div class="bar" />
+        <div
+          v-for="item in transferOrderDetail.ps"
+          :key="item.inputId"
+          class="row"
+        >
+          <template v-if="item.type === 14 && item.value">
             <div
-              v-for="item in transferOrderDetail.feedBackImg"
-              :key="item"
+              v-for="img in item.value.split(',')"
+              :key="img"
               class="img-container"
             >
-              <img :src="item">
+              <img :src="img" />
             </div>
           </template>
-          <div v-else>
-            无
-          </div>
+          <template v-else-if="item.type === 13" />
+          <template v-else>
+            <div class="title">
+              {{ item.name }}
+            </div>
+            ：
+            <div class="content">
+              {{ item.value }}
+            </div>
+          </template>
         </div>
-      </div>
-    </template>
-    <template v-if="transferOrderDetail.ps">
-      <div class="bar" />
-      <div
-        v-for="item in transferOrderDetail.ps"
-        :key="item.inputId"
-        class="row"
-      >
-        <template v-if="item.type === 14 && item.value">
-          <div
-            v-for="img in item.value.split(',')"
-            :key="img"
-            class="img-container"
-          >
-            <img :src="img">
-          </div>
-        </template>
-        <template v-else-if="item.type === 13" />
-        <template v-else>
-          <div class="title">
-            {{ item.name }}
-          </div>
-          ：
-          <div class="content">
-            {{ item.value }}
-          </div>
-        </template>
-      </div>
-    </template>
-  </el-dialog>
+      </template>
+    </el-dialog>
+    <VideoPlayer :src="videoPlayerSrc" />
+  </div>
 </template>
 
 <script>
 import { addProps } from '../data';
+import VideoPlayer from './VideoPlayer';
 
 const computedProps = {};
 addProps.forEach(({ name, full }) => {
@@ -146,9 +176,14 @@ export default {
   props: {
     visible: Boolean,
   },
+  components: {
+    VideoPlayer,
+  },
   data() {
     return {
       sVisible: this.visible,
+      videoPlayerSrc:
+        'https://pic.zizaihome.com/b7c155f70d6a2d0a49cabcb6b790ce6b.mp4',
     };
   },
   computed: {
@@ -162,7 +197,13 @@ export default {
       this.$emit('updateVisible', val);
     },
   },
-  methods: {},
+  methods: {
+    onClickPlayVideo(video) {
+      console.log(video);
+      this.videoPlayerSrc = video;
+      // this.videoPlayerVisible = !0;
+    },
+  },
 };
 </script>
 

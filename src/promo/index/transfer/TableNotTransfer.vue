@@ -30,76 +30,37 @@
         label="佛事名称"
         show-overflow-tooltip
       />
-      <el-table-column
-        label="状态"
-        show-overflow-tooltip
-        :align="'center'"
-      >
+      <el-table-column label="状态" show-overflow-tooltip :align="'center'">
         <template slot-scope="scope">
           {{ scope.row.isAuto ? '自动' : '手动' }}
         </template>
       </el-table-column>
-      <el-table-column
-        prop="buyNum"
-        label="数量"
-        :align="'center'"
-      />
-      <el-table-column
-        prop="price"
-        label="支付金额（元）"
-        :align="'center'"
-      />
-      <el-table-column
-        label="所属寺院"
-        show-overflow-tooltip
-        :align="'center'"
-      >
+      <el-table-column prop="buyNum" label="数量" :align="'center'" />
+      <el-table-column prop="price" label="支付金额（元）" :align="'center'" />
+      <el-table-column label="所属寺院" show-overflow-tooltip :align="'center'">
         <template slot-scope="scope">
-          <div
-            v-for="item in scope.row.orderList"
-            :key="item.addTime"
-          >
+          <div v-for="item in scope.row.orderList" :key="item.addTime">
             {{ item.templeName }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column
-        label="支付时间"
-        show-overflow-tooltip
-        :align="'center'"
-      >
+      <el-table-column label="支付时间" show-overflow-tooltip :align="'center'">
         <template slot-scope="scope">
-          <div
-            v-for="item in scope.row.orderList"
-            :key="item.addTime"
-          >
+          <div v-for="item in scope.row.orderList" :key="item.addTime">
             {{ item.addTime }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column
-        label="转单金额（元）"
-        :align="'center'"
-      >
+      <el-table-column label="转单金额（元）" :align="'center'">
         <template slot-scope="scope">
-          <div
-            v-for="item in scope.row.orderList"
-            :key="item.addTime"
-          >
+          <div v-for="item in scope.row.orderList" :key="item.addTime">
             {{ item.transferPrice }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column
-        label="详情"
-        width="100"
-        :align="'center'"
-      >
+      <el-table-column label="详情" width="100" :align="'center'">
         <template slot-scope="scope">
-          <div
-            v-for="(item, index) in scope.row.orderList"
-            :key="item.addTime"
-          >
+          <div v-for="(item, index) in scope.row.orderList" :key="item.addTime">
             <el-button
               type="text"
               size="small"
@@ -110,11 +71,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column
-        label="操作"
-        width="100"
-        align="right"
-      >
+      <el-table-column label="操作" width="100" align="right">
         <template slot-scope="scope">
           <div>
             <el-button
@@ -301,7 +258,7 @@ export default {
         orderNum,
         wxId,
       } = rowData;
-      const { feedBackImg, transferPrice, addTime } = itemData;
+      const { feedBackImg, feedBackVideo, transferPrice, addTime } = itemData;
       const detail = {
         buddhistName,
         subName,
@@ -313,6 +270,7 @@ export default {
         addTime,
         wxId,
         feedBackImg: feedBackImg ? feedBackImg.split(',') : [],
+        feedBackVideo: feedBackVideo ? feedBackVideo.split(',') : [],
         ps: isAuto ? itemData.ps : rowData.ps[itemIndex].ps,
       };
       this.transferOrderDetail = detail;

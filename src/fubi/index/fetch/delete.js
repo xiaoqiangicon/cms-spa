@@ -2,7 +2,7 @@
 import seeFetch from 'see-fetch';
 
 const req = {
-  id: 'commodityId',
+  buddhistId: 'commodityId',
 };
 
 seeFetch.config('fubi/index/delete', {

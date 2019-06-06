@@ -1,4 +1,6 @@
 export const addProps = [
+  // common
+  { name: 'videoPlayerVisible', full: !0, default: !1 },
   // transfer
   { name: 'transferActiveName', full: !0, default: 'tableBuddhist' },
   { name: 'transferBuddhistId', full: !0, default: '' },

@@ -12,10 +12,7 @@
               filterable
               @change="handleChangeType"
             >
-              <el-option
-                label="全部"
-                :value="0"
-              />
+              <el-option label="全部" :value="0" />
               <el-option
                 v-for="item in typeList"
                 :key="item.id"
@@ -41,10 +38,7 @@
             </el-button>
           </div>
           <div class="table">
-            <el-table
-              :data="tableData"
-              style="width: 100%"
-            >
+            <el-table :data="tableData" style="width: 100%">
               <el-table-column label="排序">
                 <template slot-scope="scope">
                   <div
@@ -52,17 +46,11 @@
                     @click="handleClickRowSort(scope.row)"
                   >
                     {{ scope.row.sort }}
-                    <i
-                      style="color: #409EFF;"
-                      class="el-icon-edit"
-                    />
+                    <i style="color: #409EFF;" class="el-icon-edit" />
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column
-                prop="name"
-                label="标题"
-              />
+              <el-table-column prop="name" label="标题" />
               <el-table-column label="类型">
                 <template slot-scope="scope">
                   <div
@@ -72,29 +60,20 @@
                     {{
                       typeList.find(item => item.id === scope.row.typeId)
                         ? typeList.find(item => item.id === scope.row.typeId)
-                          .name
+                            .name
                         : ''
                     }}
-                    <i
-                      style="color: #409EFF;"
-                      class="el-icon-edit"
-                    />
+                    <i style="color: #409EFF;" class="el-icon-edit" />
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column
-                prop="fuBiMoney"
-                label="兑换福币（元）"
-              />
+              <el-table-column prop="fuBiMoney" label="兑换福币（元）" />
               <el-table-column
                 prop="exchangeTimes"
                 label="兑换次数"
                 align="center"
               />
-              <el-table-column
-                label="操作"
-                align="center"
-              >
+              <el-table-column label="操作" align="center">
                 <template slot-scope="scope">
                   <div>
                     <el-button
@@ -144,15 +123,9 @@
           :value="item.id"
         />
       </el-select>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="saveRowType"
-        >保 存</el-button>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogEditRowType = false">取 消</el-button>
+        <el-button type="primary" @click="saveRowType">保 存</el-button>
       </span>
     </el-dialog>
     <!-- dialogEditType -->
@@ -177,10 +150,7 @@
       >
         添加类型
       </el-button>
-      <el-table
-        :data="typeList"
-        style="width: 100%"
-      >
+      <el-table :data="typeList" style="width: 100%">
         <el-table-column label="排序">
           <template slot-scope="scope">
             <div
@@ -188,10 +158,7 @@
               @click="handleClickTypeRowSort(scope.row)"
             >
               {{ scope.row.sort }}
-              <i
-                style="color: #409EFF;"
-                class="el-icon-edit"
-              />
+              <i style="color: #409EFF;" class="el-icon-edit" />
             </div>
           </template>
         </el-table-column>
@@ -202,17 +169,11 @@
               @click="handleClickTypeRowTypeName(scope.row)"
             >
               {{ scope.row.name }}
-              <i
-                style="color: #409EFF;"
-                class="el-icon-edit"
-              />
+              <i style="color: #409EFF;" class="el-icon-edit" />
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          label="操作"
-          align="center"
-        >
+        <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <div>
               <el-button
@@ -253,15 +214,9 @@
             placeholder="请输入排序"
           />
         </div>
-        <span
-          slot="footer"
-          class="dialog-footer"
-        >
+        <span slot="footer" class="dialog-footer">
           <el-button @click="dialogAddType = !1">取 消</el-button>
-          <el-button
-            type="primary"
-            @click="saveAddType"
-          >保 存</el-button>
+          <el-button type="primary" @click="saveAddType">保 存</el-button>
         </span>
       </el-dialog>
     </el-dialog>
@@ -315,15 +270,9 @@
           placeholder="请输入排序"
         />
       </div>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="dialogAdd = !1">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="saveAdd"
-        >保 存</el-button>
+        <el-button type="primary" @click="saveAdd">保 存</el-button>
       </span>
     </el-dialog>
   </div>
@@ -471,7 +420,9 @@ export default {
                 message: '修改成功',
               });
 
+              /* eslint-disable */
               rowData.sort = sort;
+              return true;
             }
           );
         })
@@ -507,14 +458,14 @@ export default {
       });
     },
     handleClickRowDelete(rowData) {
-      const { id } = rowData;
+      const { buddhistId } = rowData;
       this.$confirm('此操作将删除当前奖品, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
       })
         .then(() => {
-          seeFetch('fubi/index/delete', { id }).then(res => {
+          seeFetch('fubi/index/delete', { buddhistId }).then(res => {
             if (!res.success) {
               Notification({
                 type: 'error',

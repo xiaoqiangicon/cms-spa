@@ -106,6 +106,7 @@
     "screenfull": "^4.0.0",
     "see-ajax": "^1.0.1",
     "see-fetch": "^1.0.1",
+    "video.js": "^7.5.4",
     "vue": "^2.5.22",
     "vue-cropper": "^0.4.9",
     "vue-i18n": "^8.7.0",

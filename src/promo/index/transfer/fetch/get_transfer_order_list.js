@@ -44,6 +44,7 @@ const refactor = {
           isFinish: 'isFinish', // 已被处理
           templeName: 'templeName', // 所属寺院
           feedBackImg: 'disposePicUrl', // 反馈图片
+          feedBackVideo: 'disposeVideoUrl', // 反馈视频
           ps: 'posiscript',
         },
       ],
