@@ -5,63 +5,165 @@
       其中转单系统与推广佛事为互斥关系，但两者都可设置分享激励
     </div>
     <div class="filter mg-b-20">
-      <el-select size="small" v-model="templeId" placeholder="请选择寺院" @change="refresh">
-        <el-option v-for="item in templeList" :key="item.id" :label="item.name" :value="item.name"></el-option>
+      <el-select
+        v-model.number="templeId"
+        size="small"
+        placeholder="请选择寺院"
+        filterable
+        @change="refresh"
+      >
+        <el-option
+          :key="0"
+          label="全部"
+          :value="0"
+        />
+        <el-option
+          v-for="item in templeList"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        />
       </el-select>
-      <el-input placeholder="请输入佛事ID" v-model="buddhistId" size="small" style="width:200px;">
-        <el-button slot="append" icon="el-icon-search" @click="refresh"></el-button>
+      <el-input
+        v-model.number="buddhistId"
+        placeholder="请输入佛事ID"
+        size="small"
+        style="width:200px;"
+      >
+        <el-button
+          slot="append"
+          icon="el-icon-search"
+          @click="refresh"
+        />
       </el-input>
       <el-button
         class="fl-right"
         size="small"
         type="primary"
-        @click="()=>{dialogAddVisible=!0;}"
-      >添加推广佛事</el-button>
+        @click="
+          () => {
+            dialogAddVisible = !0;
+          }
+        "
+      >
+        添加推广佛事
+      </el-button>
     </div>
-    <el-table :data="list" style="width: 100%">
-      <el-table-column prop="templeId" label="寺院ID" width="100" :align="'left'"></el-table-column>
-      <el-table-column prop="buddhistName" label="佛事状态">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      style="width: 100%"
+    >
+      <el-table-column
+        prop="templeId"
+        label="寺院ID"
+        width="100"
+        :align="'left'"
+      />
+      <el-table-column
+        prop="buddhistName"
+        label="佛事状态"
+      >
         <template slot-scope="scope">
-          <span v-if="!scope.row.isEnd" style="color: #67C23A;">进行中</span>
+          <span
+            v-if="!scope.row.isEnd"
+            style="color: #67C23A;"
+          >进行中</span>
           <template v-else>
-            <span v-if="scope.row.isFinish" style="color: #909399;">已确认</span>
-            <span v-else style="color: #E6A23C;">已结束</span>
+            <span
+              v-if="scope.row.isFinish"
+              style="color: #909399;"
+            >已确认</span>
+            <span
+              v-else
+              style="color: #E6A23C;"
+            >已结束</span>
           </template>
         </template>
       </el-table-column>
-      <el-table-column prop="buddhistName" label="佛事名称"></el-table-column>
-      <el-table-column prop="templeName" label="寺院名称"></el-table-column>
-      <el-table-column label="推广服务费" :align="'center'">
-        <template slot-scope="scope">{{Number(100*scope.row.rate).toFixed(2)}}%</template>
+      <el-table-column
+        prop="buddhistName"
+        label="佛事名称"
+      />
+      <el-table-column
+        prop="templeName"
+        label="寺院名称"
+      />
+      <el-table-column
+        label="推广服务费"
+        :align="'center'"
+      >
+        <template slot-scope="scope">
+          {{ Number(100 * scope.row.rate).toFixed(2) }}%
+        </template>
       </el-table-column>
-      <el-table-column prop="startTime" label="推广生效时间" :align="'center'"></el-table-column>
-      <el-table-column prop="updateUser" label="最后编辑人" :align="'center'"></el-table-column>
-      <el-table-column label="分享福币" :align="'center'">
-        <template slot="header" slot-scope="scope">分享福币
+      <el-table-column
+        prop="startTime"
+        label="推广生效时间"
+        :align="'center'"
+      />
+      <el-table-column
+        prop="updateUser"
+        label="最后编辑人"
+        :align="'center'"
+      />
+      <el-table-column
+        label="分享福币"
+        :align="'center'"
+      >
+        <template slot="header">
+          分享福币
           <el-tooltip
             class="item"
             effect="dark"
             content="设置福币分成：用户分享当前佛事后，从分享链接支付的订单会按设置的比例的福币给他。"
             placement="top-start"
           >
-            <i class="el-icon-info" style="color: #409EFF;"></i>
+            <i
+              class="el-icon-info"
+              style="color: #409EFF;"
+            />
           </el-tooltip>
         </template>
         <template slot-scope="scope">
           <span v-if="scope.row.isShareFuBi">已设置</span>
-          <span v-else style="color: #409EFF;">未设置</span>
+          <span
+            v-else
+            style="color: #409EFF;"
+          >未设置</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" :align="'right'">
+      <el-table-column
+        label="操作"
+        :align="'right'"
+      >
         <template slot-scope="scope">
           <div v-show="scope.row.isEnd && !scope.row.isFinish">
-            <el-button type="text" size="small" @click="handleClickWithdraw(scope.row)">确认提现</el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click="handleClickWithdraw(scope.row)"
+            >
+              确认提现
+            </el-button>
           </div>
           <div>
-            <el-button type="text" size="small" @click="handleClickEdit(scope.row)">推广编辑</el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click="handleClickEdit(scope.row)"
+            >
+              推广编辑
+            </el-button>
           </div>
           <div>
-            <el-button type="text" size="small" @click="handleClickRecord(scope.row)">记录</el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click="handleClickRecord(scope.row)"
+            >
+              记录
+            </el-button>
           </div>
         </template>
       </el-table-column>
@@ -78,88 +180,170 @@
     <el-dialog
       title="记录"
       :visible.sync="dialogRecordVisible"
-      :before-close="() => {dialogRecordVisible=!1;}"
+      :before-close="
+        () => {
+          dialogRecordVisible = !1;
+        }
+      "
     >
-      <el-table :data="recordList" style="width: 100%">
-        <el-table-column prop="startTime" label="生效时间" align="left"></el-table-column>
-        <el-table-column prop="rate" label="服务费用" align="center">
-          <template slot-scope="scope">{{Number(100*scope.row.rate).toFixed(2)}}%</template>
+      <el-table
+        :data="recordList"
+        style="width: 100%"
+      >
+        <el-table-column
+          prop="startTime"
+          label="生效时间"
+          align="left"
+        />
+        <el-table-column
+          prop="rate"
+          label="服务费用"
+          align="center"
+        >
+          <template slot-scope="scope">
+            {{ Number(100 * scope.row.rate).toFixed(2) }}%
+          </template>
         </el-table-column>
-        <el-table-column prop="updateTime" label="编辑时间" align="center"></el-table-column>
-        <el-table-column prop="updateUser" label="编辑用户" align="right"></el-table-column>
+        <el-table-column
+          prop="updateTime"
+          label="编辑时间"
+          align="center"
+        />
+        <el-table-column
+          prop="updateUser"
+          label="编辑用户"
+          align="right"
+        />
       </el-table>
     </el-dialog>
     <el-dialog
       title="确认"
       :visible.sync="dialogWithdrawVisible"
-      :before-close="() => {dialogWithdrawVisible = !1;}"
+      :before-close="
+        () => {
+          dialogWithdrawVisible = !1;
+        }
+      "
     >
       <div class="row">
-        <div class="title">佛事名称</div>
-        <div class="content">：{{curItem.buddhistName}}</div>
+        <div class="title">
+          佛事名称
+        </div>
+        <div class="content">
+          ：{{ curItem.buddhistName }}
+        </div>
       </div>
       <div class="row">
-        <div class="title">佛事ID</div>
-        <div class="content">：{{curItem.buddhistId}}</div>
+        <div class="title">
+          佛事ID
+        </div>
+        <div class="content">
+          ：{{ curItem.buddhistId }}
+        </div>
       </div>
-      <div class="f-s-18" style="color: #F56C6C;">确认结算后不可取消</div>
-      <span slot="footer" class="dialog-footer">
+      <div
+        class="f-s-18"
+        style="color: #F56C6C;"
+      >
+        确认结算后不可取消
+      </div>
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button @click="dialogWithdrawVisible = !1">取 消</el-button>
-        <el-button type="primary" @click="handleWithdraw">确 定</el-button>
+        <el-button
+          type="primary"
+          @click="handleWithdraw"
+        >确 定</el-button>
       </span>
     </el-dialog>
     <el-dialog
       title="添加"
       :visible.sync="dialogAddVisible"
-      :before-close="() => {dialogAddVisible = !1;}"
+      :before-close="
+        () => {
+          dialogAddVisible = !1;
+        }
+      "
     >
       <div class="row">
-        <div class="title">寺院</div>
-        <div class="content">：
-          <el-select v-model="addItem.templeId" placeholder="请选择" @change="getBuddhistList">
+        <div class="title">
+          寺院
+        </div>
+        <div class="content">
+          ：
+          <el-select
+            v-model.number="addItem.templeId"
+            placeholder="请选择"
+            @change="getBuddhistList"
+          >
             <el-option
               v-for="item in templeList"
               :key="item.id"
               :label="item.name"
               :value="item.id"
-            ></el-option>
+            />
           </el-select>
         </div>
       </div>
       <div class="row">
-        <div class="title">佛事</div>
-        <div class="content">：
-          <el-select v-model="addItem.buddhistId" placeholder="请选择">
+        <div class="title">
+          佛事
+        </div>
+        <div class="content">
+          ：
+          <el-select
+            v-model.number="addItem.buddhistId"
+            v-loading="loadingBuddhistList"
+            placeholder="请选择"
+          >
             <el-option
               v-for="item in buddhistList"
               :key="item.id"
               :label="item.name"
               :value="item.id"
-            ></el-option>
+            />
           </el-select>
         </div>
       </div>
       <div class="row">
-        <div class="title">支付服务费</div>
-        <div class="content">：
-          <el-input style="width: 210px;" v-model="addItem.rate" placeholder=""></el-input>
+        <div class="title">
+          支付服务费
+        </div>
+        <div class="content">
+          ：
+          <el-input
+            v-model.number="addItem.rate"
+            style="width: 210px;"
+            placeholder=""
+          />
           <span class="mg-l-5">%</span>
         </div>
       </div>
       <div class="row">
-        <div class="title">生效时间</div>
-        <div class="content">：
+        <div class="title">
+          生效时间
+        </div>
+        <div class="content">
+          ：
           <el-date-picker
-            value-format="yyyy-MM-dd HH:mm:ss"
             v-model="addItem.startTime"
+            value-format="yyyy-MM-dd HH:mm:ss"
             type="datetime"
             placeholder="选择日期时间"
-          ></el-date-picker>
+          />
         </div>
       </div>
-      <span slot="footer" class="dialog-footer">
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button @click="dialogAddVisible = !1">取 消</el-button>
-        <el-button type="primary" @click="handleAdd">确 定</el-button>
+        <el-button
+          type="primary"
+          @click="handleAdd"
+        >确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -174,8 +358,11 @@ export default {
   name: 'Buddhist',
   data() {
     return {
+      loading: !0,
+      loadingBuddhistList: !1,
+
       buddhistId: '',
-      templeId: '',
+      templeId: 0,
 
       list: [],
 
@@ -234,6 +421,8 @@ export default {
       });
     },
     getBuddhistList() {
+      this.loadingBuddhistList = !0;
+
       const { templeId } = this.addItem;
       seeFetch('promo/index/buddhist/getBuddhistList', { templeId }).then(
         res => {
@@ -246,11 +435,13 @@ export default {
             return;
           }
 
-          this.buddhistList = res.data;
+          this.buddhistList = res.data.list;
+          this.loadingBuddhistList = !1;
         }
       );
     },
     getList() {
+      this.loading = !0;
       const { buddhistId, templeId } = this;
       const { page, pageSize } = this.pagination;
 
@@ -271,6 +462,8 @@ export default {
 
         this.pagination.total = res.data.total;
         this.list = res.data.list;
+
+        this.loading = !1;
       });
     },
     getRecordList() {
@@ -286,7 +479,7 @@ export default {
             title: '提示',
             message: res.message,
           });
-          return;
+          return null;
         }
 
         this.recordList = res.data;
@@ -305,7 +498,7 @@ export default {
             title: '提示',
             message: res.message,
           });
-          return;
+          return null;
         }
 
         return res.data;
@@ -317,7 +510,7 @@ export default {
       return seeFetch('promo/index/buddhist/update', {
         templeId,
         buddhistId,
-        rate,
+        rate: rate / 100,
         startTime,
       }).then(res => {
         if (!res.success) {
@@ -326,7 +519,7 @@ export default {
             title: '提示',
             message: res.message,
           });
-          return;
+          return null;
         }
 
         return res.data;
@@ -395,8 +588,9 @@ export default {
       }
 
       // 分销推广不超过 100
-      const isPromotion = this.buddhistList.find(item => item.id === buddhistId)
-        .isPromotion;
+      const { isPromotion } = this.buddhistList.find(
+        item => item.id === buddhistId
+      );
 
       if (isPromotion && rate > 100) {
         Notification({

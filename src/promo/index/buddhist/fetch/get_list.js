@@ -26,20 +26,23 @@ const refactor = {
         // rate: 'rate',
         // startTime: 'startTime',
         // updateTime: 'updateTime',
+        // isPromotion: 'isPromotion',
         updateUser: 'managerName',
+        promotionPercent: 'promotionPercentage', // 推广百分比
         subList: 'subdivideList',
         _subList: [
           {
-            shareFuBiPercent: 'shareBlessCoinPercentage'
-          }
+            // id: 'id',
+            shareFuBiPercent: 'shareBlessCoinPercentage',
+          },
         ],
-        isShareFuBi: 'isShareBlessCoin',  // 是否设置分享福币
-      }
+        isShareFuBi: 'isShareBlessCoin', // 是否设置分享福币
+      },
     ],
   },
 };
 
-const post = () => { };
+const post = () => {};
 
 seeFetch.config('promo/index/buddhist/getList', {
   method: ['post'],

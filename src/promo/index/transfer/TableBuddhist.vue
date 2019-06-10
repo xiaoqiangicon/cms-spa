@@ -1,38 +1,111 @@
 <template>
   <div>
-    <el-table :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="id" label="ID" width="100" :align="'center'"/>
-      <el-table-column prop="name" label="佛事名称"/>
-      <el-table-column label="关联寺院" :align="'center'">
+    <el-table
+      v-loading="loading"
+      :data="tableData"
+      stripe
+      style="width: 100%"
+    >
+      <el-table-column
+        prop="buddhistId"
+        label="ID"
+        width="100"
+        :align="'left'"
+      />
+      <el-table-column
+        prop="buddhistName"
+        label="佛事名称"
+      />
+      <el-table-column
+        label="关联寺院"
+        :align="'center'"
+      >
         <template slot-scope="scope">
-          <el-tooltip placement="right">
+          <el-tooltip
+            v-if="scope.row.templeList.length"
+            placement="right"
+          >
             <div slot="content">
-              <div v-for="item in scope.row.templeList" :key="item">{{ item }}</div>
+              <div
+                v-for="item in scope.row.templeList"
+                :key="item"
+              >
+                {{ item }}
+              </div>
             </div>
-            <div style="color: #409EFF;cursor: pointer;">{{ scope.row.templeList.length }}</div>
+            <div style="color: #409EFF;cursor: pointer;">
+              {{ scope.row.templeList.length }}
+            </div>
           </el-tooltip>
+          <div v-else>
+            0
+          </div>
         </template>
       </el-table-column>
-      <el-table-column prop="orderNum" label="待转单数" :align="'center'"/>
-      <el-table-column prop="conversionOrderNum" label="已转单数" :align="'center'"/>
-      <el-table-column prop="conversionOrderPrice" label="订单金额（元）" :align="'center'"/>
-      <el-table-column prop="profitConversionOrderPrice" label="盈收金额（元）" :align="'center'"/>
-      <el-table-column label="分享福币" :align="'center'">
+      <el-table-column
+        prop="orderNum"
+        label="待转单数"
+        :align="'center'"
+      />
+      <el-table-column
+        prop="conversionOrderNum"
+        label="已转单数"
+        :align="'center'"
+      />
+      <el-table-column
+        prop="conversionOrderPrice"
+        label="订单金额（元）"
+        :align="'center'"
+      />
+      <el-table-column
+        prop="profitConversionOrderPrice"
+        label="盈收金额（元）"
+        :align="'center'"
+      />
+      <el-table-column
+        label="分享福币"
+        :align="'center'"
+      >
         <template slot-scope="scope">
           <span v-if="scope.row.isShareFuBi">已设置</span>
-          <span v-else style="color: #409EFF;">未设置</span>
+          <span
+            v-else
+            style="color: #409EFF;"
+          >未设置</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="100" :align="'center'">
+      <el-table-column
+        label="操作"
+        width="100"
+        align="center"
+      >
         <template slot-scope="scope">
           <div>
-            <el-button type="text" size="small" @click="toTransferList(scope.row)">转单列表</el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click="toTransferList(scope.row)"
+            >
+              转单列表
+            </el-button>
           </div>
           <div>
-            <el-button type="text" size="small" @click="toTransferSet(scope.row)">转单设置</el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click="toTransferSet(scope.row)"
+            >
+              转单设置
+            </el-button>
           </div>
           <div>
-            <el-button type="text" size="small" @click="toMergeSet(scope.row)">组合设置</el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click="toMergeSet(scope.row)"
+            >
+              组合设置
+            </el-button>
           </div>
         </template>
       </el-table-column>
@@ -54,6 +127,7 @@ import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
 
 import { addProps } from '../data';
+
 const computedProps = {};
 addProps.forEach(({ name, full }) => {
   if (full) {
@@ -69,6 +143,7 @@ addProps.forEach(({ name, full }) => {
       },
     };
   } else {
+    /* eslint-disable */
     computedProps[name] = function() {
       return this.$store.state.promoIndex.add[name];
     };
@@ -79,6 +154,7 @@ export default {
   name: 'TableBuddhist',
   data() {
     return {
+      loading: !0,
       tableData: [],
 
       pagination: {
@@ -96,6 +172,8 @@ export default {
   },
   methods: {
     requestList() {
+      this.loading = !0;
+
       const { page, pageSize } = this.pagination;
 
       seeFetch('promo/index/transfer/getTransferBuddhistList', {
@@ -113,6 +191,7 @@ export default {
 
         this.tableData = res.data;
         this.pagination.total = res.count;
+        this.loading = !1;
       });
     },
     refresh() {
@@ -129,19 +208,19 @@ export default {
       this.requestList();
     },
     toTransferList(item) {
-      const { id, name, subList } = item;
-      this.transferBuddhistId = id;
-      this.transferBuddhistName = name;
+      const { buddhistId, buddhistName, subList } = item;
+      this.transferBuddhistId = buddhistId;
+      this.transferBuddhistName = buddhistName;
       this.transferSubList = subList;
       this.transferActiveName = 'tableNotTransfer';
     },
     toTransferSet(item) {
       window.sessionStorage['promo/index/transfer/item'] = JSON.stringify(item);
-      this.$router.push(`/promo/transferSet/${item.id}`);
+      this.$router.push(`/promo/transferSet/${item.buddhistId}`);
     },
     toMergeSet(item) {
       window.sessionStorage['promo/index/transfer/item'] = JSON.stringify(item);
-      this.$router.push(`/promo/mergeSet/${item.id}`);
+      this.$router.push(`/promo/mergeSet/${item.buddhistId}`);
     },
   },
 };

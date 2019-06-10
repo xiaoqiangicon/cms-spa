@@ -1,16 +1,20 @@
 <template>
   <div class="container">
     <el-card class="header">
-      <div class="f-s-18 mg-b-10">{{ buddhistName }}</div>
+      <div class="f-s-18 mg-b-10">
+        {{ buddhistName }}
+      </div>
       <div class="gray">
         <span class="mg-r-10">佛事ID：{{ buddhistId }}</span>|
-        <span class="mg-l-10">佛事状态：{{isEnd ? '已结束' : '进行中'}}</span>
+        <span class="mg-l-10">佛事状态：{{ isEnd ? '已结束' : '进行中' }}</span>
       </div>
       <el-button
         style="position: absolute; bottom: 40px;right: 40px;"
         type="primary"
         @click="save"
-      >保 存</el-button>
+      >
+        保 存
+      </el-button>
     </el-card>
     <div class="body">
       <div class="aside card">
@@ -20,21 +24,32 @@
             class="fl-right"
             size="small"
             type="primary"
-            @click="addDialogVisible = true"
-          >添加寺院</el-button>
+            @click="dialogAddVisible = true"
+          >
+            添加寺院
+          </el-button>
         </div>
         <div class="list">
           <div
-            class="item"
-            @click="changeTemple(item.id)"
-            :class="{active: item.id === templeId}"
             v-for="item in transferTempleList"
             :key="item.id"
+            class="item"
+            :class="{ active: item.id === templeId }"
+            @click="changeTemple(item.id)"
           >
-            <div class="id">{{item.id}}</div>
-            <div class="name">{{item.name}}</div>
+            <div class="id">
+              {{ item.id }}
+            </div>
+            <div class="name">
+              {{ item.name }}
+            </div>
             <div class="opt">
-              <el-button size="mini" icon="el-icon-delete" circle @click="delTemple(item.id)"></el-button>
+              <el-button
+                size="mini"
+                icon="el-icon-delete"
+                circle
+                @click="delTemple(item.id)"
+              />
             </div>
           </div>
         </div>
@@ -47,10 +62,17 @@
           style="width: 100%"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column type="selection" width="55" :selectable="tableSelectable"></el-table-column>
-          <el-table-column prop="name" label="选择项名称" show-overflow-tooltip>
+          <el-table-column
+            type="selection"
+            width="55"
+            :selectable="tableSelectable"
+          />
+          <el-table-column
+            prop="name"
+            label="选择项名称"
+            show-overflow-tooltip
+          >
             <template slot-scope="scope">
-              <el-tag v-if="scope.row.isZizaijiaCommodity" size="mini">自营</el-tag>
               <el-tooltip
                 v-if="scope.row.isZizaijiaCommodity && scope.row.isOrder"
                 class="item"
@@ -58,60 +80,144 @@
                 content="佛事被标记为自营佛事且已存在历史订单，不可勾选和修改"
                 placement="top-start"
               >
-                <i class="el-icon-info" style="color: #FAAD14;"></i>
+                <i
+                  class="el-icon-info"
+                  style="color: #FAAD14;"
+                />
               </el-tooltip>
               {{ scope.row.name }}
             </template>
           </el-table-column>
-          <el-table-column prop="price" label="价格（元）">
-            <template
-              slot-scope="scope"
-            >{{scope.row.price > 0 ? scope.row.price : scope.row.price === 0 ? '无需支付' : '随喜'}}</template>
+          <el-table-column
+            prop="price"
+            label="价格（元）"
+          >
+            <template slot-scope="scope">
+              {{
+                scope.row.price > 0
+                  ? scope.row.price
+                  : scope.row.price === 0
+                    ? '无需支付'
+                    : '随喜'
+              }}
+            </template>
           </el-table-column>
-          <el-table-column prop="transferRate" label="转单比例">
-            <template slot="header" slot-scope="scope">转单比例
+          <el-table-column
+            prop="transferRate"
+            label="转单比例"
+          >
+            <template slot="header">
+              转单比例
               <el-tooltip
                 class="item"
                 effect="dark"
                 content="转单比例和转单金额是互斥关系，若填写了其中一个则其“填写项”为不可填写状态。"
                 placement="top-start"
               >
-                <i class="el-icon-info" style="color: #409eff;"></i>
+                <i
+                  class="el-icon-info"
+                  style="color: #409eff;"
+                />
               </el-tooltip>
             </template>
             <template slot-scope="scope">
-              <el-input style="width: 80px;" v-model="scope.row.transferRate" placeholder=""></el-input>
-              <span class="mg-t-5 mg-r-5" slot="suffix">%</span>
+              <el-input
+                v-model.number="scope.row.transferRate"
+                :disabled="!scope.row.selected"
+                style="width: 80px;"
+                placeholder=""
+              />
+              <span
+                slot="suffix"
+                class="mg-l-5"
+              >%</span>
             </template>
           </el-table-column>
-          <el-table-column prop="transferPrice" label="转单金额（元）">
+          <el-table-column
+            prop="transferPrice"
+            label="转单金额（元）"
+          >
             <template slot-scope="scope">
-              <el-input style="width: 80px;" v-model="scope.row.transferPrice" placeholder=""></el-input>
+              <el-input
+                v-model.number="scope.row.transferPrice"
+                :disabled="!scope.row.selected"
+                style="width: 80px;"
+                placeholder=""
+              />
             </template>
           </el-table-column>
-          <el-table-column prop="fuBiRate" label="分享福币（%）">
-            <template slot="header" slot-scope="scope">分享福币（%）
+          <el-table-column label="分享福币（%）">
+            <template slot="header">
+              分享福币（%）
               <el-tooltip
                 class="item"
                 effect="dark"
                 content="设置福币分成：用户分享当前佛事后，从分享链接支付的订单会按设置的比例的福币给他。"
                 placement="top-start"
               >
-                <i class="el-icon-info" style="color: #409eff;"></i>
+                <i
+                  class="el-icon-info"
+                  style="color: #409eff;"
+                />
               </el-tooltip>
             </template>
             <template slot-scope="scope">
-              <el-input style="width: 80px;" v-model="scope.row.fuBiRate" placeholder=""></el-input>
-              <span class="mg-t-5 mg-r-5" slot="suffix">%</span>
+              <div
+                v-if="scope.row.price !== 0"
+                style="cursor: pointer;"
+                @click="handleClickEditFuBiPercent(scope.row)"
+              >
+                {{
+                  subList.find(subItem => subItem.id === scope.row.id)
+                    .shareFuBiPercent
+                }}%
+                <i
+                  style="color: #409EFF;"
+                  class="el-icon-edit"
+                />
+              </div>
+              <div v-else>
+                -
+              </div>
             </template>
           </el-table-column>
         </el-table>
       </el-card>
     </div>
+    <!-- DialogEditFuBi -->
+    <el-dialog
+      :title="curSubItem.name"
+      :visible.sync="dialogEditFuBiVisible"
+      :before-close="
+        () => {
+          dialogEditFuBiVisible = !1;
+        }
+      "
+    >
+      <div>
+        <span class="mg-r-5">分享福币</span>
+        <el-input
+          v-model.number="tempCurSubItem.shareFuBiPercent"
+          style="width: 100px;"
+          placeholder=""
+        />
+        <span class="mg-l-5">%</span>
+      </div>
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="primary"
+          @click="submitFuBiSet"
+        >保 存</el-button>
+      </span>
+    </el-dialog>
+    <!-- DialogAdd -->
     <Add
-      :visible="addDialogVisible"
-      :templeList="templeList"
-      @updateVisible="updateDialogVisible"
+      :visible="dialogAddVisible"
+      :temple-list="templeList"
+      @updateVisible="updateDialogAddVisible"
       @save="addTemple"
     />
   </div>
@@ -122,8 +228,8 @@ import clone from 'clone';
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
 import './fetch/index';
-import Add from './Add';
 import { setTimeout } from 'timers';
+import Add from './Add';
 
 export default {
   name: 'App',
@@ -134,11 +240,15 @@ export default {
     return {
       buddhistId: null,
       buddhistName: null,
-      buddhistStatus: null,
-      subList: [], // 佛事的选择项数据 {id, name, conversionSubdivide, isConversion, isOrder, isZizaijiaCommodity, price}
+      promotionPercent: null,
+      subList: [], // {id, name, conversionSubdivide, isConversion, isOrder, isZizaijiaCommodity, price, shareFuBiPercent}
       isEnd: null,
 
-      addDialogVisible: !1,
+      dialogEditFuBiVisible: !1,
+      dialogAddVisible: !1,
+
+      curSubItem: {}, // id name price shareFuBiPercent
+      tempCurSubItem: {}, // id name price shareFuBiPercent
 
       templeList: [],
       transferTempleList: [],
@@ -154,17 +264,20 @@ export default {
   methods: {
     init() {
       const {
-        id: buddhistId,
-        name: buddhistName,
-        buddhistStatus,
+        buddhistId,
+        buddhistName,
         subList,
         isEnd,
-      } = JSON.parse(window.sessionStorage.getItem('promo/index/transfer/item'));
+        promotionPercent,
+      } = JSON.parse(
+        window.sessionStorage.getItem('promo/index/transfer/item')
+      );
+
       this.buddhistId = buddhistId;
       this.buddhistName = buddhistName;
-      this.buddhistStatus = buddhistStatus;
       this.subList = subList;
       this.isEnd = isEnd;
+      this.promotionPercent = promotionPercent;
 
       this.getTempleList();
       this.getTransferTempleList(() => {
@@ -203,63 +316,64 @@ export default {
             return;
           }
           this.transferTempleList = res.data.map(item =>
-            this.createTableData(item)
+            this.createHandleData(item)
           );
-          cb && cb();
+          if (cb) cb();
         }
       );
     },
     tableSelectable(row) {
-      if(row.price <= 0) return false;
+      if (row.price <= 0) return false;
 
-      if(row.isZizaijiaCommodity && row.isOrder) return false;
+      if (row.isZizaijiaCommodity && row.isOrder) return false;
 
       return true;
     },
-    // 将服务器数据转化为表格数据
+    // 将服务器数据转化为表格形式数据
     // 本地 subList {id, name, conversionSubdivide, isConversion, isOrder, isZizaijiaCommodity, price}
-    // 服务器 subList {id, name, price, transferPrice, transferRate, fuBiRate}
-    createTableData(item) {
+    // 服务器 subList {id, name, price, transferPrice, transferRate, shareFuBiPercent}
+    createHandleData(item) {
       const { subList } = this;
-      let res = { ...item };
-      res.subList = clone(subList);
 
+      const res = { ...item };
+      res.subList = clone(subList.filter(sub => sub.conversionSubdivide));
+
+      /* eslint-disable no-param-reassign */
       res.subList.forEach(sub => {
         const findSub = item.subList.find(itemSub => itemSub.id === sub.id);
         if (findSub) {
           sub.selected = true;
 
           // 赋值服务器字段 并设置为选中状态
-          const { transferPrice, transferRate, fuBiRate } = findSub;
+          const { transferPrice, transferRate } = findSub;
           sub.transferPrice = transferPrice;
           sub.transferRate = transferRate;
-          sub.fuBiRate = fuBiRate;
         } else {
           sub.selected = false;
 
           // 补全字段
           sub.transferPrice = 0;
           sub.transferRate = 0;
-          sub.fuBiRate = 0;
         }
       });
       return res;
     },
     // 生成上传数据
     // 处理本地的transferTempleList [{id, subList: [{}]}] 数据并上传
-    // 本地 subList {id, name, price, transferPrice, transferRate, fuBiRate}
+    // 本地 subList {id, name, price, transferPrice, transferRate}
     // 服务器 subList {id, transferPrice, transferRate}
     createSubmitData() {
       const { buddhistId, transferTempleList } = this;
-      let params = { buddhistId };
+      const params = { buddhistId };
 
       params.transferTempleList = clone(transferTempleList);
       params.transferTempleList = params.transferTempleList.map(item => {
-        let res = { id: item.id, subList: [] };
+        const res = { id: item.id, subList: [] };
 
         item.subList.forEach(sub => {
           if (sub.selected && sub.price > 0) {
             res.subList.push({
+              id: sub.id,
               transferPrice: sub.transferPrice,
               transferRate: sub.transferRate,
             });
@@ -280,8 +394,8 @@ export default {
         }
       });
     },
-    updateDialogVisible(val) {
-      this.addDialogVisible = val;
+    updateDialogAddVisible(val) {
+      this.dialogAddVisible = val;
     },
     handleSelectionChange(selectedAry) {
       const { templeId } = this;
@@ -297,10 +411,40 @@ export default {
         }
       });
     },
-    save() {
-      const params = this.createSubmitData();
-      console.log(params);
-      seeFetch('promo/transfer_set/update', params).then(res => {
+    handleClickEditFuBiPercent(rowData) {
+      const curSubItem = this.subList.find(item => item.id === rowData.id);
+      this.curSubItem = curSubItem;
+      this.tempCurSubItem = { ...curSubItem };
+      this.dialogEditFuBiVisible = !0;
+    },
+    submitFuBiSet() {
+      const { promotionPercent } = this;
+      const { id: subId } = this.tempCurSubItem;
+      let { shareFuBiPercent } = this.tempCurSubItem;
+
+      if (promotionPercent + shareFuBiPercent > 100) {
+        Notification({
+          type: 'warning',
+          title: '提示',
+          message: `福币分成比例不可超过${100 - promotionPercent}`,
+        });
+        return;
+      }
+
+      if (!shareFuBiPercent) {
+        // 设置为 0 或不填 提示 为不设置分成
+        Notification({
+          type: 'info',
+          title: '提示',
+          message: '设置为0或不填将保存为不设置分成',
+        });
+        shareFuBiPercent = 0;
+      }
+
+      seeFetch('promo/transfer_set_/update_sub_set', {
+        subId,
+        shareFuBiPercent,
+      }).then(res => {
         if (!res.success) {
           Notification({
             type: 'error',
@@ -309,14 +453,55 @@ export default {
           });
           return;
         }
+
+        Notification({
+          type: 'success',
+          title: '提示',
+          message: '保存成功',
+        });
+
+        this.curSubItem.shareFuBiPercent = shareFuBiPercent;
+        this.dialogEditFuBiVisible = !1;
+      });
+    },
+    save() {
+      const params = this.createSubmitData();
+
+      let verify = !0;
+      params.transferTempleList.forEach(temple => {
+        temple.subList.forEach(sub => {
+          if (sub.transferPrice && sub.transferRate) {
+            verify = !1;
+          }
+        });
       });
 
-      Notification({
-        type: 'success',
-        title: '提示',
-        message: '保存成功',
+      if (!verify) {
+        Notification({
+          type: 'warning',
+          title: '提示',
+          message: '转单比例和转单金额只能设置一项',
+        });
+        return;
+      }
+
+      seeFetch('promo/transfer_set/update_transfer_set', params).then(res => {
+        if (!res.success) {
+          Notification({
+            type: 'error',
+            title: '提示',
+            message: res.message,
+          });
+          return;
+        }
+
+        Notification({
+          type: 'success',
+          title: '提示',
+          message: '保存成功',
+        });
+        this.init();
       });
-      this.init();
     },
     changeTemple(id) {
       this.templeId = id;
@@ -338,10 +523,10 @@ export default {
       } else {
         const index = this.templeList.findIndex(item => item.id === id);
         const { name } = this.templeList[index];
-        const tableData = this.createTableData({ id, name, subList: [] });
-        this.transferTempleList.push(tableData);
+        const handleData = this.createHandleData({ id, name, subList: [] });
+        this.transferTempleList.push(handleData);
         this.templeId = id;
-        this.tableData = tableData.subList;
+        this.tableData = handleData.subList;
         this.updateTableSelected();
       }
     },
@@ -395,6 +580,7 @@ export default {
   .body {
     flex-grow: 1;
     display: flex;
+    height: 30px;
     .aside {
       flex-basis: 300px;
       flex-shrink: 0;
@@ -417,7 +603,6 @@ export default {
           height: 40px;
           line-height: 40px;
           margin: 0 20px 10px 20px;
-
           cursor: pointer;
           border-radius: 4px;
           &.active {
@@ -425,7 +610,8 @@ export default {
           }
           .id {
             flex-basis: 60px;
-            text-align: center;
+            padding-left: 10px;
+            text-align: left;
           }
           .name {
             flex-grow: 1;

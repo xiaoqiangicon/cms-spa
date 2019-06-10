@@ -13,13 +13,15 @@ const pre = params => ({
 
 const refactor = {
   total: 'count',
-  data: [{
-    // id: 'id', // 寺院 id
-    // name: 'name', // 寺院名
-    transferOrderNum: 'conversionOrderNum', // 转单数
-    transferOrderPrice: 'conversionOrderPrice', // 转单金额
-    transferOrderGain: 'profitConversionOrderPrice', // 转单盈收
-  }],
+  data: [
+    {
+      // id: 'id', // 寺院 id
+      // name: 'name', // 寺院名
+      transferOrderNum: 'conversionOrderNum', // 转单数
+      transferOrderPrice: 'conversionOrderPrice', // 转单金额
+      transferOrderGain: 'profitConversionOrderPrice', // 转单盈收
+    },
+  ],
 };
 
 seeFetch.config('promo/statistics/getList', {

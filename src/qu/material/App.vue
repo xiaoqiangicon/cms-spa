@@ -9,11 +9,23 @@
           style="width: 200px;"
           @change="doSearch"
         >
-          <el-option :value="1" label="草稿" />
-          <el-option :value="2" label="已发布" />
-          <el-option :value="3" label="回收站" />
-          <el-option :value="0" label="全部" /> </el-select
-        >&nbsp;&nbsp;&nbsp;&nbsp;
+          <el-option
+            :value="1"
+            label="草稿"
+          />
+          <el-option
+            :value="2"
+            label="已发布"
+          />
+          <el-option
+            :value="3"
+            label="回收站"
+          />
+          <el-option
+            :value="0"
+            label="全部"
+          />
+        </el-select>&nbsp;&nbsp;&nbsp;&nbsp;
         <span class="l-hg-32"> 搜索 </span>&nbsp;&nbsp;&nbsp;&nbsp;
         <el-input
           v-model="search"
@@ -21,27 +33,56 @@
           size="small"
           style="width: 250px"
         >
-          <el-button slot="append" icon="el-icon-search" @click="doSearch" />
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="doSearch"
+          />
         </el-input>
       </div>
       <div class="body">
-        <el-table v-loading="loading" :data="list" style="width: 100%">
-          <el-table-column prop="title" label="标题" />
+        <el-table
+          v-loading="loading"
+          :data="list"
+          style="width: 100%"
+        >
+          <el-table-column
+            prop="title"
+            label="标题"
+          />
           <el-table-column label="封面">
             <template slot-scope="item">
-              <img :src="item.row.cover" class="wd-100" />
+              <img
+                :src="item.row.cover"
+                class="wd-100"
+              >
             </template>
           </el-table-column>
-          <el-table-column prop="shortContentText" label="内容摘要" />
-          <el-table-column prop="publishAccountText" label="发布账户" />
-          <el-table-column prop="statusText" label="状态" />
-          <el-table-column prop="publishAuthor" label="发布作者" />
+          <el-table-column
+            prop="shortContentText"
+            label="内容摘要"
+          />
+          <el-table-column
+            prop="publishAccountText"
+            label="发布账户"
+          />
+          <el-table-column
+            prop="statusText"
+            label="状态"
+          />
+          <el-table-column
+            prop="publishAuthor"
+            label="发布作者"
+          />
           <el-table-column label="是否原创">
             <template slot-scope="item">
               {{ item.row.original ? '是' : '否' }}
             </template>
           </el-table-column>
-          <el-table-column prop="createdAt" label="创建时间" />
+          <el-table-column
+            prop="createdAt"
+            label="创建时间"
+          />
           <el-table-column label="操作">
             <template slot-scope="item">
               <el-button
@@ -60,12 +101,19 @@
               >
                 恢复
               </el-button>
-              <el-button type="text" size="small" @click="toDetail(item)">
+              <el-button
+                type="text"
+                size="small"
+                @click="toDetail(item)"
+              >
                 详情
               </el-button>
               <el-button
                 v-if="item.row.status !== -1"
-                type="text" size="small" @click="toDelete(item)">
+                type="text"
+                size="small"
+                @click="toDelete(item)"
+              >
                 删除
               </el-button>
             </template>
@@ -189,7 +237,7 @@ export default {
       this.$store.state.quMaterial.add.covers = item.covers
         ? item.covers.split(',')
         : [];
-      const date = getDate(new Date(new Date().getTime() + 3 * 60 * 60 * 1000));
+      const date = getDate(new Date(new Date().getTime() + 15 * 60 * 1000));
       this.$store.state.quMaterial.add.publishTime =
         item.publishTime || date.dateTime;
       this.$store.state.quMaterial.add.original = item.original || 0;

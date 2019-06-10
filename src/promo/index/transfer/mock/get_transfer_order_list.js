@@ -38,10 +38,10 @@ export default {
         ],
         subdirideId: 2798,
         subdirideName: '邮寄佛事1',
-      }
+      },
     ],
     price: 10,
-    subdivideId: 11,
+    subdivideId: 1,
     subdivideName: '123123132',
     wxTransactionId: '213123213',
     conversionOrder: [
@@ -51,16 +51,19 @@ export default {
         disposePicUrl:
           'https://pic.zizaihome.com/7a5c12da-f921-11e8-aae1-00163e0c1e1c.jpg,https://pic.zizaihome.com/eac0e57ad4948a82980701d6bf803a8c.jpg',
         isFinish: Math.floor(Math.random() * 2),
+        disposeVideoUrl:
+          'https://pic.zizaihome.com/7fd190efef910bfaf44b77f6cf64ffda.mp4,https://pic.zizaihome.com/20a4d52e-8805-11e9-a870-00163e0c1e1c.mp4',
         posiscript: [
-          { name: '联系人', value: '麦一', type: 4, inputId: 46368 },
+          // { name: '联系人', value: '麦一', type: 4, inputId: 46368 },
         ],
         templeName: '弘法寺',
       },
       {
         addTime: '2019-03-21 15:35:52',
         conversionOrderPrice: 21,
-        disposePicUrl:
-          'https://pic.zizaihome.com/7a5c12da-f921-11e8-aae1-00163e0c1e1c.jpg,https://pic.zizaihome.com/eac0e57ad4948a82980701d6bf803a8c.jpg',
+        disposePicUrl: '',
+        disposeVideoUrl:
+          'https://pic.zizaihome.com/7fd190efef910bfaf44b77f6cf64ffda.mp4,https://pic.zizaihome.com/20a4d52e-8805-11e9-a870-00163e0c1e1c.mp4',
         isFinish: Math.floor(Math.random() * 2),
         posiscript: [
           { name: '联系人', value: '麦一', type: 4, inputId: 46368 },

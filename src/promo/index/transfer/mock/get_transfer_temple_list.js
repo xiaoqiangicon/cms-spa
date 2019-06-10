@@ -20,7 +20,7 @@ export default {
         price: 0,
         percent: 2,
         fuBiRate: 11,
-      }
-    ]
+      },
+    ],
   })),
 };

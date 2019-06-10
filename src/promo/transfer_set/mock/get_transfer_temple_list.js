@@ -6,13 +6,12 @@ export default {
     templeName: `转单寺院名称${id}`,
     subdivide: [
       {
-        subdivideId: 11,
-        subdivideName: '选择项',
+        subdivideId: 1,
+        subdivideName: '选择项1',
         commodityId: 11,
         price: 0,
         percent: 2,
-        fuBiRate: 11,
-      }
-    ]
+      },
+    ],
   })),
 };

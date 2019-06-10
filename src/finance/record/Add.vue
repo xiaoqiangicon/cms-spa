@@ -10,7 +10,11 @@
         <div class="row-name">
           记录名称：
         </div>
-        <el-input v-model="recordName" size="small" style="width: 200px;" />
+        <el-input
+          v-model="recordName"
+          size="small"
+          style="width: 200px;"
+        />
       </div>
       <div class="row">
         <div class="row-name">
@@ -24,7 +28,10 @@
           style="width: 200px;"
           filterable
         >
-          <el-option label="请选择寺院" :value="0" />
+          <el-option
+            label="请选择寺院"
+            :value="0"
+          />
           <el-option
             v-for="item in temples"
             :key="item.id"
@@ -56,7 +63,11 @@
         <div class="row-name">
           盈收金额：
         </div>
-        <el-input v-model="income" size="small" style="width: 200px;" />
+        <el-input
+          v-model="income"
+          size="small"
+          style="width: 200px;"
+        />
         <span class="l-hg-32">元</span>
       </div>
       <div class="row">
@@ -66,19 +77,26 @@
         <el-date-picker
           v-model="incomeTime"
           align="right"
-          type="date"
-          value-format="yyyy-MM-dd"
+          type="datetime"
+          value-format="yyyy-MM-dd HH:mm:ss"
           placeholder="选择日期"
           size="small"
           style="width: 200px;"
         />
       </div>
     </div>
-    <span slot="footer" class="dialog-footer">
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="clickCancel">
         取 消
       </el-button>
-      <el-button v-loading="saving" type="primary" @click="clickOk">
+      <el-button
+        v-loading="saving"
+        type="primary"
+        @click="clickOk"
+      >
         确 定
       </el-button>
     </span>
@@ -172,6 +190,7 @@ export default {
       const income = parseFloat(this.income);
 
       if (!recordName) error = '记录名称不能为空';
+      else if (!incomeFromId) error = '寺院不能为空';
       else if (!income) error = '盈收金额不能为空，且需是数字';
       else if (!incomeTime) error = '入账时间不能为空';
 

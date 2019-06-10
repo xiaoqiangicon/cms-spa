@@ -117,6 +117,7 @@ export const info = {
     isQuestion: 0,
     question: 'question',
     answer: 'answer',
+    typeText: 'typeText',
   },
 };
 
@@ -129,6 +130,7 @@ export const info1 = {
     isQuestion: 1,
     question: 'question',
     answer: 'answer',
+    typeText: 'typeText',
   },
 };
 

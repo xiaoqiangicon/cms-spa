@@ -12,7 +12,6 @@ export const addProps = [
   { name: 'covers', full: !0, default: () => [] },
   { name: 'publishAuthor', full: !0, default: '' },
   { name: 'original', full: !0, default: 0 },
-  { name: 'copyRight', full: !0, default: '' },
   { name: 'publishTime', full: !0, default: '' },
 ];
 

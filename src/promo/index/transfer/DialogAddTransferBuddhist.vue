@@ -34,14 +34,24 @@
         class="mg-b-10"
       >
         <el-tooltip
-          v-if="(!!item.isZizaijiaCommodity && !! item.isOrder) || (item.price <= 0)"
+          v-if="
+            (!!item.isZizaijiaCommodity && !!item.isOrder) || item.price <= 0
+          "
           effect="dark"
-          :content="(!!item.isZizaijiaCommodity && !!item.isOrder) ? '自营佛事且已产生订单' : (item.price === 0) ? '无需支付' : '随喜'"
+          :content="
+            !!item.isZizaijiaCommodity && !!item.isOrder
+              ? '自营佛事且已产生订单'
+              : item.price === 0
+                ? '无需支付'
+                : '随喜'
+          "
           placement="right"
         >
           <el-checkbox
             :label="item.id"
-            :disabled="(!!item.isZizaijiaCommodity && !!item.isOrder) || (item.price <= 0)"
+            :disabled="
+              (!!item.isZizaijiaCommodity && !!item.isOrder) || item.price <= 0
+            "
           >
             {{ item.subdivideName }}
           </el-checkbox>
@@ -92,6 +102,7 @@ addProps.forEach(({ name, full }) => {
       },
     };
   } else {
+    /* eslint-disable */
     computedProps[name] = function() {
       return this.$store.state.promoIndex.add[name];
     };
@@ -142,7 +153,7 @@ export default {
       this.subList = [];
     },
     save() {
-      const { subList } = this;
+      const { subList, buddhistId } = this;
 
       if (!subList.length) {
         Notification({
@@ -159,37 +170,33 @@ export default {
         type: 'warning',
       })
         .then(() => {
-          seeFetch('promo/index/transfer/addBuddhist', { subList }).then(
-            res => {
-              if (!res.success) {
-                Notification({
-                  type: 'error',
-                  title: '提示',
-                  message: res.message,
-                });
-                return;
-              }
-
+          seeFetch('promo/index/transfer/addBuddhist', {
+            subList,
+            buddhistId,
+          }).then(res => {
+            if (!res.success) {
               Notification({
-                type: 'success',
+                type: 'error',
                 title: '提示',
-                message: '添加成功',
+                message: res.message,
               });
-              this.$emit('save');
-              this.dialogAddTransferBuddhistVisible = false;
-              this.init();
+              return;
             }
-          );
+
+            Notification({
+              type: 'success',
+              title: '提示',
+              message: '添加成功',
+            });
+            this.$emit('save');
+            this.dialogAddTransferBuddhistVisible = false;
+            this.init();
+          });
         })
-        .catch(() => {
-          console.log('取消');
-        });
+        .catch(() => {});
     },
   },
 };
 </script>
 
-<style lang="less" scoped>
-</style>
-
-
+<style lang="less" scoped></style>

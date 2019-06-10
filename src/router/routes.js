@@ -65,6 +65,28 @@ const routes = [
         name: '祈福牌管理',
         meta: { title: '祈福牌管理' },
       },
+      {
+        path: 'face',
+        component: () => import('../ling/face/App'),
+        name: '互动发言',
+        meta: { title: '互动发言', noCache: true },
+      },
+    ],
+  },
+  {
+    path: '/fubi',
+    component: Layout,
+    controlMark: 'pw_blesscoin',
+    redirect: '/fubi/index',
+    name: '福币分销',
+    meta: { title: '福币分销', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        path: 'index',
+        component: () => import('../fubi/index/App'),
+        name: '福币商城',
+        meta: { title: '福币商城', noCache: true },
+      },
     ],
   },
   {
@@ -88,6 +110,16 @@ const routes = [
         meta: { title: '事件统计', noCache: true },
       },
       {
+        path: `${domain}/event/thousand`,
+        name: '千寺祈福',
+        meta: { title: '千寺祈福' },
+      },
+      {
+        path: `${domain}/goods/index`,
+        name: '自在好物',
+        meta: { title: '自在好物' },
+      },
+      {
         path: 'transferSet/:id',
         component: () => import('../promo/transfer_set/App'),
         name: '转单系统/转单设置',
@@ -107,7 +139,14 @@ const routes = [
         name: '推广佛事/推广编辑',
         meta: { title: '推广佛事/推广编辑', noCache: true },
         hidden: !0,
-      }
+      },
+      {
+        path: 'fubiRecord/:id',
+        component: () => import('../promo/fubi_record/App'),
+        name: '福币分享/记录',
+        meta: { title: '福币分享/记录', noCache: true },
+        hidden: !0,
+      },
     ],
   },
   {
@@ -189,15 +228,15 @@ const routes = [
       {
         path: 'income-stat',
         component: () => import('../finance/income-stat/App'),
-        name: '盈收统计',
-        meta: { title: '盈收统计', noCache: true },
+        name: '营收统计',
+        meta: { title: '营收统计', noCache: true },
         controlMark: 'pw_cash_stat',
       },
       {
         path: 'income',
-        name: '盈收管理',
+        name: '营收管理',
         component: () => import('../finance/income/App'),
-        meta: { title: '盈收管理', noCache: true },
+        meta: { title: '营收管理', noCache: true },
         controlMark: 'pw_rate',
       },
       {

@@ -14,7 +14,10 @@
           filterable
           @change="doSearch"
         >
-          <el-option label="全部" :value="0" />
+          <el-option
+            label="选择寺院"
+            :value="0"
+          />
           <el-option
             v-for="item in temples"
             :key="item.id"
@@ -22,24 +25,77 @@
             :value="item.id"
           />
         </el-select>
-        <el-button class="fl-right" size="small" @click="toAdd">
+        <el-select
+          v-model="filterType"
+          placeholder="请选择"
+          size="small"
+          style="width: 200px;"
+          filterable
+          @change="doSearch"
+        >
+          <el-option
+            label="相关模块"
+            :value="-1"
+          />
+          <el-option
+            v-for="item in relatedItems"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
+        <el-button
+          class="fl-right"
+          size="small"
+          @click="toAdd"
+        >
           添加一笔帐目
         </el-button>
       </div>
       <div class="body">
-        <el-table v-loading="loading" :data="list" style="width: 100%">
-          <el-table-column prop="recordName" label="记录名称" />
-          <el-table-column prop="incomeFrom" label="盈收来源" />
-          <el-table-column prop="relatedItem" label="相关模块" />
-          <el-table-column prop="income" label="盈收金额/元" />
-          <el-table-column prop="incomeTime" label="入账时间" />
-          <el-table-column prop="editUser" label="编辑用户" />
+        <el-table
+          v-loading="loading"
+          :data="list"
+          style="width: 100%"
+        >
+          <el-table-column
+            prop="recordName"
+            label="记录名称"
+          />
+          <el-table-column
+            prop="incomeFrom"
+            label="盈收来源"
+          />
+          <el-table-column
+            prop="relatedItem"
+            label="相关模块"
+          />
+          <el-table-column
+            prop="income"
+            label="盈收金额/元"
+          />
+          <el-table-column
+            prop="incomeTime"
+            label="入账时间"
+          />
+          <el-table-column
+            prop="editUser"
+            label="编辑用户"
+          />
           <el-table-column label="操作">
             <template slot-scope="item">
-              <el-button type="text" size="small" @click="toEdit(item)">
+              <el-button
+                type="text"
+                size="small"
+                @click="toEdit(item)"
+              >
                 编辑
               </el-button>
-              <el-button type="text" size="small" @click="toDelete(item)">
+              <el-button
+                type="text"
+                size="small"
+                @click="toDelete(item)"
+              >
                 删除
               </el-button>
             </template>
@@ -65,6 +121,7 @@ import { Notification } from 'element-ui';
 import { addProps } from './data';
 import Add from './Add';
 import './fetch';
+import { items as relatedItems } from './constant';
 
 export default {
   name: 'App',
@@ -75,10 +132,12 @@ export default {
     return {
       loading: !0,
       filterTemple: 0,
+      filterType: -1,
       currentPage: 1,
       totalCount: 0,
       list: [],
       temples: [],
+      relatedItems,
     };
   },
   created() {
@@ -94,6 +153,7 @@ export default {
 
       seeFetch('finance/record/list', {
         templeId: this.filterTemple,
+        type: this.filterType,
         page: this.currentPage,
       }).then(res => {
         this.loading = !1;

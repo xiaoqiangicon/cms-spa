@@ -159,25 +159,6 @@
       ]
     },
     {
-      "id": "transfer",
-      "name": "转单系统 ",
-      "icon": "fa-edit",
-      "subItems": [
-        {
-          "id": "transfer-index",
-          "name": "转单佛事列表",
-          "link": "/order_transfer/buddhist_list",
-          "controlMark": "pw_send_order"
-        },
-        {
-          "id": "associate-temple",
-          "name": "转单关联寺院",
-          "link": "/order_transfer/associate_temple",
-          "controlMark": "pw_send_order"
-        }
-      ]
-    },
-    {
       "id": "vrshow",
       "name": "实境礼佛 ",
       "icon": "fa-leaf",
@@ -299,25 +280,6 @@
           "name": "佛事推荐",
           "link": "/ad/buddhist",
           "controlMark": "pw_advertising"
-        }
-      ]
-    },
-    {
-      "id": "promo",
-      "name": "运营事件",
-      "icon": "fa-tasks",
-      "subItems": [
-        {
-          "id": "promo-qian-si",
-          "name": "千寺祈福",
-          "link": "/event/thousand",
-          "controlMark": "pw_promo"
-        },
-        {
-          "id": "pages-hao-wu",
-          "name": "自在好物",
-          "link": "/goods/index",
-          "controlMark": "pw_goods"
         }
       ]
     }

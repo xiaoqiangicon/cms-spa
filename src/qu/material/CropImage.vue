@@ -9,17 +9,24 @@
       <vueCropper
         ref="cropper"
         :img="cropImageUrl"
-        outputType="png"
-        :autoCrop="!0"
-        :centerBox="!0"
-        :outputSize="0.8"
-      ></vueCropper>
+        output-type="png"
+        :auto-crop="!0"
+        :center-box="!0"
+        :output-size="0.8"
+      />
     </div>
-    <span slot="footer" class="dialog-footer">
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="clickCancel">
         取 消
       </el-button>
-      <el-button v-loading="loading" type="primary" @click="clickOk">
+      <el-button
+        v-loading="loading"
+        type="primary"
+        @click="clickOk"
+      >
         确 定
       </el-button>
     </span>
@@ -28,31 +35,33 @@
 
 <script>
 import { Notification } from 'element-ui';
-import {VueCropper} from 'vue-cropper';
+import { VueCropper } from 'vue-cropper';
 
 const computedProps = {};
 
-['cropImageVisible', 'cropImageUrl', 'imageCropped', 'cropImageResult'].forEach(name => {
-  computedProps[name] = {
-    get() {
-      return this.$store.state.quMaterial[name];
-    },
-    set(value) {
-      this.$store.state.quMaterial[name] = value;
-    },
-  };
-});
+['cropImageVisible', 'cropImageUrl', 'imageCropped', 'cropImageResult'].forEach(
+  name => {
+    computedProps[name] = {
+      get() {
+        return this.$store.state.quMaterial[name];
+      },
+      set(value) {
+        this.$store.state.quMaterial[name] = value;
+      },
+    };
+  }
+);
 
 export default {
   name: 'CropImage',
-  components: {VueCropper},
-  computed: {
-    ...computedProps,
-  },
+  components: { VueCropper },
   data() {
     return {
       loading: !1,
     };
+  },
+  computed: {
+    ...computedProps,
   },
   watch: {
     cropImageVisible(value) {
@@ -62,7 +71,7 @@ export default {
           this.$refs.cropper.startCrop();
         }, 300);
       }
-    }
+    },
   },
   methods: {
     clickCancel() {
@@ -74,17 +83,20 @@ export default {
       this.loading = !0;
 
       this.$refs.cropper.getCropData(data => {
-        window.fetch(window.uploadBase64Url, {
-          method: 'post',
-          body: JSON.stringify({img: data}),
-        })
+        window
+          .fetch(window.uploadBase64Url, {
+            method: 'post',
+            body: JSON.stringify({ img: data }),
+          })
           .then(res => res.json())
           .then(res => {
             this.loading = !1;
-          this.$store.state.quMaterial.cropImageVisible = !1;
-          this.$store.state.quMaterial.cropImageResult = window.uploadBase64Handle(res);
-          this.$store.state.quMaterial.imageCropped += 1;
-        });
+            this.$store.state.quMaterial.cropImageVisible = !1;
+            this.$store.state.quMaterial.cropImageResult = window.uploadBase64Handle(
+              res
+            );
+            this.$store.state.quMaterial.imageCropped += 1;
+          });
       });
     },
   },

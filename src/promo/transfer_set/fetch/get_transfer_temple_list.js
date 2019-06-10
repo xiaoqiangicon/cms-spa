@@ -1,7 +1,7 @@
 import seeFetch from 'see-fetch';
 
 const req = {
-  buddhistId: 'commodityId'
+  buddhistId: 'commodityId',
 };
 
 const refactor = {
@@ -18,8 +18,8 @@ const refactor = {
           transferPrice: 'price',
           transferRate: 'percent',
           // fuBiRate: 'fuBiRate',
-        }
-      ]
+        },
+      ],
     },
   ],
 };
@@ -28,7 +28,7 @@ seeFetch.config('promo/transfer_set/getTransferTempleList', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/conversionOrder/getTempleList',
+    '/conversionOrder/getConversionOrderTemple',
     '/promo/transfer_set/mock/get_transfer_temple_list',
     '/promo/transfer_set/mock/get_transfer_temple_list',
   ],

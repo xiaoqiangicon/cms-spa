@@ -5,12 +5,14 @@ const req = {
 };
 
 const refactor = {
-  data: [{
-    id: 'id',
-    avatar: 'headImg',
-    // isManager: 'isManager',
-    nickname: 'nickName',
-  }],
+  data: [
+    {
+      id: 'id',
+      avatar: 'headImg',
+      // isManager: 'isManager',
+      nickname: 'nickName',
+    },
+  ],
 };
 
 seeFetch.config('promo/statistics/getManageList', {

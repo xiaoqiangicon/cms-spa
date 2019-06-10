@@ -1,5 +1,13 @@
 <template>
-  <el-dialog title="转单设置" :visible.sync="visible" :before-close="()=>{sVisible = false}">
+  <el-dialog
+    title="转单设置"
+    :visible.sync="visible"
+    :before-close="
+      () => {
+        sVisible = false;
+      }
+    "
+  >
     <div class="mg-b-20">
       <span class="mg-r-10">请 选 择</span>
       <el-select
@@ -7,8 +15,8 @@
         placeholder="请选择"
         size="small"
         style="width: 200px;"
-        @change="onChangeTransferTemple"
         filterable
+        @change="onChangeTransferTemple"
       >
         <el-option
           v-for="item in transferTempleList"
@@ -18,55 +26,103 @@
         />
       </el-select>
     </div>
-    <div v-show="price">
+    <div class="mg-b-10">
       <span class="mg-r-5">转单价格</span>
-      <el-input style="width: 200px;" v-model="price" placeholder="请输入价格"></el-input>
+      <el-input
+        v-model.number="price"
+        style="width: 200px;"
+        placeholder="请输入价格"
+      />
       <span class="mg-l-10">/ 单</span>
     </div>
-    <div v-show="percent">
+    <div class="mg-b-10">
       <span class="mg-r-5">转单比例</span>
-      <el-input style="width: 200px;" v-model="percent" placeholder="请输入价格"></el-input>
+      <el-input
+        v-model.number="percent"
+        style="width: 200px;"
+        placeholder="请输入价格"
+      />
       <span class="mg-l-10">% / 单</span>
     </div>
     <div class="tip">
       <div>温馨提示</div>
       <div>“确认转单”前请确认寺院名称以及转单价格</div>
     </div>
-    <div class="mg-t-20" style="text-align:center;">
-      <el-button type="primary" @click="handleClickConfirm">确认</el-button>
+    <div
+      class="mg-t-20"
+      style="text-align:center;"
+    >
+      <el-button
+        type="primary"
+        @click="handleClickConfirm"
+      >
+        确认
+      </el-button>
     </div>
     <el-dialog
       title="转单确认"
       :visible.sync="dialoguSbmitVisible"
-      :before-close="()=>{dialoguSbmitVisible = false}"
+      :before-close="
+        () => {
+          dialoguSbmitVisible = false;
+        }
+      "
       append-to-body
     >
       <div class="row">
-        <div class="title">佛事名称</div>
-        <div class="content">{{transferBuddhistName}}</div>
+        <div class="title">
+          佛事名称
+        </div>
+        <div class="content">
+          {{ transferBuddhistName }}
+        </div>
       </div>
       <div class="row">
-        <div class="title">转移寺院</div>
-        <div class="content">{{transferTempleName}}</div>
+        <div class="title">
+          转移寺院
+        </div>
+        <div class="content">
+          {{ transferTempleName }}
+        </div>
       </div>
       <div class="row">
-        <div class="title">转单数量</div>
-        <div class="content">{{transferOrderIds.length}}</div>
+        <div class="title">
+          转单数量
+        </div>
+        <div class="content">
+          {{ transferOrderIds.length }}
+        </div>
       </div>
       <div class="row">
-        <div class="title">总计原价（元）</div>
-        <div class="content">{{originPriceSum}}</div>
+        <div class="title">
+          总计原价（元）
+        </div>
+        <div class="content">
+          {{ originPriceSum }}
+        </div>
       </div>
       <div class="row">
-        <div class="title">转单价格（元）</div>
-        <div class="content">{{priceSum}}</div>
+        <div class="title">
+          转单价格（元）
+        </div>
+        <div class="content">
+          {{ priceSum }}
+        </div>
       </div>
       <div class="tip">
         <div>温馨提示</div>
         <div>“确认转单”前请确认寺院名称以及转单价格</div>
       </div>
-      <div class="mg-t-20" style="text-align:center;">
-        <el-button type="primary" @click="handleClickSubmit">确认转单</el-button>
+      <div
+        class="mg-t-20"
+        style="text-align:center;"
+      >
+        <el-button
+          type="primary"
+          @click="handleClickSubmit"
+        >
+          确认转单
+        </el-button>
       </div>
     </el-dialog>
   </el-dialog>
@@ -77,6 +133,7 @@ import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
 
 import { addProps } from '../data';
+
 const computedProps = {};
 addProps.forEach(({ name, full }) => {
   if (full) {
@@ -92,6 +149,7 @@ addProps.forEach(({ name, full }) => {
       },
     };
   } else {
+    /* eslint-disable */
     computedProps[name] = function() {
       return this.$store.state.promoIndex.add[name];
     };
@@ -99,8 +157,10 @@ addProps.forEach(({ name, full }) => {
 });
 
 export default {
-  name: 'dialogTransfer',
-  props: ['visible'], //
+  name: 'DialogTransfer',
+  props: {
+    visible: Boolean,
+  },
   data() {
     return {
       sVisible: this.visible,
@@ -111,8 +171,6 @@ export default {
       originPrice: '', // 转单原价
       price: '', // 转单价格
       percent: '', // 转单百分比
-      originPriceSum: '', // 转单原价总计
-      priceSum: '', // 转单价格总计
 
       dialoguSbmitVisible: !1,
     };
@@ -125,9 +183,20 @@ export default {
       );
       if (findItem) {
         return findItem.name;
-      } else {
-        return '';
       }
+      return '';
+    },
+    originPriceSum() {
+      const { originPrice, transferOrderIds } = this;
+
+      return (originPrice * transferOrderIds.length).toFixed(4);
+    },
+    priceSum() {
+      const { price, originPrice, percent, transferOrderIds } = this;
+      return (price
+        ? price * this.transferOrderIds.length
+        : (percent / 100) * this.transferOrderIds.length
+      ).toFixed(4);
     },
   },
   watch: {
@@ -175,31 +244,36 @@ export default {
       const subId = this.transferSubId
         ? this.transferSubId
         : this.transferOrderDetail.subId;
-      // 获取转单寺院的价格配置
-      const transferTempleSubList = this.transferTempleList.find(
-        item => item.id === transferTempleId
-      ).subList;
 
-      const { price, percent } = transferTempleSubList.find(
-        item => item.id === subId
-      );
       // 获取转单选择项的原价
       const { price: originPrice } = this.transferSubList.find(
         item => item.id === subId
       );
-      // 计算
+
+      // 这里有可能设置了寺院选择项 有可能没设置
+      const transferTempleSubList = this.transferTempleList.find(
+        item => item.id === transferTempleId
+      ).subList;
+      const findSub = transferTempleSubList.find(item => item.id === subId);
+      let price;
+      let percent;
+
+      if (findSub) {
+        // 设置了的读取设置配置
+        ({ price, percent } = findSub);
+      } else {
+        // 未设置赋值为原价
+        price = originPrice;
+        percent = 0;
+      }
+
       this.originPrice = originPrice;
       this.price = price;
       this.percent = percent;
-      this.originPriceSum = (
-        originPrice * this.transferOrderIds.length
-      ).toFixed(4);
-      this.priceSum = (price
-        ? price * this.transferOrderIds.length
-        : (percent / 100) * this.transferOrderIds.length
-      ).toFixed(4);
     },
     handleClickConfirm() {
+      const { originPrice, price, percent } = this;
+
       if (!this.transferTempleId) {
         Notification({
           type: 'warning',
@@ -207,9 +281,18 @@ export default {
           message: '请选择转单寺院',
         });
         return;
-      } else {
-        this.dialoguSbmitVisible = !0;
       }
+
+      if (price && percent) {
+        Notification({
+          type: 'warning',
+          title: '提示',
+          message: '转单价格和转单比例只有一项生效',
+        });
+        return;
+      }
+
+      this.dialoguSbmitVisible = !0;
     },
     handleClickSubmit() {
       const {
@@ -268,5 +351,3 @@ export default {
   }
 }
 </style>
-
-
