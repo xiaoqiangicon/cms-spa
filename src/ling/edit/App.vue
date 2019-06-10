@@ -170,6 +170,7 @@ import '@zzh/ueditor/src/ueditor.config';
 import '@zzh/ueditor';
 
 import '../../com/ueditor-plugins/xiu-mi';
+import '../../com/ueditor-plugins/insert-images';
 import './fetch';
 
 let detailEditor;
