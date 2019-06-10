@@ -9,9 +9,17 @@
           size="small"
           style="width: 250px"
         >
-          <el-button slot="append" icon="el-icon-search" @click="doSearch" />
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="doSearch"
+          />
         </el-input>
-        <el-button class="fl-right" size="small" @click="toAdd">
+        <el-button
+          class="fl-right"
+          size="small"
+          @click="toAdd"
+        >
           添加
         </el-button>
       </div>
@@ -24,10 +32,18 @@
           <el-table-column prop="lastPullTime" label="最近拉取时间" />
           <el-table-column label="操作">
             <template slot-scope="item">
-              <el-button type="text" size="small" @click="toEdit(item)">
+              <el-button
+                type="text"
+                size="small"
+                @click="toEdit(item)"
+              >
                 编辑
               </el-button>
-              <el-button type="text" size="small" @click="toDelete(item)">
+              <el-button
+                type="text"
+                size="small"
+                @click="toDelete(item)"
+              >
                 删除
               </el-button>
             </template>

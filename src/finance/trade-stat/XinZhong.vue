@@ -22,15 +22,32 @@
           style="width: 150px;"
           @change="doSearch"
         />
-        <el-button class="fl-right" size="small" @click="toExport">
+        <el-button
+          class="fl-right"
+          size="small"
+          @click="toExport"
+        >
           导出Excel
         </el-button>
       </div>
       <div class="body">
-        <el-table v-loading="loading" :data="list" style="width: 100%">
-          <el-table-column prop="shopNum" label="商户单号" />
-          <el-table-column prop="amount" label="金额（元）" />
-          <el-table-column prop="createdAt" label="时间" />
+        <el-table
+          v-loading="loading"
+          :data="list"
+          style="width: 100%"
+        >
+          <el-table-column
+            prop="shopNum"
+            label="商户单号"
+          />
+          <el-table-column
+            prop="amount"
+            label="金额（元）"
+          />
+          <el-table-column
+            prop="createdAt"
+            label="时间"
+          />
         </el-table>
         <el-pagination
           :total="totalCount"

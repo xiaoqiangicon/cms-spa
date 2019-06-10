@@ -115,7 +115,10 @@
               <span slot="suffix" class="mg-l-5">%</span>
             </template>
           </el-table-column>
-          <el-table-column prop="transferPrice" label="转单金额（元）">
+          <el-table-column
+            prop="transferPrice"
+            label="转单金额（元）"
+          >
             <template slot-scope="scope">
               <el-input
                 v-model.number="scope.row.transferPrice"

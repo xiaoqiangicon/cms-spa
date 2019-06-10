@@ -52,10 +52,18 @@
           <el-table-column prop="editUser" label="编辑用户" />
           <el-table-column label="操作">
             <template slot-scope="item">
-              <el-button type="text" size="small" @click="toEdit(item)">
+              <el-button
+                type="text"
+                size="small"
+                @click="toEdit(item)"
+              >
                 编辑
               </el-button>
-              <el-button type="text" size="small" @click="toDelete(item)">
+              <el-button
+                type="text"
+                size="small"
+                @click="toDelete(item)"
+              >
                 删除
               </el-button>
             </template>

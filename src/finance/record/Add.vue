@@ -10,7 +10,11 @@
         <div class="row-name">
           记录名称：
         </div>
-        <el-input v-model="recordName" size="small" style="width: 200px;" />
+        <el-input
+          v-model="recordName"
+          size="small"
+          style="width: 200px;"
+        />
       </div>
       <div class="row">
         <div class="row-name">
@@ -24,7 +28,10 @@
           style="width: 200px;"
           filterable
         >
-          <el-option label="请选择寺院" :value="0" />
+          <el-option
+            label="请选择寺院"
+            :value="0"
+          />
           <el-option
             v-for="item in temples"
             :key="item.id"
@@ -56,7 +63,11 @@
         <div class="row-name">
           营收金额：
         </div>
-        <el-input v-model="income" size="small" style="width: 200px;" />
+        <el-input
+          v-model="income"
+          size="small"
+          style="width: 200px;"
+        />
         <span class="l-hg-32">元</span>
       </div>
       <div class="row">
@@ -74,11 +85,18 @@
         />
       </div>
     </div>
-    <span slot="footer" class="dialog-footer">
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="clickCancel">
         取 消
       </el-button>
-      <el-button v-loading="saving" type="primary" @click="clickOk">
+      <el-button
+        v-loading="saving"
+        type="primary"
+        @click="clickOk"
+      >
         确 定
       </el-button>
     </span>

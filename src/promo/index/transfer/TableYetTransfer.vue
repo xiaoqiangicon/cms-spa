@@ -26,23 +26,37 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="支付时间" show-overflow-tooltip :align="'center'">
+      <el-table-column
+        label="支付时间"
+        show-overflow-tooltip
+        :align="'center'"
+      >
         <template slot-scope="scope">
           <div v-for="item in scope.row.orderList" :key="item.addTime">
             {{ item.addTime }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="转单金额（元）" :align="'center'">
+      <el-table-column
+        label="转单金额（元）"
+        :align="'center'"
+      >
         <template slot-scope="scope">
           <div v-for="item in scope.row.orderList" :key="item.addTime">
             {{ item.transferPrice }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="详情" width="100" :align="'center'">
+      <el-table-column
+        label="详情"
+        width="100"
+        :align="'center'"
+      >
         <template slot-scope="scope">
-          <div v-for="(item, index) in scope.row.orderList" :key="item.addTime">
+          <div
+            v-for="(item, index) in scope.row.orderList"
+            :key="item.addTime"
+          >
             <el-button
               type="text"
               size="small"
@@ -53,7 +67,11 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="100" :align="'center'">
+      <el-table-column
+        label="操作"
+        width="100"
+        :align="'center'"
+      >
         <template slot-scope="scope">
           <div>
             <span

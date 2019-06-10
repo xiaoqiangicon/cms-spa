@@ -13,8 +13,8 @@
             slot="append"
             icon="el-icon-search"
             @click="doSearch"
-          /> </el-input
-        >&nbsp;&nbsp;&nbsp;&nbsp;
+          />
+        </el-input>&nbsp;&nbsp;&nbsp;&nbsp;
         <span class="l-hg-32">开始时间</span>&nbsp;&nbsp;&nbsp;&nbsp;
         <el-date-picker
           v-model="startDate"
@@ -35,17 +35,40 @@
           style="width: 150px;"
           @change="doSearch"
         />
-        <el-button class="fl-right" size="small" @click="toExport">
+        <el-button
+          class="fl-right"
+          size="small"
+          @click="toExport"
+        >
           导出Excel
         </el-button>
       </div>
       <div class="body">
-        <el-table v-loading="loading" :data="list" style="width: 100%">
-          <el-table-column prop="createdAt" label="提现时间" />
-          <el-table-column prop="userName" label="提现姓名" />
-          <el-table-column prop="amount" label="金额（元）" />
-          <el-table-column prop="orderNum" label="订单号码" />
-          <el-table-column prop="wx_openid" label="wx_openid" />
+        <el-table
+          v-loading="loading"
+          :data="list"
+          style="width: 100%"
+        >
+          <el-table-column
+            prop="createdAt"
+            label="提现时间"
+          />
+          <el-table-column
+            prop="userName"
+            label="提现姓名"
+          />
+          <el-table-column
+            prop="amount"
+            label="金额（元）"
+          />
+          <el-table-column
+            prop="orderNum"
+            label="订单号码"
+          />
+          <el-table-column
+            prop="wx_openid"
+            label="wx_openid"
+          />
         </el-table>
         <el-pagination
           :total="totalCount"

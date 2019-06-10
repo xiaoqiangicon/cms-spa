@@ -8,18 +8,37 @@
         size="small"
         style="width: 250px;"
       >
-        <el-button slot="append" icon="el-icon-search" @click="doSearch" />
+        <el-button
+          slot="append"
+          icon="el-icon-search"
+          @click="doSearch"
+        />
       </el-input>
-      <el-button class="fl-right" size="small" @click="toAdd">
+      <el-button
+        class="fl-right"
+        size="small"
+        @click="toAdd"
+      >
         添加自营佛事
       </el-button>
     </div>
     <div class="body">
-      <el-table v-loading="loading" :data="list" style="width: 100%">
-        <el-table-column prop="foShiId" label="佛事ID" />
+      <el-table
+        v-loading="loading"
+        :data="list"
+        style="width: 100%"
+      >
+        <el-table-column
+          prop="foShiId"
+          label="佛事ID"
+        />
         <el-table-column label="佛事名称">
           <template slot-scope="item">
-            <el-button v-if="item.row.confirmed" type="primary" size="mini">
+            <el-button
+              v-if="item.row.confirmed"
+              type="primary"
+              size="mini"
+            >
               已确认
             </el-button>
             <el-button
@@ -29,14 +48,23 @@
             >
               已结束
             </el-button>
-            <el-button v-else size="mini">
+            <el-button
+              v-else
+              size="mini"
+            >
               进行中
             </el-button>
             <span>{{ item.row.foShiName }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="amount" label="自营总额">
-          <template slot="header" slot-scope="item">
+        <el-table-column
+          prop="amount"
+          label="自营总额"
+        >
+          <template
+            slot="header"
+            slot-scope="item"
+          >
             {{ item.column.label }}
             <el-tooltip
               content="若有订单或选择项被标记为转单则不计算到自营总额中"
@@ -50,7 +78,10 @@
           <template slot-scope="item">
             {{ item.row.corporationProfitRate }}%
           </template>
-          <template slot="header" slot-scope="item">
+          <template
+            slot="header"
+            slot-scope="item"
+          >
             {{ item.column.label }}
             <el-tooltip
               content="分成给公司的比例，按当天的计算生效。若修改比例后则当天所有的订单都会在24:00调整变更。"
@@ -79,7 +110,10 @@
             <!--<br />-->
             <!--<span class="f-s-12">转单系统：{{ item.row.transformAmount }}</span>-->
           </template>
-          <template slot="header" slot-scope="item">
+          <template
+            slot="header"
+            slot-scope="item"
+          >
             {{ item.column.label }}
             <el-tooltip
               content="若有订单被标记为转单则不计算到自营佛事的营收统计当中。用“已支出”将其数据剔除。"
@@ -89,8 +123,14 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="remainAmount" label="可用金额">
-          <template slot="header" slot-scope="item">
+        <el-table-column
+          prop="remainAmount"
+          label="可用金额"
+        >
+          <template
+            slot="header"
+            slot-scope="item"
+          >
             {{ item.column.label }}
             <el-tooltip
               content="可参考这个金额设置人工支出：自营总额（a）- 当前营收（c）- 人工记录已支出（d）"
@@ -102,16 +142,28 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="item">
-            <el-button type="text" @click="toEdit(item)">
+            <el-button
+              type="text"
+              @click="toEdit(item)"
+            >
               编辑
             </el-button>
-            <el-button type="text" @click="toModifyRecords(item)">
+            <el-button
+              type="text"
+              @click="toModifyRecords(item)"
+            >
               修改记录
             </el-button>
-            <el-button type="text" @click="toUse(item)">
+            <el-button
+              type="text"
+              @click="toUse(item)"
+            >
               支出
             </el-button>
-            <el-button type="text" @click="toUseRecords(item)">
+            <el-button
+              type="text"
+              @click="toUseRecords(item)"
+            >
               支出记录
             </el-button>
           </template>
