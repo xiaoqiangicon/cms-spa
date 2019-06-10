@@ -1,18 +1,13 @@
 <template>
-  <div
-    v-show="videoPlayerVisible"
-    class="video-player-mask"
-    @click.self="onClickMask"
-  >
+  <div v-show="visible" class="video-player-mask" @click.self="onClickMask">
     <div class="video-player-container">
-      <video id="video-player" class="video-js" controls preload="auto">
-        <source id="video-source" :src="src" type="video/mp4" />
+      <video ref="videoPlayer" class="video-js vjs-big-play-centered vjs-4-3">
         <p class="vjs-no-js">
           To view this video please enable JavaScript, and consider upgrading to
           a web browser that
-          <a href="http://videojs.com/html5-video-support/" target="_blank">
-            supports HTML5 video
-          </a>
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
         </p>
       </video>
     </div>
@@ -21,78 +16,62 @@
 
 <script>
 import videojs from 'video.js';
-import { addProps } from '../data';
-
-let videoPlayer;
-
-const computedProps = {};
-addProps.forEach(({ name, full }) => {
-  if (full) {
-    computedProps[name] = {
-      get() {
-        return this.$store.state.promoIndex.add[name];
-      },
-      set(value) {
-        const key = `promoIndex/update${name
-          .slice(0, 1)
-          .toUpperCase()}${name.slice(1)}`;
-        this.$store.commit(key, value);
-      },
-    };
-  } else {
-    /* eslint-disable */
-    computedProps[name] = function() {
-      return this.$store.state.promoIndex.add[name];
-    };
-  }
-});
+import 'video.js/dist/video-js.css';
 
 export default {
   name: 'VideoPlayer',
-  props: ['src'],
-  data: () => {
-    return {
-      mounted: false,
-    };
+  props: {
+    src: {
+      type: String,
+      default: '',
+    },
+    visible: {
+      type: Boolean,
+      default: !1,
+    },
   },
-  computed: {
-    ...computedProps,
-  },
+  data: () => ({
+    player: null,
+    options: {
+      controls: !0,
+      preload: 'auto',
+      autoplay: !1,
+      fluid: !0,
+      language: 'zh-cN',
+      muted: !1,
+      sources: '',
+    },
+  }),
   watch: {
-    videoPlayerVisible(newValue, oldValue) {
+    visible(newValue) {
       if (newValue) {
-        // 每次显示时 要 重置数据
-        if (this.mounted) {
-          this.init();
-        }
+        this.reload();
       }
     },
   },
-
   mounted() {
     this.$nextTick(() => {
-      // 初始化video.js
-      videoPlayer = videojs('video-player');
-      videoPlayer.ready(() => {
-        this.mounted = true;
-        console.log('初始化videojs成功');
-      });
+      this.player = videojs(this.$refs.videoPlayer, this.options, () => {});
     });
   },
-
   methods: {
-    init() {
-      videoPlayer.src(this.src);
-      videoPlayer.load();
+    reload() {
+      const { player, src } = this;
+      if (!src) return;
+
+      player.pause();
+      player.src(src);
+      player.load(src);
     },
     onClickMask() {
-      this.videoPlayerVisible = !1;
+      this.player.pause();
+      this.$emit('close');
     },
   },
 };
 </script>
 
-<style>
+<style lang="less" scoped>
 .video-player-mask {
   position: fixed;
   top: 0;

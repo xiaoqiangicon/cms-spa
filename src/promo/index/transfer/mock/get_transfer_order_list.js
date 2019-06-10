@@ -52,7 +52,7 @@ export default {
           'https://pic.zizaihome.com/7a5c12da-f921-11e8-aae1-00163e0c1e1c.jpg,https://pic.zizaihome.com/eac0e57ad4948a82980701d6bf803a8c.jpg',
         isFinish: Math.floor(Math.random() * 2),
         disposeVideoUrl:
-          'https://pic.zizaihome.com/7fd190efef910bfaf44b77f6cf64ffda.mp4',
+          'https://pic.zizaihome.com/7fd190efef910bfaf44b77f6cf64ffda.mp4,https://pic.zizaihome.com/20a4d52e-8805-11e9-a870-00163e0c1e1c.mp4',
         posiscript: [
           // { name: '联系人', value: '麦一', type: 4, inputId: 46368 },
         ],
@@ -63,7 +63,7 @@ export default {
         conversionOrderPrice: 21,
         disposePicUrl: '',
         disposeVideoUrl:
-          'https://pic.zizaihome.com/7fd190efef910bfaf44b77f6cf64ffda.mp4,',
+          'https://pic.zizaihome.com/7fd190efef910bfaf44b77f6cf64ffda.mp4,https://pic.zizaihome.com/20a4d52e-8805-11e9-a870-00163e0c1e1c.mp4',
         isFinish: Math.floor(Math.random() * 2),
         posiscript: [
           { name: '联系人', value: '麦一', type: 4, inputId: 46368 },

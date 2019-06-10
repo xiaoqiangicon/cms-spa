@@ -100,8 +100,9 @@
                 :key="item"
                 class="img-container"
               >
-                <img
-                  :src="item + '?vframe/jpg/offset/1'"
+                <img :src="item + '?vframe/jpg/offset/1'" />
+                <i
+                  class="video-play el-icon-video-play"
                   @click="onClickPlayVideo(item)"
                 />
               </div>
@@ -141,7 +142,15 @@
         </div>
       </template>
     </el-dialog>
-    <VideoPlayer :src="videoPlayerSrc" />
+    <VideoPlayer
+      :visible="videoPlayerVisible"
+      :src="videoPlayerSrc"
+      @close="
+        () => {
+          videoPlayerVisible = !1;
+        }
+      "
+    />
   </div>
 </template>
 
@@ -182,8 +191,8 @@ export default {
   data() {
     return {
       sVisible: this.visible,
-      videoPlayerSrc:
-        'https://pic.zizaihome.com/b7c155f70d6a2d0a49cabcb6b790ce6b.mp4',
+      videoPlayerVisible: !1,
+      videoPlayerSrc: '',
     };
   },
   computed: {
@@ -199,9 +208,8 @@ export default {
   },
   methods: {
     onClickPlayVideo(video) {
-      console.log(video);
       this.videoPlayerSrc = video;
-      // this.videoPlayerVisible = !0;
+      this.videoPlayerVisible = !0;
     },
   },
 };
@@ -229,9 +237,19 @@ export default {
     height: 100px;
     margin-right: 10px;
     margin-bottom: 10px;
+    position: relative;
     img {
       width: 100%;
       height: 100%;
+    }
+    .video-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 30px;
+      cursor: pointer;
+      color: #409eff;
     }
   }
 }
