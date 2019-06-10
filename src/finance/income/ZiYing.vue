@@ -60,11 +60,11 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="profitAmount" label="当前盈收">
+        <el-table-column prop="profitAmount" label="当前营收">
           <template slot="header" slot-scope="item">
             {{ item.column.label }}
             <el-tooltip
-              content="当前已经记录到“盈收统计”中的金额，会根据企业分成比例浮动"
+              content="当前已经记录到“营收统计”中的金额，会根据企业分成比例浮动"
               placement="top"
             >
               <i class="el-icon-question question" />
@@ -82,7 +82,7 @@
           <template slot="header" slot-scope="item">
             {{ item.column.label }}
             <el-tooltip
-              content="若有订单被标记为转单则不计算到自营佛事的盈收统计当中。用“已支出”将其数据剔除。"
+              content="若有订单被标记为转单则不计算到自营佛事的营收统计当中。用“已支出”将其数据剔除。"
               placement="top"
             >
               <i class="el-icon-question question" />
@@ -93,7 +93,7 @@
           <template slot="header" slot-scope="item">
             {{ item.column.label }}
             <el-tooltip
-              content="可参考这个金额设置人工支出：自营总额（a）- 当前盈收（c）- 人工记录已支出（d）"
+              content="可参考这个金额设置人工支出：自营总额（a）- 当前营收（c）- 人工记录已支出（d）"
               placement="top"
             >
               <i class="el-icon-question question" />

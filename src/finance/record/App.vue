@@ -45,9 +45,9 @@
       <div class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
           <el-table-column prop="recordName" label="记录名称" />
-          <el-table-column prop="incomeFrom" label="盈收来源" />
+          <el-table-column prop="incomeFrom" label="营收来源" />
           <el-table-column prop="relatedItem" label="相关模块" />
-          <el-table-column prop="income" label="盈收金额/元" />
+          <el-table-column prop="income" label="营收金额/元" />
           <el-table-column prop="incomeTime" label="入账时间" />
           <el-table-column prop="editUser" label="编辑用户" />
           <el-table-column label="操作">

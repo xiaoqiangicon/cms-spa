@@ -9,7 +9,7 @@
       <el-alert type="success">
         <span class="f-s-16">温馨提示</span><br /><br />
         请将自营佛事加入到列表中，并设置公司分成比例<br />
-        分成比例会即时计算与更新，而盈收统计中的数据展示会在当天的24:00刷新，所以展示的数据是前一天的。
+        分成比例会即时计算与更新，而营收统计中的数据展示会在当天的24:00刷新，所以展示的数据是前一天的。
       </el-alert>
       <div v-if="isUpdate" class="row">
         <div class="row-name">

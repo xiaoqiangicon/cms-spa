@@ -1,14 +1,8 @@
 <template>
   <div class="container">
-    <el-card
-      v-loading="loadingSummary"
-      class="mg-t-20"
-    >
-      <div
-        slot="header"
-        class="clearfix"
-      >
-        <span>盈收概览</span>
+    <el-card v-loading="loadingSummary" class="mg-t-20">
+      <div slot="header" class="clearfix">
+        <span>营收概览</span>
       </div>
       <el-select
         v-model="filterYear"
@@ -26,61 +20,46 @@
         />
       </el-select>
 
-      <el-row
-        :gutter="20"
-        class="mg-t-20"
-      >
+      <el-row :gutter="20" class="mg-t-20">
         <el-col :span="16">
           <el-card
             class="dp-inline-block mg-b-20 mg-r-20"
             style="width: 250px;"
           >
-            <p>累计盈收（每日0点更新）</p>
+            <p>累计营收（每日0点更新）</p>
             <p>
               <span class="f-s-20">{{ allTotal }}</span>
               元
             </p>
             <el-divider />
-            <p class="t-a-right gray">
-              线上：{{ total }} 元
-            </p>
-            <p class="t-a-right gray">
-              线下：{{ offlineTotal }} 元
-            </p>
+            <p class="t-a-right gray">线上：{{ total }} 元</p>
+            <p class="t-a-right gray">线下：{{ offlineTotal }} 元</p>
           </el-card>
           <el-card
             class="dp-inline-block mg-b-20 mg-r-20"
             style="width: 250px;"
           >
-            <p>年度盈收</p>
+            <p>年度营收</p>
             <p>
               <span class="f-s-20">{{ allYearTotal }}</span>
               元
             </p>
             <el-divider />
-            <p class="t-a-right gray">
-              线上：{{ yearTotal }} 元
-            </p>
-            <p class="t-a-right gray">
-              线下：{{ offlineYearTotal }} 元
-            </p>
+            <p class="t-a-right gray">线上：{{ yearTotal }} 元</p>
+            <p class="t-a-right gray">线下：{{ offlineYearTotal }} 元</p>
           </el-card>
           <el-card
             class="dp-inline-block mg-b-20 mg-r-20"
             style="width: 250px;"
           >
-            <p>本月盈收</p>
+            <p>本月营收</p>
             <p>
               <span class="f-s-20">{{ allMonthTotal }}</span>
               元
             </p>
             <el-divider />
-            <p class="t-a-right gray">
-              线上：{{ monthTotal }} 元
-            </p>
-            <p class="t-a-right gray">
-              线下：{{ offlineMonthTotal }} 元
-            </p>
+            <p class="t-a-right gray">线上：{{ monthTotal }} 元</p>
+            <p class="t-a-right gray">线下：{{ offlineMonthTotal }} 元</p>
           </el-card>
           <el-card>
             <canvas ref="chart" />
@@ -88,11 +67,8 @@
         </el-col>
         <el-col :span="8">
           <el-card>
-            <div
-              slot="header"
-              class="clearfix"
-            >
-              <span>{{ filterYear }} 年线上盈收占比</span>
+            <div slot="header" class="clearfix">
+              <span>{{ filterYear }} 年线上营收占比</span>
             </div>
             <div v-if="projects && projects.length">
               <el-row
@@ -114,15 +90,10 @@
                 <el-col :span="8">
                   {{ project.amount }}
                 </el-col>
-                <el-col :span="8">
-                  {{ project.percent }}%
-                </el-col>
+                <el-col :span="8"> {{ project.percent }}% </el-col>
               </el-row>
             </div>
-            <div
-              v-else
-              class="t-a-center"
-            >
+            <div v-else class="t-a-center">
               暂无数据
             </div>
           </el-card>
@@ -130,11 +101,8 @@
       </el-row>
     </el-card>
     <el-card class="mg-t-20">
-      <div
-        slot="header"
-        class="clearfix"
-      >
-        <span>盈收报表</span>
+      <div slot="header" class="clearfix">
+        <span>营收报表</span>
       </div>
       <div>
         <el-select
@@ -144,46 +112,16 @@
           style="width: 200px;"
           @change="doSearch"
         >
-          <el-option
-            label="推广佛事"
-            :value="1"
-          />
-          <el-option
-            label="转单系统"
-            :value="4"
-          />
-          <el-option
-            label="增值服务 - 实景探寺"
-            :value="2"
-          />
-          <el-option
-            label="增值服务 - 微供奉"
-            :value="3"
-          />
-          <el-option
-            label="法师祈福"
-            :value="5"
-          />
-          <el-option
-            label="分销推广"
-            :value="7"
-          />
-          <el-option
-            label="文章打赏"
-            :value="8"
-          />
-          <el-option
-            label="千寺祈福"
-            :value="9"
-          />
-          <el-option
-            label="日行一善"
-            :value="10"
-          />
-          <el-option
-            label="自营佛事"
-            :value="11"
-          />
+          <el-option label="推广佛事" :value="1" />
+          <el-option label="转单系统" :value="4" />
+          <el-option label="增值服务 - 实景探寺" :value="2" />
+          <el-option label="增值服务 - 微供奉" :value="3" />
+          <el-option label="法师祈福" :value="5" />
+          <el-option label="分销推广" :value="7" />
+          <el-option label="文章打赏" :value="8" />
+          <el-option label="千寺祈福" :value="9" />
+          <el-option label="日行一善" :value="10" />
+          <el-option label="自营佛事" :value="11" />
         </el-select>
         <el-date-picker
           v-model="filterStartDate"
@@ -205,10 +143,7 @@
           style="width: 200px;"
           @change="doSearch"
         />
-        <div
-          v-show="[1, 4, 11].indexOf(filterType) > -1"
-          class="fl-right"
-        >
+        <div v-show="[1, 4, 11].indexOf(filterType) > -1" class="fl-right">
           <el-button
             size="small"
             plain
@@ -228,365 +163,127 @@
         </div>
       </div>
       <!-- 推广佛事 + 项目维度 -->
-      <div
-        v-if="filterType === 1 && filterDimension === 2"
-        class="body"
-      >
-        <el-table
-          v-loading="loading"
-          :data="list"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="foShiName"
-            label="佛事名称"
-          />
-          <el-table-column
-            prop="templeName"
-            label="寺院名称"
-          />
-          <el-table-column
-            prop="amount"
-            label="佛事金额（元）"
-          />
-          <el-table-column
-            prop="profit"
-            label="盈收金额（元）"
-          />
+      <div v-if="filterType === 1 && filterDimension === 2" class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="foShiName" label="佛事名称" />
+          <el-table-column prop="templeName" label="寺院名称" />
+          <el-table-column prop="amount" label="佛事金额（元）" />
+          <el-table-column prop="profit" label="营收金额（元）" />
         </el-table>
       </div>
       <!-- 推广佛事 + 寺院维度 -->
-      <div
-        v-else-if="filterType === 1 && filterDimension === 1"
-        class="body"
-      >
-        <el-table
-          v-loading="loading"
-          :data="list"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="templeName"
-            label="寺院名称"
-          />
-          <el-table-column
-            prop="amount"
-            label="佛事金额（元）"
-          />
-          <el-table-column
-            prop="profit"
-            label="盈收金额（元）"
-          />
+      <div v-else-if="filterType === 1 && filterDimension === 1" class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="templeName" label="寺院名称" />
+          <el-table-column prop="amount" label="佛事金额（元）" />
+          <el-table-column prop="profit" label="营收金额（元）" />
         </el-table>
       </div>
       <!-- 转单系统 + 项目维度 -->
-      <div
-        v-else-if="filterType === 4 && filterDimension === 2"
-        class="body"
-      >
-        <el-table
-          v-loading="loading"
-          :data="list"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="foShiName"
-            label="佛事名称"
-          />
-          <el-table-column
-            prop="amount"
-            label="订单金额（元）"
-          />
-          <el-table-column
-            prop="profit"
-            label="盈收金额（元）"
-          />
+      <div v-else-if="filterType === 4 && filterDimension === 2" class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="foShiName" label="佛事名称" />
+          <el-table-column prop="amount" label="订单金额（元）" />
+          <el-table-column prop="profit" label="营收金额（元）" />
         </el-table>
       </div>
       <!-- 转单系统 + 寺院维度 -->
-      <div
-        v-else-if="filterType === 4 && filterDimension === 1"
-        class="body"
-      >
-        <el-table
-          v-loading="loading"
-          :data="list"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="templeName"
-            label="寺院名称"
-          />
-          <el-table-column
-            prop="amount"
-            label="佛事金额（元）"
-          />
-          <el-table-column
-            prop="profit"
-            label="盈收金额（元）"
-          />
+      <div v-else-if="filterType === 4 && filterDimension === 1" class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="templeName" label="寺院名称" />
+          <el-table-column prop="amount" label="佛事金额（元）" />
+          <el-table-column prop="profit" label="营收金额（元）" />
         </el-table>
       </div>
       <!-- 实景探寺 -->
-      <div
-        v-else-if="filterType === 2"
-        class="body"
-      >
-        <el-table
-          v-loading="loading"
-          :data="list"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="templeName"
-            label="寺院名称"
-          />
+      <div v-else-if="filterType === 2" class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="templeName" label="寺院名称" />
           <el-table-column label="支付服务费">
             <template slot-scope="item">
               {{ item.row.chargeRate }}%
             </template>
           </el-table-column>
-          <el-table-column
-            prop="amount"
-            label="订单金额（元）"
-          />
-          <el-table-column
-            prop="profit"
-            label="盈收金额（元）"
-          />
-          <el-table-column
-            prop="yueGuangBaoHe"
-            label="月光宝盒（元）"
-          />
-          <el-table-column
-            prop="manualRecord"
-            label="人工记录（元）"
-          />
+          <el-table-column prop="amount" label="订单金额（元）" />
+          <el-table-column prop="profit" label="营收金额（元）" />
+          <el-table-column prop="yueGuangBaoHe" label="月光宝盒（元）" />
+          <el-table-column prop="manualRecord" label="人工记录（元）" />
         </el-table>
       </div>
       <!-- 微供奉 -->
-      <div
-        v-else-if="filterType === 3"
-        class="body"
-      >
-        <el-table
-          v-loading="loading"
-          :data="list"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="templeName"
-            label="寺院名称"
-          />
+      <div v-else-if="filterType === 3" class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="templeName" label="寺院名称" />
           <el-table-column label="支付服务费">
             <template slot-scope="item">
               {{ item.row.chargeRate }}%
             </template>
           </el-table-column>
-          <el-table-column
-            prop="amount"
-            label="订单金额（元）"
-          />
-          <el-table-column
-            prop="profit"
-            label="盈收金额（元）"
-          />
-          <el-table-column
-            prop="manualRecord"
-            label="人工记录（元）"
-          />
+          <el-table-column prop="amount" label="订单金额（元）" />
+          <el-table-column prop="profit" label="营收金额（元）" />
+          <el-table-column prop="manualRecord" label="人工记录（元）" />
         </el-table>
       </div>
       <!-- 法师祈福 -->
-      <div
-        v-else-if="filterType === 5"
-        class="body"
-      >
-        <el-table
-          v-loading="loading"
-          :data="list"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="time"
-            label="时间"
-          />
-          <el-table-column
-            prop="orderCount"
-            label="完成订单数量"
-          />
-          <el-table-column
-            prop="amount"
-            label="订单金额（元）"
-          />
-          <el-table-column
-            prop="faShiProfit"
-            label="法师收益金额（元）"
-          />
-          <el-table-column
-            prop="profit"
-            label="盈收金额（元）"
-          />
+      <div v-else-if="filterType === 5" class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="time" label="时间" />
+          <el-table-column prop="orderCount" label="完成订单数量" />
+          <el-table-column prop="amount" label="订单金额（元）" />
+          <el-table-column prop="faShiProfit" label="法师收益金额（元）" />
+          <el-table-column prop="profit" label="营收金额（元）" />
         </el-table>
       </div>
       <!-- 分销推广 -->
-      <div
-        v-else-if="filterType === 7"
-        class="body"
-      >
-        <el-table
-          v-loading="loading"
-          :data="list"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="templeName"
-            label="寺院名称"
-          />
-          <el-table-column
-            prop="amount"
-            label="佛事金额（元）"
-          />
-          <el-table-column
-            prop="profit"
-            label="盈收金额（元）"
-          />
+      <div v-else-if="filterType === 7" class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="templeName" label="寺院名称" />
+          <el-table-column prop="amount" label="佛事金额（元）" />
+          <el-table-column prop="profit" label="营收金额（元）" />
         </el-table>
       </div>
       <!-- 文章打赏 -->
-      <div
-        v-else-if="filterType === 8"
-        class="body"
-      >
-        <el-table
-          v-loading="loading"
-          :data="list"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="templeName"
-            label="寺院名称"
-          />
-          <el-table-column
-            prop="profit"
-            label="盈收金额（元）"
-          />
+      <div v-else-if="filterType === 8" class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="templeName" label="寺院名称" />
+          <el-table-column prop="profit" label="营收金额（元）" />
         </el-table>
       </div>
       <!-- 千寺祈福 -->
-      <div
-        v-else-if="filterType === 9"
-        class="body"
-      >
-        <el-table
-          v-loading="loading"
-          :data="list"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="time"
-            label="时间"
-          />
-          <el-table-column
-            prop="orderCount"
-            label="订单数量"
-          />
-          <el-table-column
-            prop="amount"
-            label="订单金额（元）"
-          />
-          <el-table-column
-            prop="profit"
-            label="盈收金额（元）"
-          />
+      <div v-else-if="filterType === 9" class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="time" label="时间" />
+          <el-table-column prop="orderCount" label="订单数量" />
+          <el-table-column prop="amount" label="订单金额（元）" />
+          <el-table-column prop="profit" label="营收金额（元）" />
         </el-table>
       </div>
       <!-- 日行一善 -->
-      <div
-        v-else-if="filterType === 10"
-        class="body"
-      >
-        <el-table
-          v-loading="loading"
-          :data="list"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="foShiName"
-            label="名称"
-          />
-          <el-table-column
-            prop="templeName"
-            label="寺院名称"
-          />
-          <el-table-column
-            prop="amount"
-            label="佛事金额（元）"
-          />
-          <el-table-column
-            prop="profit"
-            label="盈收金额（元）"
-          />
+      <div v-else-if="filterType === 10" class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="foShiName" label="名称" />
+          <el-table-column prop="templeName" label="寺院名称" />
+          <el-table-column prop="amount" label="佛事金额（元）" />
+          <el-table-column prop="profit" label="营收金额（元）" />
         </el-table>
       </div>
       <!-- 自营佛事 + 项目维度 -->
-      <div
-        v-else-if="filterType === 11 && filterDimension === 2"
-        class="body"
-      >
-        <el-table
-          v-loading="loading"
-          :data="list"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="foShiName"
-            label="佛事名称"
-          />
-          <el-table-column
-            prop="templeName"
-            label="寺院名称"
-          />
-          <el-table-column
-            prop="orderCount"
-            label="订单数量"
-          />
-          <el-table-column
-            prop="amount"
-            label="佛事金额（元）"
-          />
-          <el-table-column
-            prop="profit"
-            label="盈收金额（元）"
-          />
+      <div v-else-if="filterType === 11 && filterDimension === 2" class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="foShiName" label="佛事名称" />
+          <el-table-column prop="templeName" label="寺院名称" />
+          <el-table-column prop="orderCount" label="订单数量" />
+          <el-table-column prop="amount" label="佛事金额（元）" />
+          <el-table-column prop="profit" label="营收金额（元）" />
         </el-table>
       </div>
       <!-- 自营佛事 + 寺院维度 -->
-      <div
-        v-else-if="filterType === 11 && filterDimension === 1"
-        class="body"
-      >
-        <el-table
-          v-loading="loading"
-          :data="list"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="templeName"
-            label="寺院名称"
-          />
-          <el-table-column
-            prop="orderCount"
-            label="订单数量"
-          />
-          <el-table-column
-            prop="amount"
-            label="佛事金额（元）"
-          />
-          <el-table-column
-            prop="profit"
-            label="盈收金额（元）"
-          />
+      <div v-else-if="filterType === 11 && filterDimension === 1" class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="templeName" label="寺院名称" />
+          <el-table-column prop="orderCount" label="订单数量" />
+          <el-table-column prop="amount" label="佛事金额（元）" />
+          <el-table-column prop="profit" label="营收金额（元）" />
         </el-table>
       </div>
     </el-card>

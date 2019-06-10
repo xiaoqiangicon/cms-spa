@@ -14,7 +14,7 @@ const responseRefactor = {
       foShiName: 'commodityName',
       amount: 'price', // 订单总额
       corporationProfitRate: 'dividedPricePercentage', // 企业分成
-      profitAmount: 'earningsPrice', // 当前盈收
+      profitAmount: 'earningsPrice', // 当前营收
       manualAmount: 'expenditurePrice', // 人工记录
       ended: 'isEnd',
     },

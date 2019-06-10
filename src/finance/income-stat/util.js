@@ -1,6 +1,6 @@
 import { chartColors, months } from '../../util/data';
 
-export const makeChartTitle = ({ year }) => `${year} 年盈收概览`;
+export const makeChartTitle = ({ year }) => `${year} 年营收概览`;
 
 export const makeChartConfig = ({ onlineData, offlineData, year }) => ({
   type: 'bar',

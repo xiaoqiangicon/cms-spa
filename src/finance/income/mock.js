@@ -165,7 +165,7 @@ export const listZiYing = {
     foShiName: `佛事名佛事名佛事名佛事名佛事名佛事名佛事名佛事名佛事名 ${id}`,
     amount: id * 1000, // 订单总额
     corporationProfitRate: id * 10, // 企业分成
-    profitAmount: id * 100, // 当前盈收
+    profitAmount: id * 100, // 当前营收
     usedAmount: id * 102, // 已支出
     manualAmount: id * 102, // 人工记录
     transformAmount: id * 102, // 转单系统
@@ -184,7 +184,7 @@ export const listZiYing1 = {
       commodityName: `佛事名佛事名佛事名佛事名佛事名佛事名佛事名佛事名佛事名 ${id}`,
       price: id * 1000, // 订单总额
       dividedPricePercentage: id * 10, // 企业分成
-      earningsPrice: id * 100, // 当前盈收
+      earningsPrice: id * 100, // 当前营收
       expenditurePrice: id * 102, // 人工记录
       isEnd: Math.floor(Math.random() * 2),
     })),
