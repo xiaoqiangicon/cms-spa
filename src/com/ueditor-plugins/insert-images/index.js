@@ -25,6 +25,7 @@ window.UE.registerUI(
       onclick() {
         if (editor.ueInsertImages) {
           editor.ueInsertImages.style.display = 'block';
+          editor.ueInsertImagesVm.images = [];
           return;
         }
 
@@ -54,6 +55,8 @@ window.UE.registerUI(
             multiple: !0,
           },
         });
+
+        editor.ueInsertImagesVm = vm;
 
         okEl.addEventListener(
           'click',
