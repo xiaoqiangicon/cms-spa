@@ -94,10 +94,6 @@ import TableBuddhist from './TableBuddhist';
 import TableYetTransfer from './TableYetTransfer';
 import TableNotTransfer from './TableNotTransfer';
 
-// const TableBuddhist = () => import('./TableBuddhist');
-// const TableYetTransfer = () => import('./TableYetTransfer');
-// const TableNotTransfer = () => import('./TableNotTransfer');
-
 import { addProps } from '../data';
 
 const computedProps = {};

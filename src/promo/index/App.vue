@@ -1,25 +1,13 @@
 <template>
   <div class="container">
-    <el-tabs
-      v-model="activeName"
-      type="border-card"
-    >
-      <el-tab-pane
-        label="转单系统"
-        name="transfer"
-      >
+    <el-tabs v-model="activeName" type="border-card">
+      <el-tab-pane label="转单系统" name="transfer">
         <Transfer />
       </el-tab-pane>
-      <el-tab-pane
-        label="推广佛事"
-        name="buddhist"
-      >
+      <el-tab-pane label="推广佛事" name="buddhist">
         <Buddhist />
       </el-tab-pane>
-      <el-tab-pane
-        label="分享福币"
-        name="fu"
-      >
+      <el-tab-pane label="分享福币" name="fu">
         <Fu />
       </el-tab-pane>
     </el-tabs>
@@ -30,9 +18,30 @@
 import Transfer from './transfer/Index';
 import Buddhist from './buddhist/Index';
 import Fu from './fu/Index';
-// const Transfer = () => import('./transfer/Index');
-// const Buddhist = () => import('./buddhist/Index');
-// const Fu = () => import('./fu/Index');
+
+import { addProps } from './data';
+
+const computedProps = {};
+addProps.forEach(({ name, full }) => {
+  if (full) {
+    computedProps[name] = {
+      get() {
+        return this.$store.state.promoIndex.add[name];
+      },
+      set(value) {
+        const key = `promoIndex/update${name
+          .slice(0, 1)
+          .toUpperCase()}${name.slice(1)}`;
+        this.$store.commit(key, value);
+      },
+    };
+  } else {
+    /* eslint-disable */
+    computedProps[name] = function() {
+      return this.$store.state.promoIndex.add[name];
+    };
+  }
+});
 
 export default {
   name: 'App',
@@ -45,6 +54,23 @@ export default {
     return {
       activeName: 'transfer',
     };
+  },
+  computed: {
+    ...computedProps,
+  },
+  mounted() {
+    /* 此处存在特殊逻辑 */
+    // 转单/未转单页面 隶属于佛事管理列表的某个子项 本应该独立出去单独作为一个页面 但是却偶合在一起了
+    // 市场部想在 佛事列表页面 点击转单列表时 新开页面
+    // 因此点击时会带两个参数 重新打开 此页面
+    // 以下做针对处理
+    // 由于是单页面 此页面在进入时必带参数 默认为 :activName :buddhistId
+    const { transferActiveName, transferBuddhistId } = this.$route.params;
+    console.log(transferActiveName, transferBuddhistId);
+    if (transferActiveName !== ':transferActiveName')
+      this.transferActiveName = transferActiveName;
+    if (transferBuddhistId !== ':transferBuddhistId')
+      this.transferBuddhistId = transferBuddhistId;
   },
   created() {},
   methods: {},
