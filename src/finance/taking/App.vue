@@ -1,10 +1,7 @@
 <template>
   <div class="container">
     <el-card v-loading="loading">
-      <el-card
-        v-if="isQuestion"
-        class="box-card"
-      >
+      <el-card v-if="isQuestion" class="box-card">
         <el-button
           v-if="type === 1"
           size="small"
@@ -15,12 +12,7 @@
           回复
         </el-button>
         <div>{{ templeName }}有疑问：{{ question }}</div>
-        <div
-          v-if="type === 2"
-          class="mg-t-20"
-        >
-          已回复：{{ answer }}
-        </div>
+        <div v-if="type === 2" class="mg-t-20">已回复：{{ answer }}</div>
       </el-card>
       <div class="clearfix mg-t-20">
         <el-button
@@ -51,16 +43,10 @@
           <div class="head">
             <div class="unit unit-head">
               <div class="unit-inner">
-                <div
-                  v-if="showType === 1"
-                  class="cell cell-name"
-                >
+                <div v-if="showType === 1" class="cell cell-name">
                   {{ dateItem.year }}年{{ dateItem.month }}月项目
                 </div>
-                <div
-                  v-else
-                  class="cell cell-name"
-                >
+                <div v-else class="cell cell-name">
                   项目名称
                 </div>
                 <div class="cell">
@@ -91,9 +77,7 @@
                 <div class="cell">
                   {{ order.count }}
                 </div>
-                <div class="cell">
-                  ¥{{ order.amount }}
-                </div>
+                <div class="cell">¥{{ order.amount }}</div>
                 <div class="cell">
                   {{
                     order.increaseCharge
@@ -101,9 +85,7 @@
                       : '无服务费'
                   }}
                 </div>
-                <div class="cell">
-                  -¥{{ order.channelCharge }}
-                </div>
+                <div class="cell">-¥{{ order.channelCharge }}</div>
               </div>
             </div>
           </div>
@@ -111,20 +93,14 @@
       </div>
       <el-card class="mg-t-20">
         <div slot="header" class="clearfix">
-          <span>提现计算（订单状态：{{ typeText }}）</span>
+          <span>提现计算</span>
         </div>
         <div>以上已勾选账单金额：{{ totalAmount }}元</div>
-        <div
-          v-if="totalIncreaseCharge"
-          class="mg-t-10"
-        >
+        <div v-if="totalIncreaseCharge" class="mg-t-10">
           <span class="badge badge-yellow pd-l-20 pd-r-20 mg-r-20">减去</span>
           增值服务费：{{ totalIncreaseCharge }} 元
         </div>
-        <div
-          v-if="totalFunctionCharge"
-          class="mg-t-10"
-        >
+        <div v-if="totalFunctionCharge" class="mg-t-10">
           <span class="badge badge-yellow pd-l-20 pd-r-20 mg-r-20">减去</span>
           功能服务费：{{ totalFunctionCharge }} 元
           <el-tooltip
@@ -134,23 +110,14 @@
             <i class="el-icon-question question" />
           </el-tooltip>
         </div>
-        <div
-          v-if="totalPromoterReward"
-          class="mg-t-10"
-        >
+        <div v-if="totalPromoterReward" class="mg-t-10">
           <span class="badge badge-yellow pd-l-20 pd-r-20 mg-r-20">减去</span>
           推广员奖励金：{{ totalPromoterReward }} 元
-          <el-tooltip
-            content="奖励金是结算给推广员的金额"
-            placement="top"
-          >
+          <el-tooltip content="奖励金是结算给推广员的金额" placement="top">
             <i class="el-icon-question question" />
           </el-tooltip>
         </div>
-        <div
-          v-if="totalChannelCharge"
-          class="mg-t-10"
-        >
+        <div v-if="totalChannelCharge" class="mg-t-10">
           <span class="badge badge-yellow pd-l-20 pd-r-20 mg-r-20">减去</span>
           支付渠道手续费：{{ totalChannelCharge }} 元
           <el-tooltip
@@ -160,24 +127,15 @@
             <i class="el-icon-question question" />
           </el-tooltip>
         </div>
-        <div
-          v-if="totalChannelSubsidy"
-          class="mg-t-10"
-        >
+        <div v-if="totalChannelSubsidy" class="mg-t-10">
           <span class="badge badge-green pd-l-20 pd-r-20 mg-r-20">增加</span>
           补贴支付渠道手续费：{{ totalChannelSubsidy }} 元
         </div>
-        <div
-          v-if="platformSupport"
-          class="mg-t-10"
-        >
+        <div v-if="platformSupport" class="mg-t-10">
           <span class="badge badge-yellow pd-l-20 pd-r-20 mg-r-20">减去</span>
           打赏自在家的金额：{{ platformSupport }} 元
         </div>
-        <div
-          v-if="specialCharge"
-          class="mg-t-10"
-        >
+        <div v-if="specialCharge" class="mg-t-10">
           <span class="badge badge-yellow pd-l-20 pd-r-20 mg-r-20">减去</span>
           特殊提现超限服务费：{{ specialCharge }} 元
           <el-tooltip
@@ -191,16 +149,15 @@
         <div>
           <span class="badge badge-blue pd-l-20 pd-r-20 mg-r-20">总计</span>
           提现金额：{{ realTakeAmount }} 元
+          <div class="fl-right mg-b-20 mg-r-20">
+            订单状态：{{ typeText }}<br />
+            更新时间：{{ updateTime }}<br />
+            添加时间：{{ createTime }}<br />
+          </div>
         </div>
       </el-card>
-      <el-card
-        v-if="remarks && remarks.length"
-        class="mg-t-20"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
+      <el-card v-if="remarks && remarks.length" class="mg-t-20">
+        <div slot="header" class="clearfix">
           <span>提现注意事项</span>&nbsp;&nbsp;&nbsp;&nbsp;
           <span class="gray">若下列注意事项已经完成，请勾选为已处理</span>
         </div>
@@ -210,28 +167,16 @@
           class="remark-row"
           :class="remark.takeEffect ? '' : 'disabled'"
         >
-          <button
-            class="clean remark-btn"
-            @click="updateRemark(remark)"
-          />
+          <button class="clean remark-btn" @click="updateRemark(remark)" />
           <span>{{ remark.content }}</span>
         </div>
       </el-card>
       <el-card class="mg-t-20">
-        <div
-          slot="header"
-          class="clearfix"
-        >
+        <div slot="header" class="clearfix">
           <span>{{ templeName }}账户信息</span>
         </div>
-        <div
-          v-if="isQuestion === 0"
-          class="fl-right t-a-right"
-        >
-          <div
-            v-if="type !== 2"
-            class="red"
-          >
+        <div v-if="isQuestion === 0" class="fl-right t-a-right">
+          <div v-if="type !== 2" class="red">
             {{
               type === 5
                 ? '*确认打款后后不可撤销，请仔细核对'
@@ -263,15 +208,9 @@
           </div>
         </div>
         <div>银行名称：{{ bankName }}</div>
-        <div class="mg-t-10">
-          支行名称：{{ subBankName }}
-        </div>
-        <div class="mg-t-10">
-          银行开户名称：{{ accountName }}
-        </div>
-        <div class="mg-t-10">
-          银行卡号：{{ accountNumber }}
-        </div>
+        <div class="mg-t-10">支行名称：{{ subBankName }}</div>
+        <div class="mg-t-10">银行开户名称：{{ accountName }}</div>
+        <div class="mg-t-10">银行卡号：{{ accountNumber }}</div>
       </el-card>
     </el-card>
     <feedback-images :ok="succeedUpload" />
@@ -343,6 +282,10 @@ export default {
       id: 0,
       // 订单状态
       typeText: '',
+      // 更新时间
+      updateTime: '',
+      // 添加时间
+      createTime: '',
     };
   },
   created() {
@@ -414,6 +357,8 @@ export default {
         this.accountName = res.data.account.accountName || '';
         this.accountNumber = res.data.account.accountNumber || '';
         this.feedbackImages = res.data.feedbackImages || [];
+        this.updateTime = res.data.updateTime;
+        this.createTime = res.data.createTime;
         this.loading = !1;
       });
     },

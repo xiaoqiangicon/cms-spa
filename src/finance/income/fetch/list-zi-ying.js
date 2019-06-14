@@ -1,6 +1,7 @@
 import seeFetch from 'see-fetch';
 
 const requestKeys = {
+  search: 'searchContent',
   page: 'pageNum',
 };
 

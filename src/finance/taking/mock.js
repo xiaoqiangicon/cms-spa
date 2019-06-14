@@ -40,6 +40,8 @@ export const orders = {
       '/sample/image3.jpg',
       '/sample/image4.jpg',
     ],
+    createTime: 'createTime',
+    updateTime: 'updateTime',
   },
 };
 
@@ -84,6 +86,8 @@ export const orders1 = {
       '/sample/image3.jpg',
       '/sample/image4.jpg',
     ],
+    addTime: 'createTime',
+    updateTime: 'updateTime',
   },
 };
 
