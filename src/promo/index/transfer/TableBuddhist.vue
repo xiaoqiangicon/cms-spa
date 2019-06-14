@@ -51,7 +51,9 @@
         <template slot-scope="scope">
           <div>
             <el-button type="text" size="small">
-              <a :href="getTransferListUrl(scope.row)">转单列表</a>
+              <a :href="getTransferListUrl(scope.row)" target="_black"
+                >转单列表</a
+              >
             </el-button>
             <!-- <el-button
               type="text"
@@ -176,8 +178,12 @@ export default {
       this.requestList();
     },
     getTransferListUrl(item) {
-      const { buddhistId } = item;
-      return `${window.location.origin}${window.location.pathname}#/promo/index/tableNotTransfer/${buddhistId}`;
+      const { buddhistId, buddhistName, subList } = item;
+      return `${window.location.origin}${
+        window.location.pathname
+      }#/promo/index/tableNotTransfer/${buddhistId}/${buddhistName}/${encodeURIComponent(
+        JSON.stringify(subList)
+      )}`;
     },
     toTransferList(item) {
       const { buddhistId, buddhistName, subList } = item;
@@ -187,7 +193,11 @@ export default {
       // this.transferActiveName = 'tableNotTransfer';
 
       // 此处存在特殊逻辑
-      let url = `${window.location.origin}${window.location.pathname}#/promo/index/tableNotTransfer/${buddhistId}`;
+      let url = `${window.location.origin}${
+        window.location.pathname
+      }#/promo/index/tableNotTransfer/${buddhistId}/${buddhistName}/${encodeURIComponent(
+        JSON.stringify(subList)
+      )}`;
       window.open(url);
     },
     toTransferSet(item) {
