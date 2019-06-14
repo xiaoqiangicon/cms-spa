@@ -50,13 +50,16 @@
       <el-table-column label="操作" width="100" align="center">
         <template slot-scope="scope">
           <div>
-            <el-button
+            <el-button type="text" size="small">
+              <a :href="getTransferListUrl(scope.row)">转单列表</a>
+            </el-button>
+            <!-- <el-button
               type="text"
               size="small"
               @click="toTransferList(scope.row)"
             >
               转单列表
-            </el-button>
+            </el-button> -->
           </div>
           <div>
             <el-button
@@ -172,12 +175,16 @@ export default {
       this.pagination.page = page;
       this.requestList();
     },
+    getTransferListUrl(item) {
+      const { buddhistId } = item;
+      return `${window.location.origin}${window.location.pathname}#/promo/index/tableNotTransfer/${buddhistId}`;
+    },
     toTransferList(item) {
       const { buddhistId, buddhistName, subList } = item;
-      this.transferBuddhistId = buddhistId;
-      this.transferBuddhistName = buddhistName;
-      this.transferSubList = subList;
-      this.transferActiveName = 'tableNotTransfer';
+      // this.transferBuddhistId = buddhistId;
+      // this.transferBuddhistName = buddhistName;
+      // this.transferSubList = subList;
+      // this.transferActiveName = 'tableNotTransfer';
 
       // 此处存在特殊逻辑
       let url = `${window.location.origin}${window.location.pathname}#/promo/index/tableNotTransfer/${buddhistId}`;
