@@ -12,11 +12,7 @@
         filterable
         @change="refresh"
       >
-        <el-option
-          :key="0"
-          label="全部"
-          :value="0"
-        />
+        <el-option :key="0" label="全部" :value="0" />
         <el-option
           v-for="item in templeList"
           :key="item.id"
@@ -30,11 +26,7 @@
         size="small"
         style="width:200px;"
       >
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="refresh"
-        />
+        <el-button slot="append" icon="el-icon-search" @click="refresh" />
       </el-input>
       <el-button
         class="fl-right"
@@ -49,50 +41,27 @@
         添加推广佛事
       </el-button>
     </div>
-    <el-table
-      v-loading="loading"
-      :data="list"
-      style="width: 100%"
-    >
+    <el-table v-loading="loading" :data="list" style="width: 100%">
       <el-table-column
         prop="templeId"
         label="寺院ID"
         width="100"
         :align="'left'"
       />
-      <el-table-column
-        prop="buddhistName"
-        label="佛事状态"
-      >
+      <el-table-column prop="buddhistName" label="佛事状态">
         <template slot-scope="scope">
-          <span
-            v-if="!scope.row.isEnd"
-            style="color: #67C23A;"
-          >进行中</span>
+          <span v-if="!scope.row.isEnd" style="color: #67C23A;">进行中</span>
           <template v-else>
-            <span
-              v-if="scope.row.isFinish"
-              style="color: #909399;"
-            >已确认</span>
-            <span
-              v-else
-              style="color: #E6A23C;"
-            >已结束</span>
+            <span v-if="scope.row.isFinish" style="color: #909399;"
+              >已确认</span
+            >
+            <span v-else style="color: #E6A23C;">已结束</span>
           </template>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="buddhistName"
-        label="佛事名称"
-      />
-      <el-table-column
-        prop="templeName"
-        label="寺院名称"
-      />
-      <el-table-column
-        label="推广服务费"
-        :align="'center'"
-      >
+      <el-table-column prop="buddhistName" label="佛事名称" />
+      <el-table-column prop="templeName" label="寺院名称" />
+      <el-table-column label="推广服务费" :align="'center'">
         <template slot-scope="scope">
           {{ Number(100 * scope.row.rate).toFixed(2) }}%
         </template>
@@ -102,15 +71,8 @@
         label="推广生效时间"
         :align="'center'"
       />
-      <el-table-column
-        prop="updateUser"
-        label="最后编辑人"
-        :align="'center'"
-      />
-      <el-table-column
-        label="分享福币"
-        :align="'center'"
-      >
+      <el-table-column prop="updateUser" label="最后编辑人" :align="'center'" />
+      <el-table-column label="分享福币" :align="'center'">
         <template slot="header">
           分享福币
           <el-tooltip
@@ -119,24 +81,15 @@
             content="设置福币分成：用户分享当前佛事后，从分享链接支付的订单会按设置的比例的福币给他。"
             placement="top-start"
           >
-            <i
-              class="el-icon-info"
-              style="color: #409EFF;"
-            />
+            <i class="el-icon-info" style="color: #409EFF;" />
           </el-tooltip>
         </template>
         <template slot-scope="scope">
           <span v-if="scope.row.isShareFuBi">已设置</span>
-          <span
-            v-else
-            style="color: #409EFF;"
-          >未设置</span>
+          <span v-else style="color: #409EFF;">未设置</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="操作"
-        :align="'right'"
-      >
+      <el-table-column label="操作" :align="'right'">
         <template slot-scope="scope">
           <div v-show="scope.row.isEnd && !scope.row.isFinish">
             <el-button
@@ -186,34 +139,15 @@
         }
       "
     >
-      <el-table
-        :data="recordList"
-        style="width: 100%"
-      >
-        <el-table-column
-          prop="startTime"
-          label="生效时间"
-          align="left"
-        />
-        <el-table-column
-          prop="rate"
-          label="服务费用"
-          align="center"
-        >
+      <el-table :data="recordList" style="width: 100%">
+        <el-table-column prop="startTime" label="生效时间" align="left" />
+        <el-table-column prop="rate" label="服务费用" align="center">
           <template slot-scope="scope">
             {{ Number(100 * scope.row.rate).toFixed(2) }}%
           </template>
         </el-table-column>
-        <el-table-column
-          prop="updateTime"
-          label="编辑时间"
-          align="center"
-        />
-        <el-table-column
-          prop="updateUser"
-          label="编辑用户"
-          align="right"
-        />
+        <el-table-column prop="updateTime" label="编辑时间" align="center" />
+        <el-table-column prop="updateUser" label="编辑用户" align="right" />
       </el-table>
     </el-dialog>
     <el-dialog
@@ -229,33 +163,20 @@
         <div class="title">
           佛事名称
         </div>
-        <div class="content">
-          ：{{ curItem.buddhistName }}
-        </div>
+        <div class="content">：{{ curItem.buddhistName }}</div>
       </div>
       <div class="row">
         <div class="title">
           佛事ID
         </div>
-        <div class="content">
-          ：{{ curItem.buddhistId }}
-        </div>
+        <div class="content">：{{ curItem.buddhistId }}</div>
       </div>
-      <div
-        class="f-s-18"
-        style="color: #F56C6C;"
-      >
+      <div class="f-s-18" style="color: #F56C6C;">
         确认结算后不可取消
       </div>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="dialogWithdrawVisible = !1">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="handleWithdraw"
-        >确 定</el-button>
+        <el-button type="primary" @click="handleWithdraw">确 定</el-button>
       </span>
     </el-dialog>
     <el-dialog
@@ -275,6 +196,7 @@
           ：
           <el-select
             v-model.number="addItem.templeId"
+            filterable
             placeholder="请选择"
             @change="getBuddhistList"
           >
@@ -335,15 +257,9 @@
           />
         </div>
       </div>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="dialogAddVisible = !1">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="handleAdd"
-        >确 定</el-button>
+        <el-button type="primary" @click="handleAdd">确 定</el-button>
       </span>
     </el-dialog>
   </div>

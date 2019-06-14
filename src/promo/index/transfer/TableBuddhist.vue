@@ -1,35 +1,18 @@
 <template>
   <div>
-    <el-table
-      v-loading="loading"
-      :data="tableData"
-      stripe
-      style="width: 100%"
-    >
+    <el-table v-loading="loading" :data="tableData" stripe style="width: 100%">
       <el-table-column
         prop="buddhistId"
         label="ID"
         width="100"
         :align="'left'"
       />
-      <el-table-column
-        prop="buddhistName"
-        label="佛事名称"
-      />
-      <el-table-column
-        label="关联寺院"
-        :align="'center'"
-      >
+      <el-table-column prop="buddhistName" label="佛事名称" />
+      <el-table-column label="关联寺院" :align="'center'">
         <template slot-scope="scope">
-          <el-tooltip
-            v-if="scope.row.templeList.length"
-            placement="right"
-          >
+          <el-tooltip v-if="scope.row.templeList.length" placement="right">
             <div slot="content">
-              <div
-                v-for="item in scope.row.templeList"
-                :key="item"
-              >
+              <div v-for="item in scope.row.templeList" :key="item">
                 {{ item }}
               </div>
             </div>
@@ -42,11 +25,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="orderNum"
-        label="待转单数"
-        :align="'center'"
-      />
+      <el-table-column prop="orderNum" label="待转单数" :align="'center'" />
       <el-table-column
         prop="conversionOrderNum"
         label="已转单数"
@@ -62,32 +41,25 @@
         label="盈收金额（元）"
         :align="'center'"
       />
-      <el-table-column
-        label="分享福币"
-        :align="'center'"
-      >
+      <el-table-column label="分享福币" :align="'center'">
         <template slot-scope="scope">
           <span v-if="scope.row.isShareFuBi">已设置</span>
-          <span
-            v-else
-            style="color: #409EFF;"
-          >未设置</span>
+          <span v-else style="color: #409EFF;">未设置</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="操作"
-        width="100"
-        align="center"
-      >
+      <el-table-column label="操作" width="100" align="center">
         <template slot-scope="scope">
           <div>
-            <el-button
+            <el-button type="text" size="small">
+              <a :href="getTransferListUrl(scope.row)">转单列表</a>
+            </el-button>
+            <!-- <el-button
               type="text"
               size="small"
               @click="toTransferList(scope.row)"
             >
               转单列表
-            </el-button>
+            </el-button> -->
           </div>
           <div>
             <el-button
@@ -99,11 +71,7 @@
             </el-button>
           </div>
           <div>
-            <el-button
-              type="text"
-              size="small"
-              @click="toMergeSet(scope.row)"
-            >
+            <el-button type="text" size="small" @click="toMergeSet(scope.row)">
               组合设置
             </el-button>
           </div>
@@ -207,12 +175,20 @@ export default {
       this.pagination.page = page;
       this.requestList();
     },
+    getTransferListUrl(item) {
+      const { buddhistId } = item;
+      return `${window.location.origin}${window.location.pathname}#/promo/index/tableNotTransfer/${buddhistId}`;
+    },
     toTransferList(item) {
       const { buddhistId, buddhistName, subList } = item;
-      this.transferBuddhistId = buddhistId;
-      this.transferBuddhistName = buddhistName;
-      this.transferSubList = subList;
-      this.transferActiveName = 'tableNotTransfer';
+      // this.transferBuddhistId = buddhistId;
+      // this.transferBuddhistName = buddhistName;
+      // this.transferSubList = subList;
+      // this.transferActiveName = 'tableNotTransfer';
+
+      // 此处存在特殊逻辑
+      let url = `${window.location.origin}${window.location.pathname}#/promo/index/tableNotTransfer/${buddhistId}`;
+      window.open(url);
     },
     toTransferSet(item) {
       window.sessionStorage['promo/index/transfer/item'] = JSON.stringify(item);
