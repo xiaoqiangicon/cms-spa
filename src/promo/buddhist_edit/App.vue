@@ -9,23 +9,20 @@
       </div>
     </el-card>
     <el-card>
-      <el-table
-        :data="buddhistData.subList"
-        style="width: 100%"
-      >
-        <el-table-column
-          prop="name"
-          label="选择项名称"
-        />
-        <el-table-column
-          prop="price"
-          label="价格（元）"
-          align="center"
-        />
-        <el-table-column
-          label="推广服务费"
-          align="center"
-        >
+      <el-table :data="buddhistData.subList" style="width: 100%">
+        <el-table-column prop="name" label="选择项名称" />
+        <el-table-column prop="price" label="价格（元）" align="center">
+          <template slot-scope="scope">
+            {{
+              scope.row.price === -1
+                ? '随喜'
+                : scope.row.price === 0
+                ? '无需支付'
+                : scope.row.price
+            }}
+          </template>
+        </el-table-column>
+        <el-table-column label="推广服务费" align="center">
           <template slot="header">
             推广服务费
             <el-tooltip
@@ -34,16 +31,9 @@
               content="转单价格请在“推广设置”中设置"
               placement="top-start"
             >
-              <i
-                class="el-icon-info"
-                style="color: #409EFF;"
-              />
+              <i class="el-icon-info" style="color: #409EFF;" />
             </el-tooltip>
-            <el-button
-              type="primary"
-              size="mini"
-              @click="handleClickEditRate"
-            >
+            <el-button type="primary" size="mini" @click="handleClickEditRate">
               编辑
             </el-button>
           </template>
@@ -51,10 +41,7 @@
             {{ Number(100 * buddhistData.rate).toFixed(2) }}%
           </template>
         </el-table-column>
-        <el-table-column
-          label="分享福币"
-          align="center"
-        >
+        <el-table-column label="分享福币" align="center">
           <template slot="header">
             分享福币（%）
             <el-tooltip
@@ -63,10 +50,7 @@
               content="设置福币分成：用户分享当前佛事后，从分享链接支付的订单会按设置的比例的福币给他。"
               placement="top-start"
             >
-              <i
-                class="el-icon-info"
-                style="color: #409EFF;"
-              />
+              <i class="el-icon-info" style="color: #409EFF;" />
             </el-tooltip>
           </template>
           <template slot-scope="scope">
@@ -76,10 +60,7 @@
               @click="handleClickEditFuBiPercent(scope.row)"
             >
               {{ scope.row.shareFuBiPercent }}%
-              <i
-                style="color: #409EFF;"
-                class="el-icon-edit"
-              />
+              <i style="color: #409EFF;" class="el-icon-edit" />
             </div>
             <div v-else>
               -
@@ -107,14 +88,8 @@
         />
         <span class="mg-l-5">%</span>
       </div>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          type="primary"
-          @click="submitFuBiSet"
-        >保 存</el-button>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitFuBiSet">保 存</el-button>
       </span>
     </el-dialog>
     <!-- DialogEdit -->
@@ -155,14 +130,8 @@
           />
         </div>
       </div>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          type="primary"
-          @click="submit"
-        >保 存</el-button>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submit">保 存</el-button>
       </span>
     </el-dialog>
   </div>
