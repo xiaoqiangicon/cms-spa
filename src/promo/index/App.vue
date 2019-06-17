@@ -65,12 +65,26 @@ export default {
     // 因此点击时会带两个参数 重新打开 此页面
     // 以下做针对处理
     // 由于是单页面 此页面在进入时必带参数 默认为 :activName :buddhistId
-    const { transferActiveName, transferBuddhistId } = this.$route.params;
-    console.log(transferActiveName, transferBuddhistId);
+    const {
+      transferActiveName,
+      transferBuddhistId,
+      transferBuddhistName,
+      transferSubList,
+    } = this.$route.params;
+    console.log(
+      transferActiveName,
+      transferBuddhistId,
+      transferBuddhistName,
+      transferSubList
+    );
     if (transferActiveName !== ':transferActiveName')
       this.transferActiveName = transferActiveName;
     if (transferBuddhistId !== ':transferBuddhistId')
       this.transferBuddhistId = transferBuddhistId;
+    if (transferBuddhistName !== ':transferBuddhistName')
+      this.transferBuddhistName = transferBuddhistName;
+    if (transferSubList !== ':transferSubList')
+      this.transferSubList = JSON.parse(decodeURIComponent(transferSubList));
   },
   created() {},
   methods: {},
