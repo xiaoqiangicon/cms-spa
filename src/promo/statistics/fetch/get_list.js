@@ -1,5 +1,7 @@
 import seeFetch from 'see-fetch';
 
+// 此接口只有第一页会返回总页码
+
 const req = {
   // templeId: 'templeId',
   page: 'pageNumber',
