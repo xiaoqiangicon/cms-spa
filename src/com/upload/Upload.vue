@@ -53,9 +53,15 @@ export default {
   mounted() {
     const { upload: uploadEl } = this.$refs;
 
-    upload(uploadEl, url => {
-      this.images.push(url);
-    });
+    upload(
+      uploadEl,
+      url => {
+        this.images.push(url);
+      },
+      {
+        multiple: this.multiple,
+      }
+    );
   },
   methods: {
     delImage(index) {

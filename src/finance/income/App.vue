@@ -8,7 +8,7 @@
         <el-tab-pane label="供奉系统" name="second">
           <gong-feng />
         </el-tab-pane>
-        <el-tab-pane label="推广佛事" name="third">
+        <el-tab-pane v-if="!1" label="推广佛事" name="third">
           <fo-shi />
         </el-tab-pane>
         <el-tab-pane label="自营佛事" name="fourth">
