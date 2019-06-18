@@ -1,5 +1,5 @@
 <template>
-  <Upload :images="images" :multiple="false" />
+  <Upload :images="images" :multiple="!0" />
 </template>
 
 <script>

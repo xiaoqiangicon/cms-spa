@@ -7,10 +7,10 @@ const req = {
   // pageSize: 'pageSize',
 };
 
-const pre = params => ({
-  ...params,
-  pageNumber: params.pageNumber - 1,
-});
+// const pre = params => ({
+//   ...params,
+//   pageNumber: params.pageNumber - 1,
+// });
 
 const refactor = {
   data: {
@@ -53,7 +53,7 @@ seeFetch.config('promo/index/buddhist/getList', {
     '/promo/index/buddhist/mock/get_list',
   ],
   req: [req, req],
-  pre: [pre, pre],
+  // pre: [pre, pre],
   refactor: [refactor, refactor],
   post: [post, post],
 });

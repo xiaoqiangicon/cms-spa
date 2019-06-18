@@ -14,10 +14,7 @@
           filterable
           @change="refresh"
         >
-          <el-option
-            :value="0"
-            label="全部"
-          />
+          <el-option :value="0" label="全部" />
           <el-option
             v-for="item in templeList"
             :key="item.id"
@@ -33,16 +30,8 @@
           stripe
           style="width: 100%"
         >
-          <el-table-column
-            prop="id"
-            label="ID"
-            width="100"
-            :align="'center'"
-          />
-          <el-table-column
-            prop="name"
-            label="寺院名称"
-          />
+          <el-table-column prop="id" label="ID" width="100" :align="'center'" />
+          <el-table-column prop="name" label="寺院名称" />
           <el-table-column
             prop="transferOrderNum"
             label="已转单数"
@@ -58,11 +47,7 @@
             label="盈收金额（元）"
             :align="'center'"
           />
-          <el-table-column
-            label="操作"
-            width="100"
-            :align="'center'"
-          >
+          <el-table-column label="操作" width="100" :align="'center'">
             <template slot-scope="scope">
               <div>
                 <el-button
@@ -166,7 +151,10 @@ export default {
           });
         }
 
-        this.pagination.total = res.total;
+        // total 只取第一页的
+        if (this.pagination.page === 1) {
+          this.pagination.total = res.total;
+        }
         this.tableData = res.data;
 
         this.loading = !1;
