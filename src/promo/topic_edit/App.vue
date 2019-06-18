@@ -11,9 +11,7 @@
         <el-switch v-model="form.isShowWish" />
       </el-form-item>
       <el-form-item label="封面图片">
-        <el-button type="primary" size="mini" @click="onUpload">
-          上 传
-        </el-button>
+        <Upload :images="form.cover" />
       </el-form-item>
       <el-form-item label="页面组件">
         <el-tabs type="border-card">
@@ -76,11 +74,12 @@ import './fetch/index';
 // import seeFetch from 'see-fetch';
 // import { Notification } from 'element-ui';
 // import DialogRemind from './DialogRemind';
-// import Upload from '../../com/upload/Upload.vue';
+import Upload from '../../com/upload/Upload.vue';
 
 export default {
   name: 'App',
   components: {
+    Upload,
     // DialogRemind,
   },
   data() {
