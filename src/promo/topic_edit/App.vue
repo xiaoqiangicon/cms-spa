@@ -14,45 +14,51 @@
         <Upload :images="form.cover" />
       </el-form-item>
       <el-form-item label="页面组件">
-        <el-tabs type="border-card">
-          <el-card class="mg-b-10">
-            <div class="mg-b-20">
-              <span class="mg-l-5">组件名称</span>
-              <el-input class="mg-l-10" style="width: 200px;" />
-              <div class="fl-right">
-                <el-button type="primary" size="small">
-                  保 存
-                </el-button>
-                <el-button type="primary" size="small">
-                  添 加
-                </el-button>
-              </div>
+        <el-tabs v-model="activeComponent" type="border-card">
+          <div class="mg-b-20">
+            <span class="mg-l-5">组件名称</span>
+            <el-input class="mg-l-10" style="width: 200px;" />
+            <div class="fl-right">
+              <el-button
+                type="primary"
+                size="small"
+                @click="clickSaveComponent"
+              >
+                保 存
+              </el-button>
+              <el-button type="primary" size="small" @click="clickAddComponent">
+                添 加
+              </el-button>
             </div>
-            <el-table border="" :data="tableData" stripe style="width: 100%">
-              <el-table-column
-                prop="id"
-                width="100"
-                label="ID"
-                :align="'center'"
-              />
-              <el-table-column prop="title" label="名称" :align="'center'" />
-              <el-table-column prop="price" label="价格" :align="'center'" />
-              <el-table-column label="操作" :align="'center'">
-                <template slot-scope="scope">
-                  <el-button
-                    type="success"
-                    size="mini"
-                    @click="handleClickDelete(scope.row)"
-                  >
-                    删除
-                  </el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-          </el-card>
-          <el-tab-pane label="寺院组件" />
-          <el-tab-pane label="佛事组件" />
-          <el-tab-pane label="商品组件" />
+          </div>
+          <el-table
+            border=""
+            :data="curComponentData.tableData"
+            stripe
+            style="width: 100%"
+          >
+            <el-table-column
+              v-for="item in curComponentData.col"
+              :key="item.prop"
+              :prop="item.prop"
+              :label="item.label"
+              :align="'center'"
+            />
+            <el-table-column label="操作" :align="'center'">
+              <template slot-scope="scope">
+                <el-button
+                  type="success"
+                  size="mini"
+                  @click="handleClickDelete(scope.row)"
+                >
+                  删除
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-tab-pane label="寺院组件" name="temple" />
+          <el-tab-pane label="佛事组件" name="buddhist" />
+          <el-tab-pane label="商品组件" name="goods" />
         </el-tabs>
       </el-form-item>
       <div class="operation">
@@ -94,28 +100,38 @@ export default {
         components: [],
       },
 
-      component: {
+      activeComponent: 'temple',
+      componentData: {
         temple: {
           name: '寺院组件',
-          col: ['id', 'name'],
+          col: [{ prop: 'id', label: 'ID' }, { prop: 'title', label: '名称' }],
         },
         buddhist: {
           name: '佛事组件',
-          col: ['id', 'name'],
+          col: [{ prop: 'id', label: 'ID' }, { prop: 'title', label: '名称' }],
         },
         goods: {
           name: '商品组件',
-          col: ['id', 'name', 'price'],
+          col: [
+            { prop: 'id', label: 'ID' },
+            { prop: 'title', label: '名称' },
+            { prop: 'price', label: '价格' },
+          ],
         },
-      },
-
-      curComponentData: {
-        name: '',
-        tableData: [],
       },
 
       dialogRemindVisible: !1,
     };
+  },
+  computed: {
+    curComponentData() {
+      const { activeComponent, componentData } = this;
+      const res = {};
+      res.name = componentData[activeComponent].name;
+      res.col = componentData[activeComponent].col;
+      res.tableData = [];
+      return res;
+    },
   },
   created() {
     this.init();
@@ -139,6 +155,8 @@ export default {
       this.dialogRemindVisible = visible;
     },
     onUpload() {},
+    clickSaveComponent() {},
+    clickAddComponent() {},
     onSubmit(rowData) {
       const { id } = rowData;
       this.curTempleId = id;
