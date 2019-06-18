@@ -8,7 +8,7 @@ const req = {
 
 const pre = params => ({
   ...params,
-  pageNum: params.pageNum - 1,
+  pageNumber: params.pageNumber - 1,
 });
 
 const refactor = {
