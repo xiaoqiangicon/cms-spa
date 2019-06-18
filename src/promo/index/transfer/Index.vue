@@ -3,21 +3,37 @@
     <div class="container">
       <div class="filter">
         <div v-if="transferActiveName === 'tableBuddhist'">
-          <div class="tip fl-left">
-            转单系统：手动调度APP的订单给指定的寺院处理、自动调度为APP超度和祈福的组合单其中转单系统与推广佛事为互斥关系，但两者都可设置分享激励
+          <div class="clearfix">
+            <div class="tip fl-left">
+              转单系统：手动调度APP的订单给指定的寺院处理、自动调度为APP超度和祈福的组合单其中转单系统与推广佛事为互斥关系，但两者都可设置分享激励
+            </div>
+            <div class="fl-right mg-t-40">
+              <el-button
+                type="primary"
+                size="small"
+                @click="dialogAddTransferBuddhistVisible = true"
+              >
+                添加转单佛事
+              </el-button>
+            </div>
           </div>
-          <div class="fl-right mg-t-40">
-            <el-button
-              type="primary"
+          <div class="mg-t-20">
+            <el-input
+              v-model="transferSearchContent"
+              placeholder="请输入佛事名"
               size="small"
-              @click="dialogAddTransferBuddhistVisible = true"
+              style="width:200px;"
             >
-              添加转单佛事
-            </el-button>
+              <el-button
+                slot="append"
+                icon="el-icon-search"
+                @click="refreshTableData('tableBuddhist')"
+              />
+            </el-input>
           </div>
         </div>
         <div v-else>
-          <div class="pd-t-20">
+          <div class="pd-t-20 clearfix">
             <div class="mg-r-10 f-s-16">
               当前佛事&nbsp;&nbsp;&nbsp;&nbsp; {{ transferBuddhistName }}
             </div>
@@ -169,7 +185,6 @@ export default {
   width: 100%;
 }
 .filter {
-  height: 100px;
   margin-bottom: 20px;
   .tip {
     width: 400px;

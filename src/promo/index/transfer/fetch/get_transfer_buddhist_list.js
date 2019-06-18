@@ -3,6 +3,7 @@ import seeFetch from 'see-fetch';
 const req = {
   page: 'pageNumber',
   // pageSize: 'pageSize',
+  // searchContent: 'searchContent',
 };
 
 const pre = params => ({

@@ -111,6 +111,19 @@ const routes = [
         meta: { title: '事件统计', noCache: true },
       },
       {
+        path: 'topic',
+        component: () => import('../promo/topic/App'),
+        name: '专题管理',
+        meta: { title: '专题管理', noCache: true },
+      },
+      {
+        path: 'topicEdit/:id',
+        component: () => import('../promo/topic_edit/App'),
+        name: '专题列表/编辑专题',
+        meta: { title: '专题列表/编辑专题', noCache: true },
+        hidden: !0,
+      },
+      {
         path: `${domain}/event/thousand`,
         name: '千寺祈福',
         meta: { title: '千寺祈福' },
