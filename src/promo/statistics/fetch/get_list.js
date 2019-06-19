@@ -1,5 +1,7 @@
 import seeFetch from 'see-fetch';
 
+// 此接口只有第一页会返回总页码
+
 const req = {
   // templeId: 'templeId',
   page: 'pageNumber',
@@ -8,7 +10,7 @@ const req = {
 
 const pre = params => ({
   ...params,
-  pageNum: params.pageNum - 1,
+  pageNumber: params.pageNumber - 1,
 });
 
 const refactor = {
