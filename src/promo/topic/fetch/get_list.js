@@ -15,14 +15,29 @@ const refactor = {
   data: 'data.list',
   _data: [
     {
-      id: 'id',
-      title: 'title',
-      addTime: 'addTime',
+      // id: 'id',
+      // title: 'title',
+      // addTime: 'addTime',
       link: 'url',
-      introduce: 'introduce',
+      // introduce: 'introduce',
       cover: 'coverPic',
-      isShowWish: 'isShowWish|bool',
-      status: 'status',
+      // isShowWish: 'isShowWish|bool',
+      // status: 'status',
+      // templeComponent: 'templeComponent',
+      _templeComponent: {
+        title: 'templeTitle',
+        list: 'templeList',
+      },
+      buddhistComponent: 'commodityComponent',
+      _buddhistComponent: {
+        title: 'commodityTitle',
+        list: 'commodityList',
+      },
+      // goodsComponent: 'goodsComponent',
+      _goodsComponent: {
+        title: 'goodsTitle',
+        list: 'goodsList',
+      },
     },
   ],
 };
