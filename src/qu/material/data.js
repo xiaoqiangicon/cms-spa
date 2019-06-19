@@ -26,6 +26,7 @@ export const publishAccounts = [
   { id: 1, name: '寺院法讯' },
   { id: 2, name: '佛学知识' },
   { id: 3, name: '菩菩公园' },
+  { id: 4, name: '心灵港湾' },
 ];
 
 const regionsStr =
