@@ -1,6 +1,21 @@
 <template>
   <div class="container">
     <div class="clearfix">
+      <el-select
+        v-model="filterType"
+        filterable
+        placeholder="请选择"
+        size="small"
+        style="width: 200px;"
+        @change="doSearch"
+      >
+        <el-option
+          v-for="item in ziYingTypes"
+          :key="item.id"
+          :value="item.id"
+          :label="item.name"
+        />
+      </el-select>
       <el-input
         v-model="search"
         placeholder="请输入佛事ID或佛事名称"
@@ -140,6 +155,7 @@ import {
   ziYingModifyRecordsProps,
   ziYingUseProps,
   ziYingUseRecordsProps,
+  ziYingTypes,
 } from './data';
 import ZiYingAdd from './ZiYingAdd';
 import ZiYingModifyRecords from './ZiYingModifyRecords';
@@ -159,9 +175,11 @@ export default {
     return {
       loading: !0,
       search: '',
+      filterType: 1,
       currentPage: 1,
       totalCount: 0,
       list: [],
+      ziYingTypes,
     };
   },
   created() {
@@ -171,6 +189,7 @@ export default {
     fetchList() {
       this.loading = !0;
       seeFetch('finance/income/listZiYing', {
+        type: this.filterType,
         search: this.search,
         page: this.currentPage,
       }).then(res => {
@@ -207,6 +226,7 @@ export default {
       this.$store.state.financeIncome.ziYingAdd.visible = !0;
       this.$store.state.financeIncome.ziYingAdd.isUpdate = !0;
       this.$store.state.financeIncome.ziYingAdd.updateId = item.id;
+      this.$store.state.financeIncome.ziYingAdd.type = item.type || 1;
     },
     toAdd() {
       ziYingAddProps.forEach(({ name, default: defaultValue }) => {

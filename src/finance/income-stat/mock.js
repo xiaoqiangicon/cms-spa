@@ -18,6 +18,7 @@ export const list = {
     orderCount: id * 15,
     faShiProfit: id * 16,
     time: '2016-01-01',
+    type: (id % 2) + 1,
   })),
 };
 
@@ -34,6 +35,7 @@ export const list1 = {
     orderNum: id * 15,
     bonzeMoney: id * 16,
     incomeTime: '2016-01-01',
+    commodityType: (id % 2) + 1,
   })),
 };
 

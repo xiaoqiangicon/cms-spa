@@ -3,6 +3,7 @@ import seeFetch from 'see-fetch';
 const requestKeys = {
   foShiId: 'commodityId',
   corporationProfitRate: 'percentage',
+  type: 'commodityType',
 };
 
 seeFetch.config('finance/income/updateZiYing', {

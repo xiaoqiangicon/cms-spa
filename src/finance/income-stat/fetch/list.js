@@ -1,4 +1,5 @@
 import seeFetch from 'see-fetch';
+import { types } from '../data';
 
 const requestKeys = {
   dimension: 'sumType',
@@ -17,6 +18,7 @@ const responseRefactor = {
       orderCount: 'orderNum',
       faShiProfit: 'bonzeMoney',
       time: 'incomeTime',
+      type: 'commodityType',
     },
   ],
 };
@@ -32,6 +34,8 @@ const postHandle = res => {
   if (res.data && res.data.length) {
     res.data.forEach((item, index) => {
       item.key = index + 1;
+      if (!item.type) item.type = 1;
+      item.typeText = types.find(i => i.id === item.type).name;
     });
 
     res.data.unshift({
@@ -70,6 +74,12 @@ const postHandle = res => {
   }
 };
 
+const postLocal = res => {
+  res.data.forEach(item => {
+    item.typeText = types.find(i => i.id === item.type).name;
+  });
+};
+
 seeFetch.config('finance/income-stat/list', {
   method: ['post'],
   stringify: [!0],
@@ -81,5 +91,5 @@ seeFetch.config('finance/income-stat/list', {
   requestKeys: [requestKeys, requestKeys],
   preHandle: [preHandle, preHandle],
   responseRefactor: [responseRefactor, responseRefactor],
-  postHandle: [postHandle, postHandle],
+  postHandle: [postHandle, postHandle, postLocal],
 });

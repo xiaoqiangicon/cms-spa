@@ -272,6 +272,7 @@
       <div v-else-if="filterType === 11 && filterDimension === 2" class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
           <el-table-column prop="foShiName" label="佛事名称" />
+          <el-table-column prop="typeText" label="项目类型" />
           <el-table-column prop="templeName" label="寺院名称" />
           <el-table-column prop="orderCount" label="订单数量" />
           <el-table-column prop="amount" label="佛事金额（元）" />

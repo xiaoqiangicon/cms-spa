@@ -1,7 +1,9 @@
 import seeFetch from 'see-fetch';
+import { ziYingTypes } from '../data';
 
 const requestKeys = {
   search: 'searchContent',
+  type: 'commodityType',
   page: 'pageNum',
 };
 
@@ -18,6 +20,7 @@ const responseRefactor = {
       profitAmount: 'earningsPrice', // 当前营收
       manualAmount: 'expenditurePrice', // 人工记录
       ended: 'isEnd',
+      type: 'commodityType',
     },
   ],
 };
@@ -41,8 +44,16 @@ const postHandle = res => {
           item.usedAmount
         ).toFixed(2)
       );
+      if (!item.type) item.type = 1;
+      item.typeText = ziYingTypes.find(i => i.id === item.type).name;
     });
   }
+};
+
+const postLocal = res => {
+  res.data.forEach(item => {
+    item.typeText = ziYingTypes.find(i => i.id === item.type).name;
+  });
 };
 
 seeFetch.config('finance/income/listZiYing', {
@@ -55,6 +66,6 @@ seeFetch.config('finance/income/listZiYing', {
   ],
   requestKeys: [requestKeys, requestKeys],
   responseRefactor: [responseRefactor, responseRefactor],
-  postHandle: [postHandle, postHandle],
+  postHandle: [postHandle, postHandle, postLocal],
   preHandle: [preHandle, preHandle],
 });
