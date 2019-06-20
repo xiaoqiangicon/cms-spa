@@ -471,7 +471,7 @@ export default {
         // 立即请求后台接口偶尔会出现错误数据
         setTimeout(() => {
           this.init();
-        }, 1000);
+        }, 100);
       });
     },
     changeTemple(id) {
