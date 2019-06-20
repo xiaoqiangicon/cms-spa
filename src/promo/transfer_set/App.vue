@@ -595,6 +595,7 @@ export default {
     }
     .main {
       height: 100%;
+      overflow-y: scroll;
       flex-grow: 1;
       flex-shrink: 1;
       margin-left: 20px;
