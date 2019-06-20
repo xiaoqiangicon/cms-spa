@@ -92,7 +92,7 @@ export const summary = {
     randomMoney(),
     randomMoney(),
   ],
-  projects: [1, 2, 3, 4, 5, 6, 7].map(id => ({
+  projects: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map(id => ({
     id,
     name: `项目${id}`,
     amount: randomMoney(),
@@ -112,7 +112,21 @@ export const summary1 = {
         earningsMoney: randomMoney(),
       })
     ),
-    yearEarningsMoneyProportion: [1, 2, 3, 4, 5, 6, 7].map(id => ({
+    yearEarningsMoneyProportion: [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+    ].map(id => ({
       type: id,
       earningsMoney: randomMoney(),
     })),
