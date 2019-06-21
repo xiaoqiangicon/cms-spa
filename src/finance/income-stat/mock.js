@@ -99,6 +99,18 @@ export const summary = {
     name: `项目${id}`,
     amount: randomMoney(),
     percent: id * 10,
+    subItems: [
+      {
+        name: `子项目${id}`,
+        amount: randomMoney(),
+        percent: id * 10,
+      },
+      {
+        name: `子项目${id}`,
+        amount: randomMoney(),
+        percent: id * 10,
+      },
+    ],
   })),
 };
 
@@ -126,11 +138,13 @@ export const summary1 = {
       9,
       10,
       11,
+      11,
       12,
       13,
     ].map(id => ({
       type: id,
       earningsMoney: randomMoney(),
+      commodityType: id === 11 ? 1 : 0,
     })),
   },
 };

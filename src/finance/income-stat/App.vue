@@ -91,6 +91,22 @@
                   {{ project.amount }}
                 </el-col>
                 <el-col :span="8"> {{ project.percent }}% </el-col>
+                <div v-if="project.subItems" class="clear pd-l-20 pd-t-10">
+                  <el-row
+                    v-for="subItem in project.subItems"
+                    :key="subItem.name"
+                    :gutter="10"
+                    class="f-s-12 gray"
+                  >
+                    <el-col :span="8">
+                      {{ subItem.name }}
+                    </el-col>
+                    <el-col :span="8">
+                      {{ subItem.amount }}
+                    </el-col>
+                    <el-col :span="8"> {{ subItem.percent }}% </el-col>
+                  </el-row>
+                </div>
               </el-row>
             </div>
             <div v-else class="t-a-center">

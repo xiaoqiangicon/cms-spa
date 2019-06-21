@@ -1,5 +1,5 @@
 import seeFetch from 'see-fetch';
-import { types } from '../data';
+import { ziYingTypes } from '../data';
 
 const requestKeys = {
   dimension: 'sumType',
@@ -35,7 +35,7 @@ const postHandle = res => {
     res.data.forEach((item, index) => {
       item.key = index + 1;
       if (!item.type) item.type = 1;
-      item.typeText = types.find(i => i.id === item.type).name;
+      item.typeText = ziYingTypes.find(i => i.id === item.type).name;
     });
 
     res.data.unshift({
@@ -76,7 +76,7 @@ const postHandle = res => {
 
 const postLocal = res => {
   res.data.forEach(item => {
-    item.typeText = types.find(i => i.id === item.type).name;
+    item.typeText = ziYingTypes.find(i => i.id === item.type).name;
   });
 };
 
