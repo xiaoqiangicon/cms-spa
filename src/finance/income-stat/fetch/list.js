@@ -24,8 +24,8 @@ const responseRefactor = {
 };
 
 const preHandle = req => {
-  if (req.type === 2 || req.type === 3 || req.type === 7 || req.type === 8)
-    req.sumType = 1;
+  if ([2, 3, 7, 8, 9, 10].indexOf(req.type) > -1) req.sumType = 1;
+  else if ([12].indexOf(req.type) > -1) req.sumType = 2;
 };
 
 /* eslint-disable no-param-reassign */
