@@ -5,6 +5,9 @@ export default {
   data: {
     list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(topicId => ({
       id: topicId,
+      bgColor: 'red',
+      btnBgColor: 'green',
+      textColor: 'blue',
       title: `专题${topicId}`,
       introduce: '简介',
       url: 'https://www.baidu.com',

@@ -21,6 +21,9 @@ const refactor = {
       link: 'url',
       // introduce: 'introduce',
       cover: 'coverPic',
+      bgColor: 'bgColor', // 背景色
+      btnBgColor: 'btnBgColor', // 按钮背景色
+      textColor: 'textColor', // 文本颜色
       // isShowWish: 'isShowWish|bool',
       // status: 'status',
       // templeComponent: 'templeComponent',

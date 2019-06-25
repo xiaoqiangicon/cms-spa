@@ -13,6 +13,15 @@
       <el-form-item prop="cover" label="封面图片">
         <Upload :images="form.cover" />
       </el-form-item>
+      <el-form-item prop="cover" label="背景颜色">
+        <el-color-picker v-model="form.bgColor" />
+      </el-form-item>
+      <el-form-item prop="cover" label="按钮背景颜色">
+        <el-color-picker v-model="form.btnBgColor" />
+      </el-form-item>
+      <el-form-item prop="cover" label="文本颜色">
+        <el-color-picker v-model="form.textColor" />
+      </el-form-item>
       <el-form-item prop="components" label="页面组件">
         <el-tabs v-model="activeComponent" type="border-card">
           <div v-loading="loadingComponentData">
@@ -105,6 +114,9 @@ export default {
         introduce: '',
         isShowWish: '',
         cover: [],
+        bgColor: '',
+        btnBgColor: '',
+        textColor: '',
         components: [],
         templeComponent: { title: '', list: [] },
         buddhistComponent: { title: '', list: [] },
@@ -212,6 +224,9 @@ export default {
         if (valid) {
           const {
             title,
+            bgColor,
+            btnBgColor,
+            textColor,
             introduce,
             isShowWish,
             cover,
@@ -220,14 +235,17 @@ export default {
             goodsComponent,
           } = this.form;
           // 数据检验
-          let verifyMessage = '';
-          if (!cover.length) verifyMessage = '请上传封面';
+          const verifyMessage = [];
+          if (!cover.length) verifyMessage.push('请上传封面');
+          if (!bgColor) verifyMessage.push('请选择背景颜色');
+          if (!btnBgColor) verifyMessage.push('请选择按钮背景颜色');
+          if (!textColor) verifyMessage.push('请选择文本颜色');
 
-          if (verifyMessage) {
+          if (verifyMessage.length) {
             Notification({
               type: 'warning',
               title: '提示',
-              message: verifyMessage,
+              message: verifyMessage[0],
             });
             return;
           }
