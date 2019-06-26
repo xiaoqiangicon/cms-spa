@@ -56,7 +56,7 @@ seeFetch.config('promo/topic/getList', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/topic/editComponent',
+    '/topic/page',
     '/promo/topic/mock/get_list',
     '/promo/topic/mock/get_list',
   ],

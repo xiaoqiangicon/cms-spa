@@ -128,7 +128,7 @@ export default {
     },
     handleClickEdit(rowData) {
       const { id } = rowData;
-      window.sessionStorage['promo/topic/item'] = JSON.stringify(rowData);
+      // window.sessionStorage['promo/topic/item'] = JSON.stringify(rowData);
       this.$router.push(`/promo/topicEdit/${id}`);
     },
     handleClickDelete(rowData) {

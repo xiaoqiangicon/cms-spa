@@ -32,7 +32,7 @@ seeFetch.config('promo/topicEdit/update', {
   method: ['post'],
   stringify: [!0, !0],
   url: [
-    '//',
+    '/topic/edit',
     '/promo/topic_edit/mock/success',
     '/promo/topic_edit/mock/success',
   ],

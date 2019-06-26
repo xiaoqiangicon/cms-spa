@@ -14,20 +14,18 @@
         <Upload :images="form.cover" />
       </el-form-item>
       <el-form-item label="页面颜色">
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <span class="vam">背景色：</span>
-            <el-color-picker v-model="form.bgColor" class="vam" />
-          </el-col>
-          <el-col :span="6">
-            <span class="vam">按钮背景颜色：</span>
-            <el-color-picker v-model="form.btnBgColor" class="vam" />
-          </el-col>
-          <el-col :span="6">
-            <span class="vam">文本颜色：</span>
-            <el-color-picker v-model="form.textColor" class="vam" />
-          </el-col>
-        </el-row>
+        <div class="dib mg-r-30">
+          <span class="vam">背景色：</span>
+          <el-color-picker v-model="form.bgColor" class="vam" />
+        </div>
+        <div class="dib mg-r-30">
+          <span class="vam">按钮背景颜色：</span>
+          <el-color-picker v-model="form.btnBgColor" class="vam" />
+        </div>
+        <div class="dib mg-r-30">
+          <span class="vam">文本颜色：</span>
+          <el-color-picker v-model="form.textColor" class="vam" />
+        </div>
       </el-form-item>
       <el-form-item prop="components" label="页面组件">
         <el-tabs v-model="activeComponent" type="border-card">
@@ -187,7 +185,8 @@ export default {
       id = parseInt(id, 10);
       if (id) {
         this.topicId = id;
-        this.form = JSON.parse(window.sessionStorage['promo/topic/item']);
+        this.getDetail();
+        // this.form = JSON.parse(window.sessionStorage['promo/topic/item']);
       }
     },
     initSortable() {
@@ -200,6 +199,24 @@ export default {
           const oldRowData = list.splice(oldIndex, 1)[0];
           list.splice(newIndex, 0, oldRowData);
         },
+      });
+    },
+    getDetail() {
+      const { topicId } = this;
+
+      seeFetch('promo/topicEdit/getDetail', { topicId }).then(res => {
+        if (!res.success) {
+          Notification({
+            type: 'error',
+            title: '提示',
+            message: res.message,
+          });
+
+          return;
+        }
+
+        console.log(res.data);
+        this.form = res.data;
       });
     },
     updateDialogAddVisible(visible) {
@@ -304,5 +321,8 @@ export default {
 }
 .vam {
   vertical-align: middle;
+}
+.dib {
+  display: inline-block;
 }
 </style>
