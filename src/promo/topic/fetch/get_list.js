@@ -11,42 +11,47 @@ const pre = params => ({
 });
 
 const refactor = {
-  // total: 'total',
-  data: 'data.list',
-  _data: [
-    {
-      // id: 'id',
-      // title: 'title',
-      // addTime: 'addTime',
-      link: 'url',
-      // introduce: 'introduce',
-      cover: 'coverPic',
-      bgColor: 'bgColor', // 背景色
-      btnBgColor: 'btnBgColor', // 按钮背景色
-      textColor: 'textColor', // 文本颜色
-      // isShowWish: 'isShowWish|bool',
-      // status: 'status',
-      // templeComponent: 'templeComponent',
-      _templeComponent: {
-        title: 'templeTitle',
-        list: 'templeList',
+  data: {
+    // total: 'total',
+    list: [
+      {
+        // id: 'id',
+        // title: 'title',
+        // addTime: 'addTime',
+        link: 'url',
+        // introduce: 'introduce',
+        cover: 'coverPic',
+        bgColor: 'bgColor', // 背景色
+        btnBgColor: 'btnBgColor', // 按钮背景色
+        textColor: 'textColor', // 文本颜色
+        // isShowWish: 'isShowWish|bool',
+        // status: 'status',
+        // templeComponent: 'templeComponent',
+        _templeComponent: {
+          title: 'templeTitle',
+          list: 'templeList',
+        },
+        buddhistComponent: 'commodityComponent',
+        _buddhistComponent: {
+          title: 'commodityTitle',
+          list: 'commodityList',
+        },
+        // goodsComponent: 'goodsComponent',
+        _goodsComponent: {
+          title: 'goodsTitle',
+          list: 'goodsList',
+        },
       },
-      buddhistComponent: 'commodityComponent',
-      _buddhistComponent: {
-        title: 'commodityTitle',
-        list: 'commodityList',
-      },
-      // goodsComponent: 'goodsComponent',
-      _goodsComponent: {
-        title: 'goodsTitle',
-        list: 'goodsList',
-      },
-    },
-  ],
+    ],
+  },
 };
 
 const post = res => {
-  res.data.forEach(item => {
+  // 后台字段缺失
+  if (!res.data.list) res.data.list = [];
+  if (!res.data.total) res.data.total = 0;
+
+  res.data.list.forEach(item => {
     /* eslint-disable no-param-reassign */
     item.cover = item.cover.split(',');
   });

@@ -108,8 +108,8 @@ export default {
           });
         }
 
-        this.pagination.total = res.total;
-        this.tableData = res.data;
+        this.pagination.total = res.data.total;
+        this.tableData = res.data.list;
 
         this.loading = !1;
       });

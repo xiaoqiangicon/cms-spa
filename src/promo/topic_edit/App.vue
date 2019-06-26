@@ -276,6 +276,7 @@ export default {
 
           // 数据上传
           seeFetch('promo/topicEdit/update', {
+            id: this.topicId,
             title,
             introduce,
             isShowWish,

@@ -7,24 +7,36 @@ const req = {
   // introduce: 'introduce',
   cover: 'coverPic',
   // templeComponent: 'templeComponent',
-  _templeComponent: {
-    title: 'templeTitle',
-    list: 'templeList',
-  },
+  // _templeComponent: {
+  //   title: 'templeTitle',
+  //   list: 'templeList',
+  // },
   buddhistComponent: 'commodityComponent',
-  _buddhistComponent: {
-    title: 'commodityTitle',
-    list: 'commodityList',
-  },
+  // _buddhistComponent: {
+  //   title: 'commodityTitle',
+  //   list: 'commodityList',
+  // },
   // goodsComponent: 'goodsComponent',
-  _goodsComponent: {
-    title: 'goodsTitle',
-    list: 'goodsList',
-  },
+  // _goodsComponent: {
+  //   title: 'goodsTitle',
+  //   list: 'goodsList',
+  // },
 };
 
 const pre = params => ({
   ...params,
+  templeComponent: {
+    templeTitle: params.templeComponent.title,
+    templeList: params.templeComponent.list,
+  },
+  commodityComponent: {
+    commodityTitle: params.commodityComponent.title,
+    commodityList: params.commodityComponent.list,
+  },
+  goodsComponent: {
+    goodsTitle: params.goodsComponent.title,
+    goodsList: params.goodsComponent.list,
+  },
   coverPic: params.coverPic.join(','),
 });
 

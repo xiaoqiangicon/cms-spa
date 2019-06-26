@@ -26,6 +26,15 @@ const refactor = {
 
 const post = res => {
   res.data.cover = res.data.cover.split(',');
+  // 添加默认字段
+  if (!res.data.templeComponent)
+    res.data.templeComponent = { title: '', list: [] };
+
+  if (!res.data.buddhistComponent)
+    res.data.buddhistComponent = { title: '', list: [] };
+
+  if (!res.data.goodsComponent)
+    res.data.goodsComponent = { title: '', list: [] };
 };
 
 seeFetch.config('promo/topicEdit/getDetail', {
