@@ -13,14 +13,21 @@
       <el-form-item prop="cover" label="封面图片">
         <Upload :images="form.cover" />
       </el-form-item>
-      <el-form-item prop="cover" label="背景颜色">
-        <el-color-picker v-model="form.bgColor" />
-      </el-form-item>
-      <el-form-item prop="cover" label="按钮背景颜色">
-        <el-color-picker v-model="form.btnBgColor" />
-      </el-form-item>
-      <el-form-item prop="cover" label="文本颜色">
-        <el-color-picker v-model="form.textColor" />
+      <el-form-item label="页面颜色">
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <span class="vam">背景色：</span>
+            <el-color-picker v-model="form.bgColor" class="vam" />
+          </el-col>
+          <el-col :span="6">
+            <span class="vam">按钮背景颜色：</span>
+            <el-color-picker v-model="form.btnBgColor" class="vam" />
+          </el-col>
+          <el-col :span="6">
+            <span class="vam">文本颜色：</span>
+            <el-color-picker v-model="form.textColor" class="vam" />
+          </el-col>
+        </el-row>
       </el-form-item>
       <el-form-item prop="components" label="页面组件">
         <el-tabs v-model="activeComponent" type="border-card">
@@ -294,5 +301,8 @@ export default {
   position: fixed;
   top: 130px;
   right: 100px;
+}
+.vam {
+  vertical-align: middle;
 }
 </style>
