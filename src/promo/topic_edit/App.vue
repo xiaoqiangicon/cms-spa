@@ -11,7 +11,7 @@
         <el-switch v-model="form.isShowWish" />
       </el-form-item>
       <el-form-item prop="cover" label="封面图片">
-        <Upload :images="form.cover" />
+        <Upload :images="form.cover" :multiple="false" />
       </el-form-item>
       <el-form-item label="页面颜色">
         <div class="dib mg-r-30">
@@ -274,6 +274,24 @@ export default {
             return;
           }
 
+          const componentJson = [
+            {
+              type: 1,
+              title: templeComponent.title,
+              ids: templeComponent.list.map(item => item.id).join(','),
+            },
+            {
+              type: 2,
+              title: buddhistComponent.title,
+              ids: buddhistComponent.list.map(item => item.id).join(','),
+            },
+            {
+              type: 3,
+              title: goodsComponent.title,
+              ids: goodsComponent.list.map(item => item.id).join(','),
+            },
+          ];
+
           // 数据上传
           seeFetch('promo/topicEdit/update', {
             id: this.topicId,
@@ -281,9 +299,10 @@ export default {
             introduce,
             isShowWish,
             cover,
-            templeComponent,
-            buddhistComponent,
-            goodsComponent,
+            bgColor,
+            btnBgColor,
+            textColor,
+            componentJson,
           }).then(res => {
             if (!res.success) {
               Notification({

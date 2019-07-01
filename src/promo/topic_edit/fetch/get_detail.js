@@ -2,24 +2,27 @@ import seeFetch from 'see-fetch';
 
 const refactor = {
   data: {
-    // isShowWish: 'isShowWish',
+    isShowWish: 'isShowWish|bool',
     // title: 'title',
     // introduce: 'introduce',
     cover: 'coverPic',
+    bgColor: 'color1',
+    btnBgColor: 'color2',
+    textColor: 'color3',
     // templeComponent: 'templeComponent',
     _templeComponent: {
       title: 'templeTitle',
-      list: 'templeList',
+      // list: 'list',
     },
     buddhistComponent: 'commodityComponent',
     _buddhistComponent: {
       title: 'commodityTitle',
-      list: 'commodityList',
+      // list: 'list',
     },
     // goodsComponent: 'goodsComponent',
     _goodsComponent: {
       title: 'goodsTitle',
-      list: 'goodsList',
+      // list: 'list',
     },
   },
 };
