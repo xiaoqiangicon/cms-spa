@@ -117,7 +117,7 @@ export default {
       form: {
         title: '',
         introduce: '',
-        isShowWish: '',
+        isShowWish: !1,
         cover: [],
         bgColor: '',
         btnBgColor: '',
@@ -264,6 +264,16 @@ export default {
           if (!bgColor) verifyMessage.push('请选择背景颜色');
           if (!btnBgColor) verifyMessage.push('请选择按钮背景颜色');
           if (!textColor) verifyMessage.push('请选择文本颜色');
+
+          // 每个组件至少有一个子项
+          if (templeComponent.list.length && !templeComponent.title)
+            verifyMessage.push('请填写寺院组件名称');
+
+          if (buddhistComponent.list.length && !buddhistComponent.title)
+            verifyMessage.push('请填写佛事组件名称');
+
+          if (goodsComponent.list.length && !goodsComponent.title)
+            verifyMessage.push('请填写商品组件名称');
 
           if (verifyMessage.length) {
             Notification({
