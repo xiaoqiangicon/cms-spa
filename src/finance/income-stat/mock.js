@@ -18,6 +18,7 @@ export const list = {
     orderCount: id * 15,
     faShiProfit: id * 16,
     time: '2016-01-01',
+    type: (id % 2) + 1,
   })),
 };
 
@@ -34,6 +35,7 @@ export const list1 = {
     orderNum: id * 15,
     bonzeMoney: id * 16,
     incomeTime: '2016-01-01',
+    commodityType: (id % 2) + 1,
   })),
 };
 
@@ -97,6 +99,18 @@ export const summary = {
     name: `项目${id}`,
     amount: randomMoney(),
     percent: id * 10,
+    subItems: [
+      {
+        name: `子项目${id}`,
+        amount: randomMoney(),
+        percent: id * 10,
+      },
+      {
+        name: `子项目${id}`,
+        amount: randomMoney(),
+        percent: id * 10,
+      },
+    ],
   })),
 };
 
@@ -124,11 +138,13 @@ export const summary1 = {
       9,
       10,
       11,
+      11,
       12,
       13,
     ].map(id => ({
       type: id,
       earningsMoney: randomMoney(),
+      commodityType: id === 11 ? 1 : 0,
     })),
   },
 };

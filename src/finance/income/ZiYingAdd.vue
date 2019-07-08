@@ -49,6 +49,29 @@
         />
         <span class="l-hg-32">%</span>
       </div>
+      <div class="row">
+        <div class="row-name">
+          项目类型：
+        </div>
+        <el-select
+          v-model="type"
+          placeholder="请选择"
+          size="small"
+          style="width: 200px;"
+          filterable
+          :disabled="isUpdate"
+        >
+          <el-option
+            v-for="item in ziYingTypes"
+            :key="item.id"
+            :value="item.id"
+            :label="item.name"
+          />
+        </el-select>
+        <p class="mg-t-10">
+          保存后项目类型不可修改，慎重
+        </p>
+      </div>
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="clickCancel">
@@ -64,7 +87,7 @@
 <script>
 import { Notification } from 'element-ui';
 import seeFetch from 'see-fetch';
-import { ziYingAddProps } from './data';
+import { ziYingAddProps, ziYingTypes } from './data';
 
 const computedProps = {};
 
@@ -110,6 +133,7 @@ export default {
       ziYingItems: [
         // {id, name}
       ],
+      ziYingTypes,
     };
   },
   computed: {
@@ -134,7 +158,7 @@ export default {
       this.$store.commit(`financeIncome/ziYingAdd/updateVisible`, !1);
     },
     clickOk() {
-      const { foShiId } = this;
+      const { foShiId, type } = this;
 
       const corporationProfitRate = parseFloat(this.corporationProfitRate);
 
@@ -157,6 +181,7 @@ export default {
       seeFetch('finance/income/updateZiYing', {
         foShiId,
         corporationProfitRate,
+        type,
       }).then(res => {
         this.saving = !1;
 
