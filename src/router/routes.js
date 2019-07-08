@@ -124,6 +124,13 @@ const routes = [
         hidden: !0,
       },
       {
+        path: 'topicCreate/:id',
+        component: () => import('../promo/topic_edit/App'),
+        name: '专题列表/新建专题',
+        meta: { title: '专题列表/新建专题', noCache: true },
+        hidden: !0,
+      },
+      {
         path: `${domain}/event/thousand`,
         name: '千寺祈福',
         meta: { title: '千寺祈福' },

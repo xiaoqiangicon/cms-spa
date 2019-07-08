@@ -124,7 +124,7 @@ export default {
       this.getList();
     },
     handleClickCreate() {
-      this.$router.push(`/promo/topicEdit/0`);
+      this.$router.push(`/promo/topicCreate/0`);
     },
     handleClickEdit(rowData) {
       const { id } = rowData;
