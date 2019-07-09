@@ -95,7 +95,7 @@ export default lila => {
           server: isGray ? servers[1] : servers[0],
           remotePath: isGray
             ? '/usr/local/resin/projects/cms'
-            : '/usr/local/resin/projects/guest_statistics',
+            : '/usr/local/resin/projects/guest_statistics1',
         },
       ],
       [
@@ -104,7 +104,7 @@ export default lila => {
           server: isGray ? servers[1] : servers[0],
           remotePath: isGray
             ? '/usr/local/resin/projects/cms/dist/html/index'
-            : '/usr/local/resin/projects/guest_statistics/dist/html/index',
+            : '/usr/local/resin/projects/guest_statistics1/dist/html/index',
           ext: 'jsp',
         },
       ],

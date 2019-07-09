@@ -151,8 +151,8 @@
           提现金额：{{ realTakeAmount }} 元
           <div class="fl-right mg-b-20 mg-r-20">
             订单状态：{{ typeText }}<br />
-            更新时间：{{ updateTime }}<br />
-            添加时间：{{ createTime }}<br />
+            提现申请：{{ createTime }}<br />
+            提现完成：{{ updateTime }}<br />
           </div>
         </div>
       </el-card>
