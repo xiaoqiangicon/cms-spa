@@ -8,10 +8,10 @@ export default {
     list: arr.map(id => ({
       id,
       content: '内容文本',
-      images:
-        '../../../../../sample/image1.jpg,../../../../../sample/image2.jpg',
-      ifPush: !1,
-      addTime: '事件',
+      img: '../../../../../sample/image1.jpg,../../../../../sample/image2.jpg',
+      isPush: !1,
+      hasPush: !0,
+      addTime: new Date(1999),
     })),
   },
 };

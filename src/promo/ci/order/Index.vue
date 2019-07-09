@@ -26,14 +26,18 @@
       <el-table-column type="selection" width="55" />
       <el-table-column prop="id" label="ID" width="100" />
       <el-table-column prop="nickname" label="用户昵称" />
-      <el-table-column prop="info" label="登记信息">
+      <el-table-column label="登记信息">
         <template slot-scope="scope">
-          {{ scope.row.info }}
+          {{ scope.row.name }}
           <br />
           {{ scope.row.tel }}
         </template>
       </el-table-column>
-      <el-table-column prop="origin" label="来源" />
+      <el-table-column label="来源">
+        <template slot-scope="scope">
+          {{ scope.row.oldUser ? '老用户' : '新用户' }}
+        </template>
+      </el-table-column>
       <el-table-column prop="addTime" label="添加时间" />
     </el-table>
     <el-pagination

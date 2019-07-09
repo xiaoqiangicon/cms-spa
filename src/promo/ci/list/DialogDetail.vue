@@ -58,26 +58,24 @@
           <div>电话号码</div>
           <div>数值</div>
         </div>
-        <div v-for="item in detail.orderInfo" :key="item.id" class="row">
+        <div v-for="item in detail.userInfo" :key="item.userId" class="row">
           <div>
             {{ item.nickname }}
             <br />
-            ID：{{ item.id }}
+            ID：{{ item.userId }}
           </div>
-          <div>{{ item.fangMing }}</div>
+          <div>{{ item.name }}</div>
           <div>{{ item.tel }}</div>
           <div>{{ item.num }}</div>
         </div>
         <div class="row foot">
-          <div>
-            用户数：{{ detail.orderInfo ? detail.orderInfo.length : '' }}
-          </div>
+          <div>用户数：{{ detail.userInfo ? detail.userInfo.length : '' }}</div>
           <div />
           <div />
           <div>
             {{
-              detail.orderInfo
-                ? detail.orderInfo.reduce(
+              detail.userInfo
+                ? detail.userInfo.reduce(
                     (prev, cur) => {
                       return { num: prev.num + cur.num };
                     },
@@ -127,7 +125,7 @@ export default {
         remark: '',
         productNum: '',
 
-        orderInfo: [],
+        userInfo: [],
         title: '',
         subtitle: '',
         orderNum: '',
@@ -151,10 +149,10 @@ export default {
   },
   methods: {
     save() {
-      const { images, remark, productNum } = this.detail;
+      const { id, images, remark, productNum } = this.detail;
 
       this.loading = !0;
-      seeFetch('promo/ci/list/handle', { images, remark, productNum }).then(
+      seeFetch('promo/ci/list/handle', { id, images, remark, productNum }).then(
         res => {
           if (!res.success) {
             Notification({

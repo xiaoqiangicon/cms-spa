@@ -8,16 +8,28 @@ export default {
     list: arr.map(id => ({
       id,
       title: `标题${id}`,
-      subtitle: `副标题${id}`,
-      userNum: `${id}`,
-      productNum: `产品编号${id}`,
+      littleTitle: `副标题${id}`,
+      feedbackProduce: `产品编号${id}`,
       addTime: `添加时间${id}`,
       // 详情信息
-      images:
+      feedbackImg:
         '../../../../../sample/image1.jpg,../../../../../sample/image2.jpg,../../../../../sample/image3.jpg',
-      remark: '123123',
-      orderInfo: [
-        { id: 123, nickname: 'dsd', fangMing: '123', tel: '123213', num: 12 },
+      feedbackContent: '123123',
+      userInfo: [
+        {
+          userId: 1,
+          nickName: '哈哈1',
+          name: '真实姓名1',
+          phone: '231231',
+          num: 1,
+        },
+        {
+          userId: 2,
+          nickName: '哈哈2',
+          name: '真实姓名2',
+          phone: '231232',
+          num: 2,
+        },
       ],
     })),
   },

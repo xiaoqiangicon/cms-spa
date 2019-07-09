@@ -79,7 +79,9 @@ export default {
   },
   methods: {
     save() {
-      seeFetch('promo/ci/order/update', {}).then(res => {
+      const ids = this.selected.map(item => item.id).join(',');
+
+      seeFetch('promo/ci/order/update', { ids }).then(res => {
         if (!res.success) {
           Notification({
             type: 'error',

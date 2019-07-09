@@ -9,7 +9,18 @@
           {{ scope.row.subtitle }}
         </template>
       </el-table-column>
-      <el-table-column prop="userNum" label="用户数量" />
+      <el-table-column label="用户数量">
+        <template slot-scope="scope">
+          {{
+            scope.row.userInfo.reduce(
+              (prev, cur) => {
+                return { num: prev.num + cur.num };
+              },
+              { num: 0 }
+            ).num
+          }}
+        </template>
+      </el-table-column>
       <el-table-column label="产品编号">
         <template slot-scope="scope">
           <el-button type="primary" size="small" plain>
@@ -76,7 +87,7 @@ export default {
       this.loading = !0;
       seeFetch('promo/ci/list/getList', {
         ...this.filterParams,
-        type: 0,
+        isFinish: 0,
         page,
         pageSize,
       }).then(res => {

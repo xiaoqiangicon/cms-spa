@@ -1,14 +1,20 @@
 import seeFetch from 'see-fetch';
 
 const req = {
-  page: 'pageNumber',
+  page: 'pageNum',
   // pageSize: 'pageSize',
 };
 
 const refactor = {
   data: {
     total: 'count',
-    list: [{}],
+    list: [
+      {
+        images: 'img',
+        ifPush: 'isPush',
+        // hasPush: 'hasPush',
+      },
+    ],
   },
 };
 
@@ -23,7 +29,7 @@ seeFetch.config('promo/ci/dynamic/getList', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '//',
+    '/event/charitableScheduleList',
     '/promo/ci/dynamic/mock/get_list',
     '/promo/ci/dynamic/mock/get_list',
   ],

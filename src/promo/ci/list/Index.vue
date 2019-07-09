@@ -11,11 +11,11 @@
           slot="prepend"
           v-model="filterKey"
           placeholder="请选择"
-          style="width: 120px;"
+          style="width: 150px;"
         >
-          <el-option label="订单ID" value="orderId" />
+          <el-option label="订单ID" value="orderNo" />
           <el-option label="关联用户ID" value="userId" />
-          <el-option label="关联用户手机号" value="tel" />
+          <el-option label="关联用户手机号" value="phone" />
         </el-select>
         <el-button
           slot="append"

@@ -8,10 +8,10 @@ export default {
     list: arr.map(id => ({
       id,
       nickname: `昵称${id}`,
-      info: `录入信息${id}`,
-      tel: `电话${id}`,
-      origin: `来源${id}`,
+      name: `录入信息${id}`,
+      phone: `电话${id}`,
       addTime: `添加时间${id}`,
+      oldUser: 1,
     })),
   },
 };

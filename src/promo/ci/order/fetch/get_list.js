@@ -1,14 +1,22 @@
 import seeFetch from 'see-fetch';
 
 const req = {
-  page: 'pageNumber',
+  page: 'pageNum',
   // pageSize: 'pageSize',
 };
 
 const refactor = {
   data: {
     total: 'count',
-    list: [{}],
+    list: [
+      {
+        // id: 'id',
+        // nickname: 'nickname',
+        // name: 'name',
+        tel: 'phone',
+        // oldUser: 'oldUser',
+      },
+    ],
   },
 };
 
@@ -17,7 +25,11 @@ const post = () => {};
 seeFetch.config('promo/ci/order/getList', {
   method: ['post'],
   stringify: [!0],
-  url: ['//', '/promo/ci/order/mock/get_list', '/promo/ci/order/mock/get_list'],
+  url: [
+    '/event/charitableRecordList ',
+    '/promo/ci/order/mock/get_list',
+    '/promo/ci/order/mock/get_list',
+  ],
   req: [req, req],
   refactor: [refactor, refactor],
   post: [post, post],

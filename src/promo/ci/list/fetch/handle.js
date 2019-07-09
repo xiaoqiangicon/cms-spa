@@ -1,20 +1,25 @@
 import seeFetch from 'see-fetch';
 
 const req = {
-  // images: 'images',
-  // remark: 'remark',
-  // productNum: 'productNum',
+  // orderId: 'orderId',
+  images: 'img',
+  remark: 'content',
+  productNum: 'produce',
 };
 
 const pre = params => ({
   ...params,
-  images: params.images.join(','),
+  img: params.img.join(','),
 });
 
 seeFetch.config('promo/ci/list/handle', {
   method: ['post'],
   stringify: [!0],
-  url: ['/', '/promo/ci/list/mock/success', '/promo/ci/list/mock/success'],
+  url: [
+    '/event/charitableFeedbackOrder',
+    '/promo/ci/list/mock/success',
+    '/promo/ci/list/mock/success',
+  ],
   req: [req, req],
   pre: [pre, pre],
 });

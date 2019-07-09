@@ -28,7 +28,7 @@
         </el-table-column>
         <el-table-column label="是否推送">
           <template slot-scope="scope">
-            <div>{{ scope.row.ifPush ? '已推送' : '无' }}</div>
+            <div>{{ scope.row.hasPush ? '已推送' : '无' }}</div>
           </template>
         </el-table-column>
         <el-table-column prop="addTime" label="发布时间" />
