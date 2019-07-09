@@ -12,7 +12,12 @@ const refactor = {
   },
 };
 
-const post = () => {};
+const post = res => {
+  res.data.list.forEach(item => {
+    /* eslint-disable-next-line no-param-reassign */
+    item.images = item.images.split(',');
+  });
+};
 
 seeFetch.config('promo/ci/list/getList', {
   method: ['post'],

@@ -15,6 +15,7 @@
 import Order from './order/Index';
 import List from './list/Index';
 import Dynamic from './dynamic/Index';
+import './ele_reset.less';
 
 import { addProps } from './data';
 

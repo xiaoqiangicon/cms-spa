@@ -5,28 +5,49 @@
         v-model="filterValue"
         placeholder="请输入内容"
         class="input-with-select"
+        style="width: 400px;"
       >
-        <el-select slot="prepend" v-model="filterKey" placeholder="请选择">
-          <el-option label="餐厅名" value="1" />
-          <el-option label="订单号" value="2" />
-          <el-option label="用户电话" value="3" />
+        <el-select
+          slot="prepend"
+          v-model="filterKey"
+          placeholder="请选择"
+          style="width: 120px;"
+        >
+          <el-option label="订单ID" value="orderId" />
+          <el-option label="关联用户ID" value="userId" />
+          <el-option label="关联用户手机号" value="tel" />
         </el-select>
-        <el-button slot="append" icon="el-icon-search" @click="refresh" />
+        <el-button
+          slot="append"
+          icon="el-icon-search"
+          @click="refreshAllTable"
+        />
       </el-input>
     </div>
-    <el-tabs v-model="activeName" class="mg-t-20">
-      <el-tab-pane label="未处理" name="not">
-        <TableNot ref="tableNot" />
-      </el-tab-pane>
-      <el-tab-pane label="已处理" name="yet">
-        <TableYet ref="tableYet" />
-      </el-tab-pane>
-    </el-tabs>
+    <el-card>
+      <el-tabs v-model="curTable" class="mg-t-20">
+        <el-tab-pane label="未处理" name="tableNot">
+          <TableNot
+            ref="tableNot"
+            :filter-params="filterParams"
+            @showDialogDetail="showDialogDetail"
+          />
+        </el-tab-pane>
+        <el-tab-pane label="已处理" name="tableYet">
+          <TableYet
+            ref="tableYet"
+            :filter-params="filterParams"
+            @showDialogDetail="showDialogDetail"
+          />
+        </el-tab-pane>
+      </el-tabs>
+    </el-card>
     <DialogDetail
       :detail="detail"
       :visible="dialogDetailVisible"
+      :cur-table="curTable"
       @updateVisible="updateDialogDetailVisible"
-      @success="refresh"
+      @success="refreshCurTable"
     />
   </div>
 </template>
@@ -46,25 +67,36 @@ export default {
     return {
       filterKey: '',
       filterValue: '',
-      activeName: 'not',
+      curTable: 'tableNot',
       dialogDetailVisible: !1,
       detail: {},
     };
   },
-  computed: {},
-  created() {
-    this.init();
+  computed: {
+    filterParams() {
+      const { filterKey, filterValue } = this;
+      const res = {};
+
+      if (!filterKey || !filterValue) return res;
+
+      res[filterKey] = filterValue;
+      return res;
+    },
   },
   methods: {
-    init() {},
-    refresh() {
-      const $curTable =
-        this.activeName === 'not' ? this.$refs.tableNot : this.$refs.tableYet;
-      $curTable.refresh();
+    refreshCurTable() {
+      this.$refs[this.curTable].refresh();
     },
-
+    refreshAllTable() {
+      this.$refs.tableNot.refresh();
+      this.$refs.tableYet.refresh();
+    },
     updateDialogDetailVisible(visible) {
       this.dialogDetailVisible = visible;
+    },
+    showDialogDetail(detail) {
+      this.detail = detail;
+      this.dialogDetailVisible = !0;
     },
   },
 };

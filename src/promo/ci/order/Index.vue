@@ -97,7 +97,9 @@ export default {
       this.getList();
     },
     getList() {
-      seeFetch('promo/ci/order/getList', {}).then(res => {
+      const { page, pageSize } = this.pagination;
+      this.loading = !0;
+      seeFetch('promo/ci/order/getList', { page, pageSize }).then(res => {
         if (!res.success) {
           Notification({
             type: 'error',
@@ -111,6 +113,7 @@ export default {
         this.list = res.data.list;
 
         this.updateTableSelected();
+        this.loading = !1;
       });
     },
     handleSelectionChange(selectedRow) {

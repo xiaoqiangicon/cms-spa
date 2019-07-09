@@ -1,54 +1,70 @@
 <template>
   <div>
-    <div class="tip">
-      温馨提示：
-      <br />当前是勾选20条记录才能生成一条为处理的订单。相同的用户可勾选多条。
-    </div>
-    <div class="table-bar">
-      已选择 {{ userNum }} 个用户
-      <el-button
-        class="fl-right mg-t-10 mg-r-20"
-        type="primary"
-        size="mini"
-        :disabled="selected.length < 20"
-        @click="dialogConfirmVisible = true"
-      >
-        生成订单
+    <div class="top">
+      <el-button type="primary" size="small" @click="handleClickCreate">
+        发 布
       </el-button>
     </div>
-    <el-table
-      ref="table"
-      v-loading="loading"
-      :data="list"
-      style="width: 100%"
-      @selection-change="handleSelectionChange"
-    >
-      <el-table-column type="selection" width="55" />
-      <el-table-column prop="id" label="ID" width="100" />
-      <el-table-column prop="nickname" label="用户昵称" />
-      <el-table-column prop="info" label="登记信息">
-        <template slot-scope="scope">
-          {{ scope.row.info }}
-          <br />
-          {{ scope.row.tel }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="origin" label="来源" />
-      <el-table-column prop="addTime" label="添加时间" />
-    </el-table>
-    <el-pagination
-      style="text-align: right; margin-top: 20px;"
-      layout="total, prev, pager, next, sizes, jumper"
-      :page-size="pagination.pageSize"
-      :current-page="pagination.page"
-      :total="pagination.total"
-      @size-change="onSizeChange"
-      @current-change="onCurrentChange"
-    />
-    <DialogConfirm
-      :selected="selected"
-      :visible="dialogConfirmVisible"
-      @updateVisible="updateDialogConfirmVisible"
+    <el-card>
+      <el-table
+        ref="table"
+        v-loading="loading"
+        :data="list"
+        style="width: 100%"
+      >
+        <el-table-column label="进展内容" width="500">
+          <template slot-scope="scope">
+            <div>{{ scope.row.content }}</div>
+            <div class="mg-t-10">
+              <div
+                v-for="img in scope.row.images"
+                :key="img"
+                class="img-container"
+              >
+                <img :src="img" alt="" />
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="是否推送">
+          <template slot-scope="scope">
+            <div>{{ scope.row.ifPush ? '已推送' : '无' }}</div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="addTime" label="发布时间" />
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button
+              type="text"
+              size="small"
+              @click="handleClickEdit(scope.row)"
+            >
+              编辑
+            </el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click="handleClickDelete(scope.row)"
+            >
+              删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        style="text-align: right; margin-top: 20px;"
+        layout="total, prev, pager, next, sizes, jumper"
+        :page-size="pagination.pageSize"
+        :current-page="pagination.page"
+        :total="pagination.total"
+        @size-change="onSizeChange"
+        @current-change="onCurrentChange"
+      />
+    </el-card>
+    <DialogEdit
+      :detail="curDetail"
+      :visible="dialogEditVisible"
+      @updateVisible="updateDialogEditVisible"
       @success="refresh"
     />
   </div>
@@ -58,11 +74,11 @@
 import seeFetch from 'see-fetch';
 import './fetch';
 import { Notification } from 'element-ui';
-import DialogConfirm from './DialogConfirm';
+import DialogEdit from './DialogEdit';
 
 export default {
   components: {
-    DialogConfirm,
+    DialogEdit,
   },
   data() {
     return {
@@ -74,16 +90,17 @@ export default {
         total: 0,
       },
 
-      selected: [{ id: 1 }, { id: 15 }],
+      dialogEditVisible: !1,
 
-      dialogConfirmVisible: !1,
+      curDetail: {
+        id: 0,
+        content: '',
+        images: [],
+        ifPush: !1,
+      },
     };
   },
-  computed: {
-    userNum() {
-      return [...new Set(this.selected.map(item => item.id))].length;
-    },
-  },
+  computed: {},
   created() {
     this.init();
   },
@@ -93,11 +110,12 @@ export default {
     },
     refresh() {
       this.pagination.page = 1;
-      this.selected = [];
       this.getList();
     },
     getList() {
-      seeFetch('promo/ci/order/getList', {}).then(res => {
+      const { page, pageSize } = this.pagination;
+      this.loading = !0;
+      seeFetch('promo/ci/dynamic/getList', { page, pageSize }).then(res => {
         if (!res.success) {
           Notification({
             type: 'error',
@@ -109,22 +127,55 @@ export default {
 
         this.pagination.total = res.data.total;
         this.list = res.data.list;
+        this.loading = !1;
       });
     },
-    handleSelectionChange(selectedRow) {
-      this.selected = selectedRow;
+    handleClickCreate() {
+      this.curDetail = {
+        id: 0,
+        content: '',
+        images: [],
+        ifPush: !1,
+      };
+      this.dialogEditVisible = !0;
     },
-    updateTableSelected() {
-      this.list.forEach(item => {
-        if (this.selected.find(sItem => sItem.id === item.id)) {
-          setTimeout(() => {
-            this.$refs.table.toggleRowSelection(item, true);
+    handleClickEdit(rowData) {
+      this.curDetail = {
+        ...rowData,
+      };
+      this.dialogEditVisible = !0;
+    },
+    handleClickDelete(rowData) {
+      this.$confirm('此操作将删除选中动态, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          this.loading = !0;
+          seeFetch('promo/ci/dynamic/delete', { id: rowData.id }).then(res => {
+            if (!res.success) {
+              Notification({
+                type: 'error',
+                title: '提示',
+                message: res.message,
+              });
+              return;
+            }
+
+            Notification({
+              type: 'success',
+              title: '提示',
+              message: '删除成功',
+            });
+
+            this.getList();
           });
-        }
-      });
+        })
+        .catch(() => {});
     },
-    updateDialogConfirmVisible(visible) {
-      this.dialogConfirmVisible = visible;
+    updateDialogEditVisible(visible) {
+      this.dialogEditVisible = visible;
     },
     onSizeChange(pageSize) {
       this.pagination.pageSize = pageSize;
@@ -140,18 +191,19 @@ export default {
 </script>
 
 <style lang="less">
-.tip {
-  width: 400px;
-  padding: 8px 16px;
-  background-color: #ecf8ff;
-  border-radius: 4px;
-  border-left: 5px solid #50bfff;
-}
-.table-bar {
-  margin: 20px 0;
-  padding-left: 20px;
+.top {
   height: 50px;
-  line-height: 50px;
-  background-color: #ecf8ff;
+  text-align: right;
+}
+.img-container {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  margin-right: 10px;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+  }
 }
 </style>

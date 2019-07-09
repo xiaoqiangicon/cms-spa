@@ -2,24 +2,31 @@
   <div>
     <el-table ref="table" v-loading="loading" :data="list" style="width: 100%">
       <el-table-column prop="id" label="订单ID" width="100" />
-      <el-table-column prop="title" label="标题">
-        <!-- <template slot-scope="scope">
-          12312
-        </template> -->
-      </el-table-column>
-
-      <el-table-column prop="info" label="用户数量">
+      <el-table-column label="标题">
         <template slot-scope="scope">
-          {{ scope.row.info }}
+          {{ scope.row.title }}
           <br />
-          {{ scope.row.tel }}
+          {{ scope.row.subtitle }}
         </template>
       </el-table-column>
-      <el-table-column prop="origin" label="产品编号" />
+      <el-table-column prop="userNum" label="用户数量" />
+      <el-table-column label="产品编号">
+        <template slot-scope="scope">
+          <el-button type="primary" size="small" plain>
+            {{ scope.row.productNum }}
+          </el-button>
+        </template>
+      </el-table-column>
       <el-table-column prop="addTime" label="生成时间" />
       <el-table-column label="操作">
-        <template>
-          详情
+        <template slot-scope="scope">
+          <el-button
+            type="text"
+            size="small"
+            @click="handleClickDeteil(scope.row)"
+          >
+            详情
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -41,9 +48,9 @@ import { Notification } from 'element-ui';
 
 export default {
   props: {
-    userId: {
-      type: String,
-      default: '',
+    filterParams: {
+      type: Object,
+      default: () => ({}),
     },
   },
   data() {
@@ -66,21 +73,29 @@ export default {
     },
     getList() {
       const { page, pageSize } = this.pagination;
-      seeFetch('promo/ci/list/getList', { type: 0, page, pageSize }).then(
-        res => {
-          if (!res.success) {
-            Notification({
-              type: 'error',
-              title: '提示',
-              message: res.message,
-            });
-            return;
-          }
-
-          this.pagination.total = res.data.total;
-          this.list = res.data.list;
+      this.loading = !0;
+      seeFetch('promo/ci/list/getList', {
+        ...this.filterParams,
+        type: 0,
+        page,
+        pageSize,
+      }).then(res => {
+        if (!res.success) {
+          Notification({
+            type: 'error',
+            title: '提示',
+            message: res.message,
+          });
+          return;
         }
-      );
+
+        this.pagination.total = res.data.total;
+        this.list = res.data.list;
+        this.loading = !1;
+      });
+    },
+    handleClickDeteil(rowData) {
+      this.$emit('showDialogDetail', rowData);
     },
     onSizeChange(pageSize) {
       this.pagination.pageSize = pageSize;

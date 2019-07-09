@@ -7,11 +7,11 @@ export default {
     count: arr.length,
     list: arr.map(id => ({
       id,
-      nickname: `昵称${id}`,
-      info: `录入信息${id}`,
-      tel: `电话${id}`,
-      origin: `来源${id}`,
-      addTime: `添加时间${id}`,
+      content: '内容文本',
+      images:
+        '../../../../../sample/image1.jpg,../../../../../sample/image2.jpg',
+      ifPush: !1,
+      addTime: '事件',
     })),
   },
 };

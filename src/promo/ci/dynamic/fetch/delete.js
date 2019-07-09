@@ -1,17 +1,10 @@
 import seeFetch from 'see-fetch';
 
 const req = {
-  // images
-  // content
-  // ifShow
+  // id
 };
 
-const pre = params => ({
-  ...params,
-  images: params.images.join(','),
-});
-
-seeFetch.config('promo/ci/dynamic/update', {
+seeFetch.config('promo/ci/dynamic/delete', {
   method: ['post'],
   stringify: [!0],
   url: [
@@ -20,5 +13,4 @@ seeFetch.config('promo/ci/dynamic/update', {
     '/promo/ci/dynamic/mock/success',
   ],
   req: [req, req],
-  pre: [pre, pre],
 });

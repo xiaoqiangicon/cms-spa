@@ -7,11 +7,18 @@ export default {
     count: arr.length,
     list: arr.map(id => ({
       id,
-      nickname: `昵称${id}`,
-      info: `录入信息${id}`,
-      tel: `电话${id}`,
-      origin: `来源${id}`,
+      title: `标题${id}`,
+      subtitle: `副标题${id}`,
+      userNum: `${id}`,
+      productNum: `产品编号${id}`,
       addTime: `添加时间${id}`,
+      // 详情信息
+      images:
+        '../../../../../sample/image1.jpg,../../../../../sample/image2.jpg,../../../../../sample/image3.jpg',
+      remark: '123123',
+      orderInfo: [
+        { id: 123, nickname: 'dsd', fangMing: '123', tel: '123213', num: 12 },
+      ],
     })),
   },
 };
