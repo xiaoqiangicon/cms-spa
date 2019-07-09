@@ -114,7 +114,27 @@ const routes = [
         path: 'ci',
         component: () => import('../promo/ci/App'),
         name: '慈光计划',
+        meta: { title: '专题管理', noCache: true },
+      },
+      {
         meta: { title: '慈光计划', noCache: true },
+        path: 'topic',
+        component: () => import('../promo/topic/App'),
+        name: '专题管理',
+      },
+      {
+        path: 'topicEdit/:id',
+        component: () => import('../promo/topic_edit/App'),
+        name: '专题列表/编辑专题',
+        meta: { title: '专题列表/编辑专题', noCache: true },
+        hidden: !0,
+      },
+      {
+        path: 'topicCreate/:id',
+        component: () => import('../promo/topic_edit/App'),
+        name: '专题列表/新建专题',
+        meta: { title: '专题列表/新建专题', noCache: true },
+        hidden: !0,
       },
       {
         path: `${domain}/event/thousand`,

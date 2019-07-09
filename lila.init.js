@@ -79,7 +79,7 @@ export default lila => {
         {
           file: 'build/index.jsp',
           start:
-            '<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>\n<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>\n<%@ page import="com.miaoyan.cms.action.UserManagerAction" %>\n<%\nUserManagerAction action = new UserManagerAction(request,response);\naction.doAction();\n%>\n<%@ page isELIgnored="true" %>',
+            '<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>\n',
         },
       ],
       [
@@ -95,7 +95,7 @@ export default lila => {
           server: isGray ? servers[1] : servers[0],
           remotePath: isGray
             ? '/usr/local/resin/projects/cms'
-            : '/usr/local/resin/projects/guest_statistics',
+            : '/usr/local/resin/projects/guest_statistics1',
         },
       ],
       [
@@ -104,7 +104,7 @@ export default lila => {
           server: isGray ? servers[1] : servers[0],
           remotePath: isGray
             ? '/usr/local/resin/projects/cms/dist/html/index'
-            : '/usr/local/resin/projects/guest_statistics/dist/html/index',
+            : '/usr/local/resin/projects/guest_statistics1/dist/html/index',
           ext: 'jsp',
         },
       ],

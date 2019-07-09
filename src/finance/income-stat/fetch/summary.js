@@ -1,4 +1,5 @@
 import seeFetch from 'see-fetch';
+import { ziYingTypes } from '../data';
 
 const projectNames = {
   1: '推广佛事',
@@ -37,17 +38,22 @@ const responseRefactor = {
   yearTotal: 'data.yearEarningsMoney',
   monthTotal: 'data.monthEarningsMoney',
   projects: 'data.yearEarningsMoneyProportion',
-  _projects: [{ id: 'type', amount: 'earningsMoney' }],
+  _projects: [
+    { id: 'type', amount: 'earningsMoney', subType: 'commodityType' },
+  ],
 };
 
 /* eslint-disable no-param-reassign */
 const postHandle = res => {
   if (res.projects && res.projects.length) {
+    // 计算总金额
     let totalAmount = 0;
     res.projects.forEach(project => {
       project.amount = parseFloat(project.amount.toFixed(2));
       totalAmount += project.amount;
     });
+
+    // 格式化每个项目
     res.projects.forEach(project => {
       project.name = projectNames[project.id];
       project.tooltip = tooltips[project.id];
@@ -55,6 +61,33 @@ const postHandle = res => {
         ((project.amount * 100) / totalAmount).toFixed(2)
       );
     });
+
+    // 自营项目的两个子项目
+    const newProjects = [];
+    let ziYingProject;
+    res.projects.forEach(project => {
+      if (project.id !== 11) {
+        newProjects.push(project);
+        return;
+      }
+
+      if (!ziYingProject) {
+        ziYingProject = { ...project, subItems: [], amount: 0 };
+        delete ziYingProject.subType;
+        delete ziYingProject.commodityType;
+        newProjects.push(ziYingProject);
+      }
+
+      ziYingProject.amount += project.amount;
+      ziYingProject.subItems.push({
+        ...project,
+        name: ziYingTypes.find(i => i.id === project.subType).name,
+      });
+    });
+    ziYingProject.percent = parseFloat(
+      ((ziYingProject.amount * 100) / totalAmount).toFixed(2)
+    );
+    res.projects = newProjects;
   }
 
   res.yearList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];

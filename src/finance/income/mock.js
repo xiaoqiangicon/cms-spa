@@ -171,6 +171,7 @@ export const listZiYing = {
     transformAmount: id * 102, // 转单系统
     remainAmount: id * 101, // 剩余金额
     ended: Math.floor(Math.random() * 2),
+    type: (id % 2) + 1,
   })),
 };
 
@@ -187,6 +188,7 @@ export const listZiYing1 = {
       earningsPrice: id * 100, // 当前营收
       expenditurePrice: id * 102, // 人工记录
       isEnd: Math.floor(Math.random() * 2),
+      type: (id % 2) + 1,
     })),
   },
 };
