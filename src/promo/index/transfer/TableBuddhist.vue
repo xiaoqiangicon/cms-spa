@@ -145,10 +145,12 @@ export default {
       this.loading = !0;
 
       const { page, pageSize } = this.pagination;
+      const { transferSearchContent: searchContent } = this;
 
       seeFetch('promo/index/transfer/getTransferBuddhistList', {
         page,
         pageSize,
+        searchContent,
       }).then(res => {
         if (!res.success) {
           Notification({

@@ -115,10 +115,7 @@
               <span slot="suffix" class="mg-l-5">%</span>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="transferPrice"
-            label="转单金额（元）"
-          >
+          <el-table-column prop="transferPrice" label="转单金额（元）">
             <template slot-scope="scope">
               <el-input
                 v-model.number="scope.row.transferPrice"
@@ -470,7 +467,11 @@ export default {
           title: '提示',
           message: '保存成功',
         });
-        this.init();
+
+        // 立即请求后台接口偶尔会出现错误数据
+        setTimeout(() => {
+          this.init();
+        }, 1000);
       });
     },
     changeTemple(id) {
@@ -594,6 +595,7 @@ export default {
     }
     .main {
       height: 100%;
+      overflow-y: scroll;
       flex-grow: 1;
       flex-shrink: 1;
       margin-left: 20px;
