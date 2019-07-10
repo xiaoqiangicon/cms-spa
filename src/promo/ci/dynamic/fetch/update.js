@@ -10,6 +10,7 @@ const req = {
 const pre = params => ({
   ...params,
   img: params.img.join(','),
+  isPush: Number(params.isPush),
 });
 
 seeFetch.config('promo/ci/dynamic/update', {

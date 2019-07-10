@@ -5,6 +5,11 @@ const req = {
   // pageSize: 'pageSize',
 };
 
+const pre = params => ({
+  ...params,
+  pageNum: params.pageNum - 1,
+});
+
 const refactor = {
   data: {
     total: 'count',
@@ -31,6 +36,7 @@ seeFetch.config('promo/ci/order/getList', {
     '/promo/ci/order/mock/get_list',
   ],
   req: [req, req],
+  pre: [pre, pre],
   refactor: [refactor, refactor],
   post: [post, post],
 });

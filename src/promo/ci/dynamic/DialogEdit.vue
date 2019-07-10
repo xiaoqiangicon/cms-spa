@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     save() {
-      const { content, images, ifPush } = this.detail;
+      const { id, content, images, ifPush } = this.detail;
       // 数据验证
       const verifyMsg = [];
 
@@ -96,7 +96,7 @@ export default {
       }
 
       this.loading = !0;
-      seeFetch('promo/ci/dynamic/update', { content, images, ifPush }).then(
+      seeFetch('promo/ci/dynamic/update', { id, content, images, ifPush }).then(
         res => {
           if (!res.success) {
             Notification({
