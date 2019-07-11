@@ -31,6 +31,13 @@ export const orders = {
         functionCharge: id * 103 + subId,
         // 推广员奖励金
         promoterReward: id * 104 + subId,
+        // 是否是推广佛事
+        isPromotionFoShi: subId % 2,
+        // 推广佛事比例列表
+        promotionRateList: [1, 2, 3, 4, 5].map(id3 => ({
+          rate: id3 * 10,
+          createTime: '2019-01-01 01:01:01',
+        })),
       })),
     })),
     // 回单照片
@@ -77,6 +84,14 @@ export const orders1 = {
         serviceMoney: id * 103 + subId,
         // 推广员奖励金
         promotionMoney: id * 104 + subId,
+        // 推广佛事比例列表
+        pickUpList:
+          subId % 2
+            ? []
+            : [1, 2, 3, 4, 5].map(id3 => ({
+                rate: id3 * 10,
+                addTime: '2019-01-01 01:01:01',
+              })),
       })),
     })),
     // 回单照片

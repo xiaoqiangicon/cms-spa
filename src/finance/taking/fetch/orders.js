@@ -46,6 +46,13 @@ const refactor = {
             functionCharge: 'serviceMoney',
             // 推广员奖励金
             promoterReward: 'promotionMoney',
+            // 推广佛事比例列表
+            promotionRateList: 'pickUpList',
+            _promotionRateList: [
+              {
+                createTime: 'addTime',
+              },
+            ],
           },
         ],
       },
@@ -57,6 +64,14 @@ const refactor = {
 const post = res => {
   if (res.data && res.data.dateItems) {
     makeTotal(res.data);
+    res.data.dateItems.forEach(dateItem => {
+      if (dateItem.orders) {
+        dateItem.orders.forEach(order => {
+          order.isPromotionFoShi =
+            order.promotionRateList && order.promotionRateList.length;
+        });
+      }
+    });
   }
 };
 

@@ -72,6 +72,12 @@
             >
               <div class="unit-inner">
                 <div class="cell cell-name">
+                  <span
+                    v-if="order.isPromotionFoShi"
+                    class="badge badge-blue pd-l-20 pd-r-20 mg-r-20 cs-pointer"
+                    @click="seeRateList(index, index2)"
+                    >推广佛事</span
+                  >
                   {{ order.title }}
                 </div>
                 <div class="cell">
@@ -214,6 +220,7 @@
       </el-card>
     </el-card>
     <feedback-images :ok="succeedUpload" />
+    <rate-list />
   </div>
 </template>
 
@@ -225,11 +232,12 @@ import { Notification } from 'element-ui';
 // import '@fancyapps/fancybox';
 // import fancyboxConfig from '../../configs/fancybox';
 import FeedbackImages from './FeedbackImages';
+import RateList from './RateList';
 import './fetch';
 
 export default {
   name: 'App',
-  components: { FeedbackImages },
+  components: { RateList, FeedbackImages },
   data() {
     return {
       loading: !0,
@@ -493,6 +501,12 @@ export default {
     },
     succeedUpload(images) {
       this.feedbackImages = images;
+    },
+    seeRateList(index1, index2) {
+      this.$store.state.financeTaking.rateList.visible = !0;
+      this.$store.state.financeTaking.rateList.list = [
+        ...this.dateItems[index1].orders[index2].promotionRateList,
+      ];
     },
   },
 };
