@@ -188,7 +188,7 @@ export const listZiYing1 = {
       earningsPrice: id * 100, // 当前营收
       expenditurePrice: id * 102, // 人工记录
       isEnd: Math.floor(Math.random() * 2),
-      commodityType: (id % 2) + 1,
+      type: (id % 2) + 1,
     })),
   },
 };

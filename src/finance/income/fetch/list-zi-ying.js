@@ -20,7 +20,6 @@ const responseRefactor = {
       profitAmount: 'earningsPrice', // 当前营收
       manualAmount: 'expenditurePrice', // 人工记录
       ended: 'isEnd',
-      type: 'commodityType',
     },
   ],
 };

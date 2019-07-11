@@ -111,6 +111,12 @@ const routes = [
         meta: { title: '事件统计', noCache: true },
       },
       {
+        path: 'ci',
+        component: () => import('../promo/ci/App'),
+        name: '慈光计划',
+        meta: { title: '慈光计划', noCache: true },
+      },
+      {
         path: 'topic',
         component: () => import('../promo/topic/App'),
         name: '专题管理',
