@@ -16,7 +16,7 @@ const refactor = {
     list: [
       {
         // id: 'id',
-        // nickname: 'nickname',
+        nickname: 'nickName',
         // name: 'name',
         tel: 'phone',
         // oldUser: 'oldUser',

@@ -16,15 +16,15 @@
       <el-form-item label="页面颜色">
         <div class="dib mg-r-30">
           <span class="vam">背景色：</span>
-          <el-color-picker v-model="form.bgColor" class="vam" />
+          <el-color-picker v-model="form.bgColor" show-alpha class="vam" />
         </div>
         <div class="dib mg-r-30">
           <span class="vam">按钮背景颜色：</span>
-          <el-color-picker v-model="form.btnBgColor" class="vam" />
+          <el-color-picker v-model="form.btnBgColor" show-alpha class="vam" />
         </div>
         <div class="dib mg-r-30">
           <span class="vam">文本颜色：</span>
-          <el-color-picker v-model="form.textColor" class="vam" />
+          <el-color-picker v-model="form.textColor" show-alpha class="vam" />
         </div>
       </el-form-item>
       <el-form-item prop="components" label="页面组件">

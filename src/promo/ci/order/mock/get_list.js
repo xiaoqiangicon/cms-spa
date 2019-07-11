@@ -7,7 +7,7 @@ export default {
     count: arr.length,
     list: arr.map(id => ({
       id,
-      nickname: `昵称${id}`,
+      nickName: `昵称${id}`,
       name: `录入信息${id}`,
       phone: `电话${id}`,
       addTime: `添加时间${id}`,
