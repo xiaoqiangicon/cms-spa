@@ -111,11 +111,6 @@ ziYingAddProps.forEach(({ name, full }) => {
   }
 });
 
-// 佛事列表
-let ziYingItems = [
-  // {id, name}
-];
-
 export default {
   name: 'ZiYingAdd',
   props: {
@@ -140,20 +135,17 @@ export default {
     ...computedProps,
   },
   created() {
-    if (ziYingItems && ziYingItems.length) this.ziYingItems = [...ziYingItems];
-    else {
-      this.loadingZiYing = !0;
-      seeFetch('finance/income/ziYingFoShi').then(res => {
-        this.loadingZiYing = !1;
-
-        if (!res.success || !res.data || !res.data.length) return;
-
-        ziYingItems = res.data;
-        this.ziYingItems = [...ziYingItems];
-      });
-    }
+    this.fetchZiYingItems();
   },
   methods: {
+    // 每次添加后都要刷新
+    fetchZiYingItems() {
+      seeFetch('finance/income/ziYingFoShi').then(res => {
+        if (!res.success || !res.data || !res.data.length) return;
+
+        this.ziYingItems = [...res.data];
+      });
+    },
     clickCancel() {
       this.$store.commit(`financeIncome/ziYingAdd/updateVisible`, !1);
     },
@@ -199,6 +191,7 @@ export default {
         });
 
         this.$store.commit(`financeIncome/ziYingAdd/updateVisible`, !1);
+        this.fetchZiYingItems();
         this.ok();
       });
     },

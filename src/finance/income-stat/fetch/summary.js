@@ -84,9 +84,12 @@ const postHandle = res => {
         name: ziYingTypes.find(i => i.id === project.subType).name,
       });
     });
-    ziYingProject.percent = parseFloat(
-      ((ziYingProject.amount * 100) / totalAmount).toFixed(2)
-    );
+
+    if (ziYingProject) {
+      ziYingProject.percent = parseFloat(
+        ((ziYingProject.amount * 100) / totalAmount).toFixed(2)
+      );
+    }
     res.projects = newProjects;
   }
 

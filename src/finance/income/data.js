@@ -67,7 +67,7 @@ export const ziYingAddProps = [
   { name: 'foShiId', full: !0, default: 0 },
   { name: 'foShiName', full: !0, default: '' },
   { name: 'corporationProfitRate', full: !0, default: '' },
-  { name: 'type', full: !0, default: 1 },
+  { name: 'type', full: !0, default: 2 },
 ];
 
 export const ziYingModifyRecordsProps = [
@@ -98,6 +98,6 @@ export const ziYingUseRecordsProps = [
 ];
 
 export const ziYingTypes = [
-  { id: 1, name: '商品销售' },
   { id: 2, name: '服务费类' },
+  { id: 1, name: '商品销售' },
 ];

@@ -175,7 +175,7 @@ export default {
     return {
       loading: !0,
       search: '',
-      filterType: 1,
+      filterType: 2,
       currentPage: 1,
       totalCount: 0,
       list: [],

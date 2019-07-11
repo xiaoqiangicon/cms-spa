@@ -6,4 +6,9 @@ export const addProps = [
   { name: 'editFeedbackImages', full: !0, default: () => [] },
 ];
 
+export const rateListProps = [
+  { name: 'visible', full: !0, default: !1 },
+  { name: 'list', full: !0, default: () => [] },
+];
+
 export default {};

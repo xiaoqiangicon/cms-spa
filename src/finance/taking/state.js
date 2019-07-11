@@ -1,4 +1,4 @@
-import { addProps } from './data';
+import { addProps, rateListProps } from './data';
 
 const addMutations = {};
 
@@ -17,6 +17,23 @@ addProps.forEach(({ name, default: defaultValue }) => {
     typeof defaultValue === 'function' ? defaultValue() : defaultValue;
 });
 
+const rateListMutations = {};
+
+rateListProps.forEach(({ name }) => {
+  const key = `update${name.slice(0, 1).toUpperCase()}${name.slice(1)}`;
+  rateListMutations[key] = (state, payload) => {
+    // eslint-disable-next-line no-param-reassign
+    state.rateList[name] = payload;
+  };
+});
+
+const rateListState = {};
+
+rateListProps.forEach(({ name, default: defaultValue }) => {
+  rateListState[name] =
+    typeof defaultValue === 'function' ? defaultValue() : defaultValue;
+});
+
 export default {
   namespaced: true,
   state: {
@@ -24,5 +41,12 @@ export default {
   },
   mutations: {
     ...addMutations,
+  },
+  modules: {
+    rateList: {
+      namespaced: true,
+      state: rateListState,
+      mutations: rateListMutations,
+    },
   },
 };
