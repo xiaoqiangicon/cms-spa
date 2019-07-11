@@ -91,13 +91,14 @@
       </el-table-column>
       <el-table-column label="操作" :align="'right'">
         <template slot-scope="scope">
-          <div v-show="scope.row.isEnd && !scope.row.isFinish">
+          <!-- <div v-show="scope.row.isEnd && !scope.row.isFinish"> -->
+          <div>
             <el-button
               type="text"
               size="small"
               @click="handleClickWithdraw(scope.row)"
             >
-              确认提现
+              结束推广
             </el-button>
           </div>
           <div>
