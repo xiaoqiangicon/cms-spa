@@ -290,9 +290,10 @@ export default {
       );
     },
     tableSelectable(row) {
-      if (row.price <= 0) return false;
+      // eslint-disable-line
+      // if (row.price <= 0) return false;
 
-      if (row.isZizaijiaCommodity && row.isOrder) return false;
+      // if (row.isZizaijiaCommodity && row.isOrder) return false;
 
       return true;
     },
