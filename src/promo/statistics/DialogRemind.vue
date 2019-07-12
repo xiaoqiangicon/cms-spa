@@ -16,17 +16,10 @@
       <div class="nickname">{{item.nickname}}</div>
     </div>-->
     <el-checkbox-group v-model="userId">
-      <div
-        v-for="manager in managerList"
-        :key="manager.id"
-        class="cell"
-      >
+      <div v-for="manager in managerList" :key="manager.id" class="cell">
         <el-checkbox :label="manager.id">
           <div class="avatar">
-            <img
-              :src="manager.avatar"
-              alt=""
-            >
+            <img :src="manager.avatar" alt="" />
           </div>
           <div class="nickname">
             {{ manager.nickname }}
@@ -34,14 +27,8 @@
         </el-checkbox>
       </div>
     </el-checkbox-group>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
-      <el-button
-        type="primary"
-        @click="submit"
-      >保 存</el-button>
+    <span slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="submit">保 存</el-button>
     </span>
   </el-dialog>
 </template>
@@ -87,6 +74,7 @@ export default {
             title: '提示',
             message: res.message,
           });
+          return;
         }
 
         this.managerList = res.data;
@@ -111,6 +99,7 @@ export default {
               title: '提示',
               message: res.message,
             });
+            return;
           }
 
           Notification({

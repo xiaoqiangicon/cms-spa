@@ -106,10 +106,7 @@
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="price"
-            label="佛事名称"
-          >
+          <el-table-column prop="price" label="佛事名称">
             <template slot-scope="scope">
               <el-select
                 v-model="scope.row.buddhistId"
@@ -127,10 +124,7 @@
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="transferRate"
-            label="选择项"
-          >
+          <el-table-column prop="transferRate" label="选择项">
             <template slot-scope="scope">
               <el-select
                 v-model="scope.row.subId"
@@ -147,10 +141,7 @@
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="transferPrice"
-            label="转单价格（元）"
-          >
+          <el-table-column prop="transferPrice" label="转单价格（元）">
             <template slot-scope="scope">
               <el-input v-model="scope.row.price" placeholder="" />
             </template>
@@ -400,15 +391,16 @@ export default {
             title: '提示',
             message: res.message,
           });
+          return;
         }
-      });
 
-      Notification({
-        type: 'success',
-        title: '提示',
-        message: '保存成功',
+        Notification({
+          type: 'success',
+          title: '提示',
+          message: '保存成功',
+        });
+        this.init();
       });
-      this.init();
     },
     changeSub(id) {
       this.subId = id;
@@ -457,15 +449,15 @@ export default {
                 title: '提示',
                 message: res.message,
               });
+              return;
             }
+            Notification({
+              type: 'success',
+              title: '提示',
+              message: '删除成功',
+            });
+            this.init();
           });
-
-          Notification({
-            type: 'success',
-            title: '提示',
-            message: '删除成功',
-          });
-          this.init();
         })
         .catch(() => {});
     },

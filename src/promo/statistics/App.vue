@@ -128,6 +128,7 @@ export default {
             title: '提示',
             message: res.message,
           });
+          return;
         }
 
         this.templeList = res.data;
@@ -149,6 +150,7 @@ export default {
             title: '提示',
             message: res.message,
           });
+          return;
         }
 
         // total 只取第一页的

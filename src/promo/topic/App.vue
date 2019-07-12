@@ -106,6 +106,7 @@ export default {
             title: '提示',
             message: res.message,
           });
+          return;
         }
 
         this.pagination.total = res.data.total;
@@ -146,6 +147,7 @@ export default {
                 title: '提示',
                 message: res.message,
               });
+              return;
             }
 
             Notification({
