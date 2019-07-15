@@ -10,7 +10,7 @@
         class="fl-right mg-t-10 mg-r-20"
         type="primary"
         size="mini"
-        :disabled="selected.length < 20"
+        :disabled="selected.length !== 20"
         @click="dialogConfirmVisible = true"
       >
         生成订单
