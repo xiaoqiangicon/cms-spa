@@ -85,7 +85,7 @@ export const orders1 = {
         // 推广员奖励金
         promotionMoney: id * 104 + subId,
         // 推广佛事比例列表
-        pickUpList:
+        rateList:
           subId % 2
             ? []
             : [1, 2, 3, 4, 5].map(id3 => ({

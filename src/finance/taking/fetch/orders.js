@@ -47,7 +47,7 @@ const refactor = {
             // 推广员奖励金
             promoterReward: 'promotionMoney',
             // 推广佛事比例列表
-            promotionRateList: 'pickUpList',
+            promotionRateList: 'rateList',
             _promotionRateList: [
               {
                 createTime: 'addTime',
