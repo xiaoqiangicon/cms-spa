@@ -4,7 +4,11 @@ const req = {
   buddhistId: 'commodityId',
 };
 
-const refactor = {};
+const post = res => {
+  if (!res.data) {
+    res.data = { name: '' };
+  }
+};
 
 seeFetch.config('promo/topicEdit/getBuddhistName', {
   method: ['post'],
@@ -15,5 +19,5 @@ seeFetch.config('promo/topicEdit/getBuddhistName', {
     '/promo/topic_edit/mock/get_buddhist_name',
   ],
   req: [req, req],
-  refactor: [refactor, refactor],
+  post: [post, post],
 });
