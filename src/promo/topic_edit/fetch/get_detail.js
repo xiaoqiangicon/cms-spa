@@ -22,7 +22,11 @@ const refactor = {
     // goodsComponent: 'goodsComponent',
     _goodsComponent: {
       title: 'goodsTitle',
-      // list: 'list',
+      _list: [
+        {
+          priceStr: 'price',
+        },
+      ],
     },
   },
 };
