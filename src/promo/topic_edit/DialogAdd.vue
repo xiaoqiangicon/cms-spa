@@ -23,7 +23,7 @@
         />
       </el-select>
     </div>
-    <!-- 佛事下拉 -->
+    <!-- 佛事下拉  -->
     <div v-show="activeComponent === 'buddhistComponent'" class="mg-b-20">
       <div class="mg-b-20">
         佛事ID
@@ -38,11 +38,11 @@
         <el-button
           slot="append"
           icon="el-icon-search"
-          @click="getBuddhistName"
+          @click="getBuddhistData"
         />
       </el-input>
       <el-input
-        v-model="buddhistName"
+        v-model="buddhistData.name"
         placeholder="佛事名称"
         :disabled="true"
       />
@@ -62,10 +62,14 @@
         <el-button
           slot="append"
           icon="el-icon-search"
-          @click="getBuddhistName"
+          @click="getBuddhistData"
         />
       </el-input>
-      <el-input v-model="goodsName" placeholder="商品名称" :disabled="true" />
+      <el-input
+        v-model="goodsData.name"
+        placeholder="商品名称"
+        :disabled="true"
+      />
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button type="primary" @click="handleClickSave">保 存</el-button>
@@ -99,9 +103,9 @@ export default {
       templeId: '',
 
       goodsId: '',
-      goodsName: '',
+      goodsData: {}, // name price
       buddhistId: '',
-      buddhistName: '',
+      buddhistData: {}, // name
     };
   },
   watch: {
@@ -134,7 +138,7 @@ export default {
         this.templeList = res.data;
       });
     },
-    getBuddhistName() {
+    getBuddhistData() {
       const { activeComponent } = this;
       let buddhistId;
       if (activeComponent === 'goodsComponent') {
@@ -143,7 +147,7 @@ export default {
         ({ buddhistId } = this);
       }
 
-      seeFetch('promo/topicEdit/getBuddhistName', { buddhistId }).then(res => {
+      seeFetch('promo/topicEdit/getBuddhistData', { buddhistId }).then(res => {
         if (!res.success) {
           Notification({
             type: 'error',
@@ -154,21 +158,31 @@ export default {
           return;
         }
 
-        const { name } = res.data;
+        if (!res.data) {
+          Notification({
+            type: 'error',
+            title: '提示',
+            message: '你输入的ID无对应佛事',
+          });
+
+          this.goodsData = { name: '' };
+          this.buddhistData = { name: '' };
+          return;
+        }
 
         if (activeComponent === 'goodsComponent') {
-          this.goodsName = name;
+          this.goodsData = res.data;
         } else if (activeComponent === 'buddhistComponent') {
-          this.buddhistName = name;
+          this.buddhistData = res.data;
         }
       });
     },
     init() {
       this.templeId = '';
       this.buddhistId = '';
-      this.buddhistName = '';
+      this.buddhistData = { name: '' };
       this.goodsId = '';
-      this.goodsName = '';
+      this.goodsData = { name: '' };
     },
 
     handleClickSave() {
@@ -178,16 +192,25 @@ export default {
       if (tag === 'temple') {
         rowData = this[`${tag}List`].find(item => item.id === this[`${tag}Id`]);
       } else if (tag === 'buddhist') {
-        rowData = { id: this.buddhistId, name: this.buddhistName };
+        rowData = this.buddhistData;
       } else if (tag === 'goods') {
-        rowData = { id: this.goodsId, name: this.goodsName };
+        rowData = this.goodsData;
+      }
+
+      if (!rowData.id) {
+        Notification({
+          type: 'error',
+          title: '提示',
+          message: '请选择需要添加的组件',
+        });
+        return;
       }
 
       if (!rowData.name) {
         Notification({
           type: 'error',
           title: '提示',
-          message: '请手动核实名称',
+          message: '添加前请核实名称',
         });
         return;
       }
