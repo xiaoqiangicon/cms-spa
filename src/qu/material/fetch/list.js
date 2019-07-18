@@ -4,6 +4,7 @@ import { publishAccounts, statuses } from '../data';
 
 const req = {
   search: 'content',
+  publishAccount: 'pushAccount',
   page: 'pageNum',
 };
 

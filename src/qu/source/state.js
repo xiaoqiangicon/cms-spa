@@ -20,6 +20,8 @@ addProps.forEach(({ name, default: defaultValue }) => {
 export default {
   namespaced: true,
   state: {
+    groupDialogVisible: !1,
+    groupList: [],
     add: addState,
   },
   mutations: {
