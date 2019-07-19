@@ -23,33 +23,53 @@
         />
       </el-select>
     </div>
-    <!-- 佛事下拉 -->
+    <!-- 佛事下拉  -->
     <div v-show="activeComponent === 'buddhistComponent'" class="mg-b-20">
       <div class="mg-b-20">
-        佛事名称
+        佛事ID
       </div>
-      <el-select v-model="buddhistId" filterable placeholder="请选择">
-        <el-option
-          v-for="item in buddhistList"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id"
+      <el-input
+        v-model="buddhistId"
+        class="mg-b-20"
+        style="width:200px;"
+        placeholder="请输入佛事id"
+        clearable
+      >
+        <el-button
+          slot="append"
+          icon="el-icon-search"
+          @click="getBuddhistData"
         />
-      </el-select>
+      </el-input>
+      <el-input
+        v-model="buddhistData.name"
+        placeholder="佛事名称"
+        :disabled="true"
+      />
     </div>
     <!-- 商品下拉 -->
     <div v-show="activeComponent === 'goodsComponent'" class="mg-b-20">
       <div class="mg-b-20">
-        商品名称
+        商品ID
       </div>
-      <el-select v-model="goodsId" filterable placeholder="请选择">
-        <el-option
-          v-for="item in goodsList"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id"
+      <el-input
+        v-model="goodsId"
+        class="mg-b-20"
+        style="width:200px;"
+        placeholder="请输入佛事id"
+        clearable
+      >
+        <el-button
+          slot="append"
+          icon="el-icon-search"
+          @click="getBuddhistData"
         />
-      </el-select>
+      </el-input>
+      <el-input
+        v-model="goodsData.name"
+        placeholder="商品名称"
+        :disabled="true"
+      />
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button type="primary" @click="handleClickSave">保 存</el-button>
@@ -79,12 +99,13 @@ export default {
     return {
       sVisible: this.visible,
       templeList: [],
-      buddhistList: [],
-      goodsList: [],
 
       templeId: '',
-      buddhistId: '',
+
       goodsId: '',
+      goodsData: {}, // name price
+      buddhistId: '',
+      buddhistData: {}, // name
     };
   },
   watch: {
@@ -101,8 +122,6 @@ export default {
   },
   created() {
     this.getTempleList();
-    this.getBuddhistList();
-    this.getGoodsList();
   },
   methods: {
     getTempleList() {
@@ -119,8 +138,16 @@ export default {
         this.templeList = res.data;
       });
     },
-    getBuddhistList() {
-      seeFetch('promo/topicEdit/getBuddhistList', {}).then(res => {
+    getBuddhistData() {
+      const { activeComponent } = this;
+      let buddhistId;
+      if (activeComponent === 'goodsComponent') {
+        buddhistId = this.goodsId;
+      } else if (activeComponent === 'buddhistComponent') {
+        ({ buddhistId } = this);
+      }
+
+      seeFetch('promo/topicEdit/getBuddhistData', { buddhistId }).then(res => {
         if (!res.success) {
           Notification({
             type: 'error',
@@ -131,36 +158,63 @@ export default {
           return;
         }
 
-        this.buddhistList = res.data;
-      });
-    },
-    getGoodsList() {
-      seeFetch('promo/topicEdit/getGoodsList', {}).then(res => {
-        if (!res.success) {
+        if (!res.data) {
           Notification({
             type: 'error',
             title: '提示',
-            message: res.message,
+            message: '你输入的ID无对应佛事',
           });
 
+          this.goodsData = { name: '' };
+          this.buddhistData = { name: '' };
           return;
         }
 
-        this.goodsList = res.data;
+        if (activeComponent === 'goodsComponent') {
+          this.goodsData = res.data;
+        } else if (activeComponent === 'buddhistComponent') {
+          this.buddhistData = res.data;
+        }
       });
     },
     init() {
       this.templeId = '';
       this.buddhistId = '';
+      this.buddhistData = { name: '' };
       this.goodsId = '';
+      this.goodsData = { name: '' };
     },
 
     handleClickSave() {
       const { activeComponent } = this;
       const tag = activeComponent.split('Component')[0];
-      const rowData = this[`${tag}List`].find(
-        item => item.id === this[`${tag}Id`]
-      );
+      let rowData = {};
+      if (tag === 'temple') {
+        rowData = this[`${tag}List`].find(item => item.id === this[`${tag}Id`]);
+      } else if (tag === 'buddhist') {
+        rowData = this.buddhistData;
+      } else if (tag === 'goods') {
+        rowData = this.goodsData;
+      }
+
+      if (!rowData.id) {
+        Notification({
+          type: 'error',
+          title: '提示',
+          message: '请选择需要添加的组件',
+        });
+        return;
+      }
+
+      if (!rowData.name) {
+        Notification({
+          type: 'error',
+          title: '提示',
+          message: '添加前请核实名称',
+        });
+        return;
+      }
+
       this.$emit('save', rowData);
       this.$emit('updateVisible', !1);
     },

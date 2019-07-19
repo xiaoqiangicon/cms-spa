@@ -152,7 +152,7 @@ export default {
           col: [
             { prop: 'id', label: 'ID' },
             { prop: 'name', label: '名称' },
-            { prop: 'price', label: '价格' },
+            { prop: 'priceStr', label: '价格' },
           ],
         },
       },

@@ -94,7 +94,7 @@
       <div class="mg-t-10">
         <div>{{ detail.title }}</div>
         <div>{{ detail.subtitle }}</div>
-        <div>订单号码：{{ detail.id }}</div>
+        <div>订单号码：{{ detail.orderNo }}</div>
         <div>生成时间：{{ detail.addTime }}</div>
       </div>
     </div>
