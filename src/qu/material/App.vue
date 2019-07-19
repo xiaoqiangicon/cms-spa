@@ -61,7 +61,7 @@
           <el-table-column label="操作">
             <template slot-scope="item">
               <el-button
-                v-if="item.row.status !== 1 || item.row.canEdit"
+                v-if="item.row.status !== 2 || item.row.canEdit"
                 type="text"
                 size="small"
                 @click="toEdit(item)"
