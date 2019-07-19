@@ -115,6 +115,7 @@ const routes = [
         component: () => import('../promo/ci/App'),
         name: '慈光计划',
         meta: { title: '慈光计划', noCache: true },
+        hidden: !0,
       },
       {
         path: 'topic',
