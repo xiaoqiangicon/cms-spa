@@ -24,6 +24,14 @@ const refactor = {
   ],
 };
 
+const post = res => {
+  if (res.data) {
+    res.data.forEach(item => {
+      if (!item.groupId) item.groupId = 0;
+    });
+  }
+};
+
 seeFetch.config('qu/source/list', {
   method: ['post'],
   stringify: [!0],
@@ -31,4 +39,5 @@ seeFetch.config('qu/source/list', {
   req: [req, req],
   pre: [pre, pre],
   refactor: [refactor, refactor],
+  post: [post, post],
 });
