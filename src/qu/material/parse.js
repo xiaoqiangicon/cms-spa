@@ -7,6 +7,7 @@ export const parserVersion = '1.0';
 
 export const PARSE_TYPE_TEXT = 1;
 export const PARSE_TYPE_IMAGE = 2;
+export const PARSE_TYPE_VIDEO = 3;
 
 export const makeJsonItem = (type, content) => ({ type, content });
 
@@ -23,7 +24,7 @@ export const getJsonContent = (content, jsonContent) => {
       : jsonContent;
 
   // 1. 纯文字，2：img 标签
-  const regExp = /(>([^><]+?)<)|(<img[^>]* src="([^"]+?)"[^>]*>)/gi;
+  const regExp = /(>([^><]+?)<)|(<img[^>]* src="([^"]+?)"[^>]*>)|(<iframe[^>]* data-src="([^"]+?)"[^>]*>)/gi;
 
   const result = [];
   let matches = regExp.exec(content);
@@ -38,6 +39,11 @@ export const getJsonContent = (content, jsonContent) => {
     else if (matches[4]) {
       const url = matches[4].trim();
       if (url) result.push(makeJsonItem(PARSE_TYPE_IMAGE, url));
+    }
+    // 视频
+    else if (matches[6]) {
+      const url = matches[6].trim();
+      if (url) result.push(makeJsonItem(PARSE_TYPE_VIDEO, url));
     }
 
     matches = regExp.exec(content);

@@ -48,6 +48,16 @@
               <img :src="item.row.cover" class="wd-100" />
             </template>
           </el-table-column>
+          <el-table-column label="资源类型">
+            <template slot-scope="item">
+              <el-button v-if="item.row.hasImages" size="small" type="primary">
+                图文 </el-button
+              ><br /><br />
+              <el-button v-if="item.row.hasVideos" size="small" type="primary">
+                视频
+              </el-button>
+            </template>
+          </el-table-column>
           <el-table-column prop="shortContentText" label="内容摘要" />
           <el-table-column prop="publishAccountText" label="发布账户" />
           <el-table-column prop="statusText" label="状态" />

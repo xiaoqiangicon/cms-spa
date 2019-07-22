@@ -18,6 +18,8 @@ export const list = {
     publishAuthor: '推送作者',
     original: id % 2,
     createdAt: '2019-01-01 01:01:01',
+    hasImages: id % 2,
+    hasVideos: id % 2,
   })),
 };
 
@@ -39,6 +41,8 @@ export const list1 = {
       printAuthor: '推送作者',
       isOriginal: id % 2,
       addTime: '2019-01-01 01:01:01',
+      hasImages: id % 2,
+      hasVideos: id % 2,
     })),
   },
 };
