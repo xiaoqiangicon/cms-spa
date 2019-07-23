@@ -23,6 +23,7 @@ const refactor = {
       contentText: 'articleText',
       addedToLibrary: 'isUse',
       pullTime: 'pullTime',
+      addedVideoToLibrary: 'isUseVideo',
     },
   ],
 };
@@ -35,7 +36,11 @@ const post = res => {
         ? item.contentText.slice(0, 40)
         : '';
 
-      if (item.articleImg) item.cover = item.articleImg.split(',')[0];
+      if (item.articleImg) {
+        item.cover = item.articleImg.split(',')[0];
+      }
+      item.hasImages = !!item.articleImg;
+      item.hasVideos = !!item.articleVideo;
     });
 };
 

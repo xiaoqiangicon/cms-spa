@@ -16,6 +16,7 @@ export const list = {
     pullTime: '2019-01-01 01:01:01',
     hasImages: id % 2,
     hasVideos: id % 2,
+    addedVideoToLibrary: id % 2,
   })),
 };
 
@@ -34,8 +35,9 @@ export const list1 = {
         'contentTextcontentTextcontentTextcontentTextcontentTextcontentTextcontentText',
       isUse: id % 2,
       pullTime: '2019-01-01 01:01:01',
-      hasImages: id % 2,
-      hasVideos: id % 2,
+      articleVideo:
+        'https://v.qq.com/iframe/preview.html?width=500&height=375&auto=0&vid=b09029kucqe',
+      isUseVideo: id % 2,
     })),
   },
 };

@@ -6,36 +6,53 @@
     width="700px"
   >
     <div class="content">
-      <el-alert
-        title="提示：拖动图片或文字进行排序，点击文字或图片进行操作"
-        type="success"
-        effect="dark"
-      />
-      <div class="preview mg-t-20">
-        <draggable v-model="jsonContent.content">
-          <transition-group>
-            <p
-              v-for="(item, index) in jsonContent.content"
-              :key="index"
-              class="item"
-              @click="showActions(index)"
-            >
-              <span v-if="item.type === 1">{{ item.content }}</span>
-              <img
-                v-if="item.type === 2"
-                :src="item.content"
-              >
-            </p>
-          </transition-group>
-        </draggable>
+      <div v-if="type === 1">
+        <div class="row">
+          <iframe frameborder="0" allowfullscreen="" :src="video" />
+        </div>
+        <div v-if="videos.length > 1" class="row">
+          <el-button size="small" @click="changeVideo">
+            选择其他视频
+          </el-button>
+        </div>
+        <div class="row">
+          <div class="row-name">
+            视频描述：
+          </div>
+          <el-input
+            v-model="videoDesc"
+            placeholder="视频描述"
+            type="textarea"
+            style="width: 100%"
+          />
+        </div>
       </div>
-      <div class="row">
-        <el-button
-          size="small"
-          @click="remakeContent"
-        >
-          重新加载内容
-        </el-button>
+      <div v-else>
+        <el-alert
+          title="提示：拖动图片或文字进行排序，点击文字或图片进行操作"
+          type="success"
+          effect="dark"
+        />
+        <div class="preview mg-t-20">
+          <draggable v-model="jsonContent.content">
+            <transition-group>
+              <p
+                v-for="(item, index) in jsonContent.content"
+                :key="index"
+                class="item"
+                @click="showActions(index)"
+              >
+                <span v-if="item.type === 1">{{ item.content }}</span>
+                <img v-if="item.type === 2" :src="item.content" />
+              </p>
+            </transition-group>
+          </draggable>
+        </div>
+        <div class="row">
+          <el-button size="small" @click="remakeContent">
+            重新加载内容
+          </el-button>
+        </div>
       </div>
       <div class="row">
         <div class="row-name">
@@ -63,26 +80,17 @@
             class="image"
             @click="delImage(index)"
           >
-            <img
-              :src="image"
-              class="image-img"
-            >
+            <img :src="image" class="image-img" />
             <button class="clean image-close">
               X
             </button>
           </div>
         </div>
         <div>
-          <el-button
-            size="small"
-            @click="selectImages"
-          >
+          <el-button size="small" @click="selectImages">
             选取内容的图片
           </el-button>
-          <el-button
-            size="small"
-            class="mg-l-10 ps-relative"
-          >
+          <el-button size="small" class="mg-l-10 ps-relative">
             上传图片
             <div ref="upload" />
           </el-button>
@@ -102,16 +110,8 @@
           filterable
           style="width: 100%"
         >
-          <el-option
-            label="请选择"
-            value=""
-          />
-          <el-option
-            v-for="r in regions"
-            :key="r"
-            :label="r"
-            :value="r"
-          />
+          <el-option label="请选择" value="" />
+          <el-option v-for="r in regions" :key="r" :label="r" :value="r" />
         </el-select>
         <p class="mg-t-10">
           如稿件讲述的是某地域的事件，请添加该地域的标签
@@ -127,14 +127,8 @@
           size="small"
           style="width: 100%"
         >
-          <el-option
-            label="否"
-            :value="0"
-          />
-          <el-option
-            label="是"
-            :value="1"
-          />
+          <el-option label="否" :value="0" />
+          <el-option label="是" :value="1" />
         </el-select>
         <p class="mg-t-10">
           选择是会展示原创标示和禁止转载声明，否则为转载第三方免责声明。
@@ -195,24 +189,14 @@
         </p>
       </div>
     </div>
-    <span
-      slot="footer"
-      v-loading="saving"
-      class="dialog-footer"
-    >
+    <span slot="footer" v-loading="saving" class="dialog-footer">
       <el-button @click="clickCancel">
         取 消
       </el-button>
-      <el-button
-        type="primary"
-        @click="clickOk(1)"
-      >
+      <el-button type="primary" @click="clickOk(1)">
         保存
       </el-button>
-      <el-button
-        type="primary"
-        @click="clickOk(2)"
-      >
+      <el-button type="primary" @click="clickOk(2)">
         发布
       </el-button>
     </span>
@@ -238,7 +222,7 @@ import {
   ACTION_EDIT,
   ACTION_DELETE,
   ACTION_INSERT_TEXT_BEFORE,
-  ACTION_INSERT_TEXT_AFTER,
+  // ACTION_INSERT_TEXT_AFTER,
   ACTION_INSERT_IMAGE_BEFORE,
   ACTION_INSERT_IMAGE_AFTER,
   ACTION_CROP_IMAGE,
@@ -278,6 +262,8 @@ addProps.forEach(({ name, full }) => {
   'cropImageUrl',
   'imageCropped',
   'cropImageResult',
+  'selectVideoResult',
+  'videoSelected',
 ].forEach(name => {
   computedProps[name] = {
     get() {
@@ -396,6 +382,9 @@ export default {
 
       item.content = this.cropImageResult;
     },
+    videoSelected() {
+      this.video = this.selectVideoResult;
+    },
   },
   updated() {
     const { upload: uploadEl } = this.$refs;
@@ -474,11 +463,15 @@ export default {
         original,
         covers,
         publishTime,
+        type,
+        video,
+        videoDesc,
       } = this;
 
       if (!title) error = '标题不能为空';
       else if (title.length > 30) error = '标题最多30字';
-      else if (!jsonContent.content.length) error = '内容不能为空';
+      else if (type === 0 && !jsonContent.content.length)
+        error = '内容不能为空';
       else if (!covers.length) error = '封面不能为空';
       else if (sequence === 2) {
         if (!publishTime) error = '发布时间不能为空';
@@ -507,6 +500,8 @@ export default {
         region,
         publishAccount,
         original,
+        video,
+        videoDesc,
         publishAuthor: publishAuthor || '自在家',
         covers: covers.slice(0, 3).join(','),
       };
@@ -535,6 +530,13 @@ export default {
         this.$store.commit(`quMaterial/updateVisible`, !1);
         this.ok();
       });
+    },
+    changeVideo() {
+      this.$store.state.quMaterial.videosToSelect = [...this.videos].map(
+        url => ({ url, selected: !1 })
+      );
+      this.$store.state.quMaterial.selectVideoResult = '';
+      this.$store.state.quMaterial.selectVideoVisible = !0;
     },
   },
 };

@@ -13,6 +13,10 @@ export const addProps = [
   { name: 'publishAuthor', full: !0, default: '' },
   { name: 'original', full: !0, default: 0 },
   { name: 'publishTime', full: !0, default: '' },
+  { name: 'type', full: !0, default: 0 },
+  { name: 'videos', full: !0, default: () => [] },
+  { name: 'video', full: !0, default: '' },
+  { name: 'videoDesc', full: !0, default: '' },
 ];
 
 export const statuses = [

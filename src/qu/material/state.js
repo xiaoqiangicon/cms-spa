@@ -37,6 +37,10 @@ export default {
     cropImageUrl: '',
     cropImageResult: '',
     imageCropped: 1,
+    videosToSelect: [],
+    selectVideoVisible: !1,
+    selectVideoResult: '',
+    videoSelected: 1,
   },
   mutations: {
     ...addMutations,

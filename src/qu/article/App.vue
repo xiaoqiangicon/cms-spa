@@ -76,11 +76,19 @@
                 v-if="!item.row.addedToLibrary"
                 type="text"
                 size="small"
-                @click="addToLibrary(item)"
+                @click="addToLibrary(item, 0)"
               >
-                添加到素材库
+                添加图文到素材库
               </el-button>
-              <el-button type="text" size="small" @click="toDetail(item)">
+
+              <el-button
+                v-if="!item.row.addedVideoToLibrary"
+                type="text"
+                size="small"
+                @click="addToLibrary(item, 1)"
+              >
+                添加视频到素材库 </el-button
+              ><el-button type="text" size="small" @click="toDetail(item)">
                 详情
               </el-button>
             </template>
@@ -168,9 +176,10 @@ export default {
       this.currentPage = 1;
       this.fetchList();
     },
-    addToLibrary({ row: item }) {
+    addToLibrary({ row: item }, type) {
       seeFetch('qu/article/add', {
         id: item.id,
+        type,
       }).then(res => {
         if (!res.success) {
           Notification({
