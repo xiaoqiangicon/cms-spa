@@ -84,9 +84,17 @@
         <el-input
           v-model.number="tempCurSubItem.shareFuBiPercent"
           style="width: 100px;"
+          :disabled="tempCurSubItem.price === -1"
           placeholder=""
         />
         <span class="mg-l-5">%</span>
+      </div>
+      <div
+        v-show="tempCurSubItem.price === -1"
+        class="tip mg-t-30"
+        style="color: #E6A23C;"
+      >
+        重要提示：选择项若金额为“随喜”，则不可设置福币分成比例
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitFuBiSet">保 存</el-button>

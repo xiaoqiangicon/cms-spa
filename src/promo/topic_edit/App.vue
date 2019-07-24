@@ -7,7 +7,7 @@
       <el-form-item prop="introduce" label="专题简介">
         <el-input v-model="form.introduce" type="textarea" rows="5" />
       </el-form-item>
-      <el-form-item label="展示心愿">
+      <el-form-item label="发布心愿">
         <el-switch v-model="form.isShowWish" />
       </el-form-item>
       <el-form-item prop="cover" label="封面图片">
