@@ -50,7 +50,16 @@
       />
       <el-table-column prop="buddhistName" label="佛事状态">
         <template slot-scope="scope">
-          <span v-if="!scope.row.isEnd" style="color: #67C23A;">进行中</span>
+          <template v-if="!scope.row.isEnd">
+            <span style="color: #67C23A;">进行中</span>
+            <div
+              style="color: #409EFF; cursor:pointer;"
+              @click="handleClickCanCash(scope.row)"
+            >
+              {{ scope.row.isPickUpCommodity ? '可提现' : '不可提现' }}
+              <i style="color: #409EFF;" class="el-icon-edit" />
+            </div>
+          </template>
           <template v-else>
             <span v-if="scope.row.isFinish" style="color: #909399;"
               >已确认</span
@@ -131,6 +140,7 @@
       @size-change="onSizeChange"
       @current-change="onCurrentChange"
     />
+    <!-- 记录 -->
     <el-dialog
       title="记录"
       :visible.sync="dialogRecordVisible"
@@ -151,6 +161,7 @@
         <el-table-column prop="updateUser" label="编辑用户" align="right" />
       </el-table>
     </el-dialog>
+    <!-- 提现 -->
     <el-dialog
       title="确认"
       :visible.sync="dialogWithdrawVisible"
@@ -180,6 +191,7 @@
         <el-button type="primary" @click="handleWithdraw">确 定</el-button>
       </span>
     </el-dialog>
+    <!-- 添加佛事 -->
     <el-dialog
       title="添加"
       :visible.sync="dialogAddVisible"
@@ -263,6 +275,37 @@
         <el-button type="primary" @click="handleAdd">确 定</el-button>
       </span>
     </el-dialog>
+    <!-- 编辑佛事提现 -->
+    <el-dialog
+      title="提现设置"
+      :visible.sync="dialogCanCashVisible"
+      :before-close="
+        () => {
+          dialogCanCashVisible = false;
+        }
+      "
+    >
+      <el-form :model="curItem" label-width="100px">
+        <el-form-item label="佛事名称：">
+          <div>{{ curItem.buddhistName }}</div>
+        </el-form-item>
+        <el-form-item label="提现控制：">
+          <el-switch
+            v-model="curItem.isPickUpCommodity"
+            inactive-color="#ff4949"
+            active-text="可提现"
+            inactive-text="推广中不可提"
+          />
+          <div>可控制进行中的推广佛事，在saas后台寺院能否进行提现操作</div>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogCanCashVisible = false">取 消</el-button>
+        <el-button type="primary" @click="updateBuddhistCanCash"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -309,6 +352,7 @@ export default {
       dialogRecordVisible: !1,
       dialogWithdrawVisible: !1,
       dialogAddVisible: !1,
+      dialogCanCashVisible: !1,
     };
   },
   created() {
@@ -446,6 +490,18 @@ export default {
       this.curItem = rowData;
       this.dialogWithdrawVisible = !0;
     },
+    handleClickCanCash(rowData) {
+      console.log(rowData);
+      const { templeId, buddhistId, isPickUpCommodity, buddhistName } = rowData;
+      this.curItem = {
+        templeId,
+        buddhistId,
+        isPickUpCommodity: Boolean(isPickUpCommodity),
+        buddhistName,
+      };
+      console.log(this.curItem);
+      this.dialogCanCashVisible = !0;
+    },
     handleWithdraw() {
       this.withdraw().then(() => {
         Notification({
@@ -472,6 +528,29 @@ export default {
 
       this.getRecordList().then(() => {
         this.dialogRecordVisible = !0;
+      });
+    },
+    updateBuddhistCanCash() {
+      const { templeId, buddhistId, isPickUpCommodity } = this.curItem;
+      seeFetch('promo/index/buddhist/updateCanCash', {
+        templeId,
+        buddhistId,
+        isPickUpCommodity,
+      }).then(res => {
+        if (!res.success) {
+          Notification({
+            type: 'error',
+            title: '提示',
+            message: res.msg,
+          });
+          return;
+        }
+        // 更新行数据
+        this.list.find(
+          item => item.buddhistId === buddhistId
+        ).isPickUpCommodity = isPickUpCommodity;
+
+        this.dialogCanCashVisible = !1;
       });
     },
     handleAdd() {

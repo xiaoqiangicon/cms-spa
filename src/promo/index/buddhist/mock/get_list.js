@@ -17,6 +17,7 @@ export default {
       rate: 0.12,
       startTime: '2020-12-18 18:20:47',
       updateTime: '2019-12-18 18:20:47',
+      isPickUpCommodity: 1,
       subdivideList: [
         { name: '选择项1', id: 1, price: 11, shareBlessCoinPercentage: 11 },
         { name: '选择项2', id: 2, price: 12, shareBlessCoinPercentage: 12 },

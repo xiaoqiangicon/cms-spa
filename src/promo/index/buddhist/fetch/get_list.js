@@ -27,6 +27,7 @@ const refactor = {
         // startTime: 'startTime',
         // updateTime: 'updateTime',
         // isPromotion: 'isPromotion',
+        // isPickUpCommodity 可提现
         updateUser: 'managerName',
         promotionPercent: 'promotionPercentage', // 推广百分比
         subList: 'subdivideList',
