@@ -8,7 +8,6 @@ const req = {
 
 const pre = params => ({
   ...params,
-  isEnd: 1,
   type: 2, // 佛事
   isPickUpCommodity: Number(params.isPickUpCommodity),
 });
