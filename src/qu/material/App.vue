@@ -42,7 +42,14 @@
       </div>
       <div class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
-          <el-table-column prop="title" label="标题" />
+          <el-table-column label="标题">
+            <template slot-scope="item">
+              {{ item.row.title }}
+              <el-button size="mini">
+                {{ item.row.type === 1 ? '视频' : '图文' }}
+              </el-button>
+            </template>
+          </el-table-column>
           <el-table-column label="封面">
             <template slot-scope="item">
               <img :src="item.row.cover" class="wd-100" />
@@ -61,7 +68,7 @@
           <el-table-column label="操作">
             <template slot-scope="item">
               <el-button
-                v-if="item.row.status !== 1 || item.row.canEdit"
+                v-if="item.row.status !== 2 || item.row.canEdit"
                 type="text"
                 size="small"
                 @click="toEdit(item)"
@@ -106,6 +113,7 @@
     <UploadImage />
     <Detail />
     <CropImage />
+    <SelectVideo />
   </div>
 </template>
 
@@ -119,6 +127,7 @@ import Action from './Action';
 import SelectImage from './SelectImage';
 import UploadImage from './UploadImage';
 import CropImage from './CropImage';
+import SelectVideo from './SelectVideo';
 import Detail from './Detail';
 import { getJsonContent } from './parse';
 import './fetch';
@@ -132,6 +141,7 @@ export default {
     UploadImage,
     Detail,
     CropImage,
+    SelectVideo,
   },
   data() {
     return {
@@ -215,6 +225,9 @@ export default {
       this.$store.state.quMaterial.add.publishTime =
         item.publishTime || date.dateTime;
       this.$store.state.quMaterial.add.original = item.original || 0;
+      this.$store.state.quMaterial.add.videos = item.videos
+        ? item.videos.split(',')
+        : [];
     },
     toDetail({ row: item }) {
       this.$store.state.quMaterial.detailVisible = !0;

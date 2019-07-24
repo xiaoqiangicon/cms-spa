@@ -28,6 +28,8 @@ const refactor = {
       publishAuthor: 'printAuthor',
       original: 'isOriginal',
       createdAt: 'addTime',
+      videos: 'articleVideo',
+      videoDesc: 'videoDetail',
     },
   ],
 };
@@ -49,6 +51,9 @@ const post = res => {
       if (!item.publishAuthor) item.publishAuthor = '自在家';
 
       item.cover = item.covers ? item.covers.split(',')[0] : '';
+      if (!item.video) {
+        item.video = item.videos ? item.videos.split(',')[0] : '';
+      }
     });
 };
 

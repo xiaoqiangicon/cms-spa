@@ -13,12 +13,16 @@ export const addProps = [
   { name: 'publishAuthor', full: !0, default: '' },
   { name: 'original', full: !0, default: 0 },
   { name: 'publishTime', full: !0, default: '' },
+  { name: 'type', full: !0, default: 0 },
+  { name: 'videos', full: !0, default: () => [] },
+  { name: 'video', full: !0, default: '' },
+  { name: 'videoDesc', full: !0, default: '' },
 ];
 
 export const statuses = [
   { id: 0, name: '草稿' },
-  { id: 1, name: '已发布' },
-  { id: 2, name: '已发布' },
+  { id: 1, name: '待趣头条发布' },
+  { id: 2, name: '已发布到趣头条' },
   { id: -1, name: '回收站' },
 ];
 

@@ -18,6 +18,11 @@ export const list = {
     publishAuthor: '推送作者',
     original: id % 2,
     createdAt: '2019-01-01 01:01:01',
+    type: id % 2,
+    videos:
+      'https://v.qq.com/iframe/preview.html?width=500&height=375&auto=0&vid=b09029kucqe,https://v.qq.com/iframe/preview.html?width=500&height=375&auto=0&vid=b09029kucqe',
+    video: '',
+    videoDesc: '',
   })),
 };
 
@@ -39,6 +44,11 @@ export const list1 = {
       printAuthor: '推送作者',
       isOriginal: id % 2,
       addTime: '2019-01-01 01:01:01',
+      type: id % 2,
+      articleVideo:
+        'https://v.qq.com/iframe/preview.html?width=500&height=375&auto=0&vid=b09029kucqe,https://v.qq.com/iframe/preview.html?width=500&height=375&auto=0&vid=b09029kucqe',
+      video: '',
+      videoDetail: '',
     })),
   },
 };

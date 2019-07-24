@@ -14,6 +14,12 @@
       >
         <span v-if="item.type === 1">{{ item.content }}</span>
         <img v-if="item.type === 2" :src="item.content" />
+        <iframe
+          v-if="item.type === 3"
+          allowfullscreen=""
+          frameborder="0"
+          :src="item.content"
+        />
       </p>
     </div>
   </el-dialog>

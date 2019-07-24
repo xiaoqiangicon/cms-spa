@@ -46,6 +46,16 @@
       <div class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
           <el-table-column prop="id" label="id" />
+          <el-table-column label="资源类型">
+            <template slot-scope="item">
+              <el-button v-if="item.row.hasImages" size="small" type="primary">
+                图文 </el-button
+              ><br /><br />
+              <el-button v-if="item.row.hasVideos" size="small" type="primary">
+                视频
+              </el-button>
+            </template>
+          </el-table-column>
           <el-table-column prop="title" label="标题" />
           <el-table-column label="封面">
             <template slot-scope="item">
@@ -66,11 +76,19 @@
                 v-if="!item.row.addedToLibrary"
                 type="text"
                 size="small"
-                @click="addToLibrary(item)"
+                @click="addToLibrary(item, 0)"
               >
-                添加到素材库
+                添加图文到素材库
               </el-button>
-              <el-button type="text" size="small" @click="toDetail(item)">
+
+              <el-button
+                v-if="!item.row.addedVideoToLibrary"
+                type="text"
+                size="small"
+                @click="addToLibrary(item, 1)"
+              >
+                添加视频到素材库 </el-button
+              ><el-button type="text" size="small" @click="toDetail(item)">
                 详情
               </el-button>
             </template>
@@ -158,9 +176,10 @@ export default {
       this.currentPage = 1;
       this.fetchList();
     },
-    addToLibrary({ row: item }) {
+    addToLibrary({ row: item }, type) {
       seeFetch('qu/article/add', {
         id: item.id,
+        type,
       }).then(res => {
         if (!res.success) {
           Notification({
