@@ -82,7 +82,7 @@
               </el-button>
 
               <el-button
-                v-if="!item.row.addedVideoToLibrary"
+                v-if="item.row.hasVideos && !item.row.addedVideoToLibrary"
                 type="text"
                 size="small"
                 @click="addToLibrary(item, 1)"
