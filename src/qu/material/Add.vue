@@ -472,7 +472,7 @@ export default {
       else if (title.length > 30) error = '标题最多30字';
       else if (type === 0 && !jsonContent.content.length)
         error = '内容不能为空';
-      else if (!covers.length) error = '封面不能为空';
+      // else if (!covers.length) error = '封面不能为空';
       else if (sequence === 2) {
         if (!publishTime) error = '发布时间不能为空';
         else {
@@ -503,7 +503,7 @@ export default {
         video,
         videoDesc,
         publishAuthor: publishAuthor || '自在家',
-        covers: covers.slice(0, 3).join(','),
+        covers: (covers || []).slice(0, 3).join(','),
       };
 
       if (sequence === 2) {

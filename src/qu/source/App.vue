@@ -50,7 +50,7 @@
                 size="small"
                 @change="value => changeGroup(value, item)"
               >
-                <el-option :value="0" label="分组名称" />
+                <el-option :value="0" label="-" />
                 <el-option
                   v-for="group in groupList"
                   :key="group.id"
