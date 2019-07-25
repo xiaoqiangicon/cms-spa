@@ -30,6 +30,7 @@ const refactor = {
       createdAt: 'addTime',
       videos: 'articleVideo',
       videoDesc: 'videoDetail',
+      publishTime: 'pullTime',
     },
   ],
 };
