@@ -8,7 +8,13 @@
     <div class="content">
       <div v-if="type === 1">
         <div class="row">
-          <iframe frameborder="0" allowfullscreen="" :src="video" />
+          <iframe
+            frameborder="0"
+            allowfullscreen=""
+            width="500"
+            height="375"
+            :src="video"
+          />
         </div>
         <div v-if="videos.length > 1" class="row">
           <el-button size="small" @click="changeVideo">

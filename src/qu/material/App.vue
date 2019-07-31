@@ -64,8 +64,12 @@
               {{ item.row.original ? '是' : '否' }}
             </template>
           </el-table-column>
-          <el-table-column prop="createdAt" label="创建时间" />
-          <el-table-column prop="publishTime" label="发布时间" />
+          <el-table-column
+            v-if="type !== 2"
+            prop="createdAt"
+            label="创建时间"
+          />
+          <el-table-column v-else prop="publishTime" label="发布时间" />
           <el-table-column label="操作">
             <template slot-scope="item">
               <el-button

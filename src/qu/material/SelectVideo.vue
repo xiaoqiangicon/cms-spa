@@ -3,7 +3,7 @@
     :visible="selectVideoVisible"
     title="选择视频"
     :before-close="clickCancel"
-    width="40%"
+    width="540px"
   >
     <div class="content">
       <div
@@ -17,7 +17,8 @@
           frameborder="0"
           allowfullscreen=""
           :src="item.url"
-          style="width: 100%; height: 100%"
+          width="500"
+          height="375"
         />
         <div class="video-overlay" />
         <button class="clean video-mask">
@@ -96,7 +97,7 @@ export default {
 .video {
   position: relative;
   display: inline-block;
-  height: 100px;
+  height: 375px;
   margin-right: 10px;
   margin-bottom: 10px;
 }
