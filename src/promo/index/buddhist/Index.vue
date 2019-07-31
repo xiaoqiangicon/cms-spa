@@ -507,7 +507,7 @@ export default {
         Notification({
           type: 'success',
           title: '提示',
-          message: '提现成功',
+          message: '佛事推广结束',
         });
 
         this.dialogWithdrawVisible = !1;
