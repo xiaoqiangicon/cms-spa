@@ -56,7 +56,9 @@
               style="color: #409EFF; cursor:pointer;"
               @click="handleClickCanCash(scope.row)"
             >
-              {{ scope.row.isPickUpCommodity ? '可提现' : '不可提现' }}
+              {{
+                scope.row.isPickUpCommodity ? '推广中可提现' : '推广中不可提现'
+              }}
               <i style="color: #409EFF;" class="el-icon-edit" />
             </div>
           </template>
@@ -293,7 +295,7 @@
           <el-switch
             v-model="curItem.isPickUpCommodity"
             inactive-color="#ff4949"
-            active-text="可提现"
+            active-text="推广中可提现"
             inactive-text="推广中不可提"
           />
           <div>可控制进行中的推广佛事，在saas后台寺院能否进行提现操作</div>
