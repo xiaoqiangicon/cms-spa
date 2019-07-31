@@ -185,9 +185,9 @@
         </div>
         <div class="content">：{{ curItem.buddhistId }}</div>
       </div>
-      <div class="f-s-18" style="color: #F56C6C;">
+      <!-- <div class="f-s-18" style="color: #F56C6C;">
         确认结算后不可取消
-      </div>
+      </div> -->
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogWithdrawVisible = !1">取 消</el-button>
         <el-button type="primary" @click="handleWithdraw">确 定</el-button>
