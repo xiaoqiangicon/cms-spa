@@ -48,9 +48,9 @@
         width="100"
         :align="'left'"
       />
-      <el-table-column prop="buddhistName" label="佛事状态">
+      <el-table-column prop="buddhistName" label="推广状态">
         <template slot-scope="scope">
-          <template v-if="!scope.row.isEnd">
+          <template v-if="!scope.row.isFinish">
             <span style="color: #67C23A;">进行中</span>
             <div
               style="color: #409EFF; cursor:pointer;"
