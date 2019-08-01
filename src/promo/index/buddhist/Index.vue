@@ -233,6 +233,7 @@
           <el-select
             v-model.number="addItem.buddhistId"
             v-loading="loadingBuddhistList"
+            filterable
             placeholder="请选择"
           >
             <el-option
@@ -551,6 +552,12 @@ export default {
         this.list.find(
           item => item.buddhistId === buddhistId
         ).isPickUpCommodity = isPickUpCommodity;
+
+        Notification({
+          type: 'success',
+          title: '提示',
+          message: '修改成功',
+        });
 
         this.dialogCanCashVisible = !1;
       });
