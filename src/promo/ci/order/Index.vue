@@ -35,7 +35,7 @@
       </el-table-column>
       <el-table-column label="来源">
         <template slot-scope="scope">
-          {{ scope.row.oldUser ? '老用户' : '新用户' }}
+          {{ scope.row.source ? '被邀请' : '邀请' }}
         </template>
       </el-table-column>
       <el-table-column prop="addTime" label="添加时间" />
