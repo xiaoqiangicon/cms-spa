@@ -56,12 +56,17 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style scoped>
 .content {
   margin-top: 20px;
+}
 
-  img {
-    max-width: 100% !important;
-  }
+.content >>> img {
+  max-width: 100% !important;
+}
+
+iframe {
+  width: 500px;
+  height: 375px;
 }
 </style>

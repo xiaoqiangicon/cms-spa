@@ -18,6 +18,8 @@
           v-if="item.type === 3"
           allowfullscreen=""
           frameborder="0"
+          width="500"
+          height="375"
           :src="item.content"
         />
       </p>
