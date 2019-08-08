@@ -104,8 +104,8 @@
 <script>
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
-import { now, fillZero } from '@zzh/n-util';
 import Chart from 'chart.js';
+import { now, fillZero } from '../../../pro-com/src/utils';
 import { makeChartConfig, makeChartTitle, makeChartData } from './util';
 import './fetch';
 

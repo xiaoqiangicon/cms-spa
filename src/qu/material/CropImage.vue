@@ -15,18 +15,11 @@
         :output-size="0.8"
       />
     </div>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="clickCancel">
         取 消
       </el-button>
-      <el-button
-        v-loading="loading"
-        type="primary"
-        @click="clickOk"
-      >
+      <el-button v-loading="loading" type="primary" @click="clickOk">
         确 定
       </el-button>
     </span>
@@ -34,8 +27,8 @@
 </template>
 
 <script>
-import { Notification } from 'element-ui';
 import { VueCropper } from 'vue-cropper';
+import { base64Url, base64Handle } from '../../configs/upload-extra';
 
 const computedProps = {};
 
@@ -84,7 +77,7 @@ export default {
 
       this.$refs.cropper.getCropData(data => {
         window
-          .fetch(window.uploadBase64Url, {
+          .fetch(base64Url, {
             method: 'post',
             body: JSON.stringify({ img: data }),
           })
@@ -92,9 +85,7 @@ export default {
           .then(res => {
             this.loading = !1;
             this.$store.state.quMaterial.cropImageVisible = !1;
-            this.$store.state.quMaterial.cropImageResult = window.uploadBase64Handle(
-              res
-            );
+            this.$store.state.quMaterial.cropImageResult = base64Handle(res);
             this.$store.state.quMaterial.imageCropped += 1;
           });
       });

@@ -65,7 +65,7 @@ export default {
   max-width: 100% !important;
 }
 
-iframe {
+.content >>> iframe {
   width: 500px;
   height: 375px;
 }

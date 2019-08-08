@@ -1,14 +1,63 @@
-// 本地测试环境
-if (window.location.hostname.indexOf('localhost') > -1) {
-  window.zzhUploadUrl = '/mock/upload.json';
+import { Notification } from 'element-ui';
 
-  window.uploadBase64Url = '/mock/upload.json';
-  window.uploadBase64Handle = res => res.data.pic;
-} else {
-  window.zzhUploadUrl = '/upload';
+const isLocal = window.location.hostname.indexOf('localhost') > -1;
 
-  window.uploadBase64Url = '/upload/picBase64';
-  window.uploadBase64Handle = res => res.data.url;
-}
+export const makeUploadImageOptions = ({
+  el,
+  done,
+  progress,
+  multiple,
+  name,
+  uploadOptions,
+}) => ({
+  el,
+  done,
+  progress,
+  multiple,
+  name,
+  type: 'image',
+  uploadOptions,
+  uploadUrl: isLocal ? '/mock/upload.json' : '/upload',
+  uploadHandle(res) {
+    return res.data.pic;
+  },
+  uploadFail(msg) {
+    Notification({
+      title: '提示',
+      message: msg,
+    });
+  },
+});
 
-window.zzhUploadHandle = res => res.data.pic;
+export const makeUploadFileOptions = ({
+  el,
+  done,
+  progress,
+  multiple,
+  name,
+}) => ({
+  el,
+  done,
+  progress,
+  multiple,
+  name,
+  uploadUrl: isLocal ? '/mock/upload.json' : '/upload',
+  uploadOptions: {
+    dataType: 'json',
+    paramName: 'file',
+    maxFileSize: 20 * 1024 * 1024,
+    messages: {
+      // 没有效果，不知为什么
+      maxFileSize: '啊哦，文件太大啦。不要超过 20MB 哦',
+    },
+  },
+  uploadHandle(res) {
+    return res.data.pic;
+  },
+  uploadFail(msg) {
+    Notification({
+      title: '提示',
+      message: msg,
+    });
+  },
+});

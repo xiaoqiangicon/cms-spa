@@ -162,13 +162,12 @@
 </template>
 
 <script>
-import '@zzh/upload/dist/upload.css';
 import seeFetch from 'see-fetch';
 import { Notification, Message } from 'element-ui';
 
-import '../../configs/upload';
+import { makeUploadImageOptions } from '../../configs/upload';
 
-import upload from '@zzh/upload';
+import upload from '../../../pro-com/src/upload';
 
 import './fetch';
 
@@ -274,9 +273,14 @@ export default {
 
           const { uploadCover: uploadCoverRef } = this.$refs;
 
-          upload(uploadCoverRef, url => {
-            this.handleFeedImages.push(url);
-          });
+          upload(
+            makeUploadImageOptions({
+              el: uploadCoverRef,
+              done: url => {
+                this.handleFeedImages.push(url);
+              },
+            })
+          );
         }
       }, 0);
     },

@@ -24,9 +24,8 @@
 
 <script>
 import '@senntyou/shortcut.css';
-import '@zzh/upload/dist/upload.css';
-import '../../configs/upload';
-import upload from '@zzh/upload';
+import { makeUploadImageOptions } from '../../configs/upload';
+import upload from '../../../pro-com/src/upload';
 
 export default {
   name: 'Upload',
@@ -54,13 +53,13 @@ export default {
     const { upload: uploadEl } = this.$refs;
 
     upload(
-      uploadEl,
-      url => {
-        this.images.push(url);
-      },
-      {
+      makeUploadImageOptions({
+        el: uploadEl,
+        done: url => {
+          this.images.push(url);
+        },
         multiple: this.multiple,
-      }
+      })
     );
   },
   methods: {

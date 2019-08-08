@@ -1,5 +1,5 @@
 import cookie from 'js-cookie';
-import { urlParams } from '@zzh/n-util';
+import { urlParams } from '../../pro-com/src/utils';
 
 const subDomain = window.location.hostname.split('.')[0];
 

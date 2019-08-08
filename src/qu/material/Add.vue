@@ -212,11 +212,10 @@
 <script>
 import { Notification } from 'element-ui';
 import Draggable from 'vuedraggable';
-import { getDate, numOfDateTime } from '@zzh/n-util';
 import seeFetch from 'see-fetch';
-import '@zzh/upload/dist/upload.css';
-import '../../configs/upload';
-import upload from '@zzh/upload';
+import { getDate, numOfDateTime } from '../../../pro-com/src/utils';
+import { makeUploadImageOptions } from '../../configs/upload';
+import upload from '../../../pro-com/src/upload';
 import { addProps, regions, publishAccounts } from './data';
 import {
   makeJsonItem,
@@ -397,11 +396,13 @@ export default {
 
     if (uploadEl && !this.initUpload) {
       upload(
-        uploadEl,
-        url => {
-          this.covers.push(url);
-        },
-        { multiple: !0 }
+        makeUploadImageOptions({
+          el: uploadEl,
+          done: url => {
+            this.covers.push(url);
+          },
+          multiple: !0,
+        })
       );
 
       this.initUpload = !0;
