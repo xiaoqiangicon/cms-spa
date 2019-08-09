@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
+    "core-js": "^2.6.9",
     "eslint": "^5.12.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
@@ -43,7 +44,7 @@
     "lila-core": "^0.7.1",
     "lila-tasks": "^0.7.1",
     "lila-webpack": "^0.7.1",
-    "lila-webpack-config": "^0.7.2",
+    "lila-webpack-config": "^0.7.5",
     "lint-staged": "^8.1.0",
     "moment-locales-webpack-plugin": "^1.0.7",
     "opn-cli": "^4.0.0",
