@@ -152,6 +152,15 @@ export default lila => {
           },
         },
       },
+      rebuildWebpackConfig({ webpackConfig }) {
+        /* eslint-disable no-param-reassign */
+        const cwd = process.cwd();
+        webpackConfig.resolve.modules = [
+          path.join(cwd, 'src'),
+          path.join(cwd, 'node_modules'),
+        ];
+        return webpackConfig;
+      },
     };
   };
 };
