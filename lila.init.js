@@ -152,6 +152,11 @@ export default lila => {
           },
         },
       },
+      babelExclude: [
+        /node_modules/,
+        /pro-com\/src\/(ueditor|qrcode)/,
+        /pro-com\\src\\(ueditor|qrcode)/,
+      ],
       rebuildWebpackConfig({ webpackConfig }) {
         /* eslint-disable no-param-reassign */
         const cwd = process.cwd();
