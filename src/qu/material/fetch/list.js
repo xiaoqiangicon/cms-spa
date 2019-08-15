@@ -29,7 +29,7 @@ const refactor = {
       original: 'isOriginal',
       createdAt: 'addTime',
       videos: 'articleVideo',
-      videoDesc: 'videoDetail',
+      videoDesc: 'videoDetails',
       publishTime: 'pullTime',
     },
   ],

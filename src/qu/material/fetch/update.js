@@ -9,7 +9,7 @@ const req = {
   publishTime: 'printTime',
   publishAuthor: 'printAuthor',
   original: 'isOriginal',
-  videoDesc: 'videoDetail',
+  videoDesc: 'videoDetails',
 };
 
 const pre = params => {

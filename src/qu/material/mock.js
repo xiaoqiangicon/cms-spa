@@ -49,7 +49,7 @@ export const list1 = {
       articleVideo:
         'https://v.qq.com/iframe/preview.html?width=500&height=375&auto=0&vid=b09029kucqe,https://v.qq.com/iframe/preview.html?width=500&height=375&auto=0&vid=b09029kucqe',
       video: '',
-      videoDetail: '',
+      videoDetails: '',
       pullTime: '2019-12-12 01:01:01',
     })),
   },
