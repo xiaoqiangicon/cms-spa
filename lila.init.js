@@ -154,8 +154,8 @@ export default lila => {
       },
       babelExclude: [
         /node_modules/,
-        /pro-com\/src\/(ueditor|qrcode)/,
-        /pro-com\\src\\(ueditor|qrcode)/,
+        /pro-com\/src\/(ueditor|libs-es5)/,
+        /pro-com\\src\\(ueditor|libs-es5)/,
       ],
       rebuildWebpackConfig({ webpackConfig }) {
         /* eslint-disable no-param-reassign */
