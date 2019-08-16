@@ -317,6 +317,32 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/order',
+    component: Layout,
+    controlMark: 'pw_order',
+    redirect: '/order/index',
+    name: '订单管理',
+    meta: { title: '订单管理', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        path: `${domain}/order/templeOrderList`,
+        name: '寺院监控',
+        meta: { title: '寺院监控' },
+      },
+      {
+        path: `${domain}/orderManage/statisticsDetail`,
+        name: '订单查询',
+        meta: { title: '订单查询' },
+      },
+      {
+        path: 'refund',
+        component: () => import('../order/refund/App'),
+        name: '退款记录',
+        meta: { title: '退款记录', noCache: true },
+      },
+    ],
+  },
 ];
 
 const first = routes.filter(item => valid(item));

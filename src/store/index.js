@@ -31,6 +31,9 @@ import quSource from '../qu/source/state';
 // 事件管理
 import promoIndex from '../promo/index/state';
 
+// 订单退款
+import orderRefund from '../order/refund/state';
+
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -63,6 +66,9 @@ const store = new Vuex.Store({
 
     // 事件管理
     promoIndex,
+
+    // 订单退款
+    orderRefund,
   },
   getters,
 });

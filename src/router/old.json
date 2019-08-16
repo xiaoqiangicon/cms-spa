@@ -1,25 +1,6 @@
 {
   "items": [
     {
-      "id": "order-manage",
-      "name": "订单管理",
-      "icon": "fa-credit-card",
-      "subItems": [
-        {
-          "id": "temple-order-list",
-          "name": "寺院监控",
-          "link": "/order/templeOrderList",
-          "controlMark": "pw_order"
-        },
-        {
-          "id": "search-order",
-          "name": "订单查询",
-          "link": "/orderManage/statisticsDetail",
-          "controlMark": "pw_order"
-        }
-      ]
-    },
-    {
       "id": "buddhist-manage",
       "name": "佛事管理",
       "icon": "fa-money",
