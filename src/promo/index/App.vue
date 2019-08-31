@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { urlParams } from '../../../../pro-com/src/utils';
 import Transfer from './transfer/Index';
 import Buddhist from './buddhist/Index';
 import Fu from './fu/Index';
@@ -64,27 +65,17 @@ export default {
     // 市场部想在 佛事列表页面 点击转单列表时 新开页面
     // 因此点击时会带两个参数 重新打开 此页面
     // 以下做针对处理
-    // 由于是单页面 此页面在进入时必带参数 默认为 :activName :buddhistId
-    const {
-      transferActiveName,
-      transferBuddhistId,
-      transferBuddhistName,
-      transferSubList,
-    } = this.$route.params;
-    console.log(
-      transferActiveName,
-      transferBuddhistId,
-      transferBuddhistName,
-      transferSubList
-    );
-    if (transferActiveName !== ':transferActiveName')
-      this.transferActiveName = transferActiveName;
-    if (transferBuddhistId !== ':transferBuddhistId')
-      this.transferBuddhistId = transferBuddhistId;
-    if (transferBuddhistName !== ':transferBuddhistName')
-      this.transferBuddhistName = transferBuddhistName;
-    if (transferSubList !== ':transferSubList')
-      this.transferSubList = JSON.parse(decodeURIComponent(transferSubList));
+    // 由于是单页面 此页面在进入时必带参数 默认为 :activeName :buddhistId
+
+    if (urlParams.promoIndexTransferList) {
+      const transferList = JSON.parse(
+        decodeURIComponent(urlParams.promoIndexTransferList)
+      );
+      this.transferActiveName = 'tableNotTransfer';
+      this.transferBuddhistId = transferList.buddhistId;
+      this.transferBuddhistName = transferList.buddhistName;
+      this.transferSubList = transferList.subList;
+    }
   },
   created() {},
   methods: {},

@@ -50,18 +50,13 @@
       <el-table-column label="操作" width="100" align="center">
         <template slot-scope="scope">
           <div>
-            <el-button type="text" size="small">
-              <a :href="getTransferListUrl(scope.row)" target="_black"
-                >转单列表</a
-              >
-            </el-button>
-            <!-- <el-button
+            <el-button
               type="text"
               size="small"
               @click="toTransferList(scope.row)"
             >
               转单列表
-            </el-button> -->
+            </el-button>
           </div>
           <div>
             <el-button
@@ -189,17 +184,17 @@ export default {
     },
     toTransferList(item) {
       const { buddhistId, buddhistName, subList } = item;
-      // this.transferBuddhistId = buddhistId;
-      // this.transferBuddhistName = buddhistName;
-      // this.transferSubList = subList;
-      // this.transferActiveName = 'tableNotTransfer';
+
+      const transferList = encodeURIComponent(
+        JSON.stringify({
+          buddhistId,
+          buddhistName,
+          subList,
+        })
+      );
 
       // 此处存在特殊逻辑
-      let url = `${window.location.origin}${
-        window.location.pathname
-      }#/promo/index/tableNotTransfer/${buddhistId}/${buddhistName}/${encodeURIComponent(
-        JSON.stringify(subList)
-      )}`;
+      const url = `${window.location.origin}${window.location.pathname}?promoIndexTransferList=${transferList}#/promo/index`;
       window.open(url);
     },
     toTransferSet(item) {

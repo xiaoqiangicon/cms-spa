@@ -98,8 +98,7 @@ const routes = [
     meta: { title: '运营事件', icon: 'fa-circle', noCache: true },
     children: [
       {
-        path:
-          'index/:transferActiveName/:transferBuddhistId/:transferBuddhistName/:transferSubList',
+        path: 'index',
         component: () => import('../promo/index/App'),
         name: '事件管理',
         meta: { title: '事件管理', noCache: true },
