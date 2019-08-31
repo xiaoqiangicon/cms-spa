@@ -15,7 +15,7 @@ const pre = params => ({
   ...params,
   isTest: 1,
   tagId: 0,
-  verify: 0,
+  verify: -1,
 });
 
 seeFetch.config('promo/topicEdit/getTempleList', {

@@ -227,11 +227,9 @@ export default {
         month === 12 ? 1 : month + 1
       )}-01`;
 
-      window.sessionStorage[
-        'finance/summary||filterTemple'
-      ] = this.filterTemple;
-      window.sessionStorage['finance/summary||filterStart'] = start;
-      window.sessionStorage['finance/summary||filterEnd'] = end;
+      window.sessionStorage['finance/summary:filterTemple'] = this.filterTemple;
+      window.sessionStorage['finance/summary:filterStart'] = start;
+      window.sessionStorage['finance/summary:filterEnd'] = end;
 
       this.$router.push(`/finance/summary`);
     },

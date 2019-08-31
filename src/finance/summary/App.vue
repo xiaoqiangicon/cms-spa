@@ -146,24 +146,23 @@ export default {
 
       this.temples = res.data;
 
-      if (window.sessionStorage['finance/summary||filterTemple']) {
+      if (window.sessionStorage['finance/summary:filterTemple']) {
         this.filterTemple = parseInt(
-          window.sessionStorage['finance/summary||filterTemple'],
+          window.sessionStorage['finance/summary:filterTemple'],
           10
         );
-        window.sessionStorage.removeItem('finance/summary||filterTemple');
+        window.sessionStorage.removeItem('finance/summary:filterTemple');
       }
 
-      if (window.sessionStorage['finance/summary||filterStart']) {
+      if (window.sessionStorage['finance/summary:filterStart']) {
         this.filterStartDate =
-          window.sessionStorage['finance/summary||filterStart'];
-        window.sessionStorage.removeItem('finance/summary||filterStart');
+          window.sessionStorage['finance/summary:filterStart'];
+        window.sessionStorage.removeItem('finance/summary:filterStart');
       }
 
-      if (window.sessionStorage['finance/summary||filterEnd']) {
-        this.filterEndDate =
-          window.sessionStorage['finance/summary||filterEnd'];
-        window.sessionStorage.removeItem('finance/summary||filterEnd');
+      if (window.sessionStorage['finance/summary:filterEnd']) {
+        this.filterEndDate = window.sessionStorage['finance/summary:filterEnd'];
+        window.sessionStorage.removeItem('finance/summary:filterEnd');
       }
 
       this.fetchList();
@@ -232,11 +231,7 @@ export default {
     },
     exportExcel() {
       window.open(
-        `/finance/getTransactionRecordExcel?templeId=${
-          this.filterTemple
-        }&type=${this.filterType}&startTime=${this.filterStartDate}&endTime=${
-          this.filterEndDate
-        }&commodityId=${this.filterSubId}`
+        `/finance/getTransactionRecordExcel?templeId=${this.filterTemple}&type=${this.filterType}&startTime=${this.filterStartDate}&endTime=${this.filterEndDate}&commodityId=${this.filterSubId}`
       );
     },
     changeTemple() {

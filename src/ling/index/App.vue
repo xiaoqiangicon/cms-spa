@@ -145,7 +145,7 @@ export default {
       this.$router.push('/ling/edit/0');
     },
     toEdit(item) {
-      window.sessionStorage['ling/edit||item'] = JSON.stringify(item.row);
+      window.sessionStorage['ling/edit:item'] = JSON.stringify(item.row);
 
       this.$router.push(`/ling/edit/${item.row.id}`);
     },

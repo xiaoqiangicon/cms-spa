@@ -27,7 +27,7 @@ seeFetch.config('ling/edit/info', {
   implement: [
     () =>
       new Promise(resolve => {
-        const item = window.sessionStorage['ling/edit||item'];
+        const item = window.sessionStorage['ling/edit:item'];
 
         if (!item) {
           resolve({
