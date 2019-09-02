@@ -177,7 +177,7 @@
         },
         {
           "id": "buddish-data",
-          "name": "活动数据",
+          "name": "佛事数据",
           "link": "/stat/buddishData",
           "controlMark": "pw_statistics"
         },
