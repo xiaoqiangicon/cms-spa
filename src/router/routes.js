@@ -204,6 +204,12 @@ const routes = [
         name: '善款资料审核',
         meta: { title: '善款资料审核' },
       },
+      {
+        path: 'comment',
+        component: () => import('../temple/comment/App'),
+        name: '评价管理',
+        meta: { title: '评价管理', noCache: true },
+      },
     ],
   },
   {
