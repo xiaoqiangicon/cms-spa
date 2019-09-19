@@ -95,7 +95,13 @@
         <el-table-column label="评价时间" prop="addTime" />
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <div class="delete" @click="onClickDelete(scope.row)">
+            <div
+              class="delete"
+              @click="
+                isShowMask = true;
+                deleteId = scope.row.id;
+              "
+            >
               删除
             </div>
           </template>
@@ -114,6 +120,25 @@
         @current-change="handleCurrentChange"
       />
     </div>
+    <div v-if="isShowMask" class="mask">
+      <div class="delete-box">
+        <div class="delete-header">
+          <p>删除</p>
+          <span>×</span>
+        </div>
+        <p class="delete-info">
+          确定要删除吗？
+        </p>
+        <div class="delete-btn">
+          <div class="confirm-delete" @click="onClickDelete">
+            确认
+          </div>
+          <div class="cancel" @click="isShowMask = false">
+            取消
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -129,8 +154,8 @@ export default {
     return {
       loadingList: true,
 
-      templeName: '',
-
+      isShowMask: false, // 是否显示删除框
+      deleteId: '',
       // 列表请求参数
       templeId: '', // 寺院ID
       buddhistId: '', // 佛事ID
@@ -269,15 +294,18 @@ export default {
     },
     // 删除
     onClickDelete(row) {
-      seeFetch('temple/comment/delEvaluation', { id: row.id }).then(res => {
-        if (!res.success) return;
+      seeFetch('temple/comment/delEvaluation', { id: this.deleteId }).then(
+        res => {
+          if (!res.success) return;
 
-        Notification({
-          title: '消息',
-          message: '操作成功',
-          type: 'success',
-        });
-      });
+          this.isShowMask = false;
+          Notification({
+            title: '消息',
+            message: '操作成功',
+            type: 'success',
+          });
+        }
+      );
     },
     handleSizeChange(size) {
       this.currentSize = size;
@@ -347,5 +375,56 @@ main {
 .delete {
   color: #409eff;
   cursor: pointer;
+}
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+}
+.delete-box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 360px;
+  background: white;
+  border-radius: 8px;
+}
+.delete-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-size: 16px;
+  border-bottom: 1px solid #ccc;
+}
+.delete-info {
+  padding: 30px;
+  text-align: center;
+}
+.delete-btn {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.confirm-delete,
+.cancel {
+  width: 60px;
+  height: 30px;
+  text-align: center;
+  color: white;
+  border-radius: 4px;
+  line-height: 30px;
+  background: #409eff;
+  cursor: pointer;
+}
+.cancel {
+  margin-left: 20px;
+  background: #ccc;
 }
 </style>
