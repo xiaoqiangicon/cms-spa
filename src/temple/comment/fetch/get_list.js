@@ -9,10 +9,10 @@ const postHandle = (res, req) => {
   });
 };
 seeFetch.config('temple/comment/getList', {
-  method: ['get'],
+  method: ['post'],
   stringify: [!0],
   url: [
-    '/temple/getEvaluationList',
+    '/evaluation/getEvaluationList',
     '/src/temple/comment/mock/get_list',
     '/src/temple/comment/mock/get_list',
   ],

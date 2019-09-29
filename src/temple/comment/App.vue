@@ -247,13 +247,13 @@ export default {
       } = this;
 
       seeFetch('temple/comment/getList', {
-        templeId,
-        buddhistId,
+        templeId: parseInt(templeId, 10) | 0,
+        commodityId: parseInt(buddhistId, 10) | 0,
         startTime: formatDate[0],
         endTime: formatDate[1],
         pageNum: currentPage - 1,
         pageSize: currentSize,
-        type,
+        evaluation: type,
       }).then(res => {
         if (!res.success) return;
 
