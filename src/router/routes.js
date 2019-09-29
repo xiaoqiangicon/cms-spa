@@ -4,6 +4,33 @@ import { domain, valid } from './data';
 
 const routes = [
   {
+    path: '/tool',
+    component: Layout,
+    redirect: '/tool/upload-image',
+    name: '工具管理',
+    meta: { title: '工具管理', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        path: 'upload-image',
+        component: () => import('../tool/upload-image/App'),
+        name: '上传图片',
+        meta: { title: '上传图片', noCache: true },
+      },
+      {
+        path: 'upload-file',
+        component: () => import('../tool/upload-file/App'),
+        name: '上传文件',
+        meta: { title: '上传文件', noCache: true },
+      },
+      {
+        path: 'open-install-url',
+        component: () => import('../tool/open-install-url/App'),
+        name: '生成 OpenInstall 链接',
+        meta: { title: '生成 OpenInstall 链接', noCache: true },
+      },
+    ],
+  },
+  {
     path: '/ling',
     component: Layout,
     controlMark: 'pw_yaolingling',
