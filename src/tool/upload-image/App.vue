@@ -14,7 +14,7 @@
         <el-table :data="list" style="width: 100%">
           <el-table-column label="预览">
             <template slot-scope="item">
-              <img class="wd-200" :src="item.row.url" />
+              <img class="preview" :src="item.row.url" />
             </template>
           </el-table-column>
           <el-table-column label="地址">
@@ -125,5 +125,9 @@ export default {
 
 .code {
   word-break: break-all;
+}
+
+.preview {
+  max-width: 200px;
 }
 </style>
