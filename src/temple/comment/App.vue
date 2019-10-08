@@ -11,7 +11,7 @@
             size="medium"
             filterable
             placeholder="请选择或填写关键词搜索"
-            @change="onChangeBuddhistId"
+            @change="onChangeTempleId"
           >
             <el-option
               v-for="item in templeList"
@@ -32,9 +32,9 @@
           >
             <el-option
               v-for="item in buddhistList"
-              :key="item.commodityId"
+              :key="item.id"
               :label="item.name"
-              :value="item.commodityId"
+              :value="item.id"
             />
           </el-select>
           <span>评价类型</span>
@@ -83,10 +83,16 @@
         <el-table-column label="寺院名称" prop="templeName" />
         <el-table-column label="评价用户" prop="nickName" />
         <el-table-column label="手机号码" prop="mobile" />
-        <el-table-column label="参与项目" prop="subdivideName" />
+        <el-table-column label="参与项目" prop="commodityName" />
         <el-table-column label="评价类型" prop="evaluation" />
-        <el-table-column label="评价内容" prop="commodityName" />
-        <el-table-column label="文字评价" prop="labelRecordList" />
+        <el-table-column label="评价内容" prop="labelRecordList">
+          <template slot-scope="scope">
+            <div v-for="(value, key) in scope.row.labelRecordList" :key="key">
+              {{ value }}
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="文字评价" prop="content" />
         <el-table-column label="寺院回复">
           <template slot-scope="scope">
             <p>{{ scope.row.reply }}</p>
@@ -224,6 +230,7 @@ export default {
   created() {
     this.requestTempleList();
     this.requestList();
+    this.requestBuddhist();
   },
   methods: {
     // 格式化时间
@@ -264,10 +271,10 @@ export default {
           single.name = item.subdivideName;
           commodityList.push(single);
         });
-        this.buddhistList = commodityList;
+        // this.buddhistList = commodityList;
         this.list = res.data.dataList;
         this.loadingList = false;
-        this.totalCount = res.total;
+        this.totalCount = res.data.total;
       });
     },
     // 获取寺院列表
@@ -278,7 +285,19 @@ export default {
         this.templeList = res.data;
       });
     },
+    // 获取佛事列表
+    requestBuddhist() {
+      seeFetch('temple/comment/getBuddhistList', {
+        templeId: this.templeId,
+      }).then(res => {
+        this.buddhistList = res.data;
+      });
+    },
     // 佛事ID改变时
+    onChangeTempleId() {
+      this.onChangeFilter();
+      this.requestBuddhist();
+    },
     onChangeBuddhistId() {
       this.onChangeFilter();
     },

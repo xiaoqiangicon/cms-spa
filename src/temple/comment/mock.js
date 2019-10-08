@@ -59,3 +59,46 @@ export const del_evaluation = {
   msg: '成功',
   result: 1,
 };
+
+export const get_commodity_name_list = {
+  data: [
+    {
+      subdivideList: [
+        {
+          name: '实物奖品规格一',
+          subdivideId: 2772,
+        },
+        {
+          name: '实物奖品规格二',
+          subdivideId: 2773,
+        },
+        {
+          name: '实物奖品规格三',
+          subdivideId: 2774,
+        },
+        {
+          name: '实物奖品规格四',
+          subdivideId: 2775,
+        },
+      ],
+      commodityId: 1577,
+      name: '实物奖品领奖佛事',
+    },
+    {
+      subdivideList: [
+        {
+          name: '虚拟道具一随喜放生',
+          subdivideId: 2770,
+        },
+        {
+          name: '虚拟道具二放生月卡',
+          subdivideId: 2771,
+        },
+      ],
+      commodityId: 1576,
+      name: '虚拟道具领奖佛事',
+    },
+  ],
+  result: 0,
+  msg: '成功',
+};
