@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { urlParams } from '../../../../pro-com/src/utils';
 import Transfer from './transfer/Index';
 import Buddhist from './buddhist/Index';
 import Fu from './fu/Index';
@@ -67,10 +66,13 @@ export default {
     // 以下做针对处理
     // 由于是单页面 此页面在进入时必带参数 默认为 :activeName :buddhistId
 
-    if (urlParams.promoIndexTransferList) {
-      const transferList = JSON.parse(
-        decodeURIComponent(urlParams.promoIndexTransferList)
-      );
+    const transferListStr = window.localStorage.getItem(
+      'promo/index:transferList'
+    );
+    if (transferListStr) {
+      window.localStorage.removeItem('promo/index:transferList');
+
+      const transferList = JSON.parse(decodeURIComponent(transferListStr));
       this.transferActiveName = 'tableNotTransfer';
       this.transferBuddhistId = transferList.buddhistId;
       this.transferBuddhistName = transferList.buddhistName;
