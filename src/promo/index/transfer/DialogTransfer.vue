@@ -48,14 +48,8 @@
       <div>温馨提示</div>
       <div>“确认转单”前请确认寺院名称以及转单价格</div>
     </div>
-    <div
-      class="mg-t-20"
-      style="text-align:center;"
-    >
-      <el-button
-        type="primary"
-        @click="handleClickConfirm"
-      >
+    <div class="mg-t-20" style="text-align:center;">
+      <el-button type="primary" @click="handleClickConfirm">
         确认
       </el-button>
     </div>
@@ -113,14 +107,8 @@
         <div>温馨提示</div>
         <div>“确认转单”前请确认寺院名称以及转单价格</div>
       </div>
-      <div
-        class="mg-t-20"
-        style="text-align:center;"
-      >
-        <el-button
-          type="primary"
-          @click="handleClickSubmit"
-        >
+      <div class="mg-t-20" style="text-align:center;">
+        <el-button type="primary" @click="handleClickSubmit">
           确认转单
         </el-button>
       </div>
@@ -195,7 +183,7 @@ export default {
       const { price, originPrice, percent, transferOrderIds } = this;
       return (price
         ? price * this.transferOrderIds.length
-        : (percent / 100) * this.transferOrderIds.length
+        : (percent / 100) * originPrice * this.transferOrderIds.length
       ).toFixed(4);
     },
   },
