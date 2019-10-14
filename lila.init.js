@@ -1,11 +1,14 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
+import fse from 'fs-extra';
+import { Base64 } from 'js-base64';
 import tasksPlugin from 'lila-tasks';
 import webpackPlugin from 'lila-webpack';
 import { forVue } from 'lila-webpack-config';
 import MomentLocalesPlugin from 'moment-locales-webpack-plugin';
 
-import servers from './servers';
+const { readFileSync } = fse;
+const cwd = process.cwd();
 
 export default lila => {
   const { addCmdOption, setSetting } = lila;
@@ -29,6 +32,34 @@ export default lila => {
   return ({ argv, cmd }) => {
     const isDev = cmd === 'dev' || cmd === 'serve';
     const isGray = argv.env === 'gray';
+
+    const servers = [];
+    try {
+      const accounts = JSON.parse(
+        Base64.decode(
+          readFileSync(path.join(cwd, '../accounts/info.txt'), 'utf8')
+        )
+      );
+      accounts.forEach(item => {
+        servers.push({
+          ignoreErrors: true,
+          sshConfig: {
+            host: item.host,
+            username: item.user,
+            password: item.pass,
+          },
+        });
+      });
+    } catch (e) {
+      console.log('\nUse fake account.\n');
+      '.'.repeat(10).forEach(() => {
+        servers.push({
+          host: 'fake-host',
+          user: 'fake-user',
+          path: 'fake-path',
+        });
+      });
+    }
 
     const tasks = [
       '@lila/webpack',
@@ -124,7 +155,6 @@ export default lila => {
       ],
       rebuildWebpackConfig({ webpackConfig }) {
         /* eslint-disable no-param-reassign */
-        const cwd = process.cwd();
         webpackConfig.resolve.modules = [
           path.join(cwd, 'src'),
           path.join(cwd, 'node_modules'),
