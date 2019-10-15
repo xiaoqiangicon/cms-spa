@@ -153,43 +153,6 @@
       ]
     },
     {
-      "id": "data",
-      "name": "数据统计 ",
-      "icon": "fa-bar-chart-o",
-      "subItems": [
-        {
-          "id": "data-sum",
-          "name": "数据汇总",
-          "link": "/stat/sum",
-          "controlMark": "pw_statistics"
-        },
-        {
-          "id": "form-list",
-          "name": "分析报表",
-          "link": "/stat/statisticsIndex",
-          "controlMark": "pw_statistics"
-        },
-        {
-          "id": "data-preview",
-          "name": "寺院数据",
-          "link": "/stat/templeIndex",
-          "controlMark": "pw_statistics"
-        },
-        {
-          "id": "buddish-data",
-          "name": "佛事数据",
-          "link": "/stat/buddishData",
-          "controlMark": "pw_statistics"
-        },
-        {
-          "id": "data-promo",
-          "name": "推广数据",
-          "link": "/stat/promoIndex",
-          "controlMark": "pw_statistics"
-        }
-      ]
-    },
-    {
       "id": "wish",
       "name": "许愿管理",
       "icon": "fa-heart",

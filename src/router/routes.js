@@ -375,6 +375,53 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/stat',
+    component: Layout,
+    controlMark: 'pw_statistics',
+    name: '数据统计 ',
+    meta: { title: '数据统计', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        name: '数据汇总',
+        path: `${domain}/stat/sum`,
+        meta: { title: '数据汇总' },
+      },
+      {
+        name: '分析报表',
+        path: `${domain}/stat/statisticsIndex`,
+        meta: { title: '分析报表' },
+      },
+      {
+        name: '寺院数据',
+        path: `${domain}/stat/templeIndex`,
+        meta: { title: '寺院数据' },
+      },
+      {
+        name: '佛事数据',
+        path: `${domain}/stat/buddishData`,
+        meta: { title: '佛事数据' },
+      },
+      {
+        name: '推广数据',
+        path: `${domain}/stat/promoIndex`,
+        meta: { title: '推广数据' },
+      },
+      {
+        name: '渠道统计',
+        component: () => import('../statistics/channel/App'),
+        path: 'channel',
+        meta: { title: '渠道统计' },
+      },
+      {
+        path: 'laxin/:channel',
+        component: () => import('../statistics/detail/App'),
+        name: '渠道统计详情',
+        meta: { title: '渠道统计详情', noCache: true },
+        hidden: !0,
+      },
+    ],
+  },
 ];
 
 const first = routes.filter(item => valid(item));

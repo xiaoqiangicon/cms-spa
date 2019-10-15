@@ -34,6 +34,9 @@ import promoIndex from '../promo/index/state';
 // 订单退款
 import orderRefund from '../order/refund/state';
 
+// 数据统计
+import statisticsChannel from '../statistics/channel/state';
+
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -69,6 +72,9 @@ const store = new Vuex.Store({
 
     // 订单退款
     orderRefund,
+
+    // 数据统计
+    statisticsChannel,
   },
   getters,
 });
