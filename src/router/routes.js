@@ -414,7 +414,7 @@ const routes = [
         meta: { title: '渠道统计' },
       },
       {
-        path: 'laxin/:channel',
+        path: 'detail/:channel',
         component: () => import('../statistics/detail/App'),
         name: '渠道统计详情',
         meta: { title: '渠道统计详情', noCache: true },

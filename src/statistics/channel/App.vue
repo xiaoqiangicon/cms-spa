@@ -100,7 +100,9 @@ export default {
       this.item = value;
       this.$store.state.statisticsChannel.editVisible = !0;
     },
-    toLaxin(value) {},
+    toLaxin(value) {
+      this.$router.push(`/stat/detail/${value}`);
+    },
     pageChange(page) {
       this.page = page;
       this.fetchList();
