@@ -17,7 +17,7 @@
     <div class="input-block">
       <label>
         <span class="input-name">渠道参数</span>
-        <input v-model="param" class="input-txt" type="text" />
+        <input v-model="channel" class="input-txt" type="text" />
       </label>
       <p class="info">
         使用者根据各自内部规则，为每个推广渠道指定的唯一编号。一般命名方式是渠道名称+使用方式缩写，如在公众号的某个文章推广：app_gongzh
@@ -34,7 +34,7 @@
     </div>
     <div>
       <span class="input-name">过期时间</span>
-      <el-date-picker v-model="expireTime" type="date" placeholder="选择日期" />
+      <el-date-picker v-model="endDate" type="date" placeholder="选择日期" />
       <p class="info">
         一般是推广的结束的时间，或者在这个时间点在无需监控数据
       </p>
@@ -49,6 +49,7 @@
 
 <script>
 import seeFetch from 'see-fetch';
+import { Notification } from 'element-ui';
 
 const computedProps = {};
 
@@ -77,10 +78,11 @@ export default {
   data() {
     return {
       newItem: {},
+      id: 0,
       channelName: '',
-      param: '',
+      channel: '',
       url: '',
-      expireTime: '',
+      endDate: '',
     };
   },
   computed: {
@@ -90,21 +92,21 @@ export default {
     item: {
       handler(newValue, oldValue) {
         if (this.isNew) return;
-        console.log(this.item);
         this.newItem = this.item;
         this.channelName = this.newItem.name;
-        this.param = this.newItem.params;
+        this.channel = this.newItem.channel;
         this.url = this.newItem.url;
-        this.expireTime = this.newItem.expireTime;
+        this.endDate = this.newItem.endDate;
+        this.id = this.newItem.id;
       },
       deep: true,
     },
     isNew() {
       if (this.isNew) {
         this.channelName = '';
-        this.param = '';
+        this.channel = '';
         this.url = '';
-        this.expireTime = '';
+        this.endDate = '';
       }
     },
   },
@@ -113,21 +115,58 @@ export default {
       this.$store.state.statisticsChannel.editVisible = !1;
     },
     save() {
-      console.log('save');
+      if (!this.channelName) {
+        Notification({
+          title: '请输入渠道名',
+          type: 'warning',
+        });
+        return;
+      }
+      if (!this.channel) {
+        Notification({
+          title: '请输入渠道参数',
+          type: 'warning',
+        });
+        return;
+      }
+      if (!this.url) {
+        Notification({
+          title: '请输入链接',
+          type: 'warning',
+        });
+        return;
+      }
+      if (!this.endDate) {
+        Notification({
+          title: '请输入截至日期',
+          type: 'warning',
+        });
+        return;
+      }
       seeFetch('statistics/channel/save', {
-        channelName: this.channelName,
-        param: this.param,
+        id: this.id,
+        name: this.channelName,
+        channel: this.channel,
         url: this.url,
-        expireTime: this.expireTime,
+        endDate: this.format(this.endDate),
       }).then(res => {
         if (!res.success) return;
 
         this.$store.state.statisticsChannel.editVisible = !1;
         this.channelName = '';
         this.url = '';
-        this.expireTime = '';
-        this.param = '';
+        this.endDate = '';
+        this.channel = '';
+        window.location.reload();
       });
+    },
+    format(timeStr) {
+      const date = new Date(timeStr);
+      const y = date.getFullYear();
+      const m = date.getMonth() + 1;
+      const d = date.getDate();
+
+      return `${y}-${m >= 10 ? m : `0${m}`}-${d >= 10 ? d : `0${d}`}`;
     },
   },
 };

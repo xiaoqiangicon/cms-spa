@@ -11,7 +11,7 @@ seeFetch.config('statistics/channel/list', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/statistics/getRefundOrderList',
+    '/stat/getChannelList',
     '/statistics/channel/mock/list',
     '/statistics/channel/mock/list',
   ],

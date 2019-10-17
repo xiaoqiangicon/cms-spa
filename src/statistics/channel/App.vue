@@ -13,14 +13,14 @@
               <div>{{ scope.row.name }}</div>
             </template>
           </el-table-column>
-          <el-table-column prop="params" label="渠道参数" />
+          <el-table-column prop="channel" label="渠道参数" />
           <el-table-column prop="url" label="统计链接" />
-          <el-table-column prop="expireTime" label="过期时间" />
+          <el-table-column prop="endDate" label="过期时间" />
           <el-table-column prop="remark" label="备注" />
           <el-table-column label="操作">
             <template slot-scope="scope">
               <div>
-                <button class="btn" @click="toLaxin(scope.row.name)">
+                <button class="btn" @click="toLaxin(scope.row)">
                   报表
                 </button>
                 <button class="btn" @click="edit(scope.row)">
@@ -59,7 +59,7 @@ export default {
       loading: !1,
       list: [],
       total: 10,
-      page: 1,
+      page: 0,
       isNew: false, //  是否是创建新的渠道
       item: {}, // 当前点击的这一行的数据
     };
@@ -86,7 +86,7 @@ export default {
 
         if (this.page === 1) this.total = res.total;
 
-        this.list = res.data;
+        this.list = res.data.list;
 
         window.scrollTo(0, 0);
       });
@@ -100,8 +100,8 @@ export default {
       this.item = value;
       this.$store.state.statisticsChannel.editVisible = !0;
     },
-    toLaxin(value) {
-      this.$router.push(`/stat/detail/${value}`);
+    toLaxin(item) {
+      this.$router.push(`/stat/detail/${item.name}/${item.id}/${item.addTime}`);
     },
     pageChange(page) {
       this.page = page;

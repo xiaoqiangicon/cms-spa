@@ -117,3 +117,11 @@ export const getAll = (begin, end) => {
     k += 24 * 60 * 60 * 1000;
   }
 };
+
+export const getTenDays = begin => {
+  const ab = begin.split('-');
+  const de = new Date();
+  de.setUTCFullYear(ab[0], ab[1] - 1, ab[2]);
+  const unixTen = de.getTime();
+  return unixTen + 24 * 60 * 60 * 1000 * 10;
+};

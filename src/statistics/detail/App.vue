@@ -6,19 +6,19 @@
         <div class="fx-1">
           <div>访问量</div>
           <div class="mg-t-10">
-            {{ totalVisit }}
+            {{ viewAll }}
           </div>
         </div>
         <div class="fx-1">
           <div>支付笔数</div>
           <div class="mg-t-10">
-            {{ totalAccount }}
+            {{ payNumAll }}
           </div>
         </div>
         <div class="fx-1">
           <div>支付金额（元）</div>
           <div class="mg-t-10">
-            {{ totalMoney }}
+            {{ payMoneyAll }}
           </div>
         </div>
       </div>
@@ -51,6 +51,7 @@ import {
   makeChartConfig,
   makeChartTitle,
   makeChartData,
+  getTenDays,
 } from './util';
 
 let chart;
@@ -58,11 +59,12 @@ let chart;
 export default {
   data() {
     return {
-      totalAccount: '',
-      totalVisit: '',
-      totalMoney: '',
+      payNumAll: '',
+      viewAll: '',
+      payMoneyAll: '',
       chartData: [],
       name: '',
+      channelId: '',
       loading: !1,
       date: ['', ''],
       formatDate: ['2019-10-16', '2019-10-18'],
@@ -71,6 +73,10 @@ export default {
   },
   created() {
     this.name = this.$route.params.channel;
+    this.channelId = this.$route.params.channelId;
+    this.formatDate[0] = this.$route.params.addTime;
+    this.formatDate[1] = formatTime(getTenDays(this.formatDate[0]));
+    // console.log(this.formatDate);
     this.fetchList();
   },
   mounted() {
@@ -78,22 +84,42 @@ export default {
 
     chart = new Chart(chartRef.getContext('2d'), this.makeChartConfig());
   },
+  beforeDestroy() {
+    if (chart) {
+      chart.destroy();
+      chart = null;
+    }
+  },
   methods: {
     fetchList() {
       const { formatDate } = this;
+      this.loading = !0;
       seeFetch('statistics/detail/list', {
-        startTime: formatDate[0],
-        endTime: formatDate[1],
+        channelId: this.channelId,
+        startDate: formatDate[0],
+        endDate: formatDate[1],
       }).then(res => {
         if (res.success) {
-          this.totalAccount = res.totalAccount;
-          this.totalVisit = res.totalVisit;
-          this.totalMoney = res.totalMoney;
+          this.payNumAll = res.data.payNumAll;
+          this.viewAll = res.data.viewAll;
+          this.payMoneyAll = res.data.payMoneyAll;
 
-          // chart.data.datasets[0].data = res.data;
+          const viewNumResult = [];
+          const payNumResult = [];
+          const payMoneyResult = [];
+
+          res.data.list.forEach(item => {
+            viewNumResult.push(item.viewNum);
+            payNumResult.push(item.payNum);
+            payMoneyResult.push(item.payMoney);
+          });
+          chart.data.datasets[0].data = viewNumResult;
+          chart.data.datasets[1].data = payNumResult;
+          chart.data.datasets[2].data = payMoneyResult;
           this.getAll(this.formatDate[0], this.formatDate[1]);
           chart.data.labels = this.xAxis;
           chart.update();
+          this.loading = !1;
         }
       });
     },

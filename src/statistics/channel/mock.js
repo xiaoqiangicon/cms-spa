@@ -7,8 +7,9 @@ export const list = {
     name: `渠道${id}`,
     url: 'www.baidu.com',
     remark: '备注',
-    params: 'env-surs',
-    expireTime: '2019-01-01 01:01:01',
+    channel: 'env-surs',
+    endDate: '2019-01-01 01:01:01',
+    addTime: '2018-10-29',
   })),
 };
 
