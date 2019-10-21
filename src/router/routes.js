@@ -422,6 +422,51 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/wish',
+    component: Layout,
+    controlMark: 'pw_wish',
+    name: '法师模块',
+    meta: { title: '法师模块', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        path: 'project',
+        component: () => import('../master/project/App'),
+        name: '加持项目',
+        meta: { title: '加持项目', noCache: true },
+      },
+      {
+        name: '加持订单',
+        path: `${domain}/wish/plus`,
+        meta: { title: '加持订单' },
+      },
+      {
+        name: '法师管理',
+        path: `${domain}/wish/master`,
+        meta: { title: '法师管理' },
+      },
+      {
+        name: '心愿管理',
+        path: `${domain}/wish/index`,
+        meta: { title: '心愿管理' },
+      },
+      {
+        name: '还愿管理',
+        path: `${domain}/wish/return`,
+        meta: { title: '还愿管理' },
+      },
+      {
+        name: '寺院认证',
+        path: `${domain}/wish/verify`,
+        meta: { title: '寺院认证' },
+      },
+      {
+        name: '经咒落地页管理',
+        path: `${domain}/wish/template`,
+        meta: { title: '经咒落地页管理' },
+      },
+    ],
+  },
 ];
 
 const first = routes.filter(item => valid(item));
