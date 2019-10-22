@@ -36,6 +36,7 @@
           background
           layout="prev, pager, next"
           style="margin-top: 40px"
+          :page-size="pageSize"
           @current-change="pageChange"
         />
       </div>
@@ -60,6 +61,8 @@ export default {
       list: [],
       total: 10,
       page: 0,
+      currentPage: 0,
+      pageSize: 10,
       isNew: false, //  是否是创建新的渠道
       item: {}, // 当前点击的这一行的数据
     };
@@ -72,7 +75,7 @@ export default {
       this.loading = !0;
 
       seeFetch('statistics/channel/list', {
-        page: this.page,
+        pageNum: this.currentPage,
       }).then(res => {
         if (!res.success) {
           Notification({
@@ -84,7 +87,7 @@ export default {
 
         this.loading = !1;
 
-        if (this.page === 1) this.total = res.total;
+        this.total = res.data.count;
 
         this.list = res.data.list;
 
@@ -105,6 +108,7 @@ export default {
     },
     pageChange(page) {
       this.page = page;
+      this.currentPage = this.page - 1;
       this.fetchList();
     },
   },
