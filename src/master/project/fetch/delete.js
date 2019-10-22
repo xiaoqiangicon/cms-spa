@@ -1,19 +1,12 @@
 /* eslint-disable no-param-reassign, prefer-destructuring */
 import seeFetch from 'see-fetch';
 
-const refactor = {
-  data: [{}],
-};
-
-const post = res => {};
-
-seeFetch.config('master/project/list', {
+seeFetch.config('master/project/delete', {
   method: ['post'],
   stringify: [!0],
   url: [
     '/order/getRefundOrderList',
-    '/master/project/mock/list',
-    '/master/project/mock/list',
+    '/master/project/mock/del',
+    '/master/project/mock/del',
   ],
-  post: [post],
 });

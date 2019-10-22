@@ -436,6 +436,13 @@ const routes = [
         meta: { title: '加持项目', noCache: true },
       },
       {
+        path: 'edit/:name',
+        component: () => import('../master/edit/App'),
+        name: '编辑项目',
+        meta: { title: '编辑项目', noCache: true },
+        hidden: !0,
+      },
+      {
         name: '加持订单',
         path: `${domain}/wish/plus`,
         meta: { title: '加持订单' },
