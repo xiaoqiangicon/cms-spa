@@ -8,7 +8,7 @@ export const list = {
       id,
       name: `渠道${id}`,
       url: 'www.baidu.com',
-      remark: '备注',
+      remark: `备注 ${id}`,
       channel: 'env-surs',
       endDate: '2019-01-01 01:01:01',
       addTime: '2018-10-29',
