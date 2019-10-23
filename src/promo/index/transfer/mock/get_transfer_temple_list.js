@@ -12,6 +12,7 @@ export default {
         price: 0,
         percent: 2,
         fuBiRate: 11,
+        reviewConversion: 1,
       },
       {
         subdivideId: 2,
@@ -20,6 +21,7 @@ export default {
         price: 0,
         percent: 2,
         fuBiRate: 11,
+        reviewConversion: 1,
       },
     ],
   })),

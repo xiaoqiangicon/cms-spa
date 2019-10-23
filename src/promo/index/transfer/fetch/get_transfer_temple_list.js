@@ -17,7 +17,7 @@ const refactor = {
           buddhistId: 'commodityId',
           transferPrice: 'price',
           transferRate: 'percent',
-          // fuBiRate: 'fuBiRate',
+          takeEffect: 'reviewConversion',
         },
       ],
     },
