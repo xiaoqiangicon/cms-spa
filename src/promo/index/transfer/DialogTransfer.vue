@@ -161,6 +161,9 @@ export default {
       percent: '', // 转单百分比
 
       dialoguSbmitVisible: !1,
+
+      // 正在确认
+      confirming: !1,
     };
   },
   computed: {
@@ -283,6 +286,8 @@ export default {
       this.dialoguSbmitVisible = !0;
     },
     handleClickSubmit() {
+      if (this.confirming) return;
+
       const {
         transferBuddhistId: buddhistId,
         transferTempleId: templeId,
@@ -291,6 +296,7 @@ export default {
         percent,
       } = this;
 
+      this.confirming = !0;
       seeFetch('promo/index/transfer/transfer', {
         buddhistId,
         templeId,
@@ -298,6 +304,8 @@ export default {
         price,
         percent,
       }).then(res => {
+        this.confirming = !1;
+
         if (!res.success) {
           Notification({
             type: 'error',
