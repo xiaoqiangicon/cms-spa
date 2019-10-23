@@ -382,7 +382,6 @@ const routes = [
   {
     path: '/stat',
     component: Layout,
-    controlMark: 'pw_statistics',
     name: '数据统计 ',
     meta: { title: '数据统计', icon: 'fa-circle', noCache: true },
     children: [
@@ -390,32 +389,38 @@ const routes = [
         name: '数据汇总',
         path: `${domain}/stat/sum`,
         meta: { title: '数据汇总' },
+        controlMark: 'pw_statistics',
       },
       {
         name: '分析报表',
         path: `${domain}/stat/statisticsIndex`,
         meta: { title: '分析报表' },
+        controlMark: 'pw_statistics',
       },
       {
         name: '寺院数据',
         path: `${domain}/stat/templeIndex`,
         meta: { title: '寺院数据' },
+        controlMark: 'pw_statistics',
       },
       {
         name: '佛事数据',
         path: `${domain}/stat/buddishData`,
         meta: { title: '佛事数据' },
+        controlMark: 'pw_statistics',
       },
       {
         name: '推广数据',
         path: `${domain}/stat/promoIndex`,
         meta: { title: '推广数据' },
+        controlMark: 'pw_statistics',
       },
       {
         name: '渠道统计',
         component: () => import('../statistics/channel/App'),
         path: 'channel',
         meta: { title: '渠道统计' },
+        controlMark: 'pw_promo',
       },
       {
         path: 'detail/:channel/:channelId/:addTime',
