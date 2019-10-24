@@ -119,7 +119,7 @@
             <template slot-scope="scope">
               <el-input
                 v-model.number="scope.row.transferPrice"
-                :disabled="!scope.row.selected"
+                :disabled="!scope.row.selected || scope.row.price <= 0"
                 style="width: 80px;"
                 placeholder=""
               />
@@ -289,7 +289,7 @@ export default {
         }
       );
     },
-    tableSelectable(row) {
+    tableSelectable() {
       // eslint-disable-line
       // if (row.price <= 0) return false;
 
@@ -342,7 +342,7 @@ export default {
           if (sub.selected && sub.price > 0) {
             res.subList.push({
               id: sub.id,
-              transferPrice: sub.transferPrice,
+              transferPrice: sub.price <= 0 ? 0 : sub.transferPrice,
               transferRate: sub.transferRate,
             });
           }

@@ -14,9 +14,42 @@
             </template>
           </el-table-column>
           <el-table-column prop="channel" label="渠道参数" />
-          <el-table-column prop="url" label="统计链接" />
+          <el-table-column label="统计链接">
+            <template slot-scope="scope">
+              <div>
+                {{
+                  scope.row.url.indexOf('p_mc') !== -1
+                    ? scope.row.url
+                    : scope.row.url.indexOf('?') == -1
+                    ? `${scope.row.url}?p_mc=${scope.row.channel}`
+                    : `${scope.row.url}&p_mc=${scope.row.channel}`
+                }}
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column prop="endDate" label="过期时间" />
-          <el-table-column prop="remark" label="备注" />
+          <el-table-column label="备注" width="200">
+            <template slot-scope="scope">
+              <div class="remark-box">
+                <div>
+                  <div
+                    v-if="!scope.row.remarkShow"
+                    class="remark"
+                    @click="modify(scope)"
+                  >
+                    {{ scope.row.remark ? scope.row.remark : '-' }}
+                  </div>
+                  <textarea
+                    v-else
+                    v-model="scope.row.remark"
+                    v-focus="scope.row.remarkShow"
+                    class="remark-textarea"
+                    @blur="blur(scope)"
+                  />
+                </div>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <div>
@@ -25,6 +58,9 @@
                 </button>
                 <button class="btn" @click="edit(scope.row)">
                   编辑
+                </button>
+                <button class="btn del" @click="del(scope.row)">
+                  删除
                 </button>
               </div>
             </template>
@@ -36,6 +72,7 @@
           background
           layout="prev, pager, next"
           style="margin-top: 40px"
+          :page-size="pageSize"
           @current-change="pageChange"
         />
       </div>
@@ -54,14 +91,27 @@ export default {
   components: {
     Edit,
   },
+  directives: {
+    focus: {
+      inserted(el, { value }) {
+        if (value) {
+          el.focus();
+        }
+      },
+    },
+  },
   data() {
     return {
       loading: !1,
       list: [],
+      newList: [],
       total: 10,
       page: 0,
+      currentPage: 0,
+      pageSize: 10,
       isNew: false, //  是否是创建新的渠道
       item: {}, // 当前点击的这一行的数据
+      modifyRemark: !1,
     };
   },
   created() {
@@ -72,7 +122,7 @@ export default {
       this.loading = !0;
 
       seeFetch('statistics/channel/list', {
-        page: this.page,
+        pageNum: this.currentPage,
       }).then(res => {
         if (!res.success) {
           Notification({
@@ -84,7 +134,7 @@ export default {
 
         this.loading = !1;
 
-        if (this.page === 1) this.total = res.total;
+        this.total = res.data.count;
 
         this.list = res.data.list;
 
@@ -95,16 +145,68 @@ export default {
       this.isNew = true;
       this.$store.state.statisticsChannel.editVisible = !0;
     },
+    modify(scope) {
+      this.list.forEach(item => {
+        item.remarkShow = !1;
+      });
+      scope.row.remarkShow = !0;
+      this.newList = this.list;
+      this.list = [];
+      this.$nextTick(() => {
+        this.list = this.newList;
+      });
+    },
+    blur(scope) {
+      this.list.forEach(item => {
+        item.remarkShow = !1;
+      });
+      this.newList = this.list;
+      this.list = [];
+      this.$nextTick(() => {
+        this.list = this.newList;
+      });
+      seeFetch('statistics/channel/save', {
+        id: scope.row.id,
+        name: scope.row.name,
+        channel: scope.row.channel,
+        url: scope.row.url,
+        remark: scope.row.remark,
+        endDate: scope.row.endDate,
+      }).then(res => {
+        if (res.success) {
+          console.log(111);
+        }
+      });
+    },
     edit(value) {
       this.isNew = false;
       this.item = value;
       this.$store.state.statisticsChannel.editVisible = !0;
+    },
+    del(row) {
+      this.$confirm('确定删除吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          seeFetch('statistics/channel/save', {
+            id: row.id,
+            status: -1,
+          }).then(res => {
+            if (!res.success) return;
+
+            window.location.reload();
+          });
+        })
+        .catch(() => {});
     },
     toLaxin(item) {
       this.$router.push(`/stat/detail/${item.name}/${item.id}/${item.addTime}`);
     },
     pageChange(page) {
       this.page = page;
+      this.currentPage = this.page - 1;
       this.fetchList();
     },
   },
@@ -136,5 +238,19 @@ export default {
   outline: none;
   background-color: #2db7f5;
   cursor: pointer;
+}
+.remark-box {
+  cursor: pointer;
+}
+.remark-textarea {
+  width: 180px;
+  outline: none;
+  resize: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding-left: 2px;
+}
+.del {
+  margin-top: 10px;
 }
 </style>
