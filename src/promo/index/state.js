@@ -20,6 +20,8 @@ export default {
   namespaced: true,
   state: {
     add: addState,
+    // 选择项设置弹框的选择项 Id
+    dialogTransferSelectionId: 0,
   },
   mutations: {
     ...addMutations,
