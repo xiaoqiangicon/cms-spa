@@ -5,7 +5,11 @@ const refactor = {
   data: [{}],
 };
 
-const post = res => {};
+const post = res => {
+  res.data.list.forEach(item => {
+    item.remarkShow = !1;
+  });
+};
 
 seeFetch.config('statistics/channel/list', {
   method: ['post'],

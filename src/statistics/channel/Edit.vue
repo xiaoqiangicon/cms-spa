@@ -136,6 +136,13 @@ export default {
         });
         return;
       }
+      if (this.url.indexOf('p_mc') !== -1) {
+        Notification({
+          title: '链接请不要带上渠道参数',
+          type: 'warning',
+        });
+        return;
+      }
       if (!this.endDate) {
         Notification({
           title: '请输入截至日期',
@@ -149,7 +156,15 @@ export default {
         channel: this.channel,
         url: this.url,
         endDate: this.format(this.endDate),
+        remark: this.item.remark,
       }).then(res => {
+        if (res.errorCode == -1) {
+          Notification({
+            title: `${res.msg}`,
+            type: 'warning',
+          });
+          return;
+        }
         if (!res.success) return;
 
         this.$store.state.statisticsChannel.editVisible = !1;
@@ -157,6 +172,7 @@ export default {
         this.url = '';
         this.endDate = '';
         this.channel = '';
+        console.log(res);
         window.location.reload();
       });
     },

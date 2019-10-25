@@ -55,8 +55,9 @@ export const makeChartConfig = ({ chartData }) => ({
     },
     tooltips: {
       mode: 'index',
-      intersect: false,
+      intersect: true,
       displayColors: false,
+      position: 'nearest',
     },
     hover: {
       mode: 'nearest',
