@@ -41,7 +41,7 @@
       <el-input
         v-model.number="percent"
         style="width: 200px;"
-        placeholder="请输入价格"
+        placeholder="请输入比例"
         disabled
       />
       <span class="mg-l-10">% / 单</span>

@@ -108,7 +108,7 @@
             <template slot-scope="scope">
               <el-input
                 v-model.number="scope.row.transferRate"
-                :disabled="!scope.row.selected"
+                :disabled="!scope.row.selected || scope.row.price <= 0"
                 style="width: 80px;"
                 placeholder=""
               />
@@ -160,6 +160,7 @@
                 :value="!!item.row.takeEffect"
                 active-text="是"
                 inactive-text="否"
+                :disabled="!item.row.selected || item.row.price <= 0"
                 @change="value => changeTakeEffect(value, item)"
               />
             </template>
