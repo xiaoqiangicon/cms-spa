@@ -108,7 +108,7 @@
             <template slot-scope="scope">
               <el-input
                 v-model.number="scope.row.transferRate"
-                :disabled="!scope.row.selected"
+                :disabled="!scope.row.selected || scope.row.price <= 0"
                 style="width: 80px;"
                 placeholder=""
               />
@@ -152,6 +152,17 @@
               <div v-else>
                 -
               </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="是否生效">
+            <template slot-scope="item">
+              <el-switch
+                :value="!!item.row.takeEffect"
+                active-text="是"
+                inactive-text="否"
+                :disabled="!item.row.selected || item.row.price <= 0"
+                @change="value => changeTakeEffect(value, item)"
+              />
             </template>
           </el-table-column>
         </el-table>
@@ -316,42 +327,18 @@ export default {
           const { transferPrice, transferRate } = findSub;
           sub.transferPrice = transferPrice;
           sub.transferRate = transferRate;
+
+          sub.takeEffect = findSub.takeEffect;
         } else {
           sub.selected = false;
 
           // 补全字段
           sub.transferPrice = 0;
           sub.transferRate = 0;
+          sub.takeEffect = 0;
         }
       });
       return res;
-    },
-    // 生成上传数据
-    // 处理本地的transferTempleList [{id, subList: [{}]}] 数据并上传
-    // 本地 subList {id, name, price, transferPrice, transferRate}
-    // 服务器 subList {id, transferPrice, transferRate}
-    createSubmitData() {
-      const { buddhistId, transferTempleList } = this;
-      const params = { buddhistId };
-
-      params.transferTempleList = clone(transferTempleList);
-      params.transferTempleList = params.transferTempleList.map(item => {
-        const res = { id: item.id, subList: [] };
-
-        item.subList.forEach(sub => {
-          if (sub.selected && sub.price > 0) {
-            res.subList.push({
-              id: sub.id,
-              transferPrice: sub.price <= 0 ? 0 : sub.transferPrice,
-              transferRate: sub.transferRate,
-            });
-          }
-        });
-
-        return res;
-      });
-
-      return params;
     },
     updateTableSelected() {
       this.tableData.forEach(item => {
@@ -432,26 +419,69 @@ export default {
         this.dialogEditFuBiVisible = !1;
       });
     },
-    save() {
-      const params = this.createSubmitData();
+    // 生成上传数据
+    // 处理本地的transferTempleList [{id, subList: [{}]}] 数据并上传
+    // 本地 subList {id, name, price, transferPrice, transferRate}
+    // 服务器 subList {id, transferPrice, transferRate}
+    createSubmitData() {
+      const { buddhistId, transferTempleList } = this;
+      const params = { buddhistId };
 
-      let verify = !0;
-      params.transferTempleList.forEach(temple => {
-        temple.subList.forEach(sub => {
-          if (sub.transferPrice && sub.transferRate) {
-            verify = !1;
-          }
-        });
-      });
+      let error = '';
 
-      if (!verify) {
+      params.transferTempleList = clone(transferTempleList);
+      params.transferTempleList = params.transferTempleList.map(
+        (item, templeIndex) => {
+          const res = { id: item.id, subList: [] };
+
+          item.subList.forEach((sub, selectionIndex) => {
+            if (sub.selected && sub.price > 0) {
+              const newItem = {
+                id: sub.id,
+                transferPrice: sub.price <= 0 ? 0 : sub.transferPrice,
+                transferRate: sub.transferRate,
+              };
+
+              res.subList.push(newItem);
+
+              if (error) return;
+
+              const templeSequence = templeIndex + 1;
+              const selectionSequence = selectionIndex + 1;
+              const errorPrefix = `第${templeSequence}个寺院第${selectionSequence}个选择项`;
+
+              if (newItem.transferPrice && newItem.transferRate) {
+                error = `${errorPrefix}转单比例和转单金额只能设置一项`;
+              } else if (newItem.transferRate && newItem.transferRate > 100) {
+                error = `${errorPrefix}转单比例不能超过100%`;
+              } else if (
+                newItem.transferPrice &&
+                newItem.transferPrice > sub.price
+              ) {
+                error = `${errorPrefix}转单金额不能超过价格`;
+              }
+            }
+          });
+
+          return res;
+        }
+      );
+
+      if (error) {
         Notification({
           type: 'warning',
           title: '提示',
-          message: '转单比例和转单金额只能设置一项',
+          message: error,
         });
-        return;
+        return null;
       }
+
+      return params;
+    },
+    save() {
+      const params = this.createSubmitData();
+
+      if (!params) return;
 
       seeFetch('promo/transfer_set/update_transfer_set', params).then(res => {
         if (!res.success) {
@@ -515,6 +545,29 @@ export default {
           this.transferTempleList.splice(index, 1);
         })
         .catch(() => {});
+    },
+    changeTakeEffect(value, { row: item }) {
+      seeFetch('promo/transfer_set/takeEffect', {
+        selectionId: item.id,
+        templeId: this.templeId,
+        checked: value ? 1 : 0,
+      }).then(res => {
+        if (!res.success) {
+          Notification({
+            title: '提示',
+            message: res.message || '操作失败',
+          });
+          return;
+        }
+
+        // eslint-disable-next-line no-param-reassign
+        item.takeEffect = value ? 1 : 0;
+
+        Notification({
+          title: '提示',
+          message: '修改成功',
+        });
+      });
     },
   },
 };

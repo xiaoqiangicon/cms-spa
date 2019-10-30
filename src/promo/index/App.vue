@@ -66,11 +66,10 @@ export default {
     // 以下做针对处理
     // 由于是单页面 此页面在进入时必带参数 默认为 :activeName :buddhistId
 
-    const transferListStr = window.localStorage.getItem(
-      'promo/index:transferList'
-    );
-    if (transferListStr) {
-      window.localStorage.removeItem('promo/index:transferList');
+    if (this.$route.path === '/promo/index/transfer-list') {
+      const transferListStr = window.localStorage.getItem(
+        'promo/index:transferList'
+      );
 
       const transferList = JSON.parse(decodeURIComponent(transferListStr));
       this.transferActiveName = 'tableNotTransfer';

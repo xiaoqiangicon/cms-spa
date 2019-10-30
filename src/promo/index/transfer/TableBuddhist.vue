@@ -196,7 +196,7 @@ export default {
       window.localStorage.setItem('promo/index:transferList', transferList);
 
       // 此处存在特殊逻辑
-      const url = `${window.location.origin}${window.location.pathname}?#/promo/index`;
+      const url = `${window.location.origin}${window.location.pathname}?#/promo/index/transfer-list`;
       // 应运营需要，重新打开一个页面
       window.open(url);
     },

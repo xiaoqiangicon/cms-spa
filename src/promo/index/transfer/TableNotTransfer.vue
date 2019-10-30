@@ -245,6 +245,8 @@ export default {
         return;
       }
 
+      this.$store.state.promoIndex.dialogTransferSelectionId =
+        rowData.subdivideId;
       this.dialogTransferVisible = !0;
     },
     handleClickDetail(rowData, itemData, itemIndex) {

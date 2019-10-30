@@ -32,6 +32,7 @@
         v-model.number="price"
         style="width: 200px;"
         placeholder="请输入价格"
+        disabled
       />
       <span class="mg-l-10">/ 单</span>
     </div>
@@ -40,7 +41,8 @@
       <el-input
         v-model.number="percent"
         style="width: 200px;"
-        placeholder="请输入价格"
+        placeholder="请输入比例"
+        disabled
       />
       <span class="mg-l-10">% / 单</span>
     </div>
@@ -49,7 +51,11 @@
       <div>“确认转单”前请确认寺院名称以及转单价格</div>
     </div>
     <div class="mg-t-20" style="text-align:center;">
-      <el-button type="primary" @click="handleClickConfirm">
+      <el-button
+        type="primary"
+        :disabled="commitDisabled"
+        @click="handleClickConfirm"
+      >
         确认
       </el-button>
     </div>
@@ -63,49 +69,41 @@
       "
       append-to-body
     >
-      <div class="row">
-        <div class="title">
-          佛事名称
-        </div>
-        <div class="content">
-          {{ transferBuddhistName }}
-        </div>
-      </div>
-      <div class="row">
-        <div class="title">
-          转移寺院
-        </div>
-        <div class="content">
-          {{ transferTempleName }}
-        </div>
-      </div>
-      <div class="row">
-        <div class="title">
-          转单数量
-        </div>
-        <div class="content">
-          {{ transferOrderIds.length }}
-        </div>
-      </div>
-      <div class="row">
-        <div class="title">
-          总计原价（元）
-        </div>
-        <div class="content">
-          {{ originPriceSum }}
-        </div>
-      </div>
-      <div class="row">
-        <div class="title">
-          转单价格（元）
-        </div>
-        <div class="content">
-          {{ priceSum }}
-        </div>
-      </div>
       <div class="tip">
         <div>温馨提示</div>
         <div>“确认转单”前请确认寺院名称以及转单价格</div>
+      </div>
+      <div class="mg-t-20 f-s-16">
+        <div class="dp-flex pd-t-10 pd-b-10">
+          <div class="fx-1 t-a-center">
+            佛事名称
+          </div>
+          <div class="fx-1 t-a-center">
+            转移寺院
+          </div>
+          <div class="fx-1 t-a-center">
+            转单数量
+          </div>
+        </div>
+        <hr />
+        <div class="dp-flex pd-t-10 pd-b-10">
+          <div class="fx-1 t-a-center">
+            {{ transferBuddhistName }}
+          </div>
+          <div class="fx-1 t-a-center">
+            {{ transferTempleName }}
+          </div>
+          <div class="fx-1 t-a-center">
+            {{ transferOrderIds.length }}
+          </div>
+        </div>
+        <hr />
+        <div class="dp-flex pd-t-10 pd-b-10">
+          <div class="fx-1 t-a-center">
+            总计原价（元）：{{ originPriceSum }}
+          </div>
+          <div class="fx-1 t-a-center">转单价格（元）：{{ priceSum }}</div>
+        </div>
       </div>
       <div class="mg-t-20" style="text-align:center;">
         <el-button type="primary" @click="handleClickSubmit">
@@ -164,6 +162,7 @@ export default {
 
       // 正在确认
       confirming: !1,
+      commitDisabled: !0,
     };
   },
   computed: {
@@ -208,9 +207,8 @@ export default {
       this.originPrice = '';
       this.price = '';
       this.percent = '';
-      this.originPriceSum = '';
-      this.priceSum = '';
       this.getTransferTempleList();
+      this.commitDisabled = !0;
     },
     getTransferTempleList() {
       const { transferBuddhistId: buddhistId } = this;
@@ -261,8 +259,35 @@ export default {
       this.originPrice = originPrice;
       this.price = price;
       this.percent = percent;
+
+      this.checkCommitDisabled();
+    },
+    checkCommitDisabled() {
+      if (!this.transferTempleId) {
+        this.commitDisabled = !0;
+        return;
+      }
+
+      const selectionId =
+        this.$store.state.promoIndex.add.transferSubId ||
+        this.$store.state.promoIndex.dialogTransferSelectionId;
+
+      if (!selectionId) {
+        this.commitDisabled = !0;
+        return;
+      }
+
+      const selectionList = this.transferTempleList.find(
+        item => item.id === this.transferTempleId
+      ).subList;
+
+      const selectionItem = selectionList.find(i => i.id === selectionId);
+
+      this.commitDisabled = !selectionItem.takeEffect;
     },
     handleClickConfirm() {
+      if (this.commitDisabled) return;
+
       const { originPrice, price, percent } = this;
 
       if (!this.transferTempleId) {
@@ -332,9 +357,9 @@ export default {
 
 <style lang="less" scoped>
 .tip {
-  width: 400px;
+  width: 100%;
   padding: 10px;
-  margin-top: 20px;
+  margin-bottom: 20px;
   background: #f6ffed;
   border: 1px solid #b7eb8f;
   border-radius: 4px;
