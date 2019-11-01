@@ -2,7 +2,14 @@
 import seeFetch from 'see-fetch';
 
 const refactor = {
-  data: [{}],
+  data: {
+    list: [
+      {
+        price: 'joinPrice',
+        amount: 'joinNum',
+      },
+    ],
+  },
 };
 
 const post = res => {};
@@ -11,7 +18,7 @@ seeFetch.config('master/project/list', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/order/getRefundOrderList',
+    '/wish/getWishProjectList',
     '/master/project/mock/list',
     '/master/project/mock/list',
   ],

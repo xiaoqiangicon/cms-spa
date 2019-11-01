@@ -1,5 +1,5 @@
 <template>
-  <div class="detail">
+  <div v-if="urlVisible" class="detail" @click="close">
     <el-card class="box-card">
       <div slot="header" class="header">
         <span>链接</span>
@@ -8,8 +8,11 @@
         </div>
       </div>
       <div class="input-box">
-        <div class="url-input">
+        <div id="url-input" class="url-input">
           {{ url }}
+        </div>
+        <div id="clip" data-clipboard-target="#url-input" class="clip">
+          复制链接
         </div>
       </div>
       <div class="btn-box">
@@ -22,6 +25,8 @@
 </template>
 
 <script>
+import ClipboardJS from 'clipboard';
+
 export default {
   props: {
     url: {
@@ -29,9 +34,22 @@ export default {
       required: true,
     },
   },
+  computed: {
+    urlVisible() {
+      return this.$store.state.masterProject.urlVisible;
+    },
+  },
+  mounted() {
+    new ClipboardJS('#clip');
+  },
   methods: {
-    close() {
-      console.log(111);
+    clip() {
+      window.clipboardData.setData('Text', this.url);
+    },
+    close(e) {
+      if (e.target === e.currentTarget) {
+        this.$store.state.masterProject.urlVisible = !1;
+      }
     },
   },
 };
@@ -64,16 +82,28 @@ export default {
 }
 .input-box {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 60px;
 }
 .url-input {
   width: 80%;
   height: 36px;
+  line-height: 36px;
   border: 1px solid #ccc;
   border-radius: 6px;
   outline: none;
   text-align: center;
+}
+.clip {
+  width: 18%;
+  height: 36px;
+  line-height: 36px;
+  background-color: #39f;
+  text-align: center;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
 }
 .btn-box {
   display: flex;
@@ -85,6 +115,7 @@ export default {
   margin-top: 60px;
   border: none;
   border-radius: 17px;
+  outline: none;
   color: white;
   background-color: #39f;
   cursor: pointer;

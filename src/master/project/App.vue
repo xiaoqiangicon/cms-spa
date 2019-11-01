@@ -45,7 +45,8 @@
         @current-change="pageChange"
       />
     </el-card>
-    <Detail />
+    <Detail url="www.baidu.com" />
+    <Edit v-bind="row" />
   </div>
 </template>
 
@@ -53,10 +54,12 @@
 import seeFetch from 'see-fetch';
 import './fetch';
 import Detail from './Detail';
+import Edit from './Edit';
 
 export default {
   components: {
     Detail,
+    Edit,
   },
   data() {
     return {
@@ -65,6 +68,8 @@ export default {
       total: 0,
       loading: true,
       list: [],
+      row: {},
+      url: '',
     };
   },
   created() {
@@ -76,19 +81,25 @@ export default {
 
       seeFetch('master/project/list', { pageNum: this.page }).then(res => {
         if (res.success) {
-          this.list = res.data;
+          this.list = res.data.list;
           this.total = res.total;
           this.loading = false;
         }
       });
     },
-    handleManage(name) {},
-    handleUrl(url) {},
+    handleManage(name) {
+      window.location.href = `/wish/plus?project=${name}`;
+    },
+    handleUrl(url) {
+      this.url = url;
+      this.$store.state.masterProject.urlVisible = !0;
+    },
     handleEdit(row) {
-      if (row) {
-        this.$router.push(`/wish/edit/${row.name}`);
+      this.$store.state.masterProject.editVisible = !0;
+      if (row.name) {
+        this.row = row;
       } else {
-        this.$router.push('/wish/edit');
+        this.row = {};
       }
     },
     handleDel(id) {

@@ -5,7 +5,7 @@ seeFetch.config('master/project/delete', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/order/getRefundOrderList',
+    '/wish/delWishProject',
     '/master/project/mock/del',
     '/master/project/mock/del',
   ],
