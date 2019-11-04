@@ -108,7 +108,7 @@
             <template slot-scope="scope">
               <el-input
                 v-model.number="scope.row.transferRate"
-                :disabled="!scope.row.selected"
+                :disabled="!scope.row.selected || scope.row.price <= 0"
                 style="width: 80px;"
                 placeholder=""
               />
@@ -122,6 +122,17 @@
                 :disabled="!scope.row.selected || scope.row.price <= 0"
                 style="width: 80px;"
                 placeholder=""
+              />
+            </template>
+          </el-table-column>
+          <el-table-column label="转单是否生效">
+            <template slot-scope="item">
+              <el-switch
+                :value="!!item.row.takeEffect"
+                active-text="是"
+                inactive-text="否"
+                :disabled="!item.row.selected || item.row.price <= 0"
+                @change="value => changeTakeEffect(value, item)"
               />
             </template>
           </el-table-column>
@@ -152,16 +163,6 @@
               <div v-else>
                 -
               </div>
-            </template>
-          </el-table-column>
-          <el-table-column label="是否生效">
-            <template slot-scope="item">
-              <el-switch
-                :value="!!item.row.takeEffect"
-                active-text="是"
-                inactive-text="否"
-                @change="value => changeTakeEffect(value, item)"
-              />
             </template>
           </el-table-column>
         </el-table>
@@ -372,9 +373,9 @@ export default {
       this.dialogEditFuBiVisible = !0;
     },
     submitFuBiSet() {
-      const { promotionPercent } = this;
+      const promotionPercent = this.promotionPercent || 0;
       const { id: subId } = this.tempCurSubItem;
-      let { shareFuBiPercent } = this.tempCurSubItem;
+      let shareFuBiPercent = this.tempCurSubItem.shareFuBiPercent || 0;
 
       if (promotionPercent + shareFuBiPercent > 100) {
         Notification({
@@ -416,6 +417,7 @@ export default {
 
         this.curSubItem.shareFuBiPercent = shareFuBiPercent;
         this.dialogEditFuBiVisible = !1;
+        this.curSubItem.takeEffect = 0;
       });
     },
     // 生成上传数据
