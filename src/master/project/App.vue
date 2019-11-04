@@ -16,10 +16,7 @@
           <el-table-column label="操作">
             <template slot-scope="scope">
               <div class="handle-box">
-                <div
-                  class="handle manage"
-                  @click="handleManage(scope.row.name)"
-                >
+                <div class="handle manage" @click="handleManage(scope.row)">
                   订单管理
                 </div>
                 <div class="handle url" @click="handleUrl(scope.row.url)">
@@ -87,8 +84,8 @@ export default {
         }
       });
     },
-    handleManage(name) {
-      window.location.href = `/wish/plus?project=${name}`;
+    handleManage(row) {
+      window.location.href = `/wish/plus?project=${row.name}&id=${row.id}`;
     },
     handleUrl(url) {
       this.url = url;

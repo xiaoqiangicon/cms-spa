@@ -1,6 +1,5 @@
 <template>
-  <div v-if="editVisible" class="edit-container" @click="close">
-    <div class="edit-content">
+  <!-- <div class="edit-content">
       <el-card>
         <div slot="header" class="container-title">
           <div>
@@ -89,8 +88,89 @@
           </div>
         </div>
       </el-card>
+    </div> -->
+  <el-dialog
+    :title="name ? '编辑项目' : '新建项目'"
+    :visible.sync="editVisible"
+    @click="close"
+  >
+    <div class="el-card-body">
+      <div class="btn-box">
+        <el-button type="primary" style="width: 130px;" @click="save">
+          保存
+        </el-button>
+      </div>
+      <div>
+        <p class="title">
+          项目标题
+        </p>
+        <input v-model="title" class="title-input" type="text" />
+      </div>
+      <div>
+        <p class="title">
+          封面图片
+        </p>
+        <p class="item-info">
+          最多5张，请保持所有封面图片的宽高比例一致可效果最好。
+        </p>
+        <div class="dp-inline-block">
+          <div
+            v-for="(cover, index) in covers"
+            :key="cover"
+            class="cover"
+            @click="delCover(index)"
+          >
+            <img :src="cover" class="cover-image" />
+            <button class="clean cover-close">
+              X
+            </button>
+          </div>
+        </div>
+        <div
+          v-if="covers.length < 5"
+          ref="uploadCover"
+          class="cover cs-pointer"
+        >
+          <img
+            ref="uploadCover"
+            class="cover-image"
+            src="https://pic.zizaihome.com/0f919be8-308e-11e8-b78b-00163e0c001e.png"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <p class="title">
+          加持详情
+        </p>
+        <div id="detail-editor" />
+      </div>
+      <div class="">
+        <p class="title">
+          参与列表
+        </p>
+        <p>
+          若当前项目有用户下单则会展示参与者列表，可控制参与者列表是否显示
+        </p>
+        <div class="pd-t-5">
+          <el-radio v-model="type" label="1">
+            显示
+          </el-radio>
+          <el-radio v-model="type" label="0">
+            不显示
+          </el-radio>
+        </div>
+      </div>
+      <div class="">
+        <p class="title">
+          下单按钮
+        </p>
+        <p class="item-info">
+          最多10个字，可控制项目的详情页面“下一步”按钮的文案。
+        </p>
+        <input v-model="text" class="title-input" type="text" />
+      </div>
     </div>
-  </div>
+  </el-dialog>
 </template>
 
 <script>
@@ -131,8 +211,13 @@ export default {
     };
   },
   computed: {
-    editVisible() {
-      return this.$store.state.masterProject.editVisible;
+    editVisible: {
+      get() {
+        return this.$store.state.masterProject.editVisible;
+      },
+      set(newVal) {
+        this.$store.state.masterProject.editVisible = newVal;
+      },
     },
   },
   watch: {
@@ -211,6 +296,7 @@ export default {
         payBtn: this.text,
       }).then(res => {
         if (res.success) {
+          window.location.reload();
         }
       });
     },
@@ -240,10 +326,6 @@ p {
   transform: translate(-50%, -50%);
   width: 800px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
-}
-.el-card-body {
-  height: 600px;
-  overflow-y: scroll;
 }
 .container-title {
   display: flex;
