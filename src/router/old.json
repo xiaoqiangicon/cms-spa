@@ -153,49 +153,6 @@
       ]
     },
     {
-      "id": "wish",
-      "name": "许愿管理",
-      "icon": "fa-heart",
-      "subItems": [
-        {
-          "id": "wish-index",
-          "name": "心愿管理",
-          "link": "/wish/index",
-          "controlMark": "pw_wish"
-        },
-        {
-          "id": "wish-return",
-          "name": "还愿管理",
-          "link": "/wish/return",
-          "controlMark": "pw_wish"
-        },
-        {
-          "id": "wish-plus",
-          "name": "加持管理",
-          "link": "/wish/plus",
-          "controlMark": "pw_wish"
-        },
-        {
-          "id": "wish-master",
-          "name": "法师管理",
-          "link": "/wish/master",
-          "controlMark": "pw_wish"
-        },
-        {
-          "id": "wish-verify",
-          "name": "寺院认证",
-          "link": "/wish/verify",
-          "controlMark": "pw_wish"
-        },
-        {
-          "id": "wish-jing",
-          "name": "经咒落地页管理",
-          "link": "/wish/template",
-          "controlMark": "pw_wish"
-        }
-      ]
-    },
-    {
       "id": "user",
       "name": "用户管理",
       "icon": "fa-user",

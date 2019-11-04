@@ -37,6 +37,9 @@ import orderRefund from '../order/refund/state';
 // 数据统计
 import statisticsChannel from '../statistics/channel/state';
 
+// 法师模块
+import masterProject from '../master/project/state';
+
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -75,6 +78,9 @@ const store = new Vuex.Store({
 
     // 数据统计
     statisticsChannel,
+
+    // 法师模块
+    masterProject,
   },
   getters,
 });
