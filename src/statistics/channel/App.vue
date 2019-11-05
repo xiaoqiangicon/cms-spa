@@ -1,7 +1,14 @@
 <template>
   <div class="container">
     <el-card>
-      <div class="clearfix">
+      <div class="header">
+        <div class="search-box">
+          <span>渠道号搜索</span>
+          <el-input v-model="channelSearch" class="search-input" />
+          <el-button class="search" type="primary" @click="searchChannel">
+            搜索
+          </el-button>
+        </div>
         <button class="add-channel" @click="add">
           创建渠道
         </button>
@@ -109,6 +116,7 @@ export default {
       page: 0,
       currentPage: 0,
       pageSize: 10,
+      channelSearch: '', // 渠道号搜索
       isNew: false, //  是否是创建新的渠道
       item: {}, // 当前点击的这一行的数据
       modifyRemark: !1,
@@ -122,6 +130,7 @@ export default {
       this.loading = !0;
 
       seeFetch('statistics/channel/list', {
+        channelSearch: this.channelSearch,
         pageNum: this.currentPage,
       }).then(res => {
         if (!res.success) {
@@ -140,6 +149,9 @@ export default {
 
         window.scrollTo(0, 0);
       });
+    },
+    searchChannel() {
+      this.fetchList();
     },
     add() {
       this.isNew = true;
@@ -213,13 +225,29 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .container {
   width: 100%;
   padding: 40px 20px;
 }
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 30px 0 0;
+  margin-bottom: 20px;
+}
+.search-box {
+  display: flex;
+  align-items: center;
+  span {
+    width: 124px;
+  }
+}
+.search-input {
+  margin: 0 20px;
+}
 .add-channel {
-  float: right;
   width: 100px;
   height: 36px;
   border: none;

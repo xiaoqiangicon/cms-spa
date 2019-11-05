@@ -38,6 +38,14 @@
       </div>
       <canvas ref="chart" />
     </el-card>
+    <el-card v-loading="loading" class="mg-t-20">
+      <el-table :data="tableData" border style="width: 100%">
+        <el-table-column prop="date" label="日期" />
+        <el-table-column prop="date" label="访问量" />
+        <el-table-column prop="date" label="支付笔数" />
+        <el-table-column prop="date" label="支付金额（元）" />
+      </el-table>
+    </el-card>
   </div>
 </template>
 
