@@ -200,8 +200,12 @@ export default {
       });
     },
     refresh() {
-      this.pagination.page = 1;
-      this.requestList();
+      this.loading = !0;
+      // 后端异步处理，需要延迟
+      setTimeout(() => {
+        this.pagination.page = 1;
+        this.requestList();
+      }, 2000);
     },
     tableRowSelectable() {
       return this.transferSubId !== 0;
