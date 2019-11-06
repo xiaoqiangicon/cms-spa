@@ -3,7 +3,7 @@
     <el-card>
       <div class="header">
         <div class="search-box">
-          <span>渠道号搜索</span>
+          <span>渠道名搜索</span>
           <el-input v-model="channelSearch" class="search-input" />
           <el-button class="search" type="primary" @click="searchChannel">
             搜索
@@ -130,7 +130,7 @@ export default {
       this.loading = !0;
 
       seeFetch('statistics/channel/list', {
-        channelSearch: this.channelSearch,
+        channel: this.channelSearch,
         pageNum: this.currentPage,
       }).then(res => {
         if (!res.success) {
@@ -152,6 +152,7 @@ export default {
     },
     searchChannel() {
       this.fetchList();
+      console.log(1111);
     },
     add() {
       this.isNew = true;
