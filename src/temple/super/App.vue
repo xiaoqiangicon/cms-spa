@@ -16,6 +16,7 @@
           <template slot-scope="scope">
             <el-select
               v-model="adminList[scope.$index].templeId"
+              v-loading="!allTempleList.length"
               filterable
               placeholder="请选择或搜索寺院名称"
             >
@@ -55,6 +56,7 @@
         </el-form-item>
         <el-select
           v-model="dialogAdminVModel"
+          v-loading="!allTempleList.length"
           filterable
           multiple
           collapse-tags
