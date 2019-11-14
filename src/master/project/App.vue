@@ -77,8 +77,8 @@ export default {
       this.loading = true;
 
       seeFetch('master/project/list', {
-        pageNum: this.page,
         getAll: 0,
+        pageNum: this.page,
         pageSize: 20,
       }).then(res => {
         if (res.success) {

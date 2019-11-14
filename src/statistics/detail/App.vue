@@ -38,6 +38,14 @@
       </div>
       <canvas ref="chart" />
     </el-card>
+    <el-card v-loading="loading" class="mg-t-20">
+      <el-table :data="tableData" border style="width: 100%">
+        <el-table-column prop="date" label="日期" />
+        <el-table-column prop="viewNum" label="访问量" />
+        <el-table-column prop="payNum" label="支付笔数" />
+        <el-table-column prop="payMoney" label="支付金额（元）" />
+      </el-table>
+    </el-card>
   </div>
 </template>
 
@@ -69,6 +77,7 @@ export default {
       date: ['', ''],
       formatDate: ['2019-10-16', '2019-10-18'],
       xAxis: [],
+      tableData: [],
     };
   },
   created() {
@@ -108,6 +117,9 @@ export default {
           const payNumResult = [];
           const payMoneyResult = [];
 
+          // 初始化表格数据
+          this.tableData = [];
+
           res.data.list.forEach(item => {
             viewNumResult.push(item.viewNum);
             payNumResult.push(item.payNum);
@@ -118,6 +130,29 @@ export default {
           chart.data.datasets[2].data = payMoneyResult;
           this.getAll(this.formatDate[0], this.formatDate[1]);
           chart.data.labels = this.xAxis;
+
+          // 生成表格数据
+          res.data.list.forEach((item, i) => {
+            this.tableData.push({
+              date: this.xAxis[i],
+              viewNum: res.data.list[i].viewNum ? res.data.list[i].viewNum : 0,
+              payNum: res.data.list[i].payNum ? res.data.list[i].payNum : 0,
+              payMoney: res.data.list[i].payMoney,
+            });
+          });
+          // 补充未返回的时间的数据
+          for (let i = res.data.list.length; i < this.xAxis.length; i++) {
+            viewNumResult.push(0);
+            payNumResult.push(0);
+            payMoneyResult.push(0);
+            this.tableData.push({
+              date: this.xAxis[i],
+              viewNum: 0,
+              payNum: 0,
+              payMoney: 0,
+            });
+          }
+
           chart.update();
           this.loading = !1;
         }
