@@ -7,44 +7,77 @@
       </div>
     </el-card>
     <div class="mg-t-20" />
+
     <el-card style="min-height:400px;">
-      <div class="mg-t-20 mg-b-40">
-        <span style="display: inline-block;width:100px;" class="l-hg-32"
-          >当前登录账号</span
-        >&nbsp;&nbsp;&nbsp;&nbsp;
-        <el-button size="small" type="primary" plain>
-          miaoyanAdmin
-        </el-button>
-      </div>
-      <div>
-        <span style="display: inline-block;width:100px;" class="l-hg-32"
-          >绑定的寺院名</span
-        >&nbsp;&nbsp;&nbsp;&nbsp;
+      <el-table v-loading="tableLoading" :data="adminList" style="width: 100%">
+        <el-table-column prop="account" label="登录账号" min-width="160" />
+
+        <el-table-column label="访问寺院名称" min-width="230">
+          <template slot-scope="scope">
+            <el-select
+              v-model="adminList[scope.$index].templeId"
+              v-loading="!allTempleList.length"
+              filterable
+              placeholder="请选择或搜索寺院名称"
+            >
+              <el-option
+                v-for="item in getTempleInfo(scope.row.temples)"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </template>
+        </el-table-column>
+
+        <el-table-column fixed="right" label="操作" width="200">
+          <template slot-scope="scope">
+            <el-button type="primary" @click="updateAdmin(scope.row)">
+              保存
+            </el-button>
+            <el-button
+              type="primary"
+              @click="showAdminManage(scope.row, scope.$index)"
+            >
+              管理
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
+
+    <el-dialog title="管理" :visible.sync="dialogManageVisible">
+      <el-form ref="form" label-width="80px">
+        <el-form-item label="登录账号">
+          {{ dialogAdmin.account || '' }}
+        </el-form-item>
+        <el-form-item label="允许访问">
+          {{ dialogAdminVModel.length }}
+        </el-form-item>
         <el-select
-          v-model="templeId"
-          v-loading="loading"
+          v-model="dialogAdminVModel"
+          v-loading="!allTempleList.length"
           filterable
-          placeholder="请选择"
-          size="small"
-          style="width: 200px;"
+          multiple
+          collapse-tags
+          style="margin-left: 10px; width: 80%;"
+          placeholder="请选择或搜索寺院名称"
         >
           <el-option
-            v-for="item in list"
+            v-for="item in allTempleList"
             :key="item.id"
-            :value="item.id"
             :label="item.name"
-          /> </el-select
-        >&nbsp;&nbsp;&nbsp;&nbsp;
-        <el-button
-          v-loading="loading"
-          size="small"
-          type="primary"
-          @click="updateAdmin"
-        >
+            :value="item.id"
+            :disabled="dialogAdmin.templeId == item.id ? true : false"
+          />
+        </el-select>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="updateAdminTempleBind">
           保存
         </el-button>
       </div>
-    </el-card>
+    </el-dialog>
   </div>
 </template>
 
@@ -57,18 +90,45 @@ export default {
   name: 'App',
   data() {
     return {
-      loading: !0,
-      templeId: '',
-      list: [],
+      tableLoading: true,
+      dialogManageVisible: false,
+      adminList: [],
+      allTempleList: [],
+      dialogAdmin: {},
+      dialogAdminIndex: '',
+      dialogAdminVModel: [],
     };
   },
   created() {
-    this.requestList();
+    this.initData();
   },
   methods: {
-    requestList() {
-      this.loading = !0;
-
+    initData() {
+      const that = this;
+      that.tableLoading = true;
+      // 获取超级管理员及访问寺院信息
+      seeFetch('temple/super/getAdmin', {}).then(res => {
+        if (!res.success) {
+          Notification({
+            title: '提示',
+            message: res.message,
+          });
+          return;
+        }
+        if (res.data.adminList && res.data.adminList.length) {
+          const aList = res.data.adminList;
+          const temples = res.data.templeList || [];
+          aList.forEach((item, index) => {
+            aList[index].templeId = String(aList[index].templeId);
+            aList[index].temples = temples[item.account]
+              ? temples[item.account].split(',')
+              : [];
+          });
+          that.adminList = aList;
+        }
+        that.tableLoading = false;
+      });
+      // 获取寺院列表
       seeFetch('temple/super/templeList', { isTest: 1, verify: -1 }).then(
         listRes => {
           if (!listRes.success) {
@@ -78,28 +138,25 @@ export default {
             });
             return;
           }
-
-          this.list = listRes.data;
-
-          seeFetch('temple/super/getAdmin', {}).then(res => {
-            if (!res.success) {
-              Notification({
-                title: '提示',
-                message: res.message,
-              });
-              return;
-            }
-
-            const { templeId } = res.data;
-            this.templeId = res.data.templeId ? templeId : '';
-            this.loading = !1;
+          this.allTempleList = listRes.data.map(item => {
+            item.id = String(item.id);
+            item.name = `${item.id} - ${item.name}`;
+            return item;
           });
         }
       );
     },
-    updateAdmin() {
-      const { templeId } = this;
-      seeFetch('temple/super/updateAdmin', { templeId }).then(res => {
+    // 根据id返回对应寺院信息
+    getTempleInfo(ids) {
+      if (ids && ids.length && this.allTempleList.length) {
+        return this.allTempleList.filter(item => ids.includes(`${item.id}`));
+      }
+      return [];
+    },
+    // 更新用户绑定的寺院ID
+    updateAdmin(adminItem) {
+      const { account, templeId } = adminItem;
+      seeFetch('temple/super/updateAdmin', { account, templeId }).then(res => {
         if (!res.success) {
           Notification({
             title: '提示',
@@ -108,6 +165,38 @@ export default {
           return;
         }
 
+        Notification({
+          type: 'success',
+          title: '提示',
+          message: '更新成功',
+        });
+      });
+    },
+    // 显示管理对话框 设置当前用户数据
+    showAdminManage(item, index) {
+      this.dialogAdmin = item;
+      this.dialogAdminVModel = [...item.temples];
+      this.dialogAdminIndex = index;
+      this.dialogManageVisible = true;
+    },
+    // 更新绑定可选的寺院
+    updateAdminTempleBind() {
+      const that = this;
+      seeFetch('temple/super/updateAdminTempleBind', {
+        account: that.dialogAdmin.account,
+        bindTempleIds: that.dialogAdminVModel.join(','),
+      }).then(res => {
+        if (!res.success) {
+          Notification({
+            title: '提示',
+            message: res.message,
+          });
+          return;
+        }
+        that.adminList[that.dialogAdminIndex].temples = [
+          ...that.dialogAdminVModel,
+        ];
+        that.dialogManageVisible = false;
         Notification({
           type: 'success',
           title: '提示',
