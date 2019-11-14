@@ -92,6 +92,7 @@
   <el-dialog
     :title="name ? '编辑项目' : '新建项目'"
     :visible.sync="editVisible"
+    class="dialog-box"
     @click="close"
   >
     <div class="el-card-body">
@@ -126,11 +127,7 @@
             </button>
           </div>
         </div>
-        <div
-          v-if="covers.length < 5"
-          ref="uploadCover"
-          class="cover cs-pointer"
-        >
+        <div v-if="coversLength < 5" ref="uploadCover" class="cover cs-pointer">
           <img
             ref="uploadCover"
             class="cover-image"
@@ -196,7 +193,7 @@ export default {
     id: { default: 0 },
     name: { default: '' },
     pic: { default: '' },
-    payBtn: { default: '' },
+    payBtn: { default: '恭请' },
     isShowJoinList: { default: 1 },
     detail: { default: '' },
   },
@@ -205,8 +202,9 @@ export default {
       submitId: 0, // 项目id
       title: '', // 项目名称
       covers: [], // 上传的图片链接
-      type: '0', // 选择是否有参与列表
-      text: '', // 支付提示
+      coversLength: 0,
+      type: '1', // 选择是否有参与列表
+      text: '恭请', // 支付提示
       content: '', // ueditor内容
     };
   },
@@ -223,6 +221,7 @@ export default {
   watch: {
     editVisible() {
       if (this.editVisible) {
+        console.log(111);
         // 绑定编辑器元素
         this.$nextTick(() => {
           detailEditor = window.UE.getEditor('detail-editor');
@@ -240,13 +239,34 @@ export default {
               el: uploadCoverRef,
               done: url => {
                 this.covers.push(url);
+                this.coversLength = this.covers.length;
               },
             })
           );
         });
       } else {
-        UE.delEditor('detail-editor');
+        // UE.delEditor('detail-editor');
+        detailEditor.setContent(' ');
+        detailEditor.destroy();
         detailEditor = null;
+      }
+    },
+    coversLength() {
+      if (this.coversLength < 5) {
+        this.$nextTick(() => {
+          // 绑定上传图片元素
+          const { uploadCover: uploadCoverRef } = this.$refs;
+
+          upload(
+            makeUploadImageOptions({
+              el: uploadCoverRef,
+              done: url => {
+                this.covers.push(url);
+                this.coversLength = this.covers.length;
+              },
+            })
+          );
+        });
       }
     },
     id() {
@@ -264,6 +284,7 @@ export default {
     },
     pic() {
       this.covers = this.pic.split(',');
+      this.coversLength = this.covers.length;
     },
     detail() {
       const content = this.detail;
@@ -281,34 +302,53 @@ export default {
   methods: {
     delCover(index) {
       this.covers.splice(index, 1);
+      this.coversLength = this.covers.length;
     },
     save() {
       const detail = detailEditor.getContent();
-      console.log(this.name);
+
       if (!this.name) this.submitId = 0;
 
-      seeFetch('master/edit/save', {
-        id: this.submitId,
-        name: this.title,
-        pic: this.covers.join(','),
-        detail,
-        isShowJoinList: this.type,
-        payBtn: this.text,
-      }).then(res => {
-        if (res.success) {
-          window.location.reload();
-        }
-      });
+      new StoreImage(
+        makeStoreImageOptions({
+          content: detail,
+          done: newDetail => {
+            seeFetch('master/edit/save', {
+              id: this.submitId,
+              name: this.title,
+              pic: this.covers.join(','),
+              detail: newDetail,
+              isShowJoinList: this.type,
+              payBtn: this.text,
+            }).then(res => {
+              if (res.success) {
+                window.location.reload();
+              }
+            });
+          },
+        })
+      );
     },
     close(e) {
-      if (e.target == e.currentTarget)
-        this.$store.state.masterProject.editVisible = !1;
+      if (e.target == e.currentTarget) {
+        (this.submitId = 0), // 项目id
+          (this.title = ''), // 项目名称
+          (this.covers = []), // 上传的图片链接
+          (this.coversLength = 0),
+          (this.type = '1'), // 选择是否有参与列表
+          (this.text = '恭请'), // 支付提示
+          (this.content = ''), // ueditor内容
+          (this.$store.state.masterProject.editVisible = !1);
+      }
     },
   },
 };
 </script>
 
 <style lang="less" scoped>
+.dialog-box {
+  z-index: 1005 !important;
+}
 p {
   margin: 0;
 }

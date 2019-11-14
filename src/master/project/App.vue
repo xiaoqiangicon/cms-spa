@@ -19,7 +19,7 @@
                 <div class="handle manage" @click="handleManage(scope.row)">
                   订单管理
                 </div>
-                <div class="handle url" @click="handleUrl(scope.row.url)">
+                <div class="handle url" @click="handleUrl(scope.row.id)">
                   链接
                 </div>
                 <div class="handle edit" @click="handleEdit(scope.row)">
@@ -42,7 +42,7 @@
         @current-change="pageChange"
       />
     </el-card>
-    <Detail url="www.baidu.com" />
+    <Detail :url="url" />
     <Edit v-bind="row" />
   </div>
 </template>
@@ -76,10 +76,14 @@ export default {
     fetchList() {
       this.loading = true;
 
-      seeFetch('master/project/list', { pageNum: this.page }).then(res => {
+      seeFetch('master/project/list', {
+        getAll: 0,
+        pageNum: this.page,
+        pageSize: 20,
+      }).then(res => {
         if (res.success) {
           this.list = res.data.list;
-          this.total = res.total;
+          this.total = res.data.total;
           this.loading = false;
         }
       });
@@ -87,8 +91,8 @@ export default {
     handleManage(row) {
       window.location.href = `/wish/plus?project=${row.name}&id=${row.id}`;
     },
-    handleUrl(url) {
-      this.url = url;
+    handleUrl(id) {
+      this.url = `http://test.zizaihome.com/wishOrder/blessing?id=${id}`;
       this.$store.state.masterProject.urlVisible = !0;
     },
     handleEdit(row) {
