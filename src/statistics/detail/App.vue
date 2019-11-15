@@ -1,7 +1,12 @@
 <template>
   <div class="container">
-    <div class="title">渠道统计<span class="arrow">></span>{{ name }}</div>
-    <el-card v-loading="loading" class="mg-t-20">
+    <div class="title">
+      渠道统计<span class="arrow">></span>{{ name }}
+    </div>
+    <el-card
+      v-loading="loading"
+      class="mg-t-20"
+    >
       <div class="dp-flex t-a-center">
         <div class="fx-1">
           <div>访问量</div>
@@ -23,7 +28,10 @@
         </div>
       </div>
     </el-card>
-    <el-card v-loading="loading" class="mg-t-20">
+    <el-card
+      v-loading="loading"
+      class="mg-t-20"
+    >
       <div class="select-time">
         <el-date-picker
           v-model="date"
@@ -38,12 +46,31 @@
       </div>
       <canvas ref="chart" />
     </el-card>
-    <el-card v-loading="loading" class="mg-t-20">
-      <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="date" label="日期" />
-        <el-table-column prop="viewNum" label="访问量" />
-        <el-table-column prop="payNum" label="支付笔数" />
-        <el-table-column prop="payMoney" label="支付金额（元）" />
+    <el-card
+      v-loading="loading"
+      class="mg-t-20"
+    >
+      <el-table
+        :data="tableData"
+        border
+        style="width: 100%"
+      >
+        <el-table-column
+          prop="date"
+          label="日期"
+        />
+        <el-table-column
+          prop="viewNum"
+          label="访问量"
+        />
+        <el-table-column
+          prop="payNum"
+          label="支付笔数"
+        />
+        <el-table-column
+          prop="payMoney"
+          label="支付金额（元）"
+        />
       </el-table>
     </el-card>
   </div>
@@ -83,8 +110,8 @@ export default {
   created() {
     this.name = this.$route.params.channel;
     this.channelId = this.$route.params.channelId;
-    this.formatDate[0] = this.$route.params.addTime;
-    this.formatDate[1] = formatTime(getTenDays(this.formatDate[0]));
+    this.formatDate[0] = this.date[0] = this.$route.params.addTime;
+    this.formatDate[1] = this.date[1] = formatTime(getTenDays(this.formatDate[0]));
     // console.log(this.formatDate);
     this.fetchList();
   },
