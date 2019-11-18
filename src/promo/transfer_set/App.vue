@@ -591,12 +591,9 @@ export default {
   position: relative;
 }
 .container {
-  position: absolute;
   width: 100%;
-  height: 100%;
   padding: 40px 20px;
-  display: flex;
-  flex-direction: column;
+
   .header {
     height: 120px;
     margin-bottom: 20px;
@@ -604,13 +601,9 @@ export default {
     position: relative;
   }
   .body {
-    flex-grow: 1;
     display: flex;
-    height: 30px;
     .aside {
-      flex-basis: 300px;
-      flex-shrink: 0;
-      height: 100%;
+      flex: 1;
       .head {
         height: 52px;
         line-height: 32px;
@@ -618,19 +611,15 @@ export default {
         border-bottom: 2px solid #ebeef5;
       }
       .list {
-        position: absolute;
-        top: 80px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        overflow-y: scroll;
+        margin-top: 20px;
+
         .item {
           display: flex;
           height: 40px;
           line-height: 40px;
-          margin: 0 20px 10px 20px;
           cursor: pointer;
           border-radius: 4px;
+          margin-bottom: 10px;
           &.active {
             background: #409eff;
           }
@@ -649,10 +638,7 @@ export default {
       }
     }
     .main {
-      height: 100%;
-      overflow-y: scroll;
-      flex-grow: 1;
-      flex-shrink: 1;
+      flex: 3;
       margin-left: 20px;
     }
   }
