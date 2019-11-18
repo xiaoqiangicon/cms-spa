@@ -2,66 +2,30 @@
   <div class="container">
     <el-card>
       <div class="header">
-        <button
-          class="btn"
-          @click="handleEdit"
-        >
+        <button class="btn" @click="handleEdit">
           创建项目
         </button>
       </div>
       <div class="table-box">
-        <el-table
-          v-loading="loading"
-          :data="list"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="id"
-            label="ID"
-          />
-          <el-table-column
-            prop="name"
-            label="项目名称"
-          />
-          <el-table-column
-            prop="joinNum"
-            width="100"
-            label="参与人次"
-          />
-          <el-table-column
-            prop="joinPrice"
-            width="100"
-            label="金额（元）"
-          />
-          <el-table-column
-            prop="addTime"
-            label="创建时间"
-          />
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="id" label="ID" />
+          <el-table-column prop="name" label="项目名称" />
+          <el-table-column prop="joinNum" width="100" label="参与人次" />
+          <el-table-column prop="joinPrice" width="100" label="金额（元）" />
+          <el-table-column prop="addTime" label="创建时间" />
           <el-table-column label="操作">
             <template slot-scope="scope">
               <div class="handle-box">
-                <div
-                  class="handle manage"
-                  @click="handleManage(scope.row)"
-                >
+                <div class="handle manage" @click="handleManage(scope.row)">
                   订单管理
                 </div>
-                <div
-                  class="handle url"
-                  @click="handleUrl(scope.row.id)"
-                >
+                <div class="handle url" @click="handleUrl(scope.row.id)">
                   链接
                 </div>
-                <div
-                  class="handle edit"
-                  @click="handleEdit(scope.row)"
-                >
+                <div class="handle edit" @click="handleEdit(scope.row)">
                   编辑
                 </div>
-                <div
-                  class="handle del"
-                  @click="handleDel(scope.row.id)"
-                >
+                <div class="handle del" @click="handleDel(scope.row.id)">
                   删除
                 </div>
               </div>
@@ -128,7 +92,7 @@ export default {
       window.location.href = `/wish/plus?project=${row.name}&id=${row.id}`;
     },
     handleUrl(id) {
-      this.url = `http://test.zizaihome.com/wishOrder/blessing?id=${id}`;
+      this.url = `https://wx.zizaihome.com/wishOrder/blessing?id=${id}`;
       this.$store.state.masterProject.urlVisible = !0;
     },
     handleEdit(row) {
