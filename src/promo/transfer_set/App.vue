@@ -595,7 +595,6 @@ export default {
   padding: 40px 20px;
 
   .header {
-    height: 120px;
     margin-bottom: 20px;
     padding-bottom: 20px;
     position: relative;

@@ -466,15 +466,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.gray {
-  color: #aeafae;
-}
 .tip {
   width: 600px;
   padding: 20px;
   background: #f6ffed;
   border: 1px solid #b7eb8f;
   border-radius: 4px;
+}
+.gray {
+  color: #aeafae;
 }
 .card {
   box-sizing: border-box;
@@ -489,26 +489,18 @@ export default {
   position: relative;
 }
 .container {
-  position: absolute;
   width: 100%;
-  height: 100%;
   padding: 40px 20px;
-  display: flex;
-  flex-direction: column;
+
   .header {
-    height: 200px;
     margin-bottom: 20px;
     padding-bottom: 20px;
     position: relative;
   }
   .body {
-    flex-grow: 1;
     display: flex;
-    height: 30px;
     .aside {
-      flex-basis: 300px;
-      flex-shrink: 0;
-      height: 100%;
+      flex: 1;
       .head {
         height: 52px;
         line-height: 32px;
@@ -516,25 +508,22 @@ export default {
         border-bottom: 2px solid #ebeef5;
       }
       .list {
-        position: absolute;
-        top: 80px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        overflow-y: scroll;
+        margin-top: 20px;
+
         .item {
           display: flex;
           height: 40px;
           line-height: 40px;
-          margin: 0 20px 10px 20px;
           cursor: pointer;
           border-radius: 4px;
+          margin-bottom: 10px;
           &.active {
             background: #409eff;
           }
           .id {
             flex-basis: 60px;
-            text-align: center;
+            padding-left: 10px;
+            text-align: left;
           }
           .name {
             flex-grow: 1;
@@ -546,17 +535,15 @@ export default {
       }
     }
     .main {
+      flex: 3;
+      margin-left: 20px;
+
       .head {
         height: 52px;
         line-height: 32px;
         padding-bottom: 20px;
         border-bottom: 2px solid #ebeef5;
       }
-
-      height: 100%;
-      flex-grow: 1;
-      flex-shrink: 1;
-      margin-left: 20px;
     }
   }
 }
