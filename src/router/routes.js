@@ -459,6 +459,12 @@ const routes = [
         hidden: !0,
       },
       {
+        path: 'support-manege',
+        name: '供养管理',
+        component: () => import('../master/support-manege/App'),
+        meta: { title: '供养管理', noCache: true },
+      },
+      {
         name: '加持订单',
         path: `${domain}/wish/plus`,
         meta: { title: '加持订单' },
