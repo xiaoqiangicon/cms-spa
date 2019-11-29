@@ -1,3 +1,4 @@
+/* 法师供养记录 */
 <template>
   <div class="container-record">
     <div class="clearfix">
@@ -9,6 +10,7 @@
             type="date"
             value-format="yyyy-MM-dd"
             size="small"
+            style="width: 150px;"
             @change="doSearch"
           />
         </el-form-item>
@@ -19,6 +21,7 @@
             type="date"
             value-format="yyyy-MM-dd"
             size="small"
+            style="width: 150px;"
             @change="doSearch"
           />
         </el-form-item>
@@ -27,13 +30,15 @@
             v-model="listParams.bonzeId"
             filterable
             placeholder="请输入法师法号"
+            @change="doSearch"
           >
-            <!-- <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option> -->
+            <el-option
+              v-for="item in masterList"
+              :key="item.id"
+              v-loading="loadingMaster"
+              :label="item.bonzeName"
+              :value="item.id"
+            />
           </el-select>
         </el-form-item>
         <el-button class="fl-right" size="small" @click="toExport">
@@ -41,21 +46,42 @@
         </el-button>
       </el-form>
     </div>
-    <!-- <div class="body">
-      <el-table v-loading="loading" :data="list" style="width: 100%">
-        <el-table-column prop="shopNum" label="商户单号" />
-        <el-table-column prop="amount" label="金额（元）" />
-        <el-table-column prop="createdAt" label="时间" />
+
+    <div class="body">
+      <el-table
+        v-loading="loadingRecord"
+        :data="recordList"
+        style="width: 100%"
+      >
+        <el-table-column
+          min-width="200px"
+          prop="wxTransactionId"
+          label="商户单号"
+        />
+        <el-table-column min-width="100px" prop="price" label="金额（元）" />
+        <el-table-column min-width="140px" prop="addTime" label="时间" />
+        <el-table-column min-width="100px" label="单号类型">
+          <template slot-scope="scope">
+            {{
+              scope.row.type === 1
+                ? '供养金额'
+                : scope.row.type === 3
+                ? '提现金额'
+                : '其他'
+            }}
+          </template>
+        </el-table-column>
       </el-table>
+
       <el-pagination
-        :total="totalCount"
-        :current-page="currentPage"
+        :total="recordListTotal"
+        :current-page="listParams.pageNumber"
         background
         layout="prev, pager, next"
         style="margin-top: 40px"
         @current-change="pageChange"
       />
-    </div>-->
+    </div>
   </div>
 </template>
 
@@ -68,15 +94,14 @@ export default {
   name: 'SupportRecord',
   data() {
     return {
-      loading: true,
-      startDate: '',
-      endDate: '',
-      currentPage: 1,
-      totalCount: 0,
-      list: [],
+      loadingRecord: true,
+      loadingMaster: true,
+      masterList: [],
+      recordListTotal: 0,
+      recordList: [],
       listParams: {
         pageNumber: 1,
-        pageSize: 10,
+        pageSize: 20,
         bonzeId: '',
         startTime: '',
         endTime: '',
@@ -84,55 +109,78 @@ export default {
     };
   },
   created() {
+    if (this.$route.query.masterId) {
+      this.listParams.bonzeId = Number(this.$route.query.masterId);
+    }
     this.fetchList();
+    this.fetchMasterList();
   },
   methods: {
+    // 获取法师供养记录列表
     fetchList() {
       const that = this;
-      that.loading = true;
-
+      that.loadingRecord = true;
       seeFetch('master/support/getOrderRecordList', that.listParams).then(
         res => {
-          that.loading = false;
-
-          if (!res.success) {
+          that.loadingRecord = false;
+          if (res.errorCode === 0 && res.data) {
+            that.recordList = res.data.list || [];
+            that.recordListTotal = res.data.total;
+            window.scrollTo(0, 0);
+          } else {
             Notification({
               title: '提示',
-              message: res.message,
+              message: res.msg || '获取法师供养记录失败',
             });
-            return;
           }
-
-          if (this.currentPage === 1) this.totalCount = res.totalCount;
-          this.list = res.data;
-
-          window.scrollTo(0, 0);
         }
       );
     },
+    // 获取法师列表
+    fetchMasterList() {
+      const that = this;
+      that.loadingMaster = true;
+      seeFetch('master/support/getMasterList').then(res => {
+        that.loadingMaster = false;
+        if (res.errorCode === 0 && res.data) {
+          const list = res.data.list || [];
+          list.forEach(item => {
+            item.bonzeName = `${item.id} - ${item.bonzeName}`;
+          });
+          that.masterList = res.data.list;
+        } else {
+          Notification({
+            title: '提示',
+            message: res.msg || '获取法师列表失败',
+          });
+        }
+      });
+    },
     pageChange(page) {
-      this.currentPage = page;
+      this.listParams.pageNumber = page;
       this.fetchList();
     },
     doSearch() {
-      this.currentPage = 1;
+      this.listParams.pageNumber = 1;
       this.fetchList();
     },
     toExport() {
-      const { startDate, endDate } = this;
-      window.location.href = `/wish/downWishOrderExcel?startTime=${startDate}&endTime=${endDate}&type=0`;
+      const { startTime, endTime, bonzeId } = this.listParams;
+      window.location.href = `/wish/downBonzeOrderRecordExcel?startTime=${startTime}&endTime=${endTime}&bonzeId=${bonzeId}`;
     },
   },
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .container-record {
   width: 100%;
   padding: 20px 10px;
-}
-
-.body {
-  margin-top: 20px;
+  .body {
+    margin-top: 20px;
+    /deep/ .el-pagination {
+      text-align: center;
+    }
+  }
 }
 </style>
