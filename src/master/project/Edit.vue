@@ -131,7 +131,6 @@ export default {
   watch: {
     editVisible() {
       if (this.editVisible) {
-        console.log(111);
         // 绑定编辑器元素
         this.$nextTick(() => {
           detailEditor = window.UE.getEditor('detail-editor');
@@ -159,6 +158,14 @@ export default {
         detailEditor.setContent(' ');
         detailEditor.destroy();
         detailEditor = null;
+
+        this.submitId = this.id; // 项目id
+        this.title = this.name; // 项目名称
+        this.covers = this.pic.split(','); // 上传的图片链接
+        this.coversLength = this.covers.length;
+        this.type = '1'; // 选择是否有参与列表
+        this.text = '恭请'; // 支付提示
+        this.content = this.detail; // ueditor内容
       }
     },
     coversLength() {
@@ -240,16 +247,18 @@ export default {
       );
     },
     close(e) {
-      if (e.target == e.currentTarget) {
-        (this.submitId = 0), // 项目id
-          (this.title = ''), // 项目名称
-          (this.covers = []), // 上传的图片链接
-          (this.coversLength = 0),
-          (this.type = '1'), // 选择是否有参与列表
-          (this.text = '恭请'), // 支付提示
-          (this.content = ''), // ueditor内容
-          (this.$store.state.masterProject.editVisible = !1);
-      }
+      //   console.log(2342)
+      //   if (e.target == e.currentTarget) {
+      //     console.log('close');
+      //     (this.submitId = 0), // 项目id
+      //       (this.title = ''), // 项目名称
+      //       (this.covers = []), // 上传的图片链接
+      //       (this.coversLength = 0),
+      //       (this.type = '1'), // 选择是否有参与列表
+      //       (this.text = '恭请'), // 支付提示
+      //       (this.content = ''), // ueditor内容
+      //       (this.$store.state.masterProject.editVisible = !1);
+      //   }
     },
   },
 };

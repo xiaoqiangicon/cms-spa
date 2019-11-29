@@ -111,7 +111,7 @@
         <el-button @click="confirmDialogVisible = !1">
           取 消
         </el-button>
-        <el-button type="primary" @click="doTake">
+        <el-button type="primary" :disabled="doTakeBtnDisabled" @click="doTake">
           确 定
         </el-button>
       </span>
@@ -131,6 +131,7 @@ export default {
   name: 'App',
   data() {
     return {
+      doTakeBtnDisabled: false,
       filterStartDate: '',
       filterEndDate: '',
       filterTemple: 0,
@@ -239,11 +240,13 @@ export default {
       this.confirmDialogVisible = !0;
     },
     doTake() {
+      this.doTakeBtnDisabled = true;
       seeFetch('finance/special/add', {
         templeId: this.filterTemple,
         type: this.filterType,
         subId: this.filterSubId,
       }).then(res => {
+        this.doTakeBtnDisabled = false;
         if (!res.success) {
           Notification({
             title: '提示',
