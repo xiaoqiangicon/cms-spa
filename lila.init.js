@@ -157,6 +157,7 @@ export default lila => {
         /* eslint-disable no-param-reassign */
         webpackConfig.resolve.modules = [
           path.join(cwd, 'src'),
+          cwd,
           path.join(cwd, 'node_modules'),
         ];
         return webpackConfig;
