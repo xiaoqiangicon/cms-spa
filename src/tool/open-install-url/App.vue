@@ -19,6 +19,8 @@
         size="small"
         style="width: 500px;"
       /><br /><br />
+      <span class="l-hg-32"> 是否自动 </span>&nbsp;&nbsp;&nbsp;&nbsp;
+      <el-switch v-model="autoWakeUp" />（是否进入页面就自动唤醒）<br /><br />
       <span class="l-hg-32"> 生成的链接 </span>&nbsp;&nbsp;&nbsp;&nbsp;
       <span ref="link">{{ link }}</span
       ><br /><br />
@@ -43,15 +45,16 @@ export default {
       openUrl: '',
       channel: '',
       link: '',
+      autoWakeUp: !1,
     };
   },
   methods: {
     make() {
-      this.link = makeTranPageLink({
+      this.link = `${makeTranPageLink({
         userMark: this.userMark,
         openUrl: this.openUrl,
         channel: this.channel,
-      });
+      })}&autoWakeUp=${this.autoWakeUp ? '1' : ''}`;
     },
     copy() {
       this.make();

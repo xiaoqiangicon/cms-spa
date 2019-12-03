@@ -139,6 +139,7 @@
           <el-option label="日行一善" :value="10" />
           <el-option label="自营佛事" :value="11" />
           <el-option label="自动转单" :value="12" />
+          <el-option label="禅在订单" :value="13" />
         </el-select>
         <el-date-picker
           v-model="filterStartDate"
@@ -306,6 +307,14 @@
       </div>
       <!-- 自动转单 -->
       <div v-if="filterType === 12" class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="foShiName" label="佛事名称" />
+          <el-table-column prop="amount" label="佛事金额（元）" />
+          <el-table-column prop="profit" label="营收金额（元）" />
+        </el-table>
+      </div>
+      <!-- 禅在订单 -->
+      <div v-if="filterType === 13" class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
           <el-table-column prop="foShiName" label="佛事名称" />
           <el-table-column prop="amount" label="佛事金额（元）" />
