@@ -74,8 +74,10 @@
       </el-table>
 
       <el-pagination
+        v-show="recordListTotal > 0"
         :total="recordListTotal"
         :current-page="listParams.pageNumber"
+        :page-size="listParams.pageSize"
         background
         layout="prev, pager, next"
         style="margin-top: 40px"
