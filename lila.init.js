@@ -6,12 +6,15 @@ import tasksPlugin from 'lila-tasks';
 import webpackPlugin from 'lila-webpack';
 import { forVue } from 'lila-webpack-config';
 import MomentLocalesPlugin from 'moment-locales-webpack-plugin';
+import qiniuTask from './qiniu-task';
 
 const { readFileSync } = fse;
 const cwd = process.cwd();
 
 export default lila => {
-  const { addCmdOption, setSetting } = lila;
+  const { addCmdOption, setSetting, registerTask } = lila;
+
+  registerTask('qiniu', qiniuTask);
 
   const envOption = ['-e, --env [env]', 'server env', /^(test|gray)$/, 'test'];
 
@@ -88,12 +91,9 @@ export default lila => {
         },
       ],
       [
-        '@lila/sync-build',
+        'qiniu',
         {
-          server: isGray ? servers[1] : servers[0],
-          remotePath: isGray
-            ? '/usr/local/resin/projects/cms'
-            : '/usr/local/resin/projects/guest_statistics',
+          dirs: 'build',
         },
       ],
       [
@@ -118,6 +118,7 @@ export default lila => {
 
     return {
       tasks,
+      staticServer: 'https://pic.zizaihome.com',
       alias: {
         '@': path.join(__dirname, 'src'),
       },
@@ -157,10 +158,12 @@ export default lila => {
         /* eslint-disable no-param-reassign */
         webpackConfig.resolve.modules = [
           path.join(cwd, 'src'),
+          cwd,
           path.join(cwd, 'node_modules'),
         ];
         return webpackConfig;
       },
+      mockRoot: 'api',
     };
   };
 };

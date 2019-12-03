@@ -405,6 +405,12 @@ const routes = [
         controlMark: 'pw_statistics',
       },
       {
+        name: '模块数据',
+        path: `${domain}/stat/statisticsIndex?type=module`,
+        meta: { title: '模块数据' },
+        controlMark: 'pw_statistics_module',
+      },
+      {
         name: '寺院数据',
         path: `${domain}/stat/templeIndex`,
         meta: { title: '寺院数据' },
