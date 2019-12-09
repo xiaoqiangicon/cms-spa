@@ -447,7 +447,6 @@ const routes = [
   {
     path: '/wish',
     component: Layout,
-    controlMark: 'pw_wish',
     name: '法师模块',
     meta: { title: '法师模块', icon: 'fa-circle', noCache: true },
     children: [
@@ -456,12 +455,14 @@ const routes = [
         component: () => import('../master/project/App'),
         name: '加持项目',
         meta: { title: '加持项目', noCache: true },
+        controlMark: 'pw_wish',
       },
       {
         path: 'edit/:name',
         component: () => import('../master/edit/App'),
         name: '编辑项目',
         meta: { title: '编辑项目', noCache: true },
+        controlMark: 'pw_wish',
         hidden: !0,
       },
       {
@@ -469,36 +470,43 @@ const routes = [
         name: '供养管理',
         component: () => import('../master/support-manege/App'),
         meta: { title: '供养管理', noCache: true },
+        controlMark: ['pw_wish', 'pw_money'],
       },
       {
         name: '加持订单',
         path: `${domain}/wish/plus`,
         meta: { title: '加持订单' },
+        controlMark: 'pw_wish',
       },
       {
         name: '法师管理',
         path: `${domain}/wish/master`,
         meta: { title: '法师管理' },
+        controlMark: 'pw_wish',
       },
       {
         name: '心愿管理',
         path: `${domain}/wish/index`,
         meta: { title: '心愿管理' },
+        controlMark: 'pw_wish',
       },
       {
         name: '还愿管理',
         path: `${domain}/wish/return`,
         meta: { title: '还愿管理' },
+        controlMark: 'pw_wish',
       },
       {
         name: '寺院认证',
         path: `${domain}/wish/verify`,
         meta: { title: '寺院认证' },
+        controlMark: 'pw_wish',
       },
       {
         name: '经咒落地页管理',
         path: `${domain}/wish/template`,
         meta: { title: '经咒落地页管理' },
+        controlMark: 'pw_wish',
       },
     ],
   },

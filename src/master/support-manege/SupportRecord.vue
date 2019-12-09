@@ -168,7 +168,8 @@ export default {
     },
     toExport() {
       const { startTime, endTime, bonzeId } = this.listParams;
-      window.location.href = `/wish/downBonzeOrderRecordExcel?startTime=${startTime}&endTime=${endTime}&bonzeId=${bonzeId}`;
+      window.location.href = `/wish/downBonzeOrderRecordExcel?startTime=${startTime}&endTime=${endTime}&bonzeId=${bonzeId ||
+        0}`;
     },
   },
 };

@@ -3,3 +3,6 @@ export const numOfDate = date =>
 
 export const fixedFloat = (num = 0, fixed = 2) =>
   parseFloat(num.toFixed(fixed));
+
+export const isArray = arr =>
+  Object.prototype.toString.call(arr) === '[object Array]';
