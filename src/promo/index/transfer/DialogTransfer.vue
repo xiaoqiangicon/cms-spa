@@ -23,6 +23,7 @@
           :key="item.id"
           :label="item.name"
           :value="item.id"
+          :disabled="checkBuddhistSubOpen(item)"
         />
       </el-select>
     </div>
@@ -94,15 +95,13 @@
             {{ transferTempleName }}
           </div>
           <div class="fx-1 t-a-center">
-            {{ transferOrderIds.length }}
+            {{ transferOrderTotal }}
           </div>
         </div>
         <hr />
         <div class="dp-flex pd-t-10 pd-b-10">
-          <div class="fx-1 t-a-center">
-            总计原价（元）：{{ originPriceSum }}
-          </div>
-          <div class="fx-1 t-a-center">转单价格（元）：{{ priceSum }}</div>
+          <div class="fx-1 t-a-center">总计原价（元）：{{ priceSum }}</div>
+          <div class="fx-1 t-a-center">转单价格（元）：{{ transferSum }}</div>
         </div>
       </div>
       <div class="mg-t-20" style="text-align:center;">
@@ -116,6 +115,7 @@
 
 <script>
 import seeFetch from 'see-fetch';
+import { fixedFloat } from 'util/index';
 import { Notification } from 'element-ui';
 
 import { addProps } from '../data';
@@ -146,6 +146,7 @@ export default {
   name: 'DialogTransfer',
   props: {
     visible: Boolean,
+    currDialogTransfer: Array,
   },
   data() {
     return {
@@ -167,6 +168,35 @@ export default {
   },
   computed: {
     ...computedProps,
+    // 当前转单总订单数量
+    transferOrderTotal() {
+      let total = 0;
+      this.currDialogTransfer.forEach(item => (total += item.buyNum));
+      return total;
+    },
+    // 当前转单额累计
+    transferSum() {
+      const { price, percent, currDialogTransfer, transferOrderTotal } = this;
+      if (price) {
+        return transferOrderTotal * price;
+      } else if (percent) {
+        let sum = 0;
+        currDialogTransfer.forEach(item => {
+          sum += item.buyNum * ((item.price / item.buyNum) * (percent / 100));
+        });
+        return fixedFloat(sum);
+      } else {
+        return 0;
+      }
+    },
+    // 当前原价金额累计
+    priceSum() {
+      let sum = 0;
+      this.currDialogTransfer.forEach(item => {
+        sum += item.price;
+      });
+      return fixedFloat(sum);
+    },
     transferTempleName() {
       const findItem = this.transferTempleList.find(
         item => item.id === parseInt(this.transferTempleId)
@@ -175,18 +205,6 @@ export default {
         return findItem.name;
       }
       return '';
-    },
-    originPriceSum() {
-      const { originPrice, transferOrderIds } = this;
-
-      return (originPrice * transferOrderIds.length).toFixed(4);
-    },
-    priceSum() {
-      const { price, originPrice, percent, transferOrderIds } = this;
-      return (price
-        ? price * this.transferOrderIds.length
-        : (percent / 100) * originPrice * this.transferOrderIds.length
-      ).toFixed(4);
     },
   },
   watch: {
@@ -261,6 +279,11 @@ export default {
       this.percent = percent;
 
       this.checkCommitDisabled();
+    },
+    // 判断关联寺院是否有开启转单的选择项
+    checkBuddhistSubOpen(buddhist) {
+      const subIds = this.currDialogTransfer.map(item => item.subId);
+      return !buddhist.subList.some(e => subIds.indexOf(e.id) !== -1);
     },
     checkCommitDisabled() {
       if (!this.transferTempleId) {
