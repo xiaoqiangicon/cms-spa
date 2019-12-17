@@ -9,9 +9,15 @@ const post = res => {
   res.message = res.msg || '未知错误，请稍后重试';
 
   if (res.error) {
+    const urlOrigin = res.response.url
+      .split('?')[0]
+      .split('#')[0]
+      .replace('http://', '')
+      .replace('https://', '');
+    const urlPath = urlOrigin.slice(urlOrigin.indexOf('/'));
     Notification({
       title: '提示',
-      message: `接口错误，请联系自在家开发人员：url[${res.response.url}], status[${res.response.status}], statusText[${res.response.statusText}]`,
+      message: `接口错误，请联系APP开发人员：url[${urlPath}], status[${res.response.status}], statusText[${res.response.statusText}]`,
       duration: 0,
     });
   }
