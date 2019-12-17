@@ -274,45 +274,108 @@ export default {
       const origin = this.mergeSubList.find(item => item.id === curSubId);
       const promiseAry = [];
 
-      origin.subList.forEach(({ templeId, buddhistId, subId, price }) => {
-        const resItem = {
-          templeId,
-          buddhistId,
-          subId,
-          price,
-          buddhistSelect: [],
-          subSelect: [],
-        };
+      const originTempleId = origin.subList[0].templeId;
+      let repeatTempleId = !0;
+      origin.subList.forEach((item, i) => {
+        if (item.templeId !== originTempleId) repeatTempleId = !1;
+      });
+      if (repeatTempleId) {
+        origin.subList
+          .slice(0, 1)
+          .forEach(({ templeId, buddhistId, subId, price }) => {
+            const resItem = {
+              templeId,
+              buddhistId,
+              subId,
+              price,
+              buddhistSelect: [],
+              subSelect: [],
+            };
 
-        const getData = new Promise(resolve => {
-          if (this.templeBuddhistMap[templeId] === undefined) {
-            resolve(this.getBuddhistList(templeId));
-          } else {
-            resolve(this.templeBuddhistMap[templeId]);
-          }
-        });
+            const getData = new Promise(resolve => {
+              if (this.templeBuddhistMap[templeId] === undefined) {
+                resolve(this.getBuddhistList(templeId));
+              } else {
+                resolve(this.templeBuddhistMap[templeId]);
+              }
+            });
 
-        const handleData = () =>
-          getData.then(data => {
-            resItem.buddhistSelect = data;
-            // 本地模拟数据的时候这里报错会导致下边的语句不执行, 因此添加判断语句
-            const findItem = data.find(item => item.id === buddhistId);
-            if (findItem) {
-              resItem.subSelect = findItem.subList;
+            const handleData = () =>
+              getData.then(data => {
+                resItem.buddhistSelect = data;
+                // 本地模拟数据的时候这里报错会导致下边的语句不执行, 因此添加判断语句
+                const findItem = data.find(item => item.id === buddhistId);
+                if (findItem) {
+                  resItem.subSelect = findItem.subList;
+                }
+                return resItem;
+              });
+
+            handleData().then(res => {
+              console.log(res);
+              origin.subList.forEach(
+                ({ templeId, buddhistId, subId, price }) => {
+                  let singlePromise = JSON.parse(JSON.stringify(res));
+                  // 匹配正确的筛选规格列表
+                  const findItem = singlePromise.buddhistSelect.find(
+                    item => item.id === buddhistId
+                  );
+                  if (findItem) {
+                    singlePromise.subSelect = findItem.subList;
+                  }
+                  singlePromise.templeId = templeId;
+                  singlePromise.buddhistId = buddhistId;
+                  singlePromise.price = price;
+                  singlePromise.subId = subId;
+                  promiseAry.push(singlePromise);
+                }
+              );
+              console.log(promiseAry);
+              this.loading = !1;
+              cb(promiseAry);
+            });
+          });
+      } else {
+        origin.subList.forEach(({ templeId, buddhistId, subId, price }) => {
+          const resItem = {
+            templeId,
+            buddhistId,
+            subId,
+            price,
+            buddhistSelect: [],
+            subSelect: [],
+          };
+
+          const getData = new Promise(resolve => {
+            if (this.templeBuddhistMap[templeId] === undefined) {
+              resolve(this.getBuddhistList(templeId));
+            } else {
+              resolve(this.templeBuddhistMap[templeId]);
             }
-            return resItem;
           });
 
-        promiseAry.push(handleData());
-      });
+          const handleData = () =>
+            getData.then(data => {
+              resItem.buddhistSelect = data;
+              // 本地模拟数据的时候这里报错会导致下边的语句不执行, 因此添加判断语句
+              const findItem = data.find(item => item.id === buddhistId);
+              if (findItem) {
+                resItem.subSelect = findItem.subList;
+              }
+              return resItem;
+            });
 
-      Promise.all(promiseAry).then(res => {
-        /* eslint-disable */
-        console.log('全部执行结束');
-        console.log(res);
-        this.loading = !1;
-        cb(res);
-      });
+          promiseAry.push(handleData());
+        });
+
+        Promise.all(promiseAry).then(res => {
+          /* eslint-disable */
+          console.log('全部执行结束');
+          console.log(res);
+          this.loading = !1;
+          cb(res);
+        });
+      }
     },
     createSubmitData() {
       // 将当前的 tableData 转化为 submitData

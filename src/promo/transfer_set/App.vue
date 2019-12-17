@@ -451,6 +451,9 @@ export default {
               const selectionSequence = selectionIndex + 1;
               const errorPrefix = `第${templeSequence}个寺院第${selectionSequence}个选择项`;
 
+              if (!newItem.transferPrice) newItem.transferPrice = 0;
+              if (!newItem.transferRate) newItem.transferRate = 0;
+
               if (newItem.transferPrice && newItem.transferRate) {
                 error = `${errorPrefix}转单比例和转单金额只能设置一项`;
               } else if (newItem.transferRate && newItem.transferRate > 100) {
