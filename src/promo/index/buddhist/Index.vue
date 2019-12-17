@@ -1,10 +1,14 @@
 <template>
   <div>
-    <div class="tip">
-      推广佛事：为某个寺院的佛事活动提供增值业务，可设定与公司的分成比例与福币分成
-      其中转单系统与推广佛事为互斥关系，但两者都可设置分享激励
+    <div class="tip-box">
+      <div class="tip">
+        推广佛事：为某个寺院的佛事活动提供增值业务，可设定与公司的分成比例与福币分成其中转单系统与推广佛事为互斥关系，但两者都可设置分享激励
+      </div>
+      <div class="tip">
+        提现说明：若当前的推广项目被设置为可提现或结束。则当前项目会按"订单完成"后1天结算到寺院账户的提现账单中，寺院可在后台直接申请提现操作。
+      </div>
     </div>
-    <div class="filter mg-b-20">
+    <div class="filter">
       <el-select
         v-model.number="templeId"
         size="small"
@@ -45,21 +49,29 @@
       <el-table-column
         prop="templeId"
         label="寺院ID"
-        width="100"
+        min-width="50"
         :align="'left'"
       />
-      <el-table-column prop="buddhistName" label="推广状态">
+      <el-table-column prop="buddhistName" label="推广状态" min-width="120">
         <template slot-scope="scope">
           <template v-if="!scope.row.isFinish">
             <span style="color: #67C23A;">进行中</span>
             <div
-              style="color: #409EFF; cursor:pointer;"
+              :style="{
+                color: scope.row.isPickUpCommodity ? '#409EFF' : '#F97658',
+                cursor: 'pointer',
+              }"
               @click="handleClickCanCash(scope.row)"
             >
               {{
                 scope.row.isPickUpCommodity ? '推广中可提现' : '推广中不可提现'
               }}
-              <i style="color: #409EFF;" class="el-icon-edit" />
+              <i
+                :style="{
+                  color: scope.row.isPickUpCommodity ? '#409EFF' : '#F97658',
+                }"
+                class="el-icon-edit"
+              />
             </div>
           </template>
           <template v-else>
@@ -70,7 +82,7 @@
           </template>
         </template>
       </el-table-column>
-      <el-table-column prop="buddhistName" label="佛事名称" />
+      <el-table-column prop="buddhistName" label="佛事名称" min-width="140" />
       <el-table-column prop="templeName" label="寺院名称" />
       <el-table-column label="推广服务费" :align="'center'">
         <template slot-scope="scope">
@@ -655,16 +667,21 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.tip {
-  width: 400px;
-  padding: 15px;
-  border: 1px solid #b7eb8f;
-  border-radius: 4px;
-  background-color: #f6ffed;
-  color: rgba(0, 0, 0, 0.65);
+.tip-box {
+  display: flex;
+
+  .tip {
+    width: 400px;
+    padding: 15px;
+    margin-right: 20px;
+    border: 1px solid #b7eb8f;
+    border-radius: 4px;
+    background-color: #f6ffed;
+    color: rgba(0, 0, 0, 0.65);
+  }
 }
 .filter {
-  margin-top: 20px;
+  margin: 30px 0;
 }
 .row {
   display: flex;

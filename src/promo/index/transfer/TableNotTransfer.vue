@@ -100,6 +100,7 @@
     />
     <DialogTransfer
       :visible="dialogTransferVisible"
+      :curr-dialog-transfer="currDialogTransfer"
       @submit="refresh"
       @updateVisible="updateDialogTransferVisible"
     />
@@ -158,6 +159,7 @@ export default {
       },
 
       multipleSelection: [],
+      currDialogTransfer: [],
     };
   },
   computed: {
@@ -224,6 +226,8 @@ export default {
       }
 
       this.transferOrderIds = this.multipleSelection.map(item => item.id);
+      this.currDialogTransfer = this.multipleSelection;
+      console.log(this.currDialogTransfer);
       this.dialogTransferVisible = !0;
     },
     handleClickSingleTransfer(rowData) {
@@ -251,6 +255,7 @@ export default {
 
       this.$store.state.promoIndex.dialogTransferSelectionId =
         rowData.subdivideId;
+      this.currDialogTransfer = [rowData];
       this.dialogTransferVisible = !0;
     },
     handleClickDetail(rowData, itemData, itemIndex) {

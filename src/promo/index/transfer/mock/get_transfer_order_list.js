@@ -7,7 +7,7 @@ export default {
     id,
     name: '测试机随缘寺院转单测试',
     isAutoConversion: Math.floor(Math.random() * 2),
-    buyNum: 12,
+    buyNum: id % 2 ? 2 : 3,
     orderId: 123,
     orderNo: 21312,
     posiscript: [
@@ -40,8 +40,8 @@ export default {
         subdirideName: '邮寄佛事1',
       },
     ],
-    price: 10,
-    subdivideId: 1,
+    price: id % 2 ? 40 : 60,
+    subdivideId: id,
     subdivideName: '123123132',
     wxTransactionId: '213123213',
     conversionOrder: [
