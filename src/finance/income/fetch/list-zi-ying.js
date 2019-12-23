@@ -36,12 +36,15 @@ const postHandle = res => {
     res.data.forEach(item => {
       item.transformAmount = 0;
       item.usedAmount = item.manualAmount;
+      // item.remainAmount = parseFloat(
+      //   (
+      //     item.amount -
+      //     (item.amount * item.corporationProfitRate) / 100 -
+      //     item.usedAmount
+      //   ).toFixed(2)
+      // );
       item.remainAmount = parseFloat(
-        (
-          item.amount -
-          (item.amount * item.corporationProfitRate) / 100 -
-          item.usedAmount
-        ).toFixed(2)
+        (item.amount - item.profitAmount - item.usedAmount).toFixed(2)
       );
       if (!item.type) item.type = 1;
       item.typeText = ziYingTypes.find(i => i.id === item.type).name;
