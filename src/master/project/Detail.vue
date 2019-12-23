@@ -62,6 +62,7 @@ export default {
   top: 0;
   width: 100%;
   height: 100%;
+  z-index: 3000;
 }
 .box-card {
   position: absolute;

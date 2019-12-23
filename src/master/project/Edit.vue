@@ -271,6 +271,9 @@ export default {
 p {
   margin: 0;
 }
+.dialog-box {
+  z-index: 1005 !important;
+}
 .edit-container {
   position: fixed;
   right: 0;
