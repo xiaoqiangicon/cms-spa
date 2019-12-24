@@ -68,6 +68,7 @@
       :visible.sync="editDialog.visible"
       :type="editDialog.type"
       :data="editDialog.data"
+      @updateAdItem="updateAdItem"
     />
   </div>
 </template>
@@ -100,7 +101,7 @@ export default {
     this.getPopupList();
   },
   methods: {
-    // 获取弹出广告列表
+    // 获取弹窗广告列表
     getPopupList(page) {
       this.isLoadingPopupList = true;
       if (page) this.listParams.pageNumber = page;
@@ -122,6 +123,17 @@ export default {
       this.editDialog.type = type;
       this.editDialog.data = item || {};
       this.editDialog.visible = true;
+    },
+    // 更新修改数据
+    updateAdItem(id, res) {
+      this.popupList.some((e, index) => {
+        if (id == e.id) {
+          for (const key in res) {
+            this.popupList[index][key] = res[key];
+          }
+        }
+        return id == e.id;
+      });
     },
   },
 };

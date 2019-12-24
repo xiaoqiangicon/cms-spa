@@ -170,6 +170,9 @@ export default {
             if (res.errorCode === 0) {
               that.closeDialog();
               this.$message.success('保存成功');
+              if (that.type === 2) {
+                this.$emit('updateAdItem', that.id, that.editForm);
+              }
             } else {
               this.$message.error((res && res.msg) || '保存失败');
             }
