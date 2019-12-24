@@ -510,6 +510,26 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/ad',
+    component: Layout,
+    name: '广告管理',
+    meta: { title: '广告管理', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        name: '佛事推荐',
+        path: `${domain}/ad/buddhist`,
+        meta: { title: '佛事推荐' },
+        controlMark: 'pw_advertising',
+      },
+      {
+        path: 'system-popup',
+        name: '系统弹窗',
+        component: () => import('../ad/system-popup/App'),
+        meta: { title: '系统弹窗', noCache: true },
+      },
+    ],
+  },
 ];
 
 const first = routes.filter(item => valid(item));
