@@ -19,7 +19,6 @@
           filterable
           :disabled="!isNew"
         >
-          <el-option :key="0" label="全部" :value="0" />
           <el-option
             v-for="item in templeList"
             :key="item.id"
@@ -47,7 +46,7 @@
         />
       </el-select>
       <input v-model="coin" :disabled="!isNew" class="input-coin" type="text" />
-      <span class="coin-span">元</span>
+      <span class="coin-span">福币</span>
     </div>
     <div class="save-block">
       <button class="save" @click="save">
@@ -90,10 +89,11 @@ export default {
   },
   data() {
     return {
-      templeId: 0,
+      templeId: '',
       mission: '',
       status: 0,
       coin: 0,
+      newItem: {},
       operateList: [
         {
           name: '增加',
@@ -113,24 +113,25 @@ export default {
     item: {
       handler(newValue, oldValue) {
         if (this.isNew) return;
-        this.coin = newValue.coin;
+        this.newItem = this.item;
+        this.coin = this.newItem.coin;
         if (this.coin > 0) {
           this.status = 0;
         } else {
           this.status = 1;
-          this.coin = Math.abs(newValue.coin);
+          this.coin = Math.abs(this.newItem.coin);
         }
-        this.mission = newValue.mission;
-        this.templeId = newValue.templeId;
+        this.mission = this.newItem.mission;
+        this.templeId = this.newItem.templeId;
       },
       deep: true,
     },
-    editVisible(newValue, oldValue) {
-      if (!newValue) {
+    isNew() {
+      if (this.isNew) {
         this.mission = '';
         this.status = 0;
         this.coin = 0;
-        this.templeId = 0;
+        this.templeId = '';
       }
     },
   },
@@ -147,7 +148,7 @@ export default {
           });
           return;
         }
-        if (this.templeId === 0) {
+        if (!this.templeId) {
           Notification({
             title: `请选择寺院`,
             type: 'warning',
