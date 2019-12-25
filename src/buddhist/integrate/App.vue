@@ -128,7 +128,7 @@ export default {
     },
     getTempleList() {
       seeFetch('buddhist/integrate/getTempleList', {
-        isTest: '1',
+        isTest: -1,
         tagId: 0,
         verify: -1,
       }).then(res => {
