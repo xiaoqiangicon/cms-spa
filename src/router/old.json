@@ -139,19 +139,6 @@
           "controlMark": "pw_oprule"
         }
       ]
-    },
-    {
-      "id": "ad",
-      "name": "广告管理",
-      "icon": "fa-circle-o",
-      "subItems": [
-        {
-          "id": "ad-fo-shi",
-          "name": "佛事推荐",
-          "link": "/ad/buddhist",
-          "controlMark": "pw_advertising"
-        }
-      ]
     }
   ]
 }
