@@ -273,6 +273,9 @@ export default {
       // 根据当前选中的选择项 从服务器获取转单寺院列表 从服务器请求寺院对应的佛事列表
       const origin = this.mergeSubList.find(item => item.id === curSubId);
       const promiseAry = [];
+      let repeatTemleId = !0;
+      if (origin.subList[0]) {
+        const originTempleId = origin.subList[0].templeId;
 
       const originTempleId = origin.subList[0].templeId;
       let repeatTempleId = !0;

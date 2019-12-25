@@ -40,6 +40,9 @@ import statisticsChannel from '../statistics/channel/state';
 // 法师模块
 import masterProject from '../master/project/state';
 
+// 佛事管理
+import buddhistIntegrate from '../buddhist/integrate/state';
+
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -81,6 +84,9 @@ const store = new Vuex.Store({
 
     // 法师模块
     masterProject,
+
+    // 佛事管理
+    buddhistIntegrate,
   },
   getters,
 });
