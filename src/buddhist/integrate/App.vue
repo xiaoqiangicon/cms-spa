@@ -127,7 +127,11 @@ export default {
       });
     },
     getTempleList() {
-      seeFetch('buddhist/integrate/getTempleList', {}).then(res => {
+      seeFetch('buddhist/integrate/getTempleList', {
+        isTest: '1',
+        tagId: 0,
+        verify: -1,
+      }).then(res => {
         if (!res.success) {
           Notification({
             type: 'error',
@@ -164,7 +168,7 @@ export default {
           }).then(res => {
             if (!res.success) return;
 
-            // window.location.reload();
+            window.location.reload();
           });
         })
         .catch(() => {});
