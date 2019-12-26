@@ -42,11 +42,17 @@
           </template>
         </el-table-column>
         <el-table-column min-width="100px" prop="addTime" label="添加时间" />
-        <el-table-column min-width="60px" label="操作">
+        <el-table-column min-width="80px" label="操作">
           <template slot-scope="scope">
             <div class="opt">
               <el-button type="text" @click="showEditDialog(2, scope.row)">
                 编辑
+              </el-button>
+              <el-button
+                type="text"
+                @click="delAdPopUp(scope.row.id, scope.$index)"
+              >
+                删除
               </el-button>
             </div>
           </template>
@@ -123,6 +129,20 @@ export default {
       this.editDialog.type = type;
       this.editDialog.data = item || {};
       this.editDialog.visible = true;
+    },
+    // 删除广告弹窗
+    delAdPopUp(id, index) {
+      seeFetch('erpAD/addAndUpdateErpAD', {
+        id,
+        status: -1,
+      }).then(res => {
+        if (res.errorCode === 0) {
+          this.$message.success('删除成功');
+          this.popupList.splice(index, 1);
+        } else {
+          this.$message.error((res && res.msg) || '删除失败');
+        }
+      });
     },
     // 更新修改数据
     updateAdItem(id, res) {
