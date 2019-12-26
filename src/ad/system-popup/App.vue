@@ -50,7 +50,7 @@
               </el-button>
               <el-button
                 type="text"
-                @click="delAdPopUp(scope.row.id, scope.$index)"
+                @click="switchDelPopupDialog(true, scope.row.id, scope.$index)"
               >
                 删除
               </el-button>
@@ -75,7 +75,27 @@
       :type="editDialog.type"
       :data="editDialog.data"
       @updateAdItem="updateAdItem"
+      @updateAllAdItem="getPopupList"
     />
+
+    <el-dialog
+      title="提示"
+      :visible.sync="delPopupDialog.visible"
+      :before-close="switchDelPopupDialog"
+      width="30%"
+    >
+      <span>
+        确定删除 '{{
+          typeof delPopupDialog.index === 'number'
+            ? popupList[delPopupDialog.index].name
+            : ''
+        }}' 吗
+      </span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="switchDelPopupDialog(false)">取 消</el-button>
+        <el-button type="primary" @click="delAdPopUp">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -90,6 +110,11 @@ export default {
   data() {
     return {
       isLoadingPopupList: true,
+      delPopupDialog: {
+        visible: false,
+        id: '',
+        index: '',
+      },
       editDialog: {
         visible: false,
         type: 1,
@@ -130,8 +155,16 @@ export default {
       this.editDialog.data = item || {};
       this.editDialog.visible = true;
     },
+    // 切换 '删除广告弹窗' 确认对话框
+    switchDelPopupDialog(type, id, index) {
+      if (typeof type !== 'boolean') type = false;
+      this.delPopupDialog.id = id || '';
+      this.delPopupDialog.index = index || index === 0 ? index : '';
+      this.delPopupDialog.visible = type;
+    },
     // 删除广告弹窗
-    delAdPopUp(id, index) {
+    delAdPopUp() {
+      const { id, index } = this.delPopupDialog;
       seeFetch('erpAD/addAndUpdateErpAD', {
         id,
         status: -1,
@@ -139,6 +172,7 @@ export default {
         if (res.errorCode === 0) {
           this.$message.success('删除成功');
           this.popupList.splice(index, 1);
+          this.switchDelPopupDialog(false);
         } else {
           this.$message.error((res && res.msg) || '删除失败');
         }

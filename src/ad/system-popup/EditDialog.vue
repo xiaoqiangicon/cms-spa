@@ -172,6 +172,8 @@ export default {
               this.$message.success('保存成功');
               if (that.type === 2) {
                 this.$emit('updateAdItem', that.id, that.editForm);
+              } else if (that.type === 1) {
+                this.$emit('updateAllAdItem');
               }
             } else {
               this.$message.error((res && res.msg) || '保存失败');
