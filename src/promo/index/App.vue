@@ -7,7 +7,7 @@
       <el-tab-pane label="推广佛事" name="buddhist">
         <Buddhist />
       </el-tab-pane>
-      <el-tab-pane label="分享福币" name="fu">
+      <el-tab-pane v-if="0" label="分享福币" name="fu">
         <Fu />
       </el-tab-pane>
     </el-tabs>

@@ -41,7 +41,7 @@
             {{ Number(100 * buddhistData.rate).toFixed(2) }}%
           </template>
         </el-table-column>
-        <el-table-column label="分享福币" align="center">
+        <el-table-column v-if="0" label="分享福币" align="center">
           <template slot="header">
             分享福币（%）
             <el-tooltip
