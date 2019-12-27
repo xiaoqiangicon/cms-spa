@@ -202,7 +202,11 @@ export default {
     },
     toTransferSet(item) {
       window.sessionStorage['promo/index/transfer/item'] = JSON.stringify(item);
-      this.$router.push(`/promo/transferSet/${item.buddhistId}`);
+      window.open(
+        `${window.location.pathname}#/promo/transferSet/${item.buddhistId}`,
+        '_blank'
+      );
+      // this.$router.push(`/promo/transferSet/${item.buddhistId}`);
     },
     toMergeSet(item) {
       window.sessionStorage['promo/index/transfer/item'] = JSON.stringify(item);
