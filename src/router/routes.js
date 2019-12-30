@@ -565,7 +565,7 @@ const routes = [
         path: 'system-popup',
         name: '系统广告',
         component: () => import('../ad/system-popup/App'),
-        meta: { title: '系统弹窗', noCache: true },
+        meta: { title: '系统广告', noCache: true },
       },
     ],
   },
