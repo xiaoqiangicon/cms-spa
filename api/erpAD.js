@@ -16,6 +16,8 @@ export const getErpADList = {
         'https://pic.zizaihome.com/9188bd76-60c6-4747-8d28-aa2d43077112.png',
       startTime: '2019-12-20 17:28:15',
       visitNum: 2696,
+      link: '/test/url',
+      position: id % 2 ? 1 : 2,
     })),
     total: 22,
   },

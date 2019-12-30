@@ -7,13 +7,31 @@
       :before-close="closeDialog"
     >
       <el-form ref="editForm" :model="editForm" :rules="editFormRules">
-        <el-form-item label="名称" prop="name">
+        <el-form-item v-if="adType === 1" label="名称" prop="name">
           <el-input v-model="editForm.name" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="文章ID" prop="articleId">
+        <el-form-item
+          v-if="adType === 2 || adType === 3"
+          label="位置"
+          prop="position"
+        >
+          <el-select v-model="editForm.position" placeholder="请选择位置">
+            <el-option label="1" value="1" />
+            <el-option label="2" value="2" />
+            <el-option label="3" value="3" />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          v-if="adType === 1 || adType === 3"
+          label="文章ID"
+          prop="articleId"
+        >
           <el-input v-model="editForm.articleId" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="优先级" prop="sort">
+        <el-form-item v-if="adType === 2" label="跳转链接" prop="link">
+          <el-input v-model="editForm.link" autocomplete="off" />
+        </el-form-item>
+        <el-form-item v-if="adType === 1" label="优先级" prop="sort">
           <el-input v-model="editForm.sort" autocomplete="off" />
         </el-form-item>
         <el-form-item label="生效时间" prop="startTime" class="vaild-time">
@@ -59,6 +77,10 @@ import { dateToString } from '../../util';
 export default {
   name: 'EditDialog',
   props: {
+    adType: {
+      type: Number,
+      required: true,
+    },
     visible: Boolean,
     type: Number,
     data: Object,
@@ -68,7 +90,9 @@ export default {
       id: 0,
       editForm: {
         name: '',
+        position: '',
         articleId: '',
+        link: '',
         sort: '',
         startTime: '',
         endTime: '',
@@ -83,11 +107,25 @@ export default {
             trigger: 'blur',
           },
         ],
+        position: [
+          {
+            required: true,
+            message: '请选择位置',
+            trigger: 'change',
+          },
+        ],
         articleId: [
           {
             required: true,
             pattern: /^[0-9]*$/,
             message: '请正确输入文章ID',
+            trigger: 'blur',
+          },
+        ],
+        link: [
+          {
+            required: true,
+            message: '请输入跳转链接',
             trigger: 'blur',
           },
         ],
@@ -134,7 +172,7 @@ export default {
         if (this.type === 1) {
           this.editForm[k] = '';
         } else {
-          this.editForm[k] = this.data[k];
+          this.editForm[k] = this.data[k] || '';
           if (k === 'startTime') this.vaildTime[0] = new Date(this.data[k]);
           if (k === 'endTime') this.vaildTime[1] = new Date(this.data[k]);
         }
@@ -164,6 +202,7 @@ export default {
           });
         } else {
           seeFetch('erpAD/addAndUpdateErpAD', {
+            type: this.adType,
             id: that.id,
             ...that.editForm,
           }).then(res => {
