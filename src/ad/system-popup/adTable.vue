@@ -102,7 +102,7 @@
       :data="editDialog.data"
       :ad-type="adType"
       @updateAdItem="updateAdItem"
-      @updateAllAdItem="getPopupList"
+      @updateAllAdItem="delayGetPopupList"
     />
 
     <el-dialog
@@ -205,6 +205,13 @@ export default {
           });
         }
       });
+    },
+    // 延时更新列表数据
+    delayGetPopupList() {
+      this.isLoadingPopupList = true;
+      setTimeout(() => {
+        this.getPopupList();
+      }, 1000);
     },
     // 显示编辑\新建广告弹窗对话框
     showEditDialog(type, item) {
