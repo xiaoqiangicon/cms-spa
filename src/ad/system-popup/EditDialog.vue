@@ -183,8 +183,8 @@ export default {
       if (newVal && newVal.length) {
         this.editForm.startTime = dateToString(newVal[0]);
         this.editForm.endTime = dateToString(newVal[1]).replace(
-          '0:0:0',
-          '23:59:59'
+          ' 0:0:0',
+          ' 23:59:59'
         );
       } else {
         this.editForm.startTime = '';
