@@ -37,6 +37,10 @@ const postHandle = res => {
       item.key = index + 1;
       if (!item.type) item.type = 1;
       item.typeText = ziYingTypes.find(i => i.id === item.type).name;
+
+      if (item.foShiName) {
+        item.foShiNameWithId = `${item.foShiId}-${item.foShiName}`;
+      }
     });
 
     res.data.unshift({
@@ -46,6 +50,7 @@ const postHandle = res => {
       templeName: '合计',
       foShiId: 0,
       foShiName: '合计',
+      foShiNameWithId: '合计',
       amount: res.data
         .map(item => item.amount)
         .reduce((sum, value) => sum + value)
