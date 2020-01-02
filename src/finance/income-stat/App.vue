@@ -280,7 +280,6 @@
       <div v-else-if="filterType === 10" class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
           <el-table-column prop="time" label="时间" />
-          <el-table-column prop="orderCount" label="订单数量" />
           <el-table-column prop="amount" label="订单金额（元）" />
           <el-table-column prop="profit" label="营收金额（元）" />
         </el-table>
