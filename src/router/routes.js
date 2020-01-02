@@ -510,6 +510,65 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/buddhist',
+    component: Layout,
+    name: '佛事管理',
+    meta: { title: '佛事管理', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        name: '佛事审核',
+        path: `${domain}/buddhist/verify`,
+        meta: { title: '佛事审核' },
+        controlMark: 'pw_ceremony',
+      },
+      {
+        name: '佛事模板',
+        path: `${domain}/buddhist/template`,
+        meta: { title: '佛事模板' },
+        controlMark: 'pw_ceremony',
+      },
+      {
+        name: '佛事分类',
+        path: `${domain}/buddhist/classification`,
+        meta: { title: '佛事分类' },
+        controlMark: 'pw_ceremony',
+      },
+      {
+        name: '佛事标签',
+        path: `${domain}/buddhist/tag`,
+        meta: { title: '佛事标签' },
+        controlMark: 'pw_ceremony',
+      },
+      {
+        name: '积分任务',
+        path: 'integrate',
+        component: () => import('../buddhist/integrate/App'),
+        meta: { title: '积分任务', noCache: true },
+        controlMark: 'pw_ceremony',
+      },
+    ],
+  },
+  {
+    path: '/ad',
+    component: Layout,
+    name: '广告管理',
+    meta: { title: '广告管理', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        name: '佛事推荐',
+        path: `${domain}/ad/buddhist`,
+        meta: { title: '佛事推荐' },
+        controlMark: 'pw_advertising',
+      },
+      {
+        path: 'system-popup',
+        name: '系统广告',
+        component: () => import('../ad/system-popup/App'),
+        meta: { title: '系统广告', noCache: true },
+      },
+    ],
+  },
 ];
 
 const first = routes.filter(item => valid(item));

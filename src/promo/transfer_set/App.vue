@@ -136,7 +136,7 @@
               />
             </template>
           </el-table-column>
-          <el-table-column label="分享福币（%）">
+          <el-table-column v-if="0" label="分享福币（%）">
             <template slot="header">
               分享福币（%）
               <el-tooltip
