@@ -183,7 +183,11 @@
       <!-- 推广佛事 + 项目维度 -->
       <div v-if="filterType === 1 && filterDimension === 2" class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
-          <el-table-column prop="foShiName" label="佛事名称" />
+          <el-table-column label="佛事名称">
+            <template slot-scope="item">
+              {{ item.row.foShiId }}-{{ item.row.foShiName }}
+            </template>
+          </el-table-column>
           <el-table-column prop="templeName" label="寺院名称" />
           <el-table-column prop="amount" label="佛事金额（元）" />
           <el-table-column prop="profit" label="营收金额（元）" />
@@ -200,7 +204,11 @@
       <!-- 转单系统 + 项目维度 -->
       <div v-else-if="filterType === 4 && filterDimension === 2" class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
-          <el-table-column prop="foShiName" label="佛事名称" />
+          <el-table-column label="佛事名称">
+            <template slot-scope="item">
+              {{ item.row.foShiId }}-{{ item.row.foShiName }}
+            </template>
+          </el-table-column>
           <el-table-column prop="amount" label="订单金额（元）" />
           <el-table-column prop="profit" label="营收金额（元）" />
         </el-table>
@@ -279,7 +287,11 @@
       <!-- 日行一善 -->
       <div v-else-if="filterType === 10" class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
-          <el-table-column prop="foShiName" label="名称" />
+          <el-table-column label="佛事名称">
+            <template slot-scope="item">
+              {{ item.row.foShiId }}-{{ item.row.foShiName }}
+            </template>
+          </el-table-column>
           <el-table-column prop="templeName" label="寺院名称" />
           <el-table-column prop="amount" label="佛事金额（元）" />
           <el-table-column prop="profit" label="营收金额（元）" />
@@ -288,7 +300,11 @@
       <!-- 自营佛事 + 项目维度 -->
       <div v-else-if="filterType === 11 && filterDimension === 2" class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
-          <el-table-column prop="foShiName" label="佛事名称" />
+          <el-table-column label="佛事名称">
+            <template slot-scope="item">
+              {{ item.row.foShiId }}-{{ item.row.foShiName }}
+            </template>
+          </el-table-column>
           <el-table-column prop="typeText" label="项目类型" />
           <el-table-column prop="templeName" label="寺院名称" />
           <el-table-column prop="orderCount" label="订单数量" />
@@ -308,7 +324,11 @@
       <!-- 自动转单 -->
       <div v-if="filterType === 12" class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
-          <el-table-column prop="foShiName" label="佛事名称" />
+          <el-table-column label="佛事名称">
+            <template slot-scope="item">
+              {{ item.row.foShiId }}-{{ item.row.foShiName }}
+            </template>
+          </el-table-column>
           <el-table-column prop="amount" label="佛事金额（元）" />
           <el-table-column prop="profit" label="营收金额（元）" />
         </el-table>
@@ -316,7 +336,11 @@
       <!-- 禅在订单 -->
       <div v-if="filterType === 13" class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
-          <el-table-column prop="foShiName" label="佛事名称" />
+          <el-table-column label="佛事名称">
+            <template slot-scope="item">
+              {{ item.row.foShiId }}-{{ item.row.foShiName }}
+            </template>
+          </el-table-column>
           <el-table-column prop="amount" label="佛事金额（元）" />
           <el-table-column prop="profit" label="营收金额（元）" />
         </el-table>

@@ -10,6 +10,7 @@ const requestKeys = {
 const responseRefactor = {
   data: [
     {
+      foShiId: 'commodityId',
       foShiName: 'commodityName',
       amount: 'orderMoney',
       profit: 'earningsMoney',

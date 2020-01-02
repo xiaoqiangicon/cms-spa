@@ -26,6 +26,7 @@ export const list1 = {
   errorCode: 0,
   data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
     templeName: `寺院名 ${id}`,
+    commodityId: id,
     commodityName: `佛事名 ${id}`,
     orderMoney: id * 10,
     earningsMoney: id * 11,
