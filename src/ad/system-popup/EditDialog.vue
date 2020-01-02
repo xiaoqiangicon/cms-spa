@@ -43,17 +43,39 @@
             end-placeholder="结束日期"
           />
         </el-form-item>
-        <el-form-item label="广告图" prop="picUrl">
-          <el-upload
-            class="avatar-uploader"
-            :action="uploadImgApi"
-            :show-file-list="false"
-            :on-success="uploadImg"
-            :before-upload="uploadImgCheck"
-          >
-            <img v-if="editForm.picUrl" :src="editForm.picUrl" class="avatar" />
-            <i v-else class="el-icon-plus avatar-uploader-icon" />
-          </el-upload>
+        <el-form-item label="广告图" prop="picUrl" class="upload-img-item">
+          <el-col :span="6">
+            <el-upload
+              class="avatar-uploader"
+              :action="uploadImgApi"
+              :show-file-list="false"
+              :on-success="uploadImg"
+              :before-upload="uploadImgCheck"
+            >
+              <img
+                v-if="editForm.picUrl"
+                :src="editForm.picUrl"
+                class="avatar"
+              />
+              <i v-else class="el-icon-plus avatar-uploader-icon" />
+            </el-upload>
+          </el-col>
+          <el-col :span="12" class="img-size-info">
+            <div v-if="adType === 1">
+              图片尺寸：500 * 600
+            </div>
+            <div v-if="adType === 2">
+              <div class="">
+                位置1 图片尺寸：1076 * 320.5
+              </div>
+              <div class="">
+                位置2、3 图片尺寸：510 * 152
+              </div>
+            </div>
+            <div v-if="adType === 3">
+              图片尺寸：355 * 106
+            </div>
+          </el-col>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -252,6 +274,16 @@ export default {
 .container-dialog {
   /deep/ .el-dialog__body {
     padding-bottom: 0;
+  }
+  .upload-img-item {
+    /deep/ .el-form-item__content {
+      .img-size-info {
+        color: #888;
+        height: 120px;
+        display: flex;
+        align-items: center;
+      }
+    }
   }
   .vaild-time {
     /deep/ .el-form-item__label {
