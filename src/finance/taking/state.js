@@ -38,6 +38,8 @@ export default {
   namespaced: true,
   state: {
     add: addState,
+    showAddBill: !1,
+    showBillList: !1,
   },
   mutations: {
     ...addMutations,

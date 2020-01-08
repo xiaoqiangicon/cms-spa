@@ -98,6 +98,7 @@
         <el-pagination
           :total="totalCount"
           :current-page="currentPage"
+          :page-size="pageSize"
           background
           layout="prev, pager, next"
           style="margin-top: 40px"
@@ -128,6 +129,7 @@ export default {
       loading: !0,
       currentPage: 1,
       totalCount: 0,
+      pageSize: 50,
       list: [],
       temples: [],
       types: [],

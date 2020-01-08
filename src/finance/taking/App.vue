@@ -163,9 +163,19 @@
         </div>
       </el-card>
       <el-card v-if="remarks && remarks.length" class="mg-t-20">
-        <div slot="header" class="clearfix">
-          <span>提现注意事项</span>&nbsp;&nbsp;&nbsp;&nbsp;
-          <span class="gray">若下列注意事项已经完成，请勾选为已处理</span>
+        <div slot="header" class="tips-header">
+          <div class="header-left">
+            <span>提现注意事项</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="gray">若下列注意事项已经完成，请勾选为已处理</span>
+          </div>
+          <div class="header-right">
+            <el-button class="primary" @click="addBill">
+              添加记账
+            </el-button>
+            <el-button @click="showBillList">
+              记账列表
+            </el-button>
+          </div>
         </div>
         <div
           v-for="remark in remarks"
@@ -221,6 +231,8 @@
     </el-card>
     <feedback-images :ok="succeedUpload" />
     <rate-list />
+    <Add :temple-name="templeName" :temple-id="templeId" :ok="1" />
+    <Bill />
   </div>
 </template>
 
@@ -233,11 +245,13 @@ import { Notification } from 'element-ui';
 // import fancyboxConfig from '../../configs/fancybox';
 import FeedbackImages from './FeedbackImages';
 import RateList from './RateList';
+import Bill from './Bill';
+import Add from './Add';
 import './fetch';
 
 export default {
   name: 'App',
-  components: { RateList, FeedbackImages },
+  components: { RateList, FeedbackImages, Add, Bill },
   data() {
     return {
       loading: !0,
@@ -492,6 +506,12 @@ export default {
         });
       });
     },
+    addBill() {
+      this.$store.state.financeTaking.showAddBill = !0;
+    },
+    showBillList() {
+      this.$store.state.financeTaking.showBillList = !0;
+    },
     uploadFeedbackImages() {
       this.$store.state.financeTaking.add.dialogTitle = '上传银行回单照片';
       this.$store.state.financeTaking.add.visible = !0;
@@ -649,5 +669,11 @@ export default {
   .remark-btn {
     background-image: url('https://pic.zizaihome.com/7b48a7d8-b00d-11e8-9360-00163e0c001e.svg');
   }
+}
+
+.tips-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>
