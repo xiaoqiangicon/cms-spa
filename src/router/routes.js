@@ -277,7 +277,7 @@ const routes = [
         component: () => import('../finance/stat/App'),
         name: '善款统计',
         meta: { title: '善款统计', noCache: true },
-        controlMark: 'pw_money',
+        controlMark: 'pw_important_data',
       },
       {
         path: 'summary',
@@ -300,7 +300,7 @@ const routes = [
         component: () => import('../finance/income-stat/App'),
         name: '营收统计',
         meta: { title: '营收统计', noCache: true },
-        controlMark: 'pw_cash_stat',
+        controlMark: 'pw_important_data',
       },
       {
         path: 'income',
