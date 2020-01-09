@@ -10,6 +10,7 @@ export const items = [
   { id: 8, name: '续费掌中佛殿' },
   { id: 100, name: '智能硬件' },
   { id: 101, name: '文创产品' },
+  { id: 9, name: '系统服务费' },
 ];
 
 export const itemsMap = {};

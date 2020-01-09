@@ -34,6 +34,13 @@
 import seeFetch from 'see-fetch';
 
 export default {
+  props: {
+    templeId: {
+      type: Number,
+      default: '',
+      isRequired: !0,
+    },
+  },
   data() {
     return {
       list: [],
@@ -47,16 +54,17 @@ export default {
       return this.$store.state.financeTaking.showBillList;
     },
   },
-  created() {
-    this.fetchList();
+  watch: {
+    templeId() {
+      this.fetchList();
+    },
   },
   methods: {
     fetchList() {
       this.loading = !0;
 
       seeFetch('finance/taking/list', {
-        templeId: this.filterTemple,
-        type: this.filterType,
+        templeId: this.templeId,
         page: this.currentPage,
       }).then(res => {
         this.loading = !1;
@@ -71,6 +79,8 @@ export default {
 
         if (this.currentPage === 1) this.totalCount = res.totalCount;
         this.list = res.data;
+
+        window.scroll(0, 0);
       });
     },
     pageChange(page) {

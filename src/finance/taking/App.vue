@@ -232,7 +232,7 @@
     <feedback-images :ok="succeedUpload" />
     <rate-list />
     <Add :temple-name="templeName" :temple-id="templeId" :ok="1" />
-    <Bill />
+    <Bill :temple-id="templeId" />
   </div>
 </template>
 
