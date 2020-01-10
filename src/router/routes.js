@@ -414,7 +414,7 @@ const routes = [
         name: '寺院数据',
         path: `${domain}/stat/templeIndex`,
         meta: { title: '寺院数据' },
-        controlMark: 'pw_statistics',
+        controlMark: 'pw_important_data',
       },
       {
         name: '佛事数据',
