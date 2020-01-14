@@ -11,6 +11,7 @@ export const items = [
   { id: 100, name: '智能硬件' },
   { id: 101, name: '文创产品' },
   { id: 9, name: '系统服务费' },
+  { id: 10, name: '日行一善' },
 ];
 
 export const itemsMap = {};

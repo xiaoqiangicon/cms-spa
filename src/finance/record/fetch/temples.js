@@ -1,7 +1,7 @@
 import seeFetch from 'see-fetch';
 
 const preHandle = req => {
-  req.verify = 1;
+  req.verify = -1;
   req.isTest = 1;
   req.tagId = 0;
 };
