@@ -101,7 +101,7 @@
     "particles.js": "^2.0.0",
     "reqwest": "^2.0.5",
     "screenfull": "^4.0.0",
-    "see-ajax": "^1.0.1",
+    "see-ajax": "^2.0.0",
     "see-fetch": "^1.0.3",
     "sortablejs": "^1.10.0-rc2",
     "video.js": "^7.5.4",
