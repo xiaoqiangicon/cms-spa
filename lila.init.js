@@ -1,49 +1,20 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
+import fse from 'fs-extra';
+import { Base64 } from 'js-base64';
 import tasksPlugin from 'lila-tasks';
 import webpackPlugin from 'lila-webpack';
 import { forVue } from 'lila-webpack-config';
 import MomentLocalesPlugin from 'moment-locales-webpack-plugin';
+import qiniuTask from './qiniu-task';
 
-import accounts from '../accounts';
-
-const servers = [
-  {
-    ignoreErrors: true,
-    sshConfig: {
-      host: accounts[0].host,
-      username: accounts[0].user,
-      password: accounts[0].pass,
-    },
-  },
-  {
-    ignoreErrors: true,
-    sshConfig: {
-      host: accounts[1].host,
-      username: accounts[1].user,
-      password: accounts[1].pass,
-    },
-  },
-  {
-    ignoreErrors: true,
-    sshConfig: {
-      host: accounts[2].host,
-      username: accounts[2].user,
-      password: accounts[2].pass,
-    },
-  },
-  {
-    ignoreErrors: true,
-    sshConfig: {
-      host: accounts[3].host,
-      username: accounts[3].user,
-      password: accounts[3].pass,
-    },
-  },
-];
+const { readFileSync } = fse;
+const cwd = process.cwd();
 
 export default lila => {
-  const { addCmdOption, setSetting } = lila;
+  const { addCmdOption, setSetting, registerTask } = lila;
+
+  registerTask('qiniu', qiniuTask);
 
   const envOption = ['-e, --env [env]', 'server env', /^(test|gray)$/, 'test'];
 
@@ -65,7 +36,36 @@ export default lila => {
     const isDev = cmd === 'dev' || cmd === 'serve';
     const isGray = argv.env === 'gray';
 
+    const servers = [];
+    try {
+      const accounts = JSON.parse(
+        Base64.decode(
+          readFileSync(path.join(cwd, '../accounts/info.txt'), 'utf8')
+        )
+      );
+      accounts.forEach(item => {
+        servers.push({
+          ignoreErrors: true,
+          sshConfig: {
+            host: item.host,
+            username: item.user,
+            password: item.pass,
+          },
+        });
+      });
+    } catch (e) {
+      console.log('\nUse fake account.\n');
+      '.'.repeat(10).forEach(() => {
+        servers.push({
+          host: 'fake-host',
+          user: 'fake-user',
+          path: 'fake-path',
+        });
+      });
+    }
+
     const tasks = [
+      '@lila/del-build',
       '@lila/webpack',
       [
         '@lila/convert',
@@ -79,7 +79,9 @@ export default lila => {
         {
           file: 'build/index.jsp',
           start:
-            '<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>\n<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>\n<%@ page import="com.miaoyan.cms.action.UserManagerAction" %>\n<%\nUserManagerAction action = new UserManagerAction(request,response);\naction.doAction();\n%>\n<%@ page isELIgnored="true" %>',
+            '<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>\n',
+          // start:
+          //     '<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>\n<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>\n<%@ page import="com.miaoyan.cms.action.UserManagerAction" %>\n<%\nUserManagerAction action = new UserManagerAction(request,response);\naction.doAction();\n%>\n<%@ page isELIgnored="true" %>',
         },
       ],
       [
@@ -90,12 +92,9 @@ export default lila => {
         },
       ],
       [
-        '@lila/sync-build',
+        'qiniu',
         {
-          server: isGray ? servers[1] : servers[0],
-          remotePath: isGray
-            ? '/usr/local/resin/projects/cms'
-            : '/usr/local/resin/projects/guest_statistics',
+          dirs: 'build',
         },
       ],
       [
@@ -120,11 +119,15 @@ export default lila => {
 
     return {
       tasks,
+      staticServer: 'https://pic.zizaihome.com',
       alias: {
         '@': path.join(__dirname, 'src'),
       },
       define: {
         __SEE_ENV__: isDev ? 1 : 0,
+      },
+      provide: {
+        jQuery: 'jquery',
       },
       plugins: [
         new MomentLocalesPlugin({
@@ -147,6 +150,21 @@ export default lila => {
           },
         },
       },
+      babelExclude: [
+        /node_modules/,
+        /pro-com\/src\/(ueditor|libs-es5)/,
+        /pro-com\\src\\(ueditor|libs-es5)/,
+      ],
+      rebuildWebpackConfig({ webpackConfig }) {
+        /* eslint-disable no-param-reassign */
+        webpackConfig.resolve.modules = [
+          path.join(cwd, 'src'),
+          cwd,
+          path.join(cwd, 'node_modules'),
+        ];
+        return webpackConfig;
+      },
+      mockRoot: 'api',
     };
   };
 };

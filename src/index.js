@@ -1,5 +1,6 @@
 import 'normalize.css/normalize.css';
 import '@senntyou/shortcut.css';
+import 'colors.css/css/colors.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import './index.less';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -23,7 +24,7 @@ Vue.use(Element, {
   i18n: (key, value) => i18n.t(key, value),
 });
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = !0;
 
 // eslint-disable-next-line no-new
 new Vue({

@@ -1,10 +1,8 @@
 /* eslint-disable no-param-reassign, prefer-destructuring */
 import seeFetch from 'see-fetch';
-import util from '@zzh/util';
+import { now } from '../../../../pro-com/src/utils';
 import '../../../com/refactor/slice';
 import { numOfDate } from '../../../util';
-
-const { today } = util;
 
 const typeTexts = ['话费', '现金'];
 
@@ -40,7 +38,7 @@ const post = res => {
       }
       item.typeText = typeTexts[item.type - 1];
 
-      item.beforeTomorrow = numOfDate(item.date) <= numOfDate(today.display);
+      item.beforeTomorrow = numOfDate(item.date) <= numOfDate(now.date);
     });
 };
 

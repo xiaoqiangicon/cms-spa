@@ -1,11 +1,10 @@
 /* eslint-disable no-param-reassign, prefer-destructuring, no-nested-ternary */
 import seeFetch from 'see-fetch';
-import util from '@zzh/util';
+import { now } from '../../../../pro-com/src/utils';
 import '../../../com/refactor/slice';
 import { numOfDate } from '../../../util';
 
-const { today } = util;
-const todayNum = numOfDate(today.display);
+const todayNum = numOfDate(now.date);
 
 const statusTexts = ['进行中', '已下线', '未开始'];
 const hideTexts = ['不隐藏', '隐藏'];

@@ -1,81 +1,6 @@
 {
   "items": [
     {
-      "id": "temple-manage",
-      "name": "寺院管理",
-      "icon": "fa-home",
-      "subItems": [
-        {
-          "id": "temple-verify",
-          "name": "寺院审核",
-          "link": "/temple/verify",
-          "controlMark": "pw_temple"
-        },
-        {
-          "id": "temple-certification",
-          "name": "寺院列表",
-          "link": "/temple/certification",
-          "controlMark": "pw_temple"
-        },
-        {
-          "id": "cash-verify",
-          "name": "善款资料审核",
-          "link": "/finance/verifyIndex",
-          "controlMark": "pw_temple"
-        }
-      ]
-    },
-    {
-      "id": "order-manage",
-      "name": "订单管理",
-      "icon": "fa-credit-card",
-      "subItems": [
-        {
-          "id": "temple-order-list",
-          "name": "寺院监控",
-          "link": "/order/templeOrderList",
-          "controlMark": "pw_order"
-        },
-        {
-          "id": "search-order",
-          "name": "订单查询",
-          "link": "/orderManage/statisticsDetail",
-          "controlMark": "pw_order"
-        }
-      ]
-    },
-    {
-      "id": "buddhist-manage",
-      "name": "佛事管理",
-      "icon": "fa-money",
-      "subItems": [
-        {
-          "id": "buddhist-verify",
-          "name": "佛事审核",
-          "link": "/buddhist/verify",
-          "controlMark": "pw_ceremony"
-        },
-        {
-          "id": "buddhist-template",
-          "name": "佛事模板",
-          "link": "/buddhist/template",
-          "controlMark": "pw_ceremony"
-        },
-        {
-          "id": "buddhist-classification",
-          "name": "佛事分类",
-          "link": "/buddhist/classification",
-          "controlMark": "pw_ceremony"
-        },
-        {
-          "id": "buddhist-tag",
-          "name": "佛事标签",
-          "link": "/buddhist/tag",
-          "controlMark": "pw_ceremony"
-        }
-      ]
-    },
-    {
       "id": "wall",
       "name": "供奉管理",
       "icon": "fa-fire",
@@ -140,55 +65,6 @@
       ]
     },
     {
-      "id": "cash",
-      "name": "善款中心",
-      "icon": "fa-yen",
-      "subItems": [
-        {
-          "id": "cash-index",
-          "name": "待处理事项",
-          "link": "/finance/index",
-          "controlMark": "pw_money"
-        },
-        {
-          "id": "cash-stat",
-          "name": "善款统计",
-          "link": "/finance/stat",
-          "controlMark": "pw_money"
-        },
-        {
-          "id": "cash-income-stat",
-          "name": "盈收统计",
-          "link": "/earningsStatistics/stat",
-          "controlMark": "pw_cash_stat"
-        },
-        {
-          "id": "cash-income",
-          "name": "盈收管理",
-          "link": "/cash/income",
-          "controlMark": "pw_rate"
-        },
-        {
-          "id": "cash-record",
-          "name": "人工记账",
-          "link": "/cash/record",
-          "controlMark": "pw_cash_income"
-        },
-        {
-          "id": "cash-remark",
-          "name": "提醒备注",
-          "link": "/cash/remark",
-          "controlMark": "pw_cash_remark"
-        },
-        {
-          "id": "cash-jing",
-          "name": "交易统计",
-          "link": "/cash/jing",
-          "controlMark": "pw_cash_jing"
-        }
-      ]
-    },
-    {
       "id": "hardware",
       "name": "寺院硬件 ",
       "icon": "fa-square",
@@ -233,25 +109,6 @@
       ]
     },
     {
-      "id": "transfer",
-      "name": "转单系统 ",
-      "icon": "fa-edit",
-      "subItems": [
-        {
-          "id": "transfer-index",
-          "name": "转单佛事列表",
-          "link": "/order_transfer/buddhist_list",
-          "controlMark": "pw_send_order"
-        },
-        {
-          "id": "associate-temple",
-          "name": "转单关联寺院",
-          "link": "/order_transfer/associate_temple",
-          "controlMark": "pw_send_order"
-        }
-      ]
-    },
-    {
       "id": "vrshow",
       "name": "实境礼佛 ",
       "icon": "fa-leaf",
@@ -261,86 +118,6 @@
           "name": "音乐管理",
           "link": "/vr/musicIndex",
           "controlMark": "pw_vr"
-        }
-      ]
-    },
-    {
-      "id": "data",
-      "name": "数据统计 ",
-      "icon": "fa-bar-chart-o",
-      "subItems": [
-        {
-          "id": "data-sum",
-          "name": "数据汇总",
-          "link": "/stat/sum",
-          "controlMark": "pw_statistics"
-        },
-        {
-          "id": "form-list",
-          "name": "分析报表",
-          "link": "/stat/statisticsIndex",
-          "controlMark": "pw_statistics"
-        },
-        {
-          "id": "data-preview",
-          "name": "寺院数据",
-          "link": "/stat/templeIndex",
-          "controlMark": "pw_statistics"
-        },
-        {
-          "id": "buddish-data",
-          "name": "活动数据",
-          "link": "/stat/buddishData",
-          "controlMark": "pw_statistics"
-        },
-        {
-          "id": "data-promo",
-          "name": "推广数据",
-          "link": "/stat/promoIndex",
-          "controlMark": "pw_statistics"
-        }
-      ]
-    },
-    {
-      "id": "wish",
-      "name": "许愿管理",
-      "icon": "fa-heart",
-      "subItems": [
-        {
-          "id": "wish-index",
-          "name": "心愿管理",
-          "link": "/wish/index",
-          "controlMark": "pw_wish"
-        },
-        {
-          "id": "wish-return",
-          "name": "还愿管理",
-          "link": "/wish/return",
-          "controlMark": "pw_wish"
-        },
-        {
-          "id": "wish-plus",
-          "name": "加持管理",
-          "link": "/wish/plus",
-          "controlMark": "pw_wish"
-        },
-        {
-          "id": "wish-master",
-          "name": "法师管理",
-          "link": "/wish/master",
-          "controlMark": "pw_wish"
-        },
-        {
-          "id": "wish-verify",
-          "name": "寺院认证",
-          "link": "/wish/verify",
-          "controlMark": "pw_wish"
-        },
-        {
-          "id": "wish-jing",
-          "name": "经咒落地页管理",
-          "link": "/wish/template",
-          "controlMark": "pw_wish"
         }
       ]
     },
@@ -360,38 +137,6 @@
           "name": "运营策略",
           "link": "/oprule/treat",
           "controlMark": "pw_oprule"
-        }
-      ]
-    },
-    {
-      "id": "ad",
-      "name": "广告管理",
-      "icon": "fa-circle-o",
-      "subItems": [
-        {
-          "id": "ad-fo-shi",
-          "name": "佛事推荐",
-          "link": "/ad/buddhist",
-          "controlMark": "pw_advertising"
-        }
-      ]
-    },
-    {
-      "id": "promo",
-      "name": "运营事件",
-      "icon": "fa-tasks",
-      "subItems": [
-        {
-          "id": "promo-qian-si",
-          "name": "千寺祈福",
-          "link": "/event/thousand",
-          "controlMark": "pw_promo"
-        },
-        {
-          "id": "pages-hao-wu",
-          "name": "自在好物",
-          "link": "/goods/index",
-          "controlMark": "pw_goods"
         }
       ]
     }

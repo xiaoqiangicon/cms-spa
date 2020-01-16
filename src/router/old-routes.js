@@ -11,12 +11,12 @@ first.forEach(item => {
 
 const second = first.filter(item => item.subItems && item.subItems.length);
 
-export default second.map(({ id, name, icon, subItems }) => ({
+export default second.map(({ id, name, subItems }) => ({
   path: `${domain}/${id}`,
   name,
   meta: {
     title: name,
-    icon,
+    icon: 'fa-circle',
   },
   children: subItems.map(({ name: subName, link }) => ({
     path: `${domain}${link}`,
