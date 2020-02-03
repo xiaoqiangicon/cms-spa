@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="container">
     <div class="header">
       <div class="select-item">
         <div class="buddhist-name">
-          <span>寺院名称</span>
+          <span style="margin-right: 10px;">寺院名称</span>
           <el-select
             v-model="templeId"
             style="width: 350px;"
@@ -37,7 +37,7 @@
               :value="item.id"
             />
           </el-select>
-          <span>评价类型</span>
+          <span style="margin-left: 20px;margin-right: 10px">评价类型</span>
           <el-select
             v-model="type"
             style="width: 120px;"
@@ -56,7 +56,7 @@
           </el-select>
         </div>
         <div class="buddhist-time">
-          <span for="">评价时间</span>
+          <span for="" style="margin-right: 10px">评价时间</span>
           <el-date-picker
             v-model="date"
             type="daterange"
@@ -71,61 +71,64 @@
         </div>
       </div>
     </div>
-    <div class="content">
-      <el-table
-        ref="multipleTable"
-        v-loading="loadingList"
-        highlight-current-row
-        :data="list"
-        tooltip-effect="dark"
-        style="width: 100%"
-      >
-        <el-table-column label="寺院名称" prop="templeName" />
-        <el-table-column label="评价用户" prop="nickName" />
-        <el-table-column label="手机号码" prop="mobile" />
-        <el-table-column label="参与项目" prop="commodityName" />
-        <el-table-column label="评价类型" prop="evaluation" />
-        <el-table-column label="评价内容" prop="labelRecordList">
-          <template slot-scope="scope">
-            <div v-for="(value, key) in scope.row.labelRecordList" :key="key">
-              {{ value }}
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="文字评价" prop="content" />
-        <el-table-column label="寺院回复">
-          <template slot-scope="scope">
-            <p>{{ scope.row.reply }}</p>
-          </template>
-        </el-table-column>
-        <el-table-column label="评价时间" prop="addTime" />
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <div
-              class="delete"
-              @click="
-                isShowMask = true;
-                deleteId = scope.row.id;
-              "
-            >
-              删除
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
-    <div class="mg-t-10" style="text-align: center;">
-      <el-pagination
-        :current-page.sync="currentPage"
-        :page-sizes="[25, 50, 75, 100]"
-        :page-size="currentSize"
-        background=""
-        layout="sizes, prev, pager, next"
-        :total="totalCount"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
-    </div>
+    <el-card>
+      <div class="content">
+        <el-table
+          ref="multipleTable"
+          v-loading="loadingList"
+          highlight-current-row
+          :data="list"
+          tooltip-effect="dark"
+          style="width: 100%"
+        >
+          <el-table-column label="寺院名称" prop="templeName" />
+          <el-table-column label="评价用户" prop="nickName" />
+          <el-table-column label="手机号码" prop="mobile" />
+          <el-table-column label="参与项目" prop="commodityName" />
+          <el-table-column label="评价类型" prop="evaluation" />
+          <el-table-column label="评价内容" prop="labelRecordList">
+            <template slot-scope="scope">
+              <div v-for="(value, key) in scope.row.labelRecordList" :key="key">
+                {{ value }}
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="文字评价" prop="content" />
+          <el-table-column label="寺院回复">
+            <template slot-scope="scope">
+              <p>{{ scope.row.reply }}</p>
+            </template>
+          </el-table-column>
+          <el-table-column label="善缘号" prop="orderNo" />
+          <el-table-column label="评价时间" width="160" prop="addTime" />
+          <el-table-column width="100" label="操作">
+            <template slot-scope="scope">
+              <div
+                class="delete"
+                @click="
+                  isShowMask = true;
+                  deleteId = scope.row.id;
+                "
+              >
+                删除
+              </div>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <div class="mg-t-10" style="text-align: center;">
+        <el-pagination
+          :current-page.sync="currentPage"
+          :page-sizes="[25, 50, 75, 100]"
+          :page-size="currentSize"
+          background=""
+          layout="sizes, prev, pager, next"
+          :total="totalCount"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </div>
+    </el-card>
     <div v-if="isShowMask" class="mask">
       <div class="delete-box">
         <div class="delete-header">
@@ -344,12 +347,15 @@ export default {
 main {
   padding: 15px;
 }
+.container {
+  padding: 40px 20px;
+}
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 20px 0 50px;
-  padding: 0 3%;
+  padding: 0 1%;
 }
 .buddhist-time {
   margin-top: 20px;

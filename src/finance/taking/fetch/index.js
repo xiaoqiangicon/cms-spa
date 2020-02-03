@@ -5,3 +5,5 @@ import './info';
 import './answer';
 import './confirm';
 import './finish';
+import './add';
+import './list';

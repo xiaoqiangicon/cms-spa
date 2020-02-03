@@ -161,3 +161,6 @@ export const confirm1 = { errorCode: 0 };
 
 export const finish = { success: !0 };
 export const finish1 = { errorCode: 0 };
+
+export const add = { success: !0 };
+export const add1 = { errorCode: 0 };

@@ -95,7 +95,7 @@
         :align="'center'"
       />
       <el-table-column prop="updateUser" label="最后编辑人" :align="'center'" />
-      <el-table-column label="分享福币" :align="'center'">
+      <el-table-column v-if="!1" label="分享福币" :align="'center'">
         <template slot="header">
           分享福币
           <el-tooltip
