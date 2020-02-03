@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { makeTranPageLink } from '../../../pro-com/src/open-install';
+import { makeTranPageLink } from '../../../../pro-com/src/open-install';
 
 export default {
   name: 'App',

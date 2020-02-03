@@ -87,25 +87,26 @@ import seeFetch from 'see-fetch';
 import { makeUploadImageOptions } from '../../configs/upload';
 import { makeOptions as makeStoreImageOptions } from '../../configs/store-image';
 import '../../configs/ueditor';
-import '../../../pro-com/src/ueditor/ueditor.config';
-import '../../../pro-com/src/ueditor/ueditor.all';
+import '../../../../pro-com/src/ueditor/ueditor.config';
+import '../../../../pro-com/src/ueditor/ueditor.all';
 
-import upload from '../../../pro-com/src/upload';
-import StoreImage from '../../../pro-com/src/store-image';
+import upload from '../../../../pro-com/src/upload';
+import StoreImage from '../../../../pro-com/src/store-image';
 
 import '../../com/ueditor-plugins/xiu-mi';
 import '../../com/ueditor-plugins/insert-images';
 
 let detailEditor;
+let UE;
 
 export default {
   props: {
-    id: { default: 0 },
-    name: { default: '' },
-    pic: { default: '' },
-    payBtn: { default: '恭请' },
-    isShowJoinList: { default: 1 },
-    detail: { default: '' },
+    id: { default: 0, type: Number },
+    name: { default: '', type: String },
+    pic: { default: '', type: String },
+    payBtn: { default: '恭请', type: String },
+    isShowJoinList: { default: 1, type: Number },
+    detail: { default: '', type: String },
   },
   data() {
     return {
@@ -204,7 +205,7 @@ export default {
       this.coversLength = this.covers.length;
     },
     detail() {
-      const content = this.detail;
+      // const content = this.detail;
     },
   },
   beforeUpdate() {
@@ -226,6 +227,7 @@ export default {
 
       if (!this.name) this.submitId = 0;
 
+      // eslint-disable-next-line
       new StoreImage(
         makeStoreImageOptions({
           content: detail,
@@ -246,20 +248,6 @@ export default {
         })
       );
     },
-    close(e) {
-      //   console.log(2342)
-      //   if (e.target == e.currentTarget) {
-      //     console.log('close');
-      //     (this.submitId = 0), // 项目id
-      //       (this.title = ''), // 项目名称
-      //       (this.covers = []), // 上传的图片链接
-      //       (this.coversLength = 0),
-      //       (this.type = '1'), // 选择是否有参与列表
-      //       (this.text = '恭请'), // 支付提示
-      //       (this.content = ''), // ueditor内容
-      //       (this.$store.state.masterProject.editVisible = !1);
-      //   }
-    },
   },
 };
 </script>
@@ -270,9 +258,6 @@ export default {
 }
 p {
   margin: 0;
-}
-.dialog-box {
-  z-index: 1005 !important;
 }
 .edit-container {
   position: fixed;

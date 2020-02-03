@@ -96,7 +96,7 @@
 <script>
 import { Notification } from 'element-ui';
 import seeFetch from 'see-fetch';
-import { now, numOfDateTime } from '../../../pro-com/src/utils';
+import { now, numOfDateTime } from '../../../../pro-com/src/utils';
 import { foShiAddProps } from './data';
 
 const computedProps = {};
@@ -115,6 +115,7 @@ foShiAddProps.forEach(({ name, full }) => {
       },
     };
   } else {
+    // eslint-disable-next-line
     computedProps[name] = function() {
       return this.$store.state.financeIncome.foShiAdd[name];
     };

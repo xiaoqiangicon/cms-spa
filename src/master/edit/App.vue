@@ -84,16 +84,14 @@
 
 <script>
 import './fetch';
-import seeFetch from 'see-fetch';
+// import seeFetch from 'see-fetch';
 
 import { makeUploadImageOptions } from '../../configs/upload';
-import { makeOptions as makeStoreImageOptions } from '../../configs/store-image';
 import '../../configs/ueditor';
-import '../../../pro-com/src/ueditor/ueditor.config';
-import '../../../pro-com/src/ueditor/ueditor.all';
+import '../../../../pro-com/src/ueditor/ueditor.config';
+import '../../../../pro-com/src/ueditor/ueditor.all';
 
-import upload from '../../../pro-com/src/upload';
-import StoreImage from '../../../pro-com/src/store-image';
+import upload from '../../../../pro-com/src/upload';
 
 import '../../com/ueditor-plugins/xiu-mi';
 import '../../com/ueditor-plugins/insert-images';
@@ -111,7 +109,7 @@ export default {
     };
   },
   created() {
-    if (this.$route.params.name == 'undefined') this.isNew = !0;
+    if (this.$route.params.name === 'undefined') this.isNew = !0;
     else this.title = this.$route.params.name;
   },
   mounted() {
@@ -127,7 +125,6 @@ export default {
     );
 
     detailEditor = window.UE.getEditor('ling-edit-detail-editor');
-    console.log(detailEditor);
     detailEditor.ready(() => {
       this.init();
     });
@@ -143,19 +140,15 @@ export default {
       this.covers.splice(index, 1);
     },
     save() {
-      console.log(detailEditor.getContent());
-      const detail = detailEditor.getContent();
-
-      seeFetch('master/edit/save', {
-        name: this.title,
-        pic: this.covers.join(','),
-        detail,
-        isShowJoinList: this.type,
-        payBtn: this.text,
-      }).then(res => {
-        if (res.success) {
-        }
-      });
+      // const detail = detailEditor.getContent();
+      // seeFetch('master/edit/save', {
+      //   name: this.title,
+      //   pic: this.covers.join(','),
+      //   detail,
+      //   isShowJoinList: this.type,
+      //   payBtn: this.text,
+      // }).then(res => {
+      // });
     },
   },
 };

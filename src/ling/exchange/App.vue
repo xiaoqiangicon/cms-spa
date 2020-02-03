@@ -167,7 +167,7 @@ import { Notification, Message } from 'element-ui';
 
 import { makeUploadImageOptions } from '../../configs/upload';
 
-import upload from '../../../pro-com/src/upload';
+import upload from '../../../../pro-com/src/upload';
 
 import './fetch';
 

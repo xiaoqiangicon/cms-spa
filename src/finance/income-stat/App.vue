@@ -218,9 +218,7 @@
         <el-table v-loading="loading" :data="list" style="width: 100%">
           <el-table-column prop="templeName" label="寺院名称" />
           <el-table-column label="支付服务费">
-            <template slot-scope="item">
-              {{ item.row.chargeRate }}%
-            </template>
+            <template slot-scope="item"> {{ item.row.chargeRate }}% </template>
           </el-table-column>
           <el-table-column prop="amount" label="订单金额（元）" />
           <el-table-column prop="profit" label="营收金额（元）" />
@@ -233,9 +231,7 @@
         <el-table v-loading="loading" :data="list" style="width: 100%">
           <el-table-column prop="templeName" label="寺院名称" />
           <el-table-column label="支付服务费">
-            <template slot-scope="item">
-              {{ item.row.chargeRate }}%
-            </template>
+            <template slot-scope="item"> {{ item.row.chargeRate }}% </template>
           </el-table-column>
           <el-table-column prop="amount" label="订单金额（元）" />
           <el-table-column prop="profit" label="营收金额（元）" />
@@ -328,7 +324,7 @@
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
 import Chart from 'chart.js';
-import { now, dateByInterval } from '../../../pro-com/src/utils';
+import { now, dateByInterval } from '../../../../pro-com/src/utils';
 import { makeChartConfig, makeChartTitle } from './util';
 import './fetch';
 
