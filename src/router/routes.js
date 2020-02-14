@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import Layout from '../sys/views/layout/Layout';
+import Layout from '../sys/views/layout/Layout.vue';
 import { domain, valid } from './data';
 
 const routes = [
@@ -221,6 +221,13 @@ const routes = [
         component: () => import('../temple/super/App'),
         name: '超级访问',
         meta: { title: '超级访问', noCache: true },
+        controlMark: 'pw_temple',
+      },
+      {
+        path: 'notice',
+        component: () => import('../temple/notice/App'),
+        name: '寺院通知',
+        meta: { title: '寺院通知', noCache: true },
         controlMark: 'pw_temple',
       },
       {
