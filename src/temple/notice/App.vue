@@ -144,7 +144,7 @@ export default {
     // 获取寺院列表
     getTempleList() {
       this.allTempleLoading = true;
-      seeFetch('getTempleList', { isTest: 1, verify: -1 }).then(res => {
+      seeFetch('getTempleList', { isTest: 0, verify: -1 }).then(res => {
         this.allTempleLoading = false;
         if (res.errorCode !== 0) {
           Notification({
