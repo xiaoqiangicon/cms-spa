@@ -6,6 +6,9 @@ const postHandle = (res, req) => {
     if (item.evaluation == 1) item.evaluation = '好评';
     if (item.evaluation == 2) item.evaluation = '满意';
     if (item.evaluation == 3) item.evaluation = '差评';
+    if (!item.reply) item.reply = '无';
+    if (!item.content) item.content = '无';
+    if (!item.labelRecordList.length) item.labelRecordList = ['无'];
   });
 };
 seeFetch.config('temple/comment/getList', {

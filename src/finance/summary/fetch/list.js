@@ -11,7 +11,7 @@ const req = {
 const pre = params => ({
   ...params,
   pageNumber: params.pageNumber - 1,
-  pageSize: 10,
+  pageSize: 50,
 });
 
 const refactor = {

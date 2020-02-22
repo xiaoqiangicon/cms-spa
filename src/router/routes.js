@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import Layout from '../sys/views/layout/Layout';
+import Layout from '../sys/views/layout/Layout.vue';
 import { domain, valid } from './data';
 
 const routes = [
@@ -224,6 +224,13 @@ const routes = [
         controlMark: 'pw_temple',
       },
       {
+        path: 'notice',
+        component: () => import('../temple/notice/App'),
+        name: '寺院通知',
+        meta: { title: '寺院通知', noCache: true },
+        controlMark: 'pw_temple',
+      },
+      {
         path: `${domain}/temple/verify`,
         name: '寺院审核',
         meta: { title: '寺院审核' },
@@ -277,7 +284,7 @@ const routes = [
         component: () => import('../finance/stat/App'),
         name: '善款统计',
         meta: { title: '善款统计', noCache: true },
-        controlMark: 'pw_money',
+        controlMark: 'pw_important_data',
       },
       {
         path: 'summary',
@@ -300,7 +307,7 @@ const routes = [
         component: () => import('../finance/income-stat/App'),
         name: '营收统计',
         meta: { title: '营收统计', noCache: true },
-        controlMark: 'pw_cash_stat',
+        controlMark: 'pw_important_data',
       },
       {
         path: 'income',
@@ -414,7 +421,7 @@ const routes = [
         name: '寺院数据',
         path: `${domain}/stat/templeIndex`,
         meta: { title: '寺院数据' },
-        controlMark: 'pw_statistics',
+        controlMark: 'pw_important_data',
       },
       {
         name: '佛事数据',

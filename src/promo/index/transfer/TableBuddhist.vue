@@ -41,7 +41,7 @@
         label="盈收金额（元）"
         :align="'center'"
       />
-      <el-table-column label="分享福币" :align="'center'">
+      <el-table-column v-if="!1" label="分享福币" :align="'center'">
         <template slot-scope="scope">
           <span v-if="scope.row.isShareFuBi">已设置</span>
           <span v-else style="color: #409EFF;">未设置</span>

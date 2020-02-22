@@ -36,6 +36,7 @@
               保存
             </el-button>
             <el-button
+              v-if="scope.row.temples.indexOf('-1') === -1"
               type="primary"
               @click="showAdminManage(scope.row, scope.$index)"
             >
@@ -120,9 +121,11 @@ export default {
           const temples = res.data.templeList || [];
           aList.forEach((item, index) => {
             aList[index].templeId = String(aList[index].templeId);
-            aList[index].temples = temples[item.account]
-              ? temples[item.account].split(',')
-              : [];
+            if (typeof temples[item.account] !== 'undefined') {
+              aList[index].temples = String(temples[item.account]).split(',');
+            } else {
+              aList[index].temples = [];
+            }
           });
           that.adminList = aList;
         }
@@ -138,6 +141,7 @@ export default {
             });
             return;
           }
+          /* eslint no-param-reassign: "error" */
           this.allTempleList = listRes.data.map(item => {
             item.id = String(item.id);
             item.name = `${item.id} - ${item.name}`;
@@ -149,6 +153,9 @@ export default {
     // 根据id返回对应寺院信息
     getTempleInfo(ids) {
       if (ids && ids.length && this.allTempleList.length) {
+        if (ids.indexOf('-1') !== -1) {
+          return [...this.allTempleList];
+        }
         return this.allTempleList.filter(item => ids.includes(`${item.id}`));
       }
       return [];
