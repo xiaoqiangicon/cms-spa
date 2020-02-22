@@ -17,7 +17,7 @@ const post = res => {
     const urlPath = urlOrigin.slice(urlOrigin.indexOf('/'));
     Notification({
       title: '提示',
-      message: `接口错误，请联系APP开发人员：url[${urlPath}], status[${res.response.status}], statusText[${res.response.statusText}]`,
+      message: `接口错误，请联系SAAS开发人员：url[${urlPath}], status[${res.response.status}], statusText[${res.response.statusText}]`,
       duration: 0,
     });
   }
