@@ -66,6 +66,7 @@ shiJingAddProps.forEach(({ name, full }) => {
       },
     };
   } else {
+    // eslint-disable-next-line
     computedProps[name] = function() {
       return this.$store.state.financeIncome.shiJingAdd[name];
     };
