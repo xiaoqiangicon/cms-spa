@@ -47,7 +47,7 @@
 <script>
 import { Notification } from 'element-ui';
 import seeFetch from 'see-fetch';
-import { now, numOfDateTime } from '../../../../pro-com/src/utils';
+import { now, numOfDateTime } from '../../../pro-com/src/utils';
 import { shiJingAddProps } from './data';
 
 const computedProps = {};

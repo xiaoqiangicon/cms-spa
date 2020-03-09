@@ -157,15 +157,15 @@
 <script>
 import seeFetch from 'see-fetch';
 import { Notification, Message } from 'element-ui';
-import upload from '../../../../pro-com/src/upload';
-import StoreImage from '../../../../pro-com/src/store-image';
-import * as handling from '../../../../pro-com/src/handling';
+import upload from '../../../pro-com/src/upload';
+import StoreImage from '../../../pro-com/src/store-image';
+import * as handling from '../../../pro-com/src/handling';
 
 import { makeUploadImageOptions } from '../../configs/upload';
 import { makeOptions as makeStoreImageOptions } from '../../configs/store-image';
 import '../../configs/ueditor';
-import '../../../../pro-com/src/ueditor/ueditor.config';
-import '../../../../pro-com/src/ueditor/ueditor.all';
+import '../../../pro-com/src/ueditor/ueditor.config';
+import '../../../pro-com/src/ueditor/ueditor.all';
 
 import '../../com/ueditor-plugins/xiu-mi';
 import '../../com/ueditor-plugins/insert-images';

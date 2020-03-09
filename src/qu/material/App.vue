@@ -125,7 +125,7 @@
 <script>
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
-import { getDate } from '../../../../pro-com/src/utils';
+import { getDate } from '../../../pro-com/src/utils';
 import { addProps, publishAccounts } from './data';
 import Add from './Add.vue';
 import Action from './Action.vue';

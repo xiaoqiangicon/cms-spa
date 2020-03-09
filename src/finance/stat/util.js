@@ -1,4 +1,4 @@
-import { now } from '../../../../pro-com/src/utils';
+import { now } from '../../../pro-com/src/utils';
 import { chartColors, months } from '../../util/data';
 
 const defaultChartData = '.'

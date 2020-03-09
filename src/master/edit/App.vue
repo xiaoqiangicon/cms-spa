@@ -88,10 +88,10 @@ import './fetch';
 
 import { makeUploadImageOptions } from '../../configs/upload';
 import '../../configs/ueditor';
-import '../../../../pro-com/src/ueditor/ueditor.config';
-import '../../../../pro-com/src/ueditor/ueditor.all';
+import '../../../pro-com/src/ueditor/ueditor.config';
+import '../../../pro-com/src/ueditor/ueditor.all';
 
-import upload from '../../../../pro-com/src/upload';
+import upload from '../../../pro-com/src/upload';
 
 import '../../com/ueditor-plugins/xiu-mi';
 import '../../com/ueditor-plugins/insert-images';

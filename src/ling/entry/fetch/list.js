@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign, prefer-destructuring, no-nested-ternary */
 import seeFetch from 'see-fetch';
-import { now } from '../../../../../pro-com/src/utils';
+import { now } from '../../../../pro-com/src/utils';
 import '../../../com/refactor/slice';
 import { numOfDate } from '../../../util';
 

@@ -1,6 +1,6 @@
 import cookie from 'js-cookie';
 import { isArray } from '../util/index';
-import { urlParams } from '../../../pro-com/src/utils';
+import { urlParams } from '../../pro-com/src/utils';
 
 const subDomain = window.location.hostname.split('.')[0];
 

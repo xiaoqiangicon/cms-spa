@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import upload from '../../../../pro-com/src/upload';
+import upload from '../../../pro-com/src/upload';
 import { makeUploadImageOptions } from '../../configs/upload';
 
 export default {
