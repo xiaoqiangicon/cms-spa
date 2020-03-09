@@ -123,6 +123,7 @@ export default {
   data() {
     return {
       saving: !1,
+      isSaving: !1,
       loadingZiYing: !1,
       // 佛事列表
       ziYingItems: [
@@ -169,31 +170,35 @@ export default {
         return;
       }
 
-      this.saving = !0;
-      seeFetch('finance/income/updateZiYing', {
-        foShiId,
-        corporationProfitRate,
-        type,
-      }).then(res => {
-        this.saving = !1;
+      if (!this.isSaving) {
+        this.isSaving = !0;
+        this.saving = !0;
+        seeFetch('finance/income/updateZiYing', {
+          foShiId,
+          corporationProfitRate,
+          type,
+        }).then(res => {
+          this.saving = !1;
+          this.isSaving = !1;
 
-        if (!res.success) {
+          if (!res.success) {
+            Notification({
+              title: '提示',
+              message: res.message,
+            });
+            return;
+          }
+
           Notification({
             title: '提示',
-            message: res.message,
+            message: `${this.isUpdate ? '更新' : '添加'}成功`,
           });
-          return;
-        }
 
-        Notification({
-          title: '提示',
-          message: `${this.isUpdate ? '更新' : '添加'}成功`,
+          this.$store.commit(`financeIncome/ziYingAdd/updateVisible`, !1);
+          this.fetchZiYingItems();
+          this.ok();
         });
-
-        this.$store.commit(`financeIncome/ziYingAdd/updateVisible`, !1);
-        this.fetchZiYingItems();
-        this.ok();
-      });
+      }
     },
   },
 };
