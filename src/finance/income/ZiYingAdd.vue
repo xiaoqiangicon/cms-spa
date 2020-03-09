@@ -179,7 +179,6 @@ export default {
           type,
         }).then(res => {
           this.saving = !1;
-          this.isSaving = !1;
 
           if (!res.success) {
             Notification({
@@ -195,6 +194,7 @@ export default {
           });
 
           this.$store.commit(`financeIncome/ziYingAdd/updateVisible`, !1);
+          this.isSaving = !1;
           this.fetchZiYingItems();
           this.ok();
         });
