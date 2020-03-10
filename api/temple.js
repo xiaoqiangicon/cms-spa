@@ -37,3 +37,37 @@ export const pushTempleMessage = {
   errorCode: 0,
   data: '',
 };
+
+// 获取积分活动列表
+export const getTempleMissionList = {
+  msg: '',
+  errorCode: 0,
+  data: {
+    list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
+      id,
+      title: '标题标题标题标题标题',
+      content: '测试一下测试一下测试一下测试一下测试一下',
+      status: id % 2 ? 0 : 1,
+      integral: 10,
+      userId: 37,
+      userName: 'xieshuwen',
+      addTime: '2020-02-04 18:32:20',
+      updateTime: '2020-02-04 18:32:20',
+    })),
+    total: 22,
+  },
+};
+
+// 添加和编辑积分活动
+export const addAndUpdateTempleMission = {
+  msg: '',
+  errorCode: 0,
+  data: '',
+};
+
+// 发布或者删除积分活动
+export const updateTempleMissionStatus = {
+  msg: '',
+  errorCode: 0,
+  data: '',
+};
