@@ -25,7 +25,9 @@
       <div v-for="item in subdivideList" :key="item.id" class="mg-b-10">
         <el-tooltip
           v-if="
-            (!!item.isZizaijiaCommodity && !!item.isOrder) || item.price <= 0
+            (!!item.isZizaijiaCommodity && !!item.isOrder) ||
+              item.price <= 0 ||
+              item.wishOrderMoney > 0
           "
           effect="dark"
           :content="
@@ -40,7 +42,9 @@
           <el-checkbox
             :label="item.id"
             :disabled="
-              (!!item.isZizaijiaCommodity && !!item.isOrder) || item.price <= 0
+              (!!item.isZizaijiaCommodity && !!item.isOrder) ||
+                item.price <= 0 ||
+                item.wishOrderMoney > 0
             "
           >
             {{ item.subdivideName }}

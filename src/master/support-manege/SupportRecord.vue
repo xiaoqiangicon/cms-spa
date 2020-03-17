@@ -65,8 +65,18 @@
             {{
               scope.row.type === 1
                 ? '供养金额'
+                : scope.row.type === 2
+                ? '邀请金额'
                 : scope.row.type === 3
                 ? '提现金额'
+                : scope.row.type === 4
+                ? '共得订单'
+                : scope.row.type === 5
+                ? '佛事转单共得'
+                : scope.row.type === 6
+                ? '共得提现'
+                : scope.row.type === 7
+                ? '追加供养'
                 : '其他'
             }}
           </template>
