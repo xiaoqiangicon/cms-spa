@@ -179,6 +179,17 @@
             寺院维度
           </el-button>
         </div>
+        <div class="fl-right">
+          <el-button
+            size="small"
+            plain
+            type="default"
+            style="margin-right: 10px"
+            @click="downloadExcel"
+          >
+            下载全部Excel
+          </el-button>
+        </div>
       </div>
       <!-- 推广佛事 + 项目维度 -->
       <div v-if="filterType === 1 && filterDimension === 2" class="body">
@@ -489,6 +500,12 @@ export default {
 
       this.filterDimension = dimension;
       this.doSearch();
+    },
+    downloadExcel() {
+      window.open(
+        `/earningsStatistics/getEarningsExcel?startTime=${this.filterStartDate}&endTime=${this.filterEndDate}`,
+        '_blank'
+      );
     },
   },
 };
