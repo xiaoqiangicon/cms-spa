@@ -73,6 +73,13 @@
             >
               撤回
             </el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click="handleClickTrace(scope.row)"
+            >
+              订单追踪
+            </el-button>
           </div>
         </template>
       </el-table-column>
@@ -221,6 +228,11 @@ export default {
 
       this.transferOrderDetail = { id, buddhistName, subName, templeName };
       this.dialogCancelVisible = !0;
+    },
+    handleClickTrace(rowData) {
+      const { orderNo } = rowData;
+      const url = `/orderManage/statisticsDetail?orderNo=${orderNo}`;
+      window.open(url);
     },
     handleClickDetail(rowData, itemData, itemIndex) {
       const {

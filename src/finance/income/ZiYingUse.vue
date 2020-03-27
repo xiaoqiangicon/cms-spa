@@ -98,8 +98,8 @@ export default {
       let error;
 
       if (!amount) error = '请输入金额';
-      else if (amount > this.item.remainAmount)
-        error = `已超过剩余金额 ${this.item.remainAmount}`;
+      // else if (amount > this.item.remainAmount)
+      //   error = `已超过剩余金额 ${this.item.remainAmount}`;
       else if (!desc) error = '请输入支出说明';
 
       if (error) {

@@ -1,4 +1,3 @@
-import { now } from '../../../../pro-com/src/utils';
 import { chartColors, months } from '../../util/data';
 
 const defaultChartData = '.'
@@ -112,9 +111,9 @@ export const getAll = (begin, end) => {
   const unixDe = de.getTime();
   const result = [];
 
+  // eslint-disable-next-line
   for (let k = unixDb; k <= unixDe; ) {
-    result.push(new Date(parseInt(k)).formatTime());
-    console.log(result);
+    result.push(new Date(parseInt(k, 10)).formatTime());
     k += 24 * 60 * 60 * 1000;
   }
 };

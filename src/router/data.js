@@ -16,6 +16,7 @@ export const valid = item => {
   let cMark = 0;
   if (item.controlMark) {
     if (isArray(item.controlMark)) {
+      // eslint-disable-next-line
       for (let x = 0; x < item.controlMark.length; x++) {
         if (parseInt(cookie.get(item.controlMark[x]), 10) === 1) {
           cMark = 1;

@@ -84,7 +84,7 @@
 
 <script>
 import './fetch';
-import seeFetch from 'see-fetch';
+// import seeFetch from 'see-fetch';
 
 import { makeUploadImageOptions } from '../../configs/upload';
 import '../../configs/ueditor';
@@ -125,7 +125,6 @@ export default {
     );
 
     detailEditor = window.UE.getEditor('ling-edit-detail-editor');
-    console.log(detailEditor);
     detailEditor.ready(() => {
       this.init();
     });
@@ -143,18 +142,15 @@ export default {
       this.covers.splice(index, 1);
     },
     save() {
-      console.log(detailEditor.getContent());
-      const detail = detailEditor.getContent();
-
-      seeFetch('master/edit/save', {
-        name: this.title,
-        pic: this.covers.join(','),
-        detail,
-        isShowJoinList: this.type,
-        payBtn: this.text,
-      }).then(() => {
-        //
-      });
+      // const detail = detailEditor.getContent();
+      // seeFetch('master/edit/save', {
+      //   name: this.title,
+      //   pic: this.covers.join(','),
+      //   detail,
+      //   isShowJoinList: this.type,
+      //   payBtn: this.text,
+      // }).then(res => {
+      // });
     },
   },
 };

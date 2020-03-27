@@ -97,15 +97,16 @@ import '../../com/ueditor-plugins/xiu-mi';
 import '../../com/ueditor-plugins/insert-images';
 
 let detailEditor;
+let UE;
 
 export default {
   props: {
-    id: { default: 0 },
-    name: { default: '' },
-    pic: { default: '' },
-    payBtn: { default: '恭请' },
-    isShowJoinList: { default: 1 },
-    detail: { default: '' },
+    id: { default: 0, type: Number },
+    name: { default: '', type: String },
+    pic: { default: '', type: String },
+    payBtn: { default: '恭请', type: String },
+    isShowJoinList: { default: 1, type: Number },
+    detail: { default: '', type: String },
   },
   data() {
     return {
@@ -271,9 +272,6 @@ export default {
 }
 p {
   margin: 0;
-}
-.dialog-box {
-  z-index: 1005 !important;
 }
 .edit-container {
   position: fixed;
