@@ -213,9 +213,9 @@
 import { Notification } from 'element-ui';
 import Draggable from 'vuedraggable';
 import seeFetch from 'see-fetch';
-import { getDate, numOfDateTime } from '../../../pro-com/src/utils';
+import { getDate, numOfDateTime } from '../../../../pro-com/src/utils';
 import { makeUploadImageOptions } from '../../configs/upload';
-import upload from '../../../pro-com/src/upload';
+import upload from '../../../../pro-com/src/upload';
 import { addProps, regions, publishAccounts } from './data';
 import {
   makeJsonItem,

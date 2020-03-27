@@ -87,11 +87,11 @@ import seeFetch from 'see-fetch';
 import { makeUploadImageOptions } from '../../configs/upload';
 import { makeOptions as makeStoreImageOptions } from '../../configs/store-image';
 import '../../configs/ueditor';
-import '../../../pro-com/src/ueditor/ueditor.config';
-import '../../../pro-com/src/ueditor/ueditor.all';
+import '../../../../pro-com/src/ueditor/ueditor.config';
+import '../../../../pro-com/src/ueditor/ueditor.all';
 
-import upload from '../../../pro-com/src/upload';
-import StoreImage from '../../../pro-com/src/store-image';
+import upload from '../../../../pro-com/src/upload';
+import StoreImage from '../../../../pro-com/src/store-image';
 
 import '../../com/ueditor-plugins/xiu-mi';
 import '../../com/ueditor-plugins/insert-images';
@@ -204,7 +204,7 @@ export default {
       this.coversLength = this.covers.length;
     },
     detail() {
-      const content = this.detail;
+      //
     },
   },
   beforeUpdate() {
@@ -212,7 +212,7 @@ export default {
   },
   beforeDestroy() {
     if (detailEditor) {
-      UE.delEditor('detail-editor');
+      window.UE.delEditor('detail-editor');
       detailEditor = null;
     }
   },
@@ -226,6 +226,7 @@ export default {
 
       if (!this.name) this.submitId = 0;
 
+      // eslint-disable-next-line
       new StoreImage(
         makeStoreImageOptions({
           content: detail,
@@ -246,7 +247,7 @@ export default {
         })
       );
     },
-    close(e) {
+    close() {
       //   console.log(2342)
       //   if (e.target == e.currentTarget) {
       //     console.log('close');

@@ -328,7 +328,7 @@
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
 import Chart from 'chart.js';
-import { now, dateByInterval } from '../../../pro-com/src/utils';
+import { now, dateByInterval } from '../../../../pro-com/src/utils';
 import { makeChartConfig, makeChartTitle } from './util';
 import './fetch';
 

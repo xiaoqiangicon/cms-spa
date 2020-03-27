@@ -87,13 +87,11 @@ import './fetch';
 import seeFetch from 'see-fetch';
 
 import { makeUploadImageOptions } from '../../configs/upload';
-import { makeOptions as makeStoreImageOptions } from '../../configs/store-image';
 import '../../configs/ueditor';
-import '../../../pro-com/src/ueditor/ueditor.config';
-import '../../../pro-com/src/ueditor/ueditor.all';
+import '../../../../pro-com/src/ueditor/ueditor.config';
+import '../../../../pro-com/src/ueditor/ueditor.all';
 
-import upload from '../../../pro-com/src/upload';
-import StoreImage from '../../../pro-com/src/store-image';
+import upload from '../../../../pro-com/src/upload';
 
 import '../../com/ueditor-plugins/xiu-mi';
 import '../../com/ueditor-plugins/insert-images';
@@ -111,7 +109,7 @@ export default {
     };
   },
   created() {
-    if (this.$route.params.name == 'undefined') this.isNew = !0;
+    if (this.$route.params.name === 'undefined') this.isNew = !0;
     else this.title = this.$route.params.name;
   },
   mounted() {
@@ -138,7 +136,9 @@ export default {
     detailEditor = null;
   },
   methods: {
-    init() {},
+    init() {
+      //
+    },
     delCover(index) {
       this.covers.splice(index, 1);
     },
@@ -152,9 +152,8 @@ export default {
         detail,
         isShowJoinList: this.type,
         payBtn: this.text,
-      }).then(res => {
-        if (res.success) {
-        }
+      }).then(() => {
+        //
       });
     },
   },
