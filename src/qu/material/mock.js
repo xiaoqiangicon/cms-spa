@@ -6,7 +6,7 @@ export const list = {
   data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
     id,
     title: `title ${id}`,
-    cover: `/images/chan-zai-128x128.png`,
+    cover: `/images/logo.png`,
     covers: `/sample/image1.jpg,/sample/image2.jpg`,
     content: richText,
     contentText:

@@ -2,7 +2,7 @@
 // import { loginByUsername, logout, getUserInfo } from '@/api/login';
 import cookie from 'js-cookie';
 import { getToken, setToken, removeToken } from '../../sys/utils/auth';
-import img from '../../../images/chan-zai-128x128.png';
+import img from '../../../images/logo.png';
 
 const user = {
   state: {

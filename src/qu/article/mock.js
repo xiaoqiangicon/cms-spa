@@ -8,7 +8,7 @@ export const list = {
     title: `title ${id}`,
     wxAccount: `wxAccount ${id}`,
     wxAuthor: `wxAuthor ${id}`,
-    cover: `/images/chan-zai-128x128.png`,
+    cover: `/images/logo.png`,
     content: richText.repeat(5),
     contentText:
       'contentTextcontentTextcontentTextcontentTextcontentTextcontentTextcontentText',
@@ -29,7 +29,7 @@ export const list1 = {
       title: `title ${id}`,
       accounts: `wxAccount ${id}`,
       author: `wxAuthor ${id}`,
-      articleImg: `/images/chan-zai-128x128.png,/images/chan-zai-128x128.png`,
+      articleImg: `/images/logo.png,/images/logo.png`,
       articleHtml: richText.repeat(5),
       articleText:
         'contentTextcontentTextcontentTextcontentTextcontentTextcontentTextcontentText',

@@ -3,7 +3,7 @@ export const list = {
   totalCount: 99,
   data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
     id,
-    cover: `/images/chan-zai-128x128.png`,
+    cover: `/images/logo.png`,
     text: `气泡文字 ${id}`,
     frequency: Math.floor(Math.random() * 2) + 1,
     startDate: `2019-01-${id + 10}`,
@@ -23,7 +23,7 @@ export const list1 = {
     count: 99,
     list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
       id,
-      pic: `/images/chan-zai-128x128.png`,
+      pic: `/images/logo.png`,
       title: `气泡文字 ${id}`,
       appearType: Math.floor(Math.random() * 2) + 1,
       startDate: `2019-01-${id + 10}`,
