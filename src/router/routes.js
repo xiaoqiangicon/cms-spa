@@ -488,9 +488,9 @@ const routes = [
       },
       {
         path: 'support-manege',
-        name: '供养管理',
+        name: '法师订单',
         component: () => import('../master/support-manege/App'),
-        meta: { title: '供养管理', noCache: true },
+        meta: { title: '法师订单', noCache: true },
         controlMark: ['pw_wish', 'pw_money'],
       },
       {
