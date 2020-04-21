@@ -207,6 +207,12 @@ const routes = [
         meta: { title: '福币分享 / 记录', noCache: true },
         hidden: !0,
       },
+      {
+        path: 'pay-pop',
+        component: () => import('../promo/pay-pop/App'),
+        name: '支付弹窗设置',
+        meta: { title: '支付弹窗设置', noCache: true },
+      },
     ],
   },
   {
