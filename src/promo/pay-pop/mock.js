@@ -20,9 +20,9 @@ export const list = {
     // 模块内容ID（0表示全部）
     moduleContentId: 1,
     // 最少金额
-    startAmount: id,
+    minAmount: id,
     // 最大金额
-    endAmount: id * 10,
+    maxAmount: id * 10,
     // 精细化运营用户分组（0表示全部）
     userGroupId: 1,
     // 是否已经注册app（0：不限制，1：已经注册，2：没有注册）
@@ -90,3 +90,19 @@ export const add = { success: !0 };
 export const add1 = { errorCode: 0 };
 export const update = { success: !0 };
 export const update1 = { errorCode: 0 };
+
+export const userGroups = {
+  success: !0,
+  data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
+    id,
+    name: `name ${id}`,
+  })),
+};
+
+export const userGroups1 = {
+  errorCode: 0,
+  data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
+    id,
+    name: `name ${id}`,
+  })),
+};

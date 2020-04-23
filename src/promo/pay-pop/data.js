@@ -6,11 +6,9 @@ export const addProps = [
   // 标题
   { name: 'title', full: !0, default: '' },
   // 封面
-  { name: 'cover', full: !0, default: '' },
+  { name: 'covers', full: !0, default: () => [] },
   // 开始时间
-  { name: 'startTime', full: !0, default: '' },
-  // 结束时间
-  { name: 'endTime', full: !0, default: '' },
+  { name: 'takeEffectTimeRange', full: !0, default: () => [] },
   // 排序（越大越靠前）
   { name: 'sort', full: !0, default: '' },
   // 跳转链接
@@ -20,9 +18,9 @@ export const addProps = [
   // 模块内容ID（0表示全部）
   { name: 'moduleContentId', full: !0, default: 0 },
   // 最少金额
-  { name: 'startAmount', full: !0, default: '' },
+  { name: 'minAmount', full: !0, default: '' },
   // 最大金额
-  { name: 'endAmount', full: !0, default: '' },
+  { name: 'maxAmount', full: !0, default: '' },
   // 精细化运营用户分组（0表示全部）
   { name: 'userGroupId', full: !0, default: 0 },
   // 是否已经注册app（0：不限制，1：已经注册，2：没有注册）

@@ -30,6 +30,8 @@ import quSource from '../qu/source/state';
 
 // 事件管理
 import promoIndex from '../promo/index/state';
+// 支付弹窗设置
+import promoPayPop from '../promo/pay-pop/state';
 
 // 订单退款
 import orderRefund from '../order/refund/state';
@@ -75,6 +77,8 @@ const store = new Vuex.Store({
 
     // 事件管理
     promoIndex,
+    // 支付弹窗设置
+    promoPayPop,
 
     // 订单退款
     orderRefund,

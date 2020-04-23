@@ -130,24 +130,34 @@ export default {
     },
     toAdd() {
       addProps.forEach(({ name, default: defaultValue }) => {
-        this.$store.state.financeRemark.add[name] =
+        this.$store.state.promoPayPop.add[name] =
           typeof defaultValue === 'function' ? defaultValue() : defaultValue;
       });
 
-      this.$store.state.financeRemark.add.dialogTitle = '添加';
-      this.$store.state.financeRemark.add.isUpdate = !1;
-      this.$store.state.financeRemark.add.updateId = 0;
-      this.$store.state.financeRemark.add.visible = !0;
+      this.$store.state.promoPayPop.add.dialogTitle = '添加';
+      this.$store.state.promoPayPop.add.isUpdate = !1;
+      this.$store.state.promoPayPop.add.updateId = 0;
+      this.$store.state.promoPayPop.add.visible = !0;
     },
     toEdit({ row: item }) {
       addProps.forEach(({ name }) => {
-        this.$store.state.financeRemark.add[name] = item[name];
+        this.$store.state.promoPayPop.add[name] = item[name];
       });
 
-      this.$store.state.financeRemark.add.dialogTitle = '编辑';
-      this.$store.state.financeRemark.add.visible = !0;
-      this.$store.state.financeRemark.add.isUpdate = !0;
-      this.$store.state.financeRemark.add.updateId = item.id;
+      this.$store.state.promoPayPop.add.dialogTitle = '编辑';
+      this.$store.state.promoPayPop.add.visible = !0;
+      this.$store.state.promoPayPop.add.isUpdate = !0;
+      this.$store.state.promoPayPop.add.updateId = item.id;
+      this.$store.state.promoPayPop.add.covers = [item.cover];
+      this.$store.state.promoPayPop.add.takeEffectTimeRange = [
+        item.startTime,
+        item.endTime,
+      ];
+      this.$store.state.promoPayPop.add.sort = item.sort || '';
+      this.$store.state.promoPayPop.add.moduleContentId =
+        item.moduleContentId || '';
+      this.$store.state.promoPayPop.add.minAmount = item.minAmount || '';
+      this.$store.state.promoPayPop.add.maxAmount = item.maxAmount || '';
     },
     toDelete({ row: item }) {
       this.$confirm('确定删除吗？', '提示', {

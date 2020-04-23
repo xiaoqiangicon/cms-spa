@@ -14,9 +14,9 @@ const req = {
   // 模块内容ID（0表示全部）
   moduleContentId: 'moudelId',
   // 最少金额
-  startAmount: 'startMoney',
+  minAmount: 'startMoney',
   // 最大金额
-  endAmount: 'endMoney',
+  maxAmount: 'endMoney',
   // 是否已经注册app（0：不限制，1：已经注册，2：没有注册）
   registerApp: 'isRegisterApp',
   // 用户注册多少天（0表示当天）
