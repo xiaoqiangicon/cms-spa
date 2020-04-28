@@ -30,6 +30,7 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
           :default-time="['12:00:00']"
+          value-format="yyyy-MM-dd HH:mm:ss"
         />
       </div>
       <div class="row">
