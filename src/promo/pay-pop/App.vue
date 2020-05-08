@@ -87,7 +87,7 @@ export default {
   data() {
     return {
       loading: !0,
-      filterExpire: 0,
+      filterExpire: 1,
       currentPage: 1,
       totalCount: 0,
       list: [],
@@ -154,9 +154,9 @@ export default {
         item.endTime,
       ];
       this.$store.state.promoPayPop.add.sort = item.sort || '';
-      this.$store.state.promoPayPop.add.moduleContentId =
-        item.moduleContentId || '';
-      this.$store.state.promoPayPop.add.minAmount = item.minAmount || '';
+      // this.$store.state.promoPayPop.add.moduleContentId =
+      //   item.moduleContentId || '';
+      // this.$store.state.promoPayPop.add.minAmount = item.minAmount || '';
       this.$store.state.promoPayPop.add.maxAmount = item.maxAmount || '';
     },
     toDelete({ row: item }) {
