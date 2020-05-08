@@ -7,6 +7,9 @@
       <el-tab-pane label="推广佛事" name="buddhist">
         <Buddhist />
       </el-tab-pane>
+      <el-tab-pane label="转单未处理" name="transfer-not-dispose">
+        <TransferNotDispose />
+      </el-tab-pane>
       <el-tab-pane v-if="0" label="分享福币" name="fu">
         <Fu />
       </el-tab-pane>
@@ -17,6 +20,7 @@
 <script>
 import Transfer from './transfer/Index';
 import Buddhist from './buddhist/Index';
+import TransferNotDispose from './transferNotDispose/Index';
 import Fu from './fu/Index';
 
 import { addProps } from './data';
@@ -49,6 +53,7 @@ export default {
     Transfer,
     Buddhist,
     Fu,
+    TransferNotDispose,
   },
   data() {
     return {
