@@ -1,5 +1,4 @@
 import cookie from 'js-cookie';
-import { isArray } from '../util/index';
 import { urlParams } from '../../../pro-com/src/utils';
 
 const subDomain = window.location.hostname.split('.')[0];
@@ -15,10 +14,10 @@ const isSuper = !!urlParams.super;
 export const valid = item => {
   let cMark = 0;
   if (item.controlMark) {
-    if (isArray(item.controlMark)) {
+    if (Array.isArray(item.controlMark)) {
       // eslint-disable-next-line
       for (let x = 0; x < item.controlMark.length; x++) {
-        if (parseInt(cookie.get(item.controlMark[x]), 10) === 1) {
+        if (parseInt(cookie.get(item.controlMark[x]), 10)) {
           cMark = 1;
           break;
         }
