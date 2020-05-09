@@ -9,13 +9,20 @@ const post = res => {
     }
     item.id = key + 1;
 
+    item.conversionOrder.forEach(subItem => {
+      if (subItem.isFinish === 0) {
+        subItem.isFinish = '处理中';
+      } else {
+        subItem.isFinish = '已处理';
+      }
+    });
+
     // 多于1的时候以树状形式展开，增加children字段
     if (item.conversionOrder.length > 1) {
       item.children = [];
 
       item.conversionOrder.forEach((subItem, subKey) => {
         if (subKey > 0) {
-          console.log(key, subKey);
           const single = {};
           single.isFinish = subItem.isFinish;
           single.templeName = subItem.templeName;
@@ -36,7 +43,6 @@ const post = res => {
     item.templeName = item.conversionOrder[0].templeName;
     item.conversionOrderPrice = item.conversionOrder[0].conversionOrderPrice;
     item.conversionSubdivideName = item.conversionOrder[0].subdivideName;
-    console.log(res.data);
   });
   // res.data[0].temple = [1, 2, 3, 4]
 };
