@@ -3,7 +3,7 @@
     :visible="visible"
     :title="dialogTitle"
     :before-close="clickCancel"
-    width="40%"
+    width="600px"
   >
     <div class="content">
       <h2>基本设置</h2>

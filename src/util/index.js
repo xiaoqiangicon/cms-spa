@@ -12,6 +12,3 @@ export const fixedFloat = (num = 0, fixed = 2) => {
   }
   return num;
 };
-
-export const isArray = arr =>
-  Object.prototype.toString.call(arr) === '[object Array]';

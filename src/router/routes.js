@@ -252,7 +252,7 @@ const routes = [
         path: `${domain}/finance/verifyIndex`,
         name: '善款资料审核',
         meta: { title: '善款资料审核' },
-        controlMark: 'pw_temple',
+        controlMark: ['pw_temple', 'pw_money'],
       },
       {
         path: 'comment',
