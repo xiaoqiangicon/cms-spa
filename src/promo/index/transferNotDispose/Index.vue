@@ -9,15 +9,16 @@
           style="width:200px;"
           type="number"
         > -->
-          <!-- <el-button
+        <!-- <el-button
             slot="append"
             icon="el-icon-search"
             @click="refresh"
           /> -->
         <!-- </el-input> -->
         <span style="margin-left: 4px;margin-right: 6px;">佛事名称</span>
-        <el-autocomplete class="autocomplete"
+        <el-autocomplete
           v-model="commodityName"
+          class="autocomplete"
           :fetch-suggestions="querySearch"
           placeholder="请输入佛事名称"
           @select="refreshCommodityList"
@@ -126,26 +127,29 @@ export default {
         this.loading = !1;
         this.$nextTick(() => {
           this.expandAll();
-        })
-        
+        });
       });
     },
     requestCommodityList() {
-      seeFetch('promo/index/transferNotDispose/getCommodityList', {
-      }).then(res => {
-        this.commodityIdList = res.data;
-      })
+      seeFetch('promo/index/transferNotDispose/getCommodityList', {}).then(
+        res => {
+          this.commodityIdList = res.data;
+        }
+      );
     },
     refresh() {
       this.pagination.page = 1;
       this.requestList();
     },
     expandAll() {
-      
       const els = this.$el.getElementsByClassName('el-table__expand-icon');
       for (let i = 0; i < els.length; i++) {
-        if (els[i].getAttribute('class').indexOf('el-table__expand-icon--expanded') === -1) {
-          els[i].click()
+        if (
+          els[i]
+            .getAttribute('class')
+            .indexOf('el-table__expand-icon--expanded') === -1
+        ) {
+          els[i].click();
         }
       }
     },
@@ -157,14 +161,15 @@ export default {
 
       //   cb(commodityIdList);
       // })
-      var commodityIdList = this.commodityIdList;
-      var commodityIdList = commodityIdList ? commodityIdList.filter(this.createFilter(queryString)) : commodityIdList;
+      var { commodityIdList } = this;
+      var commodityIdList = commodityIdList
+        ? commodityIdList.filter(this.createFilter(queryString))
+        : commodityIdList;
       cb(commodityIdList);
     },
     createFilter(queryString) {
-      return (restaurant) => {
-        return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-      };
+      return restaurant =>
+        restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
     },
     refreshCommodityList(item) {
       this.commodityId = item.id;
