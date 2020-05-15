@@ -37,7 +37,7 @@
         <div class="row-name">
           优先级：
         </div>
-        <el-input v-model="sort" style="width: 100%;" />
+        <el-input v-model="sort" type="number" style="width: 100%;" />
         <p class="mg-t-10">
           数字越大越优先
         </p>
@@ -82,9 +82,10 @@
         <div class="row-name">
           金额范围：
         </div>
-        <el-input v-model="minAmount" style="width: 100px;" />
+        <el-input v-model="minAmount" type="number" style="width: 100px;" />
         -
-        <el-input v-model="maxAmount" style="width: 100px;" />
+        <el-input v-model="maxAmount" type="number" style="width: 100px;" />
+        元
       </div>
       <div class="row">
         <div class="row-name">
@@ -107,7 +108,7 @@
       </div>
       <div class="row pd-t-5">
         <div class="row-name">
-          注册APP：
+          是否APP用户：
         </div>
         <el-radio v-model="registerApp" :label="0">
           不限制
@@ -123,12 +124,16 @@
         <div class="row-name">
           APP注册天数：
         </div>
-        <el-input v-model="registeredDays" style="width: 100px;" />
+        <el-input
+          v-model="registeredDays"
+          type="number"
+          style="width: 100px;"
+        />
         天以内（0表示当天）
       </div>
       <div class="row pd-t-5">
         <div class="row-name">
-          支付环境：
+          用户支付方式：
         </div>
         <el-radio v-model="payEnv" :label="0">
           不限制
