@@ -49,7 +49,7 @@
             <span>{{ item.row.foShiName }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="amount" label="自营总额">
+        <el-table-column prop="amount" label="自营总额(包含禅在订单)">
           <template slot="header" slot-scope="item">
             {{ item.column.label }}
             <el-tooltip
@@ -74,7 +74,7 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="profitAmount" label="当前营收">
+        <el-table-column prop="profitAmount" label="当前营收(包含禅在订单)">
           <template slot="header" slot-scope="item">
             {{ item.column.label }}
             <el-tooltip

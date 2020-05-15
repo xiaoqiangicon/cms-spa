@@ -68,6 +68,9 @@
             unlink-panels
             @change="onChangeDatePicker"
           />
+          <el-button type="primary" style="margin-left: 20px" @click="download">
+            导出Excel
+          </el-button>
         </div>
       </div>
     </div>
@@ -257,8 +260,8 @@ export default {
       } = this;
 
       seeFetch('temple/comment/getList', {
-        templeId: parseInt(templeId, 10) | 0,
-        commodityId: parseInt(buddhistId, 10) | 0,
+        templeId: parseInt(templeId, 10) || 0,
+        commodityId: parseInt(buddhistId, 10) || 0,
         startTime: formatDate[0],
         endTime: formatDate[1],
         pageNum: currentPage - 1,
@@ -338,6 +341,13 @@ export default {
     handleCurrentChange(page) {
       this.currentPage = page;
       this.requestList();
+    },
+    download() {
+      const commodityId = this.buddhistId || 0;
+      const templeId = this.templeId || 0;
+      window.location.href = `/evaluation/getEvaluationExcel?templeId=${templeId}&commodityId=${commodityId}&evaluation=${
+        this.type
+      }&startTime=${this.formatDate[0]}&endTime=${this.formatDate[1]}`;
     },
   },
 };
