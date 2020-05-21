@@ -28,7 +28,12 @@ const post = res => {
           single.templeName = subItem.templeName;
           single.conversionOrderPrice = subItem.conversionOrderPrice;
           single.conversionSubdivideName = subItem.subdivideName;
+          single.addTime = subItem.addTime;
           single.orderNo = item.orderNo;
+          single.isAutoConversion = item.isAutoConversion;
+          single.subdivideName = item.subdivideName;
+          single.price = item.price;
+          single.name = item.name;
           if (key < 10) {
             single.id = parseInt(`${key + 1}${subKey}`);
           } else {
@@ -43,6 +48,7 @@ const post = res => {
     item.templeName = item.conversionOrder[0].templeName;
     item.conversionOrderPrice = item.conversionOrder[0].conversionOrderPrice;
     item.conversionSubdivideName = item.conversionOrder[0].subdivideName;
+    item.addTime = item.conversionOrder[0].addTime;
   });
   // res.data[0].temple = [1, 2, 3, 4]
 };

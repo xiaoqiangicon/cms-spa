@@ -20,7 +20,7 @@
           <div class="mg-t-20">
             <el-input
               v-model="transferSearchContent"
-              placeholder="请输入佛事名"
+              placeholder="请输入佛事名或ID"
               size="small"
               style="width:200px;"
             >

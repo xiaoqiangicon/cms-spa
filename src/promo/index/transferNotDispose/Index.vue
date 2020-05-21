@@ -1,28 +1,20 @@
 <template>
   <div>
     <div class="filter">
-      <div class="mg-t-20">
-        <!-- <el-input
-          v-model="commodityId"
-          placeholder="请输入佛事ID"
-          size="small"
-          style="width:200px;"
-          type="number"
-        > -->
-        <!-- <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="refresh"
-          /> -->
-        <!-- </el-input> -->
-        <span style="margin-left: 4px;margin-right: 6px;">佛事名称</span>
-        <el-autocomplete
-          v-model="commodityName"
-          class="autocomplete"
-          :fetch-suggestions="querySearch"
-          placeholder="请输入佛事名称"
-          @select="refreshCommodityList"
-        />
+      <div class="mg-t-20 top">
+        <div>
+          <span style="margin-left: 4px;margin-right: 6px;">佛事名称</span>
+          <el-autocomplete
+            v-model="commodityName"
+            class="autocomplete"
+            :fetch-suggestions="querySearch"
+            placeholder="请输入佛事名称"
+            @select="refreshCommodityList"
+          />
+        </div>
+        <el-button slot="append" type="primary" @click="download">
+          下载
+        </el-button>
       </div>
     </div>
     <el-table
@@ -50,11 +42,7 @@
         :align="'center'"
       />
       <el-table-column label="转单寺院" prop="templeName" :align="'center'" />
-      <el-table-column
-        prop="conversionOrderPrice"
-        label="转单金额"
-        :align="'center'"
-      />
+      <el-table-column prop="addTime" label="转单时间" :align="'center'" />
       <el-table-column label="处理状态" prop="isFinish" :align="'center'" />
       <el-table-column :align="'center'" label="操作" width="100">
         <template slot-scope="scope">
@@ -153,6 +141,11 @@ export default {
         }
       }
     },
+    download() {
+      const commodityId = this.commodityId || 0;
+      const url = `/conversionOrder/getNotDisposeConversionOrderExcel?commodityId=${commodityId}`;
+      window.open(url);
+    },
     querySearch(queryString, cb) {
       // seeFetch('promo/index/transferNotDispose/getCommodityList', {
       // }).then(res => {
@@ -208,5 +201,9 @@ export default {
 }
 .autocomplete {
   width: auto !important;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
