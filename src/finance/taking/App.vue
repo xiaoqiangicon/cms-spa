@@ -37,6 +37,7 @@
       <div class="content mg-t-20">
         <div
           v-for="(dateItem, index) in dateItems"
+          v-if="showType === 1 || showType === 3"
           :key="index"
           class="unit-container"
         >
@@ -75,7 +76,7 @@
                   <span
                     v-if="order.isPromotionFoShi"
                     class="badge badge-blue pd-l-20 pd-r-20 mg-r-20 cs-pointer"
-                    @click="seeRateList(index, index2)"
+                    @click="seeRateList(index, index2, index2)"
                     >推广佛事</span
                   >
                   {{ order.title }}
@@ -96,6 +97,42 @@
             </div>
           </div>
         </div>
+      </div>
+      <div v-if="showType !== 1" class="unit-container">
+        <el-table
+          row-key="id"
+          :data="dateItems[0].orders"
+          style="width: 100%;font-size: 12px;"
+        >
+          <el-table-column label="项目名称" width="450">
+            <template slot-scope="scope">
+              <span
+                v-if="scope.row.isPromotionFoShi"
+                class="badge badge-blue pd-l-20 pd-r-20 mg-r-20 cs-pointer"
+                @click="seeRateList(0, scope.row.id - 1, scope.row.id)"
+                >推广佛事</span
+              >
+              {{ scope.row.title }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="income_time" label="时间" :align="'center'" />
+          <el-table-column prop="count" label="数量" :align="'center'" />
+          <el-table-column prop="amount" label="金额" :align="'center'" />
+          <el-table-column label="增值服务费" :align="'center'">
+            <template slot-scope="scope">
+              {{
+                scope.row.increaseCharge
+                  ? '-¥' + scope.row.increaseCharge
+                  : '无服务费'
+              }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="name" label="支付渠道手续费" :align="'center'">
+            <template slot-scope="scope">
+              -¥{{ scope.row.channelCharge }}
+            </template>
+          </el-table-column>
+        </el-table>
       </div>
       <el-card class="mg-t-20">
         <div slot="header" class="clearfix">
@@ -382,6 +419,7 @@ export default {
         this.updateTime = res.data.updateTime;
         this.createTime = res.data.createTime;
         this.loading = !1;
+        console.log(this.dateItems);
       });
     },
     fetchStat() {
@@ -522,11 +560,12 @@ export default {
     succeedUpload(images) {
       this.feedbackImages = images;
     },
-    seeRateList(index1, index2) {
+    seeRateList(index1, index2, row) {
       this.$store.state.financeTaking.rateList.visible = !0;
       this.$store.state.financeTaking.rateList.list = [
         ...this.dateItems[index1].orders[index2].promotionRateList,
       ];
+      console.log(123412341234, row);
     },
   },
 };
@@ -546,6 +585,8 @@ export default {
   position: relative;
   width: 100%;
 }
+
+// 项目汇总样式更改
 
 .unit-inner {
   width: 100%;

@@ -38,6 +38,49 @@ export const orders = {
           rate: id3 * 10,
           createTime: '2019-01-01 01:01:01',
         })),
+        start: 1234,
+        billList: [
+          {
+            title: `标题标题标题标题标题标题标题标题-${id * 100 + subId}`,
+            // 数量
+            count: id * 1000 + subId,
+            // 金额
+            amount: id * 1000 + subId,
+            // 增值服务费
+            increaseCharge: id * 100 + subId,
+            // 渠道服务费
+            channelCharge: id * 101 + subId,
+            // 渠道服务费补贴
+            channelSubsidy: id * 102 + subId,
+            // 功能服务费
+            functionCharge: id * 103 + subId,
+            // 推广员奖励金
+            promoterReward: id * 104 + subId,
+            // 是否是推广佛事
+            isPromotionFoShi: subId % 2,
+            income_time: '2019-08',
+          },
+          {
+            title: `标题标题标题标题标题标题标题标题-${id * 100 + subId}`,
+            // 数量
+            count: id * 1000 + subId,
+            // 金额
+            amount: id * 1000 + subId,
+            // 增值服务费
+            increaseCharge: id * 100 + subId,
+            // 渠道服务费
+            channelCharge: id * 101 + subId,
+            // 渠道服务费补贴
+            channelSubsidy: id * 102 + subId,
+            // 功能服务费
+            functionCharge: id * 103 + subId,
+            // 推广员奖励金
+            promoterReward: id * 104 + subId,
+            // 是否是推广佛事
+            isPromotionFoShi: subId % 2,
+            income_time: '2019-08',
+          },
+        ],
       })),
     })),
     // 回单照片
@@ -92,6 +135,64 @@ export const orders1 = {
                 rate: id3 * 10,
                 addTime: '2019-01-01 01:01:01',
               })),
+        billList: [
+          {
+            name: `标题标题标题标题标题标题标题标题-${id * 100 + subId}`,
+            // 数量
+            order_num: id * 1000 + subId,
+            // 金额
+            price: id * 1000 + subId,
+            // 增值服务费
+            percentMoney: id * 100 + subId,
+            // 渠道服务费
+            counter_fee: id * 101 + subId,
+            // 渠道服务费补贴
+            subsidy_counter_fee: id * 102 + subId,
+            // 功能服务费
+            serviceMoney: id * 103 + subId,
+            // 推广员奖励金
+            promotionMoney: id * 104 + subId,
+            // 是否是推广佛事
+            isPromotionFoShi: subId % 2,
+            income_time: '2019-08',
+            // 推广佛事比例列表
+            rateList:
+              subId % 2
+                ? []
+                : [1, 2, 3, 4, 5].map(id3 => ({
+                    rate: id3 * 10,
+                    addTime: '2019-01-01 01:01:01',
+                  })),
+          },
+          {
+            name: `标题标题标题标题标题标题标题标题-${id * 100 + subId}`,
+            // 数量
+            order_num: id * 1000 + subId,
+            // 金额
+            price: id * 1000 + subId,
+            // 增值服务费
+            percentMoney: id * 100 + subId,
+            // 渠道服务费
+            counter_fee: id * 101 + subId,
+            // 渠道服务费补贴
+            subsidy_counter_fee: id * 102 + subId,
+            // 功能服务费
+            serviceMoney: id * 103 + subId,
+            // 推广员奖励金
+            promotionMoney: id * 104 + subId,
+            // 是否是推广佛事
+            isPromotionFoShi: subId % 2,
+            income_time: '2019-08',
+            // 推广佛事比例列表
+            rateList:
+              subId % 2
+                ? []
+                : [1, 2, 3, 4, 5].map(id3 => ({
+                    rate: id3 * 10,
+                    addTime: '2019-01-01 01:01:01',
+                  })),
+          },
+        ],
       })),
     })),
     // 回单照片
