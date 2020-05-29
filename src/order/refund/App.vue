@@ -1,134 +1,34 @@
 <template>
   <div class="container">
-    <el-card>
-      <div>
-        <el-date-picker
-          v-model="filterStartDate"
-          align="right"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="开始日期"
-          size="small"
-          style="width: 200px;"
-          @change="doSearch"
-        />
-        <el-date-picker
-          v-model="filterEndDate"
-          align="right"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="结束日期"
-          size="small"
-          style="width: 200px;"
-          @change="doSearch"
-        />
-        <el-input
-          v-model="filterSearch"
-          placeholder="善缘号搜索"
-          class="fl-right"
-          size="small"
-          style="width: 250px"
-        >
-          <el-button slot="append" icon="el-icon-search" @click="doSearch" />
-        </el-input>
-      </div>
-      <div class="body">
-        <el-table v-loading="loading" :data="list" style="width: 100%">
-          <el-table-column prop="fromTypeText" label="来源" />
-          <el-table-column prop="title" label="名称" />
-          <el-table-column prop="templeName" label="订单寺院" />
-          <el-table-column prop="amount" label="金额" />
-          <el-table-column label="订单处理">
-            <template>
-              <span class="orange">已退款</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作">
-            <template slot-scope="item">
-              <el-button size="small" @click="toDetail(item)">
-                订单详情
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <el-pagination
-          :total="total"
-          :current-page="page"
-          background
-          layout="prev, pager, next"
-          style="margin-top: 40px"
-          @current-change="pageChange"
-        />
-      </div>
-    </el-card>
+    <el-tabs v-model="activeName" type="border-card">
+      <el-tab-pane label="用户退款审核" name="verify">
+        <Verify />
+      </el-tab-pane>
+      <el-tab-pane label="已退款" name="refund">
+        <Refund />
+      </el-tab-pane>
+    </el-tabs>
     <Detail />
   </div>
 </template>
 
 <script>
-import seeFetch from 'see-fetch';
-import { Notification } from 'element-ui';
 import Detail from './Detail';
+import Verify from './verify/Verify';
+import Refund from './refund/Refund';
 import './fetch';
 
 export default {
   name: 'App',
   components: {
     Detail,
+    Verify,
+    Refund,
   },
   data() {
     return {
-      filterStartDate: '',
-      filterEndDate: '',
-      filterSearch: '',
-      loading: !0,
-      page: 1,
-      total: 0,
-      list: [],
+      activeName: 'verify',
     };
-  },
-  created() {
-    this.fetchList();
-  },
-  methods: {
-    fetchList() {
-      this.loading = !0;
-
-      seeFetch('order/refund/list', {
-        startDate: this.filterStartDate,
-        endDate: this.filterEndDate,
-        search: this.filterSearch,
-        page: this.page,
-      }).then(res => {
-        if (!res.success) {
-          Notification({
-            title: '提示',
-            message: res.message,
-          });
-          return;
-        }
-
-        this.loading = !1;
-
-        if (this.page === 1) this.total = res.total;
-
-        this.list = res.data;
-
-        window.scrollTo(0, 0);
-      });
-    },
-    pageChange(page) {
-      this.page = page;
-      this.fetchList();
-    },
-    doSearch() {
-      this.page = 1;
-      this.fetchList();
-    },
-    toDetail({ row: item }) {
-      this.$store.state.orderRefund.detailVisible = !0;
-      this.$store.state.orderRefund.detailItem = item;
-    },
   },
 };
 </script>
@@ -137,9 +37,5 @@ export default {
 .container {
   width: 100%;
   padding: 40px 20px;
-}
-
-.body {
-  margin-top: 20px;
 }
 </style>

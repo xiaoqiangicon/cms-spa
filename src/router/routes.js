@@ -292,6 +292,13 @@ const routes = [
         controlMark: 'pw_money',
       },
       {
+        path: 'refund',
+        component: () => import('../finance/refund/App'),
+        name: '退款列表',
+        meta: { title: '退款列表', noCache: true },
+        controlMark: 'pw_money',
+      },
+      {
         path: 'taking/:id',
         component: () => import('../finance/taking/App'),
         name: '提现账单详情',

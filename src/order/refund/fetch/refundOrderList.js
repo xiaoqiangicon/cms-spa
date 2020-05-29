@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign, prefer-destructuring */
 import seeFetch from 'see-fetch';
 
-const fromTypeTexts = ['微信', 'APP'];
+const fromTypeTexts = ['APP', '微信'];
+const finishTypeTexts = ['已完成', '处理中'];
 
 const req = {
   startDate: 'startTime',
@@ -14,51 +15,35 @@ const pre = params => ({
   ...params,
   pageNum: params.pageNum - 1,
   pageSize: 10,
+  type: 1,
 });
-
-const refactor = {
-  data: [
-    {
-      fromType: 'isChanzai',
-      title: 'name',
-      amount: 'price',
-      time: 'payTime',
-      selectItemName: 'subdivideName',
-      count: 'num',
-      prayType: 'buddhaWallType',
-      placeSequence: 'place',
-      flowNo: 'wxTransactionId',
-      contactName: 'userName',
-      contactPhone: 'mobile',
-    },
-  ],
-};
 
 const post = res => {
   // res.total = 1;
   if (res.data) {
     res.data.forEach(item => {
       item.fromTypeText = fromTypeTexts[item.fromType];
+      item.finishTypeText = finishTypeTexts[item.isFinish];
     });
   }
 };
 
 const postLocal = res => {
   res.data.forEach(item => {
-    item.fromTypeText = fromTypeTexts[item.fromType];
+    item.fromTypeText = fromTypeTexts[item.isChanzai];
+    item.finishTypeText = finishTypeTexts[item.isFinish];
   });
 };
 
-seeFetch.config('order/refund/list', {
+seeFetch.config('order/refund/refundOrderList', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/order/getRefundOrderList',
-    '/order/refund/mock/list1',
-    '/order/refund/mock/list',
+    '/order/getApplicationRefundOrderList',
+    '/order/refund/mock/refundOrderList',
+    '/order/refund/mock/refundOrderList',
   ],
   req: [req, req],
   pre: [pre, pre],
-  refactor: [refactor, refactor],
   post: [post, post, postLocal],
 });
