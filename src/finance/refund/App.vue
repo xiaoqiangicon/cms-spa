@@ -51,12 +51,12 @@
           <el-table-column label="操作" :align="'center'">
             <template slot-scope="item">
               <div class="detail">
-                <el-button size="small" @click="detailVisible = !0">
+                <el-button size="small" @click="toDetail(item)">
                   订单详情
                 </el-button>
               </div>
               <div>
-                <el-button size="small" type="danger" @click="toDetail(item)">
+                <el-button size="small" type="danger" @click="toRefund(item)">
                   同意退款
                 </el-button>
               </div>
@@ -97,28 +97,16 @@
       :visible="detailVisible"
       title="订单详情"
       :before-close="clickCancel"
-      width="600px"
+      width="500px"
     >
-      <div class="row">订单类型：{{ rowData.fromTypeText }}</div>
+      <div class="row">订单类型：{{ rowData.orderTypeStr }}</div>
       <div class="row">订单ID：{{ rowData.orderNo }}</div>
-      <div class="row">寺院：{{ rowData.templeName }}</div>
-      <hr />
-      <div class="row">名称：{{ rowData.title }}</div>
-      <div v-if="rowData.selectItemName" class="row">
-        选择项：{{ rowData.selectItemName }}
+      <div v-for="(item, key) in rowData.refundMessage" :key="key" class="row">
+        <div style="margin-bottom: 10px;">
+          {{ item.message }}
+        </div>
+        <div>申请时间：{{ item.addTime }}</div>
       </div>
-      <div v-if="rowData.count" class="row">数量：{{ rowData.count }}</div>
-      <div v-if="rowData.prayType" class="row">
-        供奉类型：{{ rowData.prayType }}
-      </div>
-      <div v-if="rowData.placeSequence" class="row">
-        位置编号：{{ rowData.placeSequence }}
-      </div>
-      <div class="row">支付金额：{{ rowData.amount }}</div>
-      <div class="row">下单时间：{{ rowData.time }}</div>
-      <div class="row">支付流水号：{{ rowData.flowNo }}</div>
-      <div class="row">联系人：{{ rowData.contactName }}</div>
-      <div class="row">联系电话：{{ rowData.contactPhone }}</div>
     </el-dialog>
   </div>
 </template>
@@ -155,6 +143,7 @@ export default {
         endDate: this.filterEndDate,
         search: this.filterSearch,
         page: this.page,
+        type: 2,
       }).then(res => {
         if (!res.success) {
           Notification({
@@ -169,7 +158,6 @@ export default {
         if (this.page === 1) this.total = res.total;
 
         this.list = res.data;
-
         window.scrollTo(0, 0);
       });
     },
@@ -181,9 +169,12 @@ export default {
       this.page = 1;
       this.fetchList();
     },
-    toDetail(rowData) {
+    toRefund(rowData) {
       this.dialogVisible = !0;
-      console.log(rowData);
+      this.rowData = rowData.row;
+    },
+    toDetail(rowData) {
+      this.detailVisible = !0;
       this.rowData = rowData.row;
     },
     refund(rowData) {
@@ -212,6 +203,10 @@ p {
 }
 .body {
   margin-top: 20px;
+}
+.row {
+  font-size: 16px;
+  margin-bottom: 10px;
 }
 .detail {
   margin-bottom: 10px;

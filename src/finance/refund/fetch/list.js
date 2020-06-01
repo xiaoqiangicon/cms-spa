@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign, prefer-destructuring */
 import seeFetch from 'see-fetch';
 
-const fromTypeTexts = ['APP', '微信'];
+const fromTypeTexts = ['微信', 'APP'];
 const finishTypeTexts = ['已完成', '处理中'];
 
 const req = {
@@ -15,14 +15,14 @@ const pre = params => ({
   ...params,
   pageNum: params.pageNum - 1,
   pageSize: 10,
-  type: 1,
+  type: 2,
 });
 
 const post = res => {
-  // res.total = 1;
+  res.total = res.data.length;
   if (res.data) {
     res.data.forEach(item => {
-      item.fromTypeText = fromTypeTexts[item.fromType];
+      item.fromTypeText = fromTypeTexts[item.isChanzai];
       item.finishTypeText = finishTypeTexts[item.isFinish];
     });
   }

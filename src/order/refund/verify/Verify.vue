@@ -83,7 +83,7 @@
           <el-button size="small" @click="hideDialog">
             取消
           </el-button>
-          <el-button size="small" type="primary" @click="refund">
+          <el-button size="small" type="primary" @click="refund(rowData)">
             同意退款
           </el-button>
         </div>
@@ -149,8 +149,9 @@ export default {
       this.fetchList();
     },
     refund(rowData) {
+      console.log(rowData);
       seeFetch('order/refund/refund', { orderId: rowData.orderNo }, res => {
-        if (res.success) {
+        if (res.errorCode == 0) {
           this.dialogVisible = !1;
           window.location.reload();
         }

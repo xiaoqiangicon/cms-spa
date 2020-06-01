@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign, prefer-destructuring */
 import seeFetch from 'see-fetch';
 
-const fromTypeTexts = ['APP', '微信'];
-const finishTypeTexts = ['已完成', '处理中'];
+const fromTypeTexts = ['微信', 'APP'];
+const finishTypeTexts = ['处理中', '已完成'];
 
 const req = {
   startDate: 'startTime',
@@ -22,7 +22,7 @@ const post = res => {
   // res.total = 1;
   if (res.data) {
     res.data.forEach(item => {
-      item.fromTypeText = fromTypeTexts[item.fromType];
+      item.fromTypeText = fromTypeTexts[item.isChanzai];
       item.finishTypeText = finishTypeTexts[item.isFinish];
     });
   }

@@ -4,6 +4,7 @@ export const refundOrderList = {
   total: 99,
   data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
     id,
+    orderTypeStr: '自营',
     fromType: id % 2,
     name: `name ${id}`,
     templeName: `templeName ${id}`,
@@ -22,7 +23,15 @@ export const refundOrderList = {
     type: 2,
     refundMessage: [
       {
-        message: '',
+        message: '1234',
+        addTime: '2020-05-26 14:14:14',
+      },
+      {
+        message: '12',
+        addTime: '2020-05-26 14:14:14',
+      },
+      {
+        message: '123',
         addTime: '2020-05-26 14:14:14',
       },
     ],
