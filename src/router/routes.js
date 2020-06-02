@@ -144,6 +144,12 @@ const routes = [
         meta: { title: '事件统计', noCache: true },
       },
       {
+        path: 'projectManage',
+        component: () => import('../promo/project_manage/App'),
+        name: '第三方项目管理',
+        meta: { title: '第三方项目管理', noCache: true },
+      },
+      {
         path: 'ci',
         component: () => import('../promo/ci/App'),
         name: '慈光计划',
