@@ -38,8 +38,10 @@
         <el-table-column prop="templeName" label="订单寺院" :align="'center'" />
         <el-table-column prop="amount" label="金额" :align="'center'" />
         <el-table-column label="订单处理" :align="'center'">
-          <template>
-            <span class="orange">已退款</span>
+          <template slot-scope="scope">
+            <span class="orange">{{
+              scope.row.isFinish === 1 ? '已处理' : '处理中'
+            }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" :align="'center'">

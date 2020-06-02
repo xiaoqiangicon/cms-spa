@@ -47,6 +47,16 @@
             prop="finishTypeText"
             :align="'center'"
           />
+          <el-table-column label="退款理由" :align="'center'">
+            <template slot-scope="scope">
+              <div>
+                {{
+                  scope.row.refundMessage[scope.row.refundMessage.length - 1]
+                    .message
+                }}
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column prop="payTime" label="时间" :align="'center'" />
           <el-table-column label="操作" :align="'center'">
             <template slot-scope="item">
@@ -75,12 +85,12 @@
     </el-card>
     <div v-show="dialogVisible" class="dialog" @click="hideDialog">
       <div class="dialog-content">
-        <p class="dialog-title">订单类型{{ rowData.orderTypeStr }}</p>
+        <p class="dialog-title">订单类型：{{ rowData.orderTypeStr }}</p>
         <p class="dialog-tip">
           您确定将此订单设为"退款状态"吗？
         </p>
         <div class="btn-box">
-          <el-button size="small" @click="hideDialog">
+          <el-button size="small" @click="cancel">
             取消
           </el-button>
           <el-button size="small" type="primary" @click="refund(rowData)">
@@ -89,6 +99,27 @@
         </div>
       </div>
     </div>
+    <el-dialog
+      :visible="detailDialog"
+      title="订单详情"
+      :before-close="hideDialog"
+      width="600px"
+    >
+      <div class="row">订单类型：{{ rowData.orderTypeStr }}</div>
+      <div class="row">订单ID：{{ rowData.orderNo }}</div>
+      <div class="row">寺院：{{ rowData.templeName }}</div>
+      <hr />
+      <div v-for="(item, key) in rowData.refundMessage" :key="key" class="row">
+        <div class="row">
+          {{ item.message }}
+        </div>
+        <div class="row">申请时间：{{ item.addTime }}</div>
+      </div>
+      <hr v-if="rowData.posiscript && rowData.posiscript.length" />
+      <div v-for="(item, key) in rowData.posiscript" :key="key" class="row">
+        {{ item.name }}：{{ item.value }}
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -108,6 +139,7 @@ export default {
       list: [],
       dialogVisible: !1,
       rowData: {},
+      detailDialog: !1,
     };
   },
   created() {
@@ -149,25 +181,30 @@ export default {
       this.fetchList();
     },
     refund(rowData) {
-      console.log(rowData);
-      seeFetch('order/refund/refund', { orderId: rowData.orderNo }, res => {
-        if (res.errorCode == 0) {
-          this.dialogVisible = !1;
-          window.location.reload();
+      seeFetch('order/refund/refund', { orderId: rowData.orderNo }).then(
+        res => {
+          if (res.errorCode === 0) {
+            this.dialogVisible = !1;
+            window.location.reload();
+          }
         }
-      });
+      );
     },
     showRefund(item) {
       this.rowData = item.row;
       this.dialogVisible = !0;
     },
-    toDetail({ row: item }) {
-      this.$store.state.orderRefund.detailVisible = !0;
-      this.$store.state.orderRefund.detailItem = item;
+    toDetail(item) {
+      this.rowData = item.row;
+      this.detailDialog = !0;
+    },
+    cancel() {
+      this.dialogVisible = !1;
     },
     hideDialog(e) {
       if (e.currentTarget === e.target) {
         this.dialogVisible = !1;
+        this.detailDialog = !1;
       }
     },
   },
@@ -180,6 +217,10 @@ p {
 }
 .body {
   margin-top: 20px;
+}
+.row {
+  margin-bottom: 4px;
+  font-size: 16px;
 }
 .detail {
   margin-bottom: 10px;
