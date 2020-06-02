@@ -178,12 +178,14 @@ export default {
       this.rowData = rowData.row;
     },
     refund(rowData) {
-      seeFetch('finance/refund/refund', { orderId: rowData.orderNo }, res => {
-        if (res.success) {
-          this.dialogVisible = !1;
-          window.location.reload();
+      seeFetch('finance/refund/refund', { orderId: rowData.orderNo }).then(
+        res => {
+          if (res.errorCode === 0) {
+            this.dialogVisible = !1;
+            window.location.reload();
+          }
         }
-      });
+      );
     },
     hideDialog(e) {
       if (e.currentTarget === e.target) {

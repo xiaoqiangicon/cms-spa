@@ -8,6 +8,7 @@ export const list = {
     templeName: `templeName ${id}`,
     amount: id * 10,
     time: '2019-01-01 01:01:01',
+    posiscript: [],
   })),
 };
 
@@ -21,6 +22,7 @@ export const list1 = {
     templeName: `templeName ${id}`,
     price: id * 10,
     payTime: '2019-01-01 01:01:01',
+    posiscript: [],
   })),
 };
 
@@ -46,6 +48,7 @@ export const refundOrderList = {
     isChanzai: 0,
     orderNo: 12341234123,
     type: 2,
+    posiscript: [],
     refundMessage: [
       {
         message: '',
@@ -53,4 +56,10 @@ export const refundOrderList = {
       },
     ],
   })),
+};
+
+export const refund = {
+  msg: '',
+  errorCode: 0,
+  data: '',
 };
