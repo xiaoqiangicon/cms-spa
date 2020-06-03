@@ -150,6 +150,13 @@ const routes = [
         meta: { title: '第三方项目管理', noCache: true },
       },
       {
+        path: 'projectManage/:id',
+        component: () => import('../promo/project_manage_detail/App'),
+        name: '第三方项目管理 / 绑定佛事列表',
+        meta: { title: '第三方项目管理 / 绑定佛事列表', noCache: true },
+        hidden: !0,
+      },
+      {
         path: 'ci',
         component: () => import('../promo/ci/App'),
         name: '慈光计划',
