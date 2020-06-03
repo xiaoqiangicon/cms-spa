@@ -380,6 +380,26 @@ const routes = [
     ],
   },
   {
+    path: '/cooperation',
+    component: Layout,
+    name: '第三方项目',
+    meta: { title: '第三方项目', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        path: '/cooperation/projectManage',
+        component: () => import('../cooperation/project_manage/App'),
+        name: '项目管理',
+        meta: { title: '项目管理', noCache: true },
+      },
+      {
+        path: '/cooperation/projectManage/:id',
+        component: () => import('../cooperation/project_detail/App'),
+        name: '项目详情',
+        meta: { title: '项目详情', noCache: true },
+      },
+    ],
+  },
+  {
     path: '/qu',
     component: Layout,
     controlMark: 'pw_funtop',
