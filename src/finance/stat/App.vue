@@ -69,6 +69,9 @@
             <el-button class="no-hover" size="small" plain>
               不可提现 {{ cantTake }}元
             </el-button>
+            <el-button class="no-hover" size="small" plain>
+              推广费用 {{ percentMoney }}元
+            </el-button>
           </div>
         </div>
       </div>
@@ -128,6 +131,7 @@ export default {
       totalRemain: 0,
       canTake: 0,
       cantTake: 0,
+      percentMoney: 0,
     };
   },
   created() {
@@ -198,6 +202,7 @@ export default {
         this.totalTaken = res.totalTaken || 0;
         this.canTake = res.canTake || 0;
         this.cantTake = res.cantTake || 0;
+        this.percentMoney = res.percentMoney || 0;
         this.totalRemain = (this.canTake + this.cantTake).toFixed(2);
 
         chart.options.title.text = makeChartTitle({

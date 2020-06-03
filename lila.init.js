@@ -32,7 +32,7 @@ export default lila => {
   webpackPlugin(lila);
   forVue(lila);
 
-  return ({ argv, cmd }) => {
+  return ({ argv, cmd, entry }) => {
     const isDev = cmd === 'dev' || cmd === 'serve';
     const isGray = argv.env === 'gray';
 
@@ -68,16 +68,23 @@ export default lila => {
       '@lila/del-build',
       '@lila/webpack',
       [
+        '@lila/move',
+        {
+          source: 'build/index.html',
+          target: `build/${entry}.html`,
+        },
+      ],
+      [
         '@lila/convert',
         {
-          file: 'build/index.html',
+          file: `build/${entry}.html`,
           ext: 'jsp',
         },
       ],
       [
         '@lila/insert',
         {
-          file: 'build/index.jsp',
+          file: `build/${entry}.jsp`,
           start:
             '<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>\n',
           // start:
