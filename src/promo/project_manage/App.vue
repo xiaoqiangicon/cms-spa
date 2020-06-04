@@ -51,7 +51,7 @@ export default {
       this.loading = !0;
 
       seeFetch('promo/projectManage/list', {
-        pageNum: this.currentPage,
+        pageNum: this.currentPage - 1,
       }).then(res => {
         this.loading = !1;
 

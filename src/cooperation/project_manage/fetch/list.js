@@ -5,7 +5,7 @@ seeFetch.config('cooperation/projectManage/list', {
   stringify: [!0],
   url: [
     '/stat/get2BStatisticsSumList',
-    '/cooperation/project_detail/mock/list',
-    '/cooperation/project_detail/mock/list',
+    '/cooperation/project_manage/mock/list',
+    '/cooperation/project_manage/mock/list',
   ],
 });

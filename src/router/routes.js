@@ -396,6 +396,7 @@ const routes = [
         component: () => import('../cooperation/project_detail/App'),
         name: '项目详情',
         meta: { title: '项目详情', noCache: true },
+        hidden: !0,
       },
     ],
   },

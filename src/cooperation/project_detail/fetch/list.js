@@ -1,6 +1,6 @@
 import seeFetch from 'see-fetch';
 
-seeFetch.config('cooperation/projectManage/list', {
+seeFetch.config('cooperation/projectDetail/list', {
   method: ['post'],
   stringify: [!0],
   url: [
