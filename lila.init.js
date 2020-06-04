@@ -64,6 +64,8 @@ export default lila => {
       });
     }
 
+    const realEntry = entry === 'login' ? 'login' : 'index';
+
     const tasks = [
       '@lila/del-build',
       '@lila/webpack',
@@ -71,20 +73,20 @@ export default lila => {
         '@lila/move',
         {
           source: 'build/index.html',
-          target: `build/${entry}.html`,
+          target: `build/${realEntry}.html`,
         },
       ],
       [
         '@lila/convert',
         {
-          file: `build/${entry}.html`,
+          file: `build/${realEntry}.html`,
           ext: 'jsp',
         },
       ],
       [
         '@lila/insert',
         {
-          file: `build/${entry}.jsp`,
+          file: `build/${realEntry}.jsp`,
           start:
             '<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>\n',
           // start:
