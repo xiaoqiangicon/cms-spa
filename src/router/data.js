@@ -14,8 +14,14 @@ const isSuper = !!urlParams.super;
 // 第三方账户，默认没有权限的，也不展示
 const isThirdParty = parseInt(cookie.get('loginType'), 10) === 10;
 
-export const valid = (item, level) => {
-  if (level === 2 && isThirdParty && !item.controlMark && !item.hidden)
+export const valid = (item, parent) => {
+  if (
+    parent &&
+    isThirdParty &&
+    !parent.controlMark &&
+    !item.controlMark &&
+    !item.hidden
+  )
     return !1;
 
   let cMark = 0;

@@ -591,11 +591,11 @@ const routes = [
   },
 ];
 
-const first = routes.filter(item => valid(item, 1));
+const first = routes.filter(item => valid(item));
 
 first.forEach(item => {
   const { children } = item;
-  item.children = children.filter(subItem => valid(subItem, 2));
+  item.children = children.filter(subItem => valid(subItem, item));
 });
 
 export default first.filter(
