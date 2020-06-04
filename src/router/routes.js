@@ -614,11 +614,7 @@ const routes = [
     path: '/ad',
     component: Layout,
     name: '广告管理',
-<<<<<<< HEAD
     controlMark: 'pw_promo',
-=======
-    controlMark: 'pw_advertising',
->>>>>>> 01567b7f7ce358204015f62d20cfa20b66238334
     meta: { title: '广告管理', icon: 'fa-circle', noCache: true },
     children: [
       {
