@@ -383,6 +383,7 @@ const routes = [
     path: '/cooperation',
     component: Layout,
     name: '第三方项目',
+    controlMark: 'pw_2b',
     meta: { title: '第三方项目', icon: 'fa-circle', noCache: true },
     children: [
       {

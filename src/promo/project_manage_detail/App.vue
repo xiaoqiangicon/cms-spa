@@ -106,24 +106,26 @@ export default {
   methods: {
     fetch() {
       this.loading = !0;
-      seeFetch('promo/projectManageDetail/list', {}).then(res => {
-        if (res.code === 0) {
-          this.list = res.data.list;
+      seeFetch('promo/projectManageDetail/list', { userId: this.id }).then(
+        res => {
+          if (res.errorCode === 0) {
+            this.list = res.data.list;
+          } else {
+            Notification({
+              title: '错误',
+              message: '接口报错',
+            });
+          }
+          this.loading = !1;
         }
-        this.loading = !1;
-      });
+      );
     },
     fetchCeremony() {
       seeFetch('promo/projectManageDetail/ceremonyList', {
-        status: 0,
-        isTest: 1,
-        isFinish: -1,
-        pageNumber: 1000,
-        commodityId: '',
-        commodityName: '',
+        size: 1000,
       }).then(res => {
         if (res.errorCode === 0) {
-          this.ceremonyList = res.data.list;
+          this.ceremonyList = res.data;
         }
       });
     },
