@@ -117,8 +117,10 @@ export default {
       seeFetch('promo/projectManageDetail/ceremonyList', {
         status: 0,
         isTest: 1,
-        isFinish: 0,
-        pageSize: 1000,
+        isFinish: -1,
+        pageNumber: 1000,
+        commodityId: '',
+        commodityName: '',
       }).then(res => {
         if (res.errorCode === 0) {
           this.ceremonyList = res.data.list;
