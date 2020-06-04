@@ -73,7 +73,7 @@
         />
       </div>
     </el-card>
-    <div v-show="dialogVisible" class="dialog" @click="hideDialog">
+    <div v-show="dialogVisible" class="dialog" @click="maskHideDialog">
       <div class="dialog-content">
         <p class="dialog-title">
           客服已确认
@@ -81,8 +81,8 @@
         <p class="dialog-tip">
           您确定将此订单设为"退款状态"吗？
         </p>
-        <p class="dialog-order">订单ID:{{ rowData.orderNo }}</p>
-        <p class="dialog-price">金额: {{ rowData.price }}</p>
+        <p class="dialog-order">订单ID：{{ rowData.orderNo }}</p>
+        <p class="dialog-price">金额：{{ rowData.price }}元</p>
         <div class="btn-box">
           <el-button size="small" @click="hideDialog">
             取消
@@ -105,7 +105,7 @@
         <div style="margin-bottom: 10px;">
           {{ item.message }}
         </div>
-        <div>申请时间：{{ item.addTime }}</div>
+        <div>{{ item.addTime }}</div>
       </div>
     </el-dialog>
   </div>
@@ -177,8 +177,8 @@ export default {
       this.detailVisible = !0;
       this.rowData = rowData.row;
     },
-    refund(rowData) {
-      seeFetch('finance/refund/refund', { orderId: rowData.orderNo }).then(
+    refund() {
+      seeFetch('finance/refund/refund', { orderId: this.rowData.orderNo }).then(
         res => {
           if (res.errorCode === 0) {
             this.dialogVisible = !1;
@@ -188,9 +188,10 @@ export default {
       );
     },
     hideDialog(e) {
-      if (e.currentTarget === e.target) {
-        this.dialogVisible = !1;
-      }
+      this.dialogVisible = !1;
+    },
+    maskHideDialog(e) {
+      if (e.target === e.currentTarget) this.dialogVisible = !1;
     },
     clickCancel() {
       this.detailVisible = !1;
@@ -232,6 +233,7 @@ p {
   padding-top: 20px;
   background-color: #fff;
   border-radius: 8px;
+  font-size: 16px;
 }
 .dialog-title,
 .dialog-tip,

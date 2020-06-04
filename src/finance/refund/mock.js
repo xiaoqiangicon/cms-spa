@@ -17,7 +17,7 @@ export const refundOrderList = {
     isConversionOrder: 1,
     conversionOrderStr: '佛山本焕四转单金额未2',
     disposePicUrl: '',
-    isFinish: 0,
+    isFinish: id % 2,
     isChanzai: 0,
     orderNo: 12341234123,
     type: 2,

@@ -5,7 +5,7 @@ seeFetch.config('finance/refund/refund', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/order/verifyRefundOrder',
+    '/order/refundOrder',
     '/finance/refund/mock/refund',
     '/finance/refund/mock/refund',
   ],

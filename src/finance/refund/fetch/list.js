@@ -2,7 +2,7 @@
 import seeFetch from 'see-fetch';
 
 const fromTypeTexts = ['微信', 'APP'];
-const finishTypeTexts = ['已完成', '处理中'];
+const finishTypeTexts = ['处理中', '已完成'];
 
 const req = {
   startDate: 'startTime',
