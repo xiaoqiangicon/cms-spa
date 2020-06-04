@@ -2,11 +2,11 @@
 import old from './old.json';
 import { domain, valid } from './data';
 
-const first = old.items.filter(item => valid(item));
+const first = old.items.filter(item => valid(item, 1));
 
 first.forEach(item => {
   const { subItems } = item;
-  item.subItems = subItems.filter(subItem => valid(subItem));
+  item.subItems = subItems.filter(subItem => valid(subItem, 2));
 });
 
 const second = first.filter(item => item.subItems && item.subItems.length);
