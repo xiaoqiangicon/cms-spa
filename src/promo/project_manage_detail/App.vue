@@ -7,8 +7,8 @@
     </div>
     <el-card>
       <el-table v-loading="loading" :data="list" style="width: 100%">
-        <el-table-column prop="id" label="佛事id" :align="'center'" />
-        <el-table-column prop="title" label="佛事名称" :align="'center'" />
+        <el-table-column prop="id" label="项目id" :align="'center'" />
+        <el-table-column prop="title" label="佛事" :align="'center'" />
         <el-table-column
           prop="collect_money"
           label="筹集金额"
@@ -41,7 +41,7 @@
             <el-option
               v-for="item in ceremonyList"
               :key="item.value"
-              :label="item.name"
+              :label="item.label"
               :value="item.id"
             />
           </el-select>
@@ -135,8 +135,11 @@ export default {
         cancelButtonText: '取消',
         type: 'warning',
       }).then(() => {
-        seeFetch('promo/projectManageDetail/del', { id: row.id }).then(res => {
-          if (res.code === 0) {
+        seeFetch('promo/projectManageDetail/del', {
+          id: row.id,
+          status: -1,
+        }).then(res => {
+          if (res.errorCode === 0) {
             window.location.reload();
           }
         });
@@ -168,7 +171,7 @@ export default {
         startTime,
         endTime,
       }).then(res => {
-        if (res.code === 0) {
+        if (res.errorCode === 0) {
         }
         this.saving = !1;
         this.addVisible = !1;

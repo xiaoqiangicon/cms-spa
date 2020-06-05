@@ -83,7 +83,7 @@ export default {
     seeFetch('cooperation/projectManage/list', {
       pageNumber: this.currentPage - 1,
     }).then(res => {
-      if (res.code === 0) {
+      if (res.errorCode === 0) {
         this.list = res.data;
         this.totalCount = this.list.length;
       }
@@ -114,7 +114,7 @@ export default {
         orderByType: this.orderByType,
         orderBySort: this.orderBySort,
       }).then(res => {
-        if (res.code === 0) {
+        if (res.errorCode === 0) {
           this.list = res.data;
           this.totalCount = this.list.length;
         }
