@@ -6,7 +6,7 @@ const first = old.items.filter(item => valid(item));
 
 first.forEach(item => {
   const { subItems } = item;
-  item.subItems = subItems.filter(subItem => valid(subItem));
+  item.subItems = subItems.filter(subItem => valid(subItem, item));
 });
 
 const second = first.filter(item => item.subItems && item.subItems.length);

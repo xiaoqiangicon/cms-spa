@@ -580,13 +580,13 @@ const routes = [
     path: '/ad',
     component: Layout,
     name: '广告管理',
+    controlMark: 'pw_advertising',
     meta: { title: '广告管理', icon: 'fa-circle', noCache: true },
     children: [
       {
         name: '佛事推荐',
         path: `${domain}/ad/buddhist`,
         meta: { title: '佛事推荐' },
-        controlMark: 'pw_advertising',
       },
       {
         path: 'system-popup',
@@ -602,7 +602,9 @@ const first = routes.filter(item => valid(item));
 
 first.forEach(item => {
   const { children } = item;
-  item.children = children.filter(subItem => valid(subItem));
+  item.children = children.filter(subItem => valid(subItem, item));
 });
 
-export default first.filter(item => item.children && item.children.length);
+export default first.filter(
+  item => item.children && item.children.filter(i => !i.hidden).length
+);

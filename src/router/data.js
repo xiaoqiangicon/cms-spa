@@ -11,7 +11,19 @@ export const domain =
 const isLocal = subDomain.indexOf('localhost') > -1;
 const isSuper = !!urlParams.super;
 
-export const valid = item => {
+// 第三方账户，默认没有权限的，也不展示
+const isThirdParty = parseInt(cookie.get('loginType'), 10) === 10;
+
+export const valid = (item, parent) => {
+  if (
+    parent &&
+    isThirdParty &&
+    !parent.controlMark &&
+    !item.controlMark &&
+    !item.hidden
+  )
+    return !1;
+
   let cMark = 0;
   if (item.controlMark) {
     if (Array.isArray(item.controlMark)) {
