@@ -131,10 +131,12 @@ export default {
           chart.data.datasets[1].data = payNumResult;
           chart.data.datasets[2].data = payMoneyResult;
           // this.getAll(this.formatDate[0], this.formatDate[1]);
-          this.getAll(
-            res.data.list[0].date,
-            res.data.list[res.data.list.length - 1].date
-          );
+          if (res.data.list.length) {
+            this.getAll(
+              res.data.list[0].date,
+              res.data.list[res.data.list.length - 1].date
+            );
+          }
           chart.data.labels = this.xAxis;
 
           // 生成表格数据
