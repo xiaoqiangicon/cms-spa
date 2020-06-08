@@ -90,6 +90,7 @@ export default {
 
     seeFetch('cooperation/projectDetail/list', {
       pageNumber: this.currentPage - 1,
+      id: this.id,
     }).then(res => {
       if (res.errorCode === 0) {
         this.list = res.data;
@@ -121,6 +122,7 @@ export default {
     fetchList() {
       this.loading = !0;
       seeFetch('cooperation/projectDetail/list', {
+        id: this.id,
         pageNumber: this.currentPage - 1,
         startTime: this.formatDate[0],
         endTime: this.formatDate[1],
