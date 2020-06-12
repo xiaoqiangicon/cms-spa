@@ -1,6 +1,6 @@
 export const list = {
   msg: '',
-  code: 0,
+  errorCode: 0,
   data: {
     list: [
       {

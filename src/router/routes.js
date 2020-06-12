@@ -157,6 +157,13 @@ const routes = [
         hidden: !0,
       },
       {
+        path: 'projectManage/:id/:id',
+        component: () => import('../promo/project_item_detail/App'),
+        name: '绑定佛事列表 / 详情',
+        meta: { title: '绑定佛事列表 / 详情', noCache: true },
+        hidden: !0,
+      },
+      {
         path: 'ci',
         component: () => import('../promo/ci/App'),
         name: '慈光计划',
@@ -265,7 +272,8 @@ const routes = [
         path: `${domain}/finance/verifyIndex`,
         name: '善款资料审核',
         meta: { title: '善款资料审核' },
-        controlMark: ['pw_temple', 'pw_money'],
+        controlMark: 'pw_money',
+        // controlMark: ['pw_temple', 'pw_money'],
       },
       {
         path: 'comment',

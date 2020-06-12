@@ -118,6 +118,8 @@ export default {
       } else if (row.prop === 'payPriceSum') {
         this.orderByType = 4;
       }
+
+      this.fetchList();
     },
     fetchList() {
       this.loading = !0;

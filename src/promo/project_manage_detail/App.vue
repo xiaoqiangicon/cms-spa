@@ -1,6 +1,19 @@
 <template>
   <div class="contain">
     <div class="add-button">
+      <div>
+        <span class="filter-time">时间过滤</span>
+        <el-date-picker
+          v-model="date"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          format="yyyy-MM-dd"
+          unlink-panels
+          @change="onChangeDatePicker"
+        />
+      </div>
       <el-button type="primary" @click="addVisible = !0">
         添加
       </el-button>
@@ -16,7 +29,7 @@
         />
         <el-table-column label="浏览/参与人次" :align="'center'">
           <template slot-scope="scope">
-            <div>{{ scope.row.join_num }} / {{ scope.row.view_count }}</div>
+            <div>{{ scope.row.view_count }} / {{ scope.row.join_num }}</div>
           </template>
         </el-table-column>
         <el-table-column prop="startTime" label="生效时间" :align="'center'" />
@@ -24,6 +37,9 @@
         <el-table-column prop="url" label="访问链接" :align="'center'" />
         <el-table-column label="操作" :align="'center'">
           <template slot-scope="scope">
+            <el-button type="text" size="small" @click="toDetail(scope.row)">
+              详情
+            </el-button>
             <el-button type="text" size="small" @click="toDel(scope.row)">
               删除
             </el-button>
@@ -45,12 +61,6 @@
               :value="item.id"
             />
           </el-select>
-        </div>
-        <div class="row">
-          <div class="row-name">
-            跳转链接：
-          </div>
-          <el-input v-model="redirect" style="width: 100%;" />
         </div>
         <div class="row">
           <div class="row-name">
@@ -91,10 +101,11 @@ export default {
       list: [],
       ceremonyList: [],
       addVisible: !1,
-      redirect: '',
       commodityId: '',
       saving: !1,
       takeEffectTimeRange: [],
+      date: ['', ''],
+      formatDate: ['', ''],
     };
   },
   created() {
@@ -106,19 +117,35 @@ export default {
   methods: {
     fetch() {
       this.loading = !0;
-      seeFetch('promo/projectManageDetail/list', { userId: this.id }).then(
-        res => {
-          if (res.errorCode === 0) {
-            this.list = res.data.list;
-          } else {
-            Notification({
-              title: '错误',
-              message: '接口报错',
-            });
-          }
-          this.loading = !1;
+      seeFetch('promo/projectManageDetail/list', {
+        userId: this.id,
+        startTime: this.formatDate[0],
+        endTime: this.formatDate[1],
+      }).then(res => {
+        if (res.errorCode === 0) {
+          this.list = res.data.list;
+        } else {
+          Notification({
+            title: '错误',
+            message: '接口报错',
+          });
         }
-      );
+        this.loading = !1;
+      });
+    },
+    onChangeDatePicker() {
+      const { date } = this;
+      this.formatDate = date.map(item => this.formatTime(`${item}`));
+
+      this.fetch();
+    },
+    formatTime(timeStr) {
+      const date = new Date(timeStr);
+      const y = date.getFullYear();
+      const m = date.getMonth() + 1;
+      const d = date.getDate();
+
+      return `${y}-${m >= 10 ? m : `0${m}`}-${d >= 10 ? d : `0${d}`}`;
     },
     fetchCeremony() {
       seeFetch('promo/projectManageDetail/ceremonyList', {
@@ -145,6 +172,11 @@ export default {
         });
       });
     },
+    toDetail(row) {
+      const id = row.commodityId;
+
+      this.$router.push(`/promo/projectManage/${this.$route.params.id}/${id}`);
+    },
     clickOk() {
       const { takeEffectTimeRange } = this;
       const startTime = takeEffectTimeRange[0];
@@ -154,13 +186,6 @@ export default {
         Notification({
           title: '提示',
           message: '请选择佛事',
-        });
-        return;
-      }
-      if (!this.redirect) {
-        Notification({
-          title: '提示',
-          message: '请填写跳转链接',
         });
         return;
       }
@@ -191,8 +216,18 @@ export default {
 }
 .add-button {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
+  padding: 20px 20px 0;
+}
+.filter-time {
+  margin-right: 10px;
+  color: rgb(144, 147, 153);
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
 }
 .row {
   position: relative;

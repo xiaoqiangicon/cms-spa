@@ -11,6 +11,7 @@ export const list = {
       ARPU: 0.2,
     },
   ],
-  code: 0,
+  total: 42,
+  errorCode: 0,
   msg: '',
 };

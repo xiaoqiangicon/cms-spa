@@ -57,7 +57,12 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="payTime" label="时间" :align="'center'" />
+          <el-table-column
+            prop="refundTime"
+            label="退款时间"
+            :align="'center'"
+          />
+          <el-table-column prop="payTime" label="支付时间" :align="'center'" />
           <el-table-column label="操作" :align="'center'">
             <template slot-scope="item">
               <div class="detail">

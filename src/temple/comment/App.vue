@@ -84,11 +84,23 @@
           tooltip-effect="dark"
           style="width: 100%"
         >
-          <el-table-column label="寺院名称" prop="templeName" />
-          <el-table-column label="评价用户" prop="nickName" />
-          <el-table-column label="手机号码" prop="mobile" />
-          <el-table-column label="参与项目" prop="commodityName" />
-          <el-table-column label="评价类型" prop="evaluation" />
+          <el-table-column
+            label="寺院名称"
+            prop="templeName"
+            :align="'center'"
+          />
+          <el-table-column label="评价用户" prop="nickName" :align="'center'" />
+          <el-table-column label="手机号码" prop="mobile" :align="'center'" />
+          <el-table-column
+            label="参与项目"
+            prop="commodityName"
+            :align="'center'"
+          />
+          <el-table-column
+            label="评价类型"
+            prop="evaluation"
+            :align="'center'"
+          />
           <el-table-column label="评价内容" prop="labelRecordList">
             <template slot-scope="scope">
               <div v-for="(value, key) in scope.row.labelRecordList" :key="key">
@@ -96,24 +108,33 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="文字评价" prop="content" />
-          <el-table-column label="寺院回复">
+          <el-table-column label="文字评价" prop="content" :align="'center'" />
+          <el-table-column label="寺院回复" :align="'center'">
             <template slot-scope="scope">
               <p>{{ scope.row.reply }}</p>
             </template>
           </el-table-column>
-          <el-table-column label="善缘号" prop="orderNo" />
-          <el-table-column label="评价时间" width="160" prop="addTime" />
-          <el-table-column width="100" label="操作">
+          <el-table-column label="善缘号" prop="orderNo" :align="'center'" />
+          <el-table-column
+            label="评价时间"
+            width="160"
+            prop="addTime"
+            :align="'center'"
+          />
+          <el-table-column width="100" label="操作" :align="'center'">
             <template slot-scope="scope">
-              <div
-                class="delete"
-                @click="
-                  isShowMask = true;
-                  deleteId = scope.row.id;
-                "
-              >
-                删除
+              <div class="delete">
+                <div
+                  @click="
+                    isShowMask = true;
+                    deleteId = scope.row.id;
+                  "
+                >
+                  删除
+                </div>
+                <div @click="toDetail(scope.row.orderNo)">
+                  订单追踪
+                </div>
               </div>
             </template>
           </el-table-column>
@@ -332,6 +353,11 @@ export default {
           window.location.reload();
         }
       );
+    },
+    // 订单追踪
+    toDetail(orderNo) {
+      const url = `/orderManage/statisticsDetail?orderNo=${orderNo}`;
+      window.open(url);
     },
     handleSizeChange(size) {
       this.currentSize = size;
