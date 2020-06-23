@@ -79,7 +79,7 @@
           </el-table-column>
         </el-table>
         <el-pagination
-          :total="total"
+          v-if="false"
           :current-page="page"
           background
           layout="prev, pager, next"
@@ -112,6 +112,7 @@
     >
       <div class="row">订单类型：{{ rowData.orderTypeStr }}</div>
       <div class="row">订单ID：{{ rowData.orderNo }}</div>
+      <div class="row">外部订单号：{{ rowData.wxTransactionId }}</div>
       <div class="row">寺院：{{ rowData.templeName }}</div>
       <hr />
       <div v-for="(item, key) in rowData.refundMessage" :key="key" class="row">
@@ -121,8 +122,25 @@
         <div class="row">申请时间：{{ item.addTime }}</div>
       </div>
       <hr v-if="rowData.posiscript && rowData.posiscript.length" />
-      <div v-for="(item, key) in rowData.posiscript" :key="key" class="row">
+      <div
+        v-for="(item, key) in rowData.posiscript"
+        :key="key + 10000"
+        class="row"
+      >
         {{ item.name }}：{{ item.value }}
+      </div>
+      <hr v-if="rowData.pics && rowData.pics.length" />
+      <div v-if="rowData.pics && rowData.pics.length" class="dispose-pic-list">
+        <div class="row">
+          反馈信息：
+        </div>
+        <el-image
+          v-for="(item, key) in rowData.pics"
+          :key="key + 20000"
+          class="dispose-pic"
+          :src="item"
+          :preview-src-list="rowData.pics"
+        />
       </div>
     </el-dialog>
   </div>
@@ -131,6 +149,7 @@
 <script>
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
+import { setTimeout } from 'timers';
 
 export default {
   data() {
@@ -140,7 +159,6 @@ export default {
       filterSearch: '',
       loading: !0,
       page: 1,
-      total: 0,
       list: [],
       dialogVisible: !1,
       rowData: {},
@@ -169,8 +187,6 @@ export default {
         }
 
         this.loading = !1;
-
-        if (this.page === 1) this.total = res.total;
 
         this.list = res.data;
 
@@ -201,7 +217,10 @@ export default {
     },
     toDetail(item) {
       this.rowData = item.row;
-      this.detailDialog = !0;
+      console.log(this.rowData.pics);
+      setTimeout(() => {
+        this.detailDialog = !0;
+      }, 100);
     },
     cancel() {
       this.dialogVisible = !1;
@@ -256,6 +275,21 @@ p {
 .dialog-price {
   padding-left: 20px;
   font-size: 16px;
+}
+.dispose-pic-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.dispose-pic {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  &:nth-last-child(1) {
+    margin-right: 0;
+  }
 }
 .btn-box {
   display: flex;

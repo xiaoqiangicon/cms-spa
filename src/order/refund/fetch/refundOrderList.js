@@ -24,6 +24,11 @@ const post = res => {
     res.data.forEach(item => {
       item.fromTypeText = fromTypeTexts[item.isChanzai];
       item.finishTypeText = finishTypeTexts[item.isFinish];
+      if (item.disposePicUrl) {
+        item.pics = item.disposePicUrl.split(',');
+      } else {
+        item.pics = [];
+      }
     });
   }
 };

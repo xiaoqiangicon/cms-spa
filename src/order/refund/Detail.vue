@@ -7,6 +7,7 @@
   >
     <div class="row">订单类型：{{ detailItem.fromTypeText }}</div>
     <div class="row">订单ID：{{ detailItem.orderNo }}</div>
+    <div class="row">外部订单号：{{ detailItem.wxTransactionId }}</div>
     <div class="row">寺院：{{ detailItem.templeName }}</div>
     <hr />
     <div class="row">名称：{{ detailItem.title }}</div>

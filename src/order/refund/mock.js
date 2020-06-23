@@ -7,6 +7,8 @@ export const list = {
     title: `title ${id}`,
     templeName: `templeName ${id}`,
     amount: id * 10,
+    disposePicUrl:
+      'https://pic.zizaihome.com/fa354df6-b1a8-11e9-b5f9-00163e0c1e1c.png,https://pic.zizaihome.com/fa354df6-b1a8-11e9-b5f9-00163e0c1e1c.png',
     time: '2019-01-01 01:01:01',
     posiscript: [],
   })),
@@ -21,6 +23,8 @@ export const list1 = {
     name: `title ${id}`,
     templeName: `templeName ${id}`,
     price: id * 10,
+    disposePicUrl:
+      'https://pic.zizaihome.com/fa354df6-b1a8-11e9-b5f9-00163e0c1e1c.png,https://pic.zizaihome.com/fa354df6-b1a8-11e9-b5f9-00163e0c1e1c.png',
     payTime: '2019-01-01 01:01:01',
     posiscript: [],
   })),
@@ -43,7 +47,10 @@ export const refundOrderList = {
     mobile: '13212341234',
     isConversionOrder: 1,
     conversionOrderStr: '佛山本焕四转单金额未2',
-    disposePicUrl: '',
+    disposePicUrl:
+      id > 2
+        ? 'https://pic.zizaihome.com/fa354df6-b1a8-11e9-b5f9-00163e0c1e1c.png,https://pic.zizaihome.com/fa354df6-b1a8-11e9-b5f9-00163e0c1e1c.png'
+        : '',
     isFinish: 0,
     isChanzai: 0,
     orderNo: 12341234123,
