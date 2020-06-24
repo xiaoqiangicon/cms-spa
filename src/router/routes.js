@@ -510,7 +510,7 @@ const routes = [
         component: () => import('../statistics/channel/App'),
         path: 'channel',
         meta: { title: '渠道统计' },
-        controlMark: 'pw_promo',
+        controlMark: 'pw_statistics',
       },
       {
         path: 'detail/:channel/:channelId/:addTime',
