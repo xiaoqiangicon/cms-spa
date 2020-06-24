@@ -46,6 +46,8 @@
               {{ item.row.clickCount }}/{{ item.row.closeCount }}
             </template>
           </el-table-column>
+          <el-table-column prop="startDate" label="开始时间" />
+          <el-table-column prop="endDate" label="结束时间" />
           <el-table-column prop="sort" label="优先级" />
           <el-table-column label="操作">
             <template slot-scope="item">

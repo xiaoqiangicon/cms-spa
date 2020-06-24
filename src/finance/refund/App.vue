@@ -47,7 +47,12 @@
             prop="finishTypeText"
             :align="'center'"
           />
-          <el-table-column prop="payTime" label="时间" :align="'center'" />
+          <el-table-column prop="payTime" label="下单时间" :align="'center'" />
+          <el-table-column
+            prop="refundTime"
+            label="申请时间"
+            :align="'center'"
+          />
           <el-table-column label="操作" :align="'center'">
             <template slot-scope="item">
               <div class="detail">
@@ -64,7 +69,7 @@
           </el-table-column>
         </el-table>
         <el-pagination
-          :total="total"
+          v-if="false"
           :current-page="page"
           background
           layout="prev, pager, next"
@@ -99,10 +104,16 @@
       :before-close="clickCancel"
       width="500px"
     >
+      <div class="row">佛事名称: {{ rowData.name }}</div>
+      <div class="row">订单寺院: {{ rowData.templeName }}</div>
       <div class="row">订单类型：{{ rowData.orderTypeStr }}</div>
       <div class="row">订单ID：{{ rowData.orderNo }}</div>
+      <div class="row">外部订单号：{{ rowData.wxTransactionId }}</div>
+      <div class="row">退款金额：{{ rowData.price }}</div>
+      <div class="row">下单时间：{{ rowData.payTime }}</div>
+      <hr />
       <div v-for="(item, key) in rowData.refundMessage" :key="key" class="row">
-        <div style="margin-bottom: 10px;">
+        <div style="margin-bottom: 4px;">
           {{ item.message }}
         </div>
         <div>{{ item.addTime }}</div>
@@ -154,8 +165,6 @@ export default {
         }
 
         this.loading = !1;
-
-        if (this.page === 1) this.total = res.total;
 
         this.list = res.data;
         window.scrollTo(0, 0);
@@ -209,7 +218,7 @@ p {
 }
 .row {
   font-size: 16px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .detail {
   margin-bottom: 10px;
