@@ -15,7 +15,6 @@ const pre = params => ({
   ...params,
   pageNum: params.pageNum - 1,
   pageSize: 10,
-  type: 1,
 });
 
 const post = res => {

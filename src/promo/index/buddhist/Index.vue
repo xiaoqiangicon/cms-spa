@@ -83,6 +83,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="buddhistName" label="佛事名称" min-width="140" />
+      <el-table-column prop="commodityId" label="佛事ID" />
       <el-table-column prop="templeName" label="寺院名称" />
       <el-table-column label="推广服务费" :align="'center'">
         <template slot-scope="scope">

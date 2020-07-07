@@ -140,8 +140,8 @@ const routes = [
       {
         path: 'statistics',
         component: () => import('../promo/statistics/App'),
-        name: '事件统计',
-        meta: { title: '事件统计', noCache: true },
+        name: '转单统计',
+        meta: { title: '转单统计', noCache: true },
       },
       {
         path: 'projectManage/:id/:id',

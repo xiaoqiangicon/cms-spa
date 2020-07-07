@@ -48,16 +48,6 @@
             prop="finishTypeText"
             :align="'center'"
           />
-          <el-table-column label="退款理由" :align="'center'">
-            <template slot-scope="scope">
-              <div>
-                {{
-                  scope.row.refundMessage[scope.row.refundMessage.length - 1]
-                    .message
-                }}
-              </div>
-            </template>
-          </el-table-column>
           <el-table-column
             prop="refundTime"
             label="退款时间"
@@ -69,11 +59,6 @@
               <div class="detail">
                 <el-button size="small" @click="toDetail(item)">
                   订单详情
-                </el-button>
-              </div>
-              <div>
-                <el-button size="small" type="danger" @click="showRefund(item)">
-                  同意退款
                 </el-button>
               </div>
             </template>
@@ -89,22 +74,6 @@
         />
       </div>
     </el-card>
-    <div v-show="dialogVisible" class="dialog" @click="hideDialog">
-      <div class="dialog-content">
-        <p class="dialog-title">订单类型：{{ rowData.orderTypeStr }}</p>
-        <p class="dialog-tip">
-          您确定将此订单设为"退款状态"吗？
-        </p>
-        <div class="btn-box">
-          <el-button size="small" @click="cancel">
-            取消
-          </el-button>
-          <el-button size="small" type="primary" @click="refund(rowData)">
-            同意退款
-          </el-button>
-        </div>
-      </div>
-    </div>
     <el-dialog
       :visible="detailDialog"
       title="订单详情"
@@ -178,7 +147,7 @@ export default {
         endDate: this.filterEndDate,
         search: this.filterSearch,
         page: this.page,
-        type: 1,
+        type: 2,
       }).then(res => {
         if (!res.success) {
           Notification({
@@ -247,9 +216,6 @@ p {
 .row {
   margin-bottom: 4px;
   font-size: 16px;
-}
-.detail {
-  margin-bottom: 10px;
 }
 .dialog {
   position: fixed;

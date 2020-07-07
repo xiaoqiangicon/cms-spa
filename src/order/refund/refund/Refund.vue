@@ -35,8 +35,10 @@
       <el-table v-loading="loading" :data="list" style="width: 100%">
         <el-table-column prop="fromTypeText" label="来源" :align="'center'" />
         <el-table-column prop="title" label="名称" :align="'center'" />
+        <el-table-column prop="orderNo" label="订单号" :align="'center'" />
         <el-table-column prop="templeName" label="订单寺院" :align="'center'" />
         <el-table-column prop="amount" label="金额" :align="'center'" />
+        <el-table-column prop="payTime" label="支付时间" :align="'center'" />
         <el-table-column label="订单处理" :align="'center'">
           <template slot-scope="scope">
             <span class="orange">{{

@@ -4,6 +4,9 @@
       <el-tab-pane label="用户退款审核" name="verify">
         <Verify />
       </el-tab-pane>
+      <el-tab-pane label="已审核" name="verifyed">
+        <Verifyed />
+      </el-tab-pane>
       <el-tab-pane label="已退款" name="refund">
         <Refund />
       </el-tab-pane>
@@ -15,6 +18,7 @@
 <script>
 import Detail from './Detail';
 import Verify from './verify/Verify';
+import Verifyed from './verifyed/Verifyed';
 import Refund from './refund/Refund';
 import './fetch';
 
@@ -23,6 +27,7 @@ export default {
   components: {
     Detail,
     Verify,
+    Verifyed,
     Refund,
   },
   data() {

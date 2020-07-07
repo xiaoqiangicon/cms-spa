@@ -55,6 +55,7 @@
           :align="'center'"
         />
         <el-table-column prop="ARPU" label="ARPU" :align="'center'" />
+        <el-table-column prop="url" label="链接地址" :align="'center'" />
         <el-table-column label="操作" :align="'center'">
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="toDetail(scope.row)">
