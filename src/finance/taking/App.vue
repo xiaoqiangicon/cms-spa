@@ -260,6 +260,77 @@
             </el-button>
           </div>
         </div>
+        <div class="pic-list">
+          <div v-if="placeNoPic" class="pic-item">
+            <el-image
+              style="width: 100px; height: 100px"
+              :src="placeNoPic"
+              :preview-src-list="[placeNoPic]"
+            />
+            <span>宗教场所</span>
+          </div>
+          <div v-if="certificatePic" class="pic-item">
+            <el-image
+              style="width: 100px; height: 100px"
+              :src="certificatePic"
+              :preview-src-list="[certificatePic]"
+            />
+            <span>合作协议</span>
+          </div>
+          <div v-if="lastPushMoneyPic" class="pic-item">
+            <el-image
+              style="width: 100px; height: 100px"
+              :src="lastPushMoneyPic"
+              :preview-src-list="[lastPushMoneyPic]"
+            />
+            <span>最后一次提现回单</span>
+          </div>
+          <div v-if="identityCardPic" class="pic-item">
+            <el-image
+              style="width: 100px; height: 100px"
+              :src="identityCardPic"
+              :preview-src-list="[identityCardPic]"
+            />
+            <span>身份证正面</span>
+          </div>
+          <div v-if="identityCardPic2" class="pic-item">
+            <el-image
+              style="width: 100px; height: 100px"
+              :src="identityCardPic2"
+              :preview-src-list="[identityCardPic2]"
+            />
+            <span>身份证反面</span>
+          </div>
+          <div v-if="bankCertificatePic" class="pic-item">
+            <el-image
+              style="width: 100px; height: 100px"
+              :src="bankCertificatePic"
+              :preview-src-list="[bankCertificatePic]"
+            />
+            <span v-if="bankType === 1">对公账户证明</span>
+            <span v-else>个人说明函</span>
+          </div>
+        </div>
+        <p v-if="!lastPushMoneyPic" class="pic-tips">
+          系统中无最近的提现完成银行回单，可能是首次提现。
+        </p>
+        <p
+          v-if="
+            !placeNoPic ||
+              !certificatePic ||
+              (bankType === 2 && (!identityCardPic || !identityCardPic2)) ||
+              !bankCertificatePic
+          "
+          class="pic-tips"
+        >
+          *系统中无{{ !placeNoPic ? '宗教场所,' : '' }}
+          {{ !certificatePic ? '合作协议,' : '' }}
+          {{ bankType === 2 && !identityCardPic ? '身份证正面,' : '' }}
+          {{ bankType === 2 && !identityCardPic2 ? '身份证反面,' : '' }}
+          {{
+            !bankCertificatePic ? '个人说明函,' : ''
+          }}资料，请联系市场工作人员。
+        </p>
         <div>银行名称：{{ bankName }}</div>
         <div class="mg-t-10">支行名称：{{ subBankName }}</div>
         <div class="mg-t-10">银行开户名称：{{ accountName }}</div>
@@ -345,6 +416,20 @@ export default {
       updateTime: '',
       // 添加时间
       createTime: '',
+      // 宗教场所
+      placeNoPic: '',
+      // 合作协议
+      certificatePic: '',
+      // 最后一次提现回单
+      lastPushMoneyPic: '',
+      // 身份证正反面
+      identityCardPic:
+        'https://pic.zizaihome.com/d8df2110-5564-11e7-acfa-00163e022fdd.jpg',
+      identityCardPic2: '',
+      // 个人说明函
+      bankCertificatePic: '',
+      // 1对公账户2个人账户
+      bankType: 1,
     };
   },
   created() {
@@ -418,6 +503,13 @@ export default {
         this.feedbackImages = res.data.feedbackImages || [];
         this.updateTime = res.data.updateTime;
         this.createTime = res.data.createTime;
+        this.certificatePic = res.data.certificatePic;
+        this.lastPushMoneyPic = res.data.lastPushMoneyPic;
+        this.placeNoPic = res.data.placeNoPic;
+        this.bankCertificatePic = res.data.bank.certificatePicUrl;
+        this.identityCardPic = res.data.bank.identityCardPic;
+        this.identityCardPic2 = res.data.bank.identityCardPic2;
+        this.bankType = res.data.bank.type;
         this.loading = !1;
         console.log(this.dateItems);
       });
@@ -716,5 +808,28 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.pic-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+.pic-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20px;
+  img {
+    border-radius: 8px;
+  }
+  span {
+    margin-top: 4px;
+  }
+}
+.pic-tips {
+  margin: 10px 0 20px 0;
+  color: red;
+  font-size: 16px;
 }
 </style>

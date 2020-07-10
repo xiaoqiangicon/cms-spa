@@ -10,6 +10,11 @@ export const orders = {
       accountName: 'accountName',
       // 银行卡号
       accountNumber: 'accountNumber',
+      type: 1,
+      identityCardPic: '',
+      identityCardPic2: '',
+      certificatePicUrl:
+        'https://pic.zizaihome.com/d8df2110-5564-11e7-acfa-00163e022fdd.jpg',
     },
     dateItems: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => ({
       year: 2019,
@@ -90,6 +95,11 @@ export const orders = {
       '/sample/image3.jpg',
       '/sample/image4.jpg',
     ],
+    placeNoPic: 'https://pic.zizaihome.com/1488248797332.jpg',
+    certificatePic:
+      'https://pic.zizaihome.com/07aa82ce-d541-4ca8-8654-d59717aeaf71.jpg',
+    lastPushMoneyPic:
+      'https://pic.zizaihome.com/6b41539a-11a4-42e4-8794-f5e334471931.jpg',
     createTime: 'createTime',
     updateTime: 'updateTime',
   },
@@ -107,6 +117,11 @@ export const orders1 = {
       bankCardUserName: 'accountName',
       // 银行卡号
       bankCardNumber: 'accountNumber',
+      type: 1,
+      identityCardPic: '',
+      identityCardPic2: '',
+      certificatePicUrl:
+        'https://pic.zizaihome.com/d8df2110-5564-11e7-acfa-00163e022fdd.jpg',
     },
     pickUpMoneyList: [1, 2, 3, 4, 5, 6, 7, 8, 9].map(id => ({
       month: `2019-0${id}`,
@@ -202,6 +217,11 @@ export const orders1 = {
       '/sample/image3.jpg',
       '/sample/image4.jpg',
     ],
+    placeNoPic: 'https://pic.zizaihome.com/1488248797332.jpg',
+    certificatePic:
+      'https://pic.zizaihome.com/07aa82ce-d541-4ca8-8654-d59717aeaf71.jpg',
+    lastPushMoneyPic:
+      'https://pic.zizaihome.com/6b41539a-11a4-42e4-8794-f5e334471931.jpg',
     addTime: 'createTime',
     updateTime: 'updateTime',
   },
