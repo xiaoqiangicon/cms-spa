@@ -351,6 +351,13 @@ const routes = [
         hidden: !0,
       },
       {
+        path: 'receipt',
+        component: () => import('../finance/receipt/App'),
+        name: '发票管理',
+        meta: { title: '发票管理', naCache: true },
+        controlMark: 'pw_money',
+      },
+      {
         path: 'income-stat',
         component: () => import('../finance/income-stat/App'),
         name: '营收统计',
