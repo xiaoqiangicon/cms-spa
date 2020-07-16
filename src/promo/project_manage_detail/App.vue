@@ -14,9 +14,14 @@
           @change="onChangeDatePicker"
         />
       </div>
-      <el-button type="primary" @click="addVisible = !0">
-        添加
-      </el-button>
+      <div>
+        <el-button type="primary" @click="download">
+          导出Excel
+        </el-button>
+        <el-button type="primary" @click="addVisible = !0">
+          添加
+        </el-button>
+      </div>
     </div>
     <el-card>
       <el-table v-loading="loading" :data="list" style="width: 100%">
@@ -146,6 +151,19 @@ export default {
       const d = date.getDate();
 
       return `${y}-${m >= 10 ? m : `0${m}`}-${d >= 10 ? d : `0${d}`}`;
+    },
+    download() {
+      if (!this.formatDate[0]) {
+        Notification({
+          title: '提示',
+          message: '请选择时间段~',
+        });
+        return;
+      }
+      const url = `/user/downOrderListExcel?userId=${this.id}&startDate=${
+        this.formatDate[0]
+      }&endDate=${this.formatDate[1]}`;
+      window.open(url);
     },
     fetchCeremony() {
       seeFetch('promo/projectManageDetail/ceremonyList', {
