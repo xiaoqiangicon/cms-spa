@@ -57,6 +57,10 @@
                 </div>
               </div>
               <p>注册场所地址：{{ item.registerAddress }}</p>
+              <p style="margin-top: -10px;">
+                注册固定电话：{{ item.registerMobile }}
+              </p>
+              <p style="margin-top: -10px;">备注：{{ item.note }}</p>
             </div>
             <div class="receipt-item-right">
               <el-upload
