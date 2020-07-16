@@ -119,7 +119,6 @@ const routes = [
   {
     path: '/promo',
     component: Layout,
-    controlMark: 'pw_promo',
     redirect: '/promo/index',
     name: '运营事件',
     meta: { title: '运营事件', icon: 'fa-circle', noCache: true },
@@ -129,12 +128,14 @@ const routes = [
         component: () => import('../promo/index/App'),
         name: '事件管理',
         meta: { title: '事件管理', noCache: true },
+        controlMark: 'pw_promo',
       },
       {
         path: 'index/transfer-list',
         component: () => import('../promo/index/App'),
         name: '事件管理 / 转单列表',
         meta: { title: '事件管理 / 转单列表', noCache: true },
+        controlMark: 'pw_promo',
         hidden: !0,
       },
       {
@@ -142,12 +143,14 @@ const routes = [
         component: () => import('../promo/statistics/App'),
         name: '转单统计',
         meta: { title: '转单统计', noCache: true },
+        controlMark: 'pw_promo',
       },
       {
         path: 'projectManage/:id/:id',
         component: () => import('../promo/project_item_detail/App'),
         name: '绑定佛事列表 / 详情',
         meta: { title: '绑定佛事列表 / 详情', noCache: true },
+        controlMark: 'pw_promo',
         hidden: !0,
       },
       {
@@ -155,18 +158,21 @@ const routes = [
         component: () => import('../promo/ci/App'),
         name: '慈光计划',
         meta: { title: '慈光计划', noCache: true },
+        controlMark: 'pw_promo',
       },
       {
         path: 'topic',
         component: () => import('../promo/topic/App'),
         name: '专题管理',
         meta: { title: '专题管理', noCache: true },
+        controlMark: 'pw_promo',
       },
       {
         path: 'topicEdit/:id',
         component: () => import('../promo/topic_edit/App'),
         name: '专题列表 / 编辑专题',
         meta: { title: '专题列表 / 编辑专题', noCache: true },
+        controlMark: 'pw_promo',
         hidden: !0,
       },
       {
@@ -174,23 +180,27 @@ const routes = [
         component: () => import('../promo/topic_edit/App'),
         name: '专题列表 / 新建专题',
         meta: { title: '专题列表 / 新建专题', noCache: true },
+        controlMark: 'pw_promo',
         hidden: !0,
       },
       {
         path: `${domain}/event/thousand`,
         name: '千寺祈福',
         meta: { title: '千寺祈福' },
+        controlMark: 'pw_promo',
       },
       {
         path: `${domain}/goods/index`,
         name: '自在好物',
         meta: { title: '自在好物' },
+        controlMark: 'pw_promo',
       },
       {
         path: 'transferSet/:id',
         component: () => import('../promo/transfer_set/App'),
         name: '转单系统 / 转单设置',
         meta: { title: '转单系统 / 转单设置', noCache: true },
+        controlMark: 'pw_promo',
         hidden: !0,
       },
       {
@@ -198,6 +208,7 @@ const routes = [
         component: () => import('../promo/merge_set/App'),
         name: '转单系统 / 组合设置',
         meta: { title: '转单系统 / 组合设置', noCache: true },
+        controlMark: 'pw_promo',
         hidden: !0,
       },
       {
@@ -205,6 +216,7 @@ const routes = [
         component: () => import('../promo/buddhist_edit/App'),
         name: '推广佛事 / 推广编辑',
         meta: { title: '推广佛事 / 推广编辑', noCache: true },
+        controlMark: 'pw_promo',
         hidden: !0,
       },
       {
@@ -212,6 +224,7 @@ const routes = [
         component: () => import('../promo/fubi_record/App'),
         name: '福币分享 / 记录',
         meta: { title: '福币分享 / 记录', noCache: true },
+        controlMark: 'pw_promo',
         hidden: !0,
       },
       {
@@ -219,18 +232,21 @@ const routes = [
         component: () => import('../promo/pay-pop/App'),
         name: '支付弹窗设置',
         meta: { title: '支付弹窗设置', noCache: true },
+        controlMark: 'pw_promo',
       },
       {
         path: 'projectManage',
         component: () => import('../promo/project_manage/App'),
         name: '第三方项目管理',
         meta: { title: '第三方项目管理', noCache: true },
+        controlMark: 'pw_order',
       },
       {
         path: 'projectManage/:id',
         component: () => import('../promo/project_manage_detail/App'),
         name: '第三方项目管理 / 绑定佛事列表',
         meta: { title: '第三方项目管理 / 绑定佛事列表', noCache: true },
+        controlMark: 'pw_order',
         hidden: !0,
       },
     ],
