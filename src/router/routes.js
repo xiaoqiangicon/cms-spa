@@ -176,6 +176,14 @@ const routes = [
         hidden: !0,
       },
       {
+        path: 'topicEdit/:id/:id',
+        component: () => import('../promo/topic_component_edit/App'),
+        name: '专题列表 / 编辑专题 / 编辑组件',
+        meta: { title: '专题列表 / 编辑专题 / 编辑组件', noCache: true },
+        controlMark: 'pw_promo',
+        hidden: !0,
+      },
+      {
         path: 'topicCreate/:id',
         component: () => import('../promo/topic_edit/App'),
         name: '专题列表 / 新建专题',
