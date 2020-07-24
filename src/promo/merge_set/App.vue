@@ -318,13 +318,21 @@ export default {
       // 将当前的 tableData 转化为 submitData
       const { tableData, subId: curSubId } = this;
       const params = { subId: curSubId, mergeList: [] };
-      tableData.forEach(({ templeId, buddhistId, subId, price }) => {
+      tableData.forEach(({ templeId, buddhistId, subId, price, subSelect }) => {
         if (templeId) {
+          let name = '';
+          subSelect.forEach(item => {
+            if (item.id === subId) {
+              name = item.name;
+              return;
+            }
+          });
           params.mergeList.push({
             templeId,
             commodityId: buddhistId,
             subdivideId: subId,
             price: parseFloat(price),
+            name,
           });
         }
       });

@@ -6,7 +6,7 @@
           开票说明
         </p>
         <p class="tips-item">
-          1、开票内容：增值服务费
+          1、开票内容：信息技术服务费
         </p>
         <p class="tips-item">
           2、工作人员需在7个工作日内处理
@@ -80,6 +80,13 @@
                 @click="cancel(item)"
               >
                 取消
+              </el-button>
+              <el-button
+                v-if="type === 2"
+                style="margin-bottom: 20px;"
+                @click="download(item)"
+              >
+                查看上传发票PDF
               </el-button>
               <el-upload
                 :before-upload="upload(item)"
@@ -171,6 +178,9 @@ export default {
           });
         })
         .catch(() => {});
+    },
+    download(item) {
+      window.open(item.pdfUrl);
     },
     upload(item) {
       this.invoiceId = item.id;

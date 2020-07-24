@@ -310,6 +310,14 @@
             <span v-if="bankType === 1">对公账户证明</span>
             <span v-else>个人说明函</span>
           </div>
+          <div v-if="replenishCertificate" class="pic-item">
+            <el-image
+              style="width: 100px; height: 100px"
+              :src="replenishCertificate"
+              :preview-src-list="[replenishCertificate]"
+            />
+            <span>补充资料</span>
+          </div>
         </div>
         <p v-if="!lastPushMoneyPic" class="pic-tips">
           系统中无最近的提现完成银行回单，可能是首次提现。
@@ -428,6 +436,8 @@ export default {
       identityCardPic2: '',
       // 个人说明函
       bankCertificatePic: '',
+      // 补充资料
+      replenishCertificate: '',
       // 1对公账户2个人账户
       bankType: 1,
     };
@@ -509,6 +519,7 @@ export default {
         this.bankCertificatePic = res.data.bank.certificatePicUrl;
         this.identityCardPic = res.data.bank.identityCardPic;
         this.identityCardPic2 = res.data.bank.identityCardPic2;
+        this.replenishCertificate = res.data.bank.replenishCertificate;
         this.bankType = res.data.bank.type;
         this.loading = !1;
         console.log(this.dateItems);
