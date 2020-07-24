@@ -44,13 +44,18 @@
             :disabled="
               (!!item.isZizaijiaCommodity && !!item.isOrder) ||
                 item.price <= 0 ||
-                item.wishOrderMoney > 0
+                item.wishOrderMoney > 0 ||
+                !!item.conversionSubdivide
             "
           >
             {{ item.subdivideName }}
           </el-checkbox>
         </el-tooltip>
-        <el-checkbox v-else :label="item.id">
+        <el-checkbox
+          v-else
+          :label="item.id"
+          :disabled="!!item.conversionSubdivide"
+        >
           {{ item.subdivideName }}
         </el-checkbox>
       </div>
