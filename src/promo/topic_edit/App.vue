@@ -1,10 +1,15 @@
 <template>
   <div class="container">
+    <div class="operation">
+      <el-button type="primary" @click="handleClickSave">
+        生 成
+      </el-button>
+    </div>
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
       <el-form-item prop="title" label="专题名称">
         <el-input v-model="form.title" />
       </el-form-item>
-      <el-form-item prop="introduce" label="专题简介">
+      <el-form-item prop="introduce" label="分享描述">
         <el-input v-model="form.introduce" type="textarea" rows="5" />
       </el-form-item>
       <el-form-item label="发布心愿">
@@ -27,63 +32,11 @@
           <el-color-picker v-model="form.textColor" show-alpha class="vam" />
         </div>
       </el-form-item>
-      <el-form-item prop="components" label="页面组件">
-        <el-tabs v-model="activeComponent" type="border-card">
-          <div v-loading="loadingComponentData">
-            <div class="mg-b-20">
-              <span class="mg-l-5">{{ curComponentData.name }}名称</span>
-              <el-input
-                v-model="form[activeComponent].title"
-                class="mg-l-10"
-                style="width: 200px;"
-              />
-              <el-button
-                class="fl-right"
-                type="primary"
-                size="small"
-                @click="handleClickAddComponent"
-              >
-                添 加
-              </el-button>
-            </div>
-            <el-table
-              ref="componentTable"
-              border=""
-              row-key="id"
-              :data="form[activeComponent].list"
-              stripe
-              style="width: 100%"
-            >
-              <el-table-column
-                v-for="item in curComponentData.col"
-                :key="item.prop"
-                :prop="item.prop"
-                :label="item.label"
-                :align="'center'"
-              />
-              <el-table-column label="操作" :align="'center'">
-                <template slot-scope="scope">
-                  <el-button
-                    type="success"
-                    size="mini"
-                    @click="handleClickDelete(scope.row)"
-                  >
-                    删除
-                  </el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-          <el-tab-pane label="寺院组件" name="templeComponent" />
-          <el-tab-pane label="佛事组件" name="buddhistComponent" />
-          <el-tab-pane label="商品组件" name="goodsComponent" />
-        </el-tabs>
-      </el-form-item>
-      <div class="operation">
-        <el-button type="primary" @click="handleClickSave">
-          保 存
+      <el-form-item v-if="!1" label="菜单按钮">
+        <el-button type="primary" @click="addMenu">
+          添加
         </el-button>
-      </div>
+      </el-form-item>
     </el-form>
     <DialogAdd
       :active-component="activeComponent"
@@ -190,16 +143,16 @@ export default {
       }
     },
     initSortable() {
-      const self = this;
-      const $tbody = this.$refs.componentTable.$el.querySelector('tbody');
-      Sortable.create($tbody, {
-        animation: 150,
-        onEnd({ newIndex, oldIndex }) {
-          const { list } = self.form[self.activeComponent];
-          const oldRowData = list.splice(oldIndex, 1)[0];
-          list.splice(newIndex, 0, oldRowData);
-        },
-      });
+      // const self = this;
+      // const $tbody = this.$refs.componentTable.$el.querySelector('tbody');
+      // Sortable.create($tbody, {
+      //   animation: 150,
+      //   onEnd({ newIndex, oldIndex }) {
+      //     const { list } = self.form[self.activeComponent];
+      //     const oldRowData = list.splice(oldIndex, 1)[0];
+      //     list.splice(newIndex, 0, oldRowData);
+      //   },
+      // });
     },
     getDetail() {
       const { topicId } = this;
@@ -254,9 +207,9 @@ export default {
             introduce,
             isShowWish,
             cover,
-            templeComponent,
-            buddhistComponent,
-            goodsComponent,
+            // templeComponent,
+            // buddhistComponent,
+            // goodsComponent,
           } = this.form;
           // 数据检验
           const verifyMessage = [];
@@ -266,14 +219,14 @@ export default {
           if (!textColor) verifyMessage.push('请选择文本颜色');
 
           // 每个组件至少有一个子项
-          if (templeComponent.list.length && !templeComponent.title)
-            verifyMessage.push('请填写寺院组件名称');
+          // if (templeComponent.list.length && !templeComponent.title)
+          //   verifyMessage.push('请填写寺院组件名称');
 
-          if (buddhistComponent.list.length && !buddhistComponent.title)
-            verifyMessage.push('请填写佛事组件名称');
+          // if (buddhistComponent.list.length && !buddhistComponent.title)
+          //   verifyMessage.push('请填写佛事组件名称');
 
-          if (goodsComponent.list.length && !goodsComponent.title)
-            verifyMessage.push('请填写商品组件名称');
+          // if (goodsComponent.list.length && !goodsComponent.title)
+          //   verifyMessage.push('请填写商品组件名称');
 
           if (verifyMessage.length) {
             Notification({
@@ -284,23 +237,23 @@ export default {
             return;
           }
 
-          const componentJson = [
-            {
-              type: 1,
-              title: templeComponent.title,
-              ids: templeComponent.list.map(item => item.id).join(','),
-            },
-            {
-              type: 2,
-              title: buddhistComponent.title,
-              ids: buddhistComponent.list.map(item => item.id).join(','),
-            },
-            {
-              type: 3,
-              title: goodsComponent.title,
-              ids: goodsComponent.list.map(item => item.id).join(','),
-            },
-          ];
+          // const componentJson = [
+          //   {
+          //     type: 1,
+          //     title: templeComponent.title,
+          //     ids: templeComponent.list.map(item => item.id).join(','),
+          //   },
+          //   {
+          //     type: 2,
+          //     title: buddhistComponent.title,
+          //     ids: buddhistComponent.list.map(item => item.id).join(','),
+          //   },
+          //   {
+          //     type: 3,
+          //     title: goodsComponent.title,
+          //     ids: goodsComponent.list.map(item => item.id).join(','),
+          //   },
+          // ];
 
           // 数据上传
           seeFetch('promo/topicEdit/update', {
@@ -312,7 +265,7 @@ export default {
             bgColor,
             btnBgColor,
             textColor,
-            componentJson,
+            // componentJson,
           }).then(res => {
             if (!res.success) {
               Notification({
@@ -330,7 +283,9 @@ export default {
               message: '保存成功',
             });
 
-            this.$router.push(`/promo/topic`);
+            this.$router.replace(
+              `/promo/topicEdit/${this.$route.params.id}/${res.data.id}`
+            );
           });
         }
       });
@@ -345,9 +300,11 @@ export default {
   padding: 40px 20px;
 }
 .operation {
-  position: fixed;
-  top: 130px;
-  right: 100px;
+  margin-bottom: 60px;
+  text-align: right;
+  // position: fixed;
+  // top: 130px;
+  // right: 100px;
 }
 .vam {
   vertical-align: middle;

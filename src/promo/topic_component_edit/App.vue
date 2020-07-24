@@ -23,6 +23,64 @@
           </div>
         </div>
       </div>
+      <div class="component-list">
+        <div class="component-item">
+          <div class="mg-b-20">
+            <span class="mg-l-5">{{ curComponentData.name }}名称</span>
+            <el-input
+              v-model="form[activeComponent].title"
+              class="mg-l-10"
+              style="width: 200px;"
+            />
+            <el-button
+              class="fl-right"
+              type="primary"
+              size="small"
+              @click="handleClickAddComponent"
+            >
+              添 加
+            </el-button>
+          </div>
+          <el-table
+            ref="componentTable"
+            border=""
+            row-key="id"
+            :data="form[activeComponent].list"
+            stripe
+            style="width: 100%"
+          >
+            <el-table-column
+              v-for="item in curComponentData.col"
+              :key="item.prop"
+              :prop="item.prop"
+              :label="item.label"
+              :align="'center'"
+            />
+            <el-table-column label="操作" :align="'center'">
+              <template slot-scope="scope">
+                <el-button
+                  type="success"
+                  size="mini"
+                  @click="handleClickDelete(scope.row)"
+                >
+                  删除
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </div>
+      <div class="btn-list">
+        <el-button type="primary">
+          寺院组件
+        </el-button>
+        <el-button type="primary">
+          佛事组件
+        </el-button>
+        <el-button type="primary">
+          商品组件
+        </el-button>
+      </div>
     </el-card>
     <DialogAddMenu
       :visible="dialogAddVisible"
@@ -53,7 +111,60 @@ export default {
         { id: 3, name: '3' },
       ],
       menuItem: {},
+      form: {
+        title: '',
+        introduce: '',
+        isShowWish: !1,
+        cover: [],
+        bgColor: '',
+        btnBgColor: '',
+        textColor: '',
+        components: [],
+        templeComponent: { title: '', list: [] },
+        buddhistComponent: { title: '', list: [] },
+        goodsComponent: { title: '', list: [] },
+      },
+
+      activeComponent: 'templeComponent',
+      loadingComponentData: !1,
+
+      componentData: {
+        templeComponent: {
+          name: '寺院组件',
+          col: [
+            { prop: 'id', label: 'ID' },
+            { prop: 'name', label: '名称' },
+            { prop: 'tag', label: '标签' },
+            { prop: 'intro', label: '描述重定义' },
+            { prop: 'pic', label: '封面图重定义' },
+            { prop: 'btn', label: '按钮文字' },
+          ],
+        },
+        buddhistComponent: {
+          name: '佛事组件',
+          col: [{ prop: 'id', label: 'ID' }, { prop: 'name', label: '名称' }],
+        },
+        goodsComponent: {
+          name: '商品组件',
+          col: [
+            { prop: 'id', label: 'ID' },
+            { prop: 'name', label: '名称' },
+            { prop: 'priceStr', label: '价格' },
+          ],
+        },
+      },
     };
+  },
+  computed: {
+    // 用来渲染表格dom的静态数据
+    curComponentData() {
+      // name col title list
+      const { activeComponent, componentData } = this;
+      const res = {};
+      res.name = componentData[activeComponent].name;
+      res.col = componentData[activeComponent].col;
+      return res;
+    },
   },
   created() {
     let { id } = this.$route.params;
@@ -69,7 +180,14 @@ export default {
       seeFetch('promo/topicComponentEdit/getComponent', {
         topicId: this.topicId,
       }).then(res => {
-        console.log(res);
+        if (!res.errorCode) {
+        } else {
+          Notification({
+            title: '提示',
+            type: 'error',
+            message: '接口出错',
+          });
+        }
       });
     },
     showMenuAdd() {
@@ -113,6 +231,22 @@ export default {
     updateDialogAddVisible(visible) {
       this.dialogAddVisible = visible;
     },
+
+    initSortable() {
+      const self = this;
+      const $tbody = this.$refs.componentTable.$el.querySelector('tbody');
+      Sortable.create($tbody, {
+        animation: 150,
+        onEnd({ newIndex, oldIndex }) {
+          const { list } = self.form[self.activeComponent];
+          const oldRowData = list.splice(oldIndex, 1)[0];
+          list.splice(newIndex, 0, oldRowData);
+        },
+      });
+    },
+    handleClickAddComponent() {
+      this.dialogAddVisible = !0;
+    },
   },
 };
 </script>
@@ -150,5 +284,15 @@ export default {
   font-size: 18px;
   color: #ccc;
   cursor: pointer;
+}
+
+.component-list {
+  margin-bottom: 20px;
+}
+.component-item {
+  position: relative;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 3px 2px 5px rgba(0, 0, 0, 0.6);
 }
 </style>
