@@ -301,7 +301,9 @@ export default {
     },
     // 添加菜单
     addMenu(menuData) {
-      this.menuList.push(menuData);
+      if (!menuData.isModify) {
+        this.menuList.push(menuData);
+      }
     },
     // 删除菜单
     delMenu(item) {
@@ -515,6 +517,7 @@ export default {
 
       const params = { id, name, type, topicId: this.topicId, dataList };
       seeFetch('promo/topicComponentEdit/addComponent', params).then(res => {
+        this.componentList[comIndex].id = res.data.id;
         if (!res.errorCode) {
           Notification({
             type: 'success',
@@ -613,6 +616,7 @@ export default {
   }
 }
 .component-list {
+  width: 100%;
   margin-bottom: 20px;
 }
 .component-item {

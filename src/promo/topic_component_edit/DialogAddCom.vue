@@ -152,6 +152,11 @@ export default {
     visible(val) {
       this.sVisible = val;
     },
+    btnName(val, oldVal) {
+      if (val && val.length >= 5) {
+        this.btnName = this.btnName.slice(0, 5);
+      }
+    },
   },
   created() {
     this.getTempleList();

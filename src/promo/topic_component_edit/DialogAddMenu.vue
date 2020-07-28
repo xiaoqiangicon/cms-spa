@@ -86,10 +86,16 @@ export default {
     visible(val) {
       this.sVisible = val;
     },
-    item(obj) {
-      this.name = obj.name;
-      this.id = obj.id;
-      this.introduce = obj.introduce;
+    item: {
+      handler(obj, oldObj) {
+        console.log('菜单数据', obj);
+        this.name = obj.name;
+        this.id = obj.id;
+        this.introduce = obj.detail;
+        this.covers[0] = obj.pic;
+        this.introCovers[0] = obj.coverPic;
+      },
+      deep: true,
     },
     name(val, oldVal) {
       if (val && val.length >= 5) {
@@ -107,22 +113,22 @@ export default {
         });
         return;
       }
-      // if (!this.covers.length) {
-      //   Notification({
-      //     type: 'error',
-      //     title: '提示',
-      //     message: '请上传图标',
-      //   });
-      //   return;
-      // }
-      // if (!this.introCovers.length) {
-      //   Notification({
-      //     type: 'error',
-      //     title: '提示',
-      //     message: '请上传简介封面',
-      //   });
-      //   return;
-      // }
+      if (!this.covers.length) {
+        Notification({
+          type: 'error',
+          title: '提示',
+          message: '请上传图标',
+        });
+        return;
+      }
+      if (!this.introCovers.length) {
+        Notification({
+          type: 'error',
+          title: '提示',
+          message: '请上传简介封面',
+        });
+        return;
+      }
       if (
         this.urlSwitch &&
         this.url.indexOf('https://wx.zizaihome.com/') === -1
@@ -143,7 +149,7 @@ export default {
         return;
       }
       const params = {
-        id: 0,
+        id: this.item.id || 0,
         name: this.name,
         pic: this.covers[0],
         coverPic: this.introCovers[0],
@@ -154,6 +160,9 @@ export default {
       seeFetch('promo/topicComponentEdit/addTag', params).then(res => {
         if (!res.errorCode) {
           params.id = res.data.id;
+          if (this.item.id) {
+            params.isModify = !0;
+          }
           this.$emit('save', params);
           this.$emit('updateVisible', !1);
         } else {
