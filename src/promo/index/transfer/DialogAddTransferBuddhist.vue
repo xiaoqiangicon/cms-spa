@@ -45,7 +45,8 @@
               (!!item.isZizaijiaCommodity && !!item.isOrder) ||
                 item.price <= 0 ||
                 item.wishOrderMoney > 0 ||
-                !!item.conversionSubdivide
+                !!item.conversionSubdivide ||
+                item.bindSubdivide.length
             "
           >
             {{ item.subdivideName }}
@@ -54,7 +55,7 @@
         <el-checkbox
           v-else
           :label="item.id"
-          :disabled="!!item.conversionSubdivide"
+          :disabled="!!item.conversionSubdivide || item.bindSubdivide.length"
         >
           {{ item.subdivideName }}
         </el-checkbox>
