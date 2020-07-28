@@ -146,6 +146,7 @@ export default {
         id: 0,
         name: this.name,
         pic: this.covers[0],
+        coverPic: this.introCovers[0],
         linkUrl: this.url,
         detail: this.introduce,
         topicId: this.$route.params.id,
@@ -166,10 +167,6 @@ export default {
     },
     handleClickSave() {
       this.verify();
-
-      const rowData = 'rowData 1234';
-      this.$emit('saveAddMenu', rowData);
-      this.$emit('updateDialogAddMenuVisible', !1);
     },
   },
 };
