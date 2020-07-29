@@ -74,6 +74,25 @@ export const get_component = {
   },
 };
 
+export const get_buddhist_data = {
+  errorCode: 0,
+  msg: '',
+  data: [
+    {
+      id: 8984,
+      name: '8984-小程序创建冥阳两利水陆斋天法会',
+    },
+    {
+      id: 8985,
+      name: '8985-小程序创建冥阳两利水陆斋天法会',
+    },
+    {
+      id: 8986,
+      name: '8986-小程序创建冥阳两利水陆斋天法会',
+    },
+  ],
+};
+
 export const add_tag = {
   msg: '',
   errorCode: 0,

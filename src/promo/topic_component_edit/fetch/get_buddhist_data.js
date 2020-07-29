@@ -16,8 +16,8 @@ seeFetch.config('promo/topicComponentEdit/getBuddhistData', {
   stringify: [!0],
   url: [
     '/ceremony/namelist',
-    '/promo/topic_edit/mock/get_buddhist_data',
-    '/promo/topic_edit/mock/get_buddhist_data',
+    '/promo/topic_component_edit/mock/get_buddhist_data',
+    '/promo/topic_component_edit/mock/get_buddhist_data',
   ],
   req: [req, req],
   post: [post, post, post],

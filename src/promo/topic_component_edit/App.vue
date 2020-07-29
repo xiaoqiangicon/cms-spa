@@ -85,6 +85,7 @@
               ref="componentTable"
               border=""
               row-key="id"
+              :key="Math.random()"
               :data="componentList[key].dataList"
               stripe
               style="width: 100%"
@@ -114,15 +115,17 @@
               />
               <el-table-column label="操作" :align="'center'">
                 <template slot-scope="scope">
-                  <div class="row-btn">
+                  <div class="row-btn-box">
                     <el-button
+                      class="row-btn"
                       type="primary"
                       size="mini"
-                      @click="delRow(scope.row, key)"
+                      @click="editRow(scope, key)"
                     >
                       编辑
                     </el-button>
                     <el-button
+                      class="row-btn"
                       type="danger"
                       size="mini"
                       @click="delRow(scope.row, key)"
@@ -157,13 +160,18 @@
     />
     <DialogAddCom
       :active-component="activeComponent"
-      :item="comItem"
+      :item="rowItem"
       :visible="dialogAddComVisible"
       :add-component-item-index="addComponentItemIndex"
+      :itemIndex="rowIndex"
       @updateComVisible="updateDialogAddComVisible"
       @saveCom="addComItem"
     />
-    <el-dialog :title="'绑定组件'" :visible.sync="bindVisible">
+    <el-dialog
+      :title="'绑定组件'"
+      :visible.sync="bindVisible"
+      :append-to-body="true"
+    >
       <el-button type="primary" @click="addBindCom">
         添加组件库
       </el-button>
@@ -177,7 +185,11 @@
         保存
       </el-button>
     </el-dialog>
-    <el-dialog :title="'选择组件'" :visible.sync="selectComVisible">
+    <el-dialog
+      :title="'选择组件'"
+      :visible.sync="selectComVisible"
+      :append-to-body="true"
+    >
       <el-select v-model="selectComId" filterable placeholder="请选择">
         <el-option
           v-for="item in componentList"
@@ -223,7 +235,9 @@ export default {
       selectComId: '',
 
       componentList: [], // 组件列表
-      comItem: {}, // 选择的组件某条数据
+      rowItem: {}, // 选择的组件某条数据
+      comRowIndex: 0, // 选择的某条数据附属于哪个组件
+      rowIndex: -1, // 选择某条数据的下标
       dialogAddComVisible: !1, // 添加组件项目弹框
       activeComponent: 'templeComponent', // 当前是什么类型
       addComponentItemIndex: 0, // 第几个组件添加项目
@@ -264,6 +278,7 @@ export default {
     }
   },
   methods: {
+    // 排序
     initSortable() {
       const self = this;
       const $aTbody = this.$refs.componentTable;
@@ -298,6 +313,7 @@ export default {
         }
       });
     },
+    // 弹出添加菜单框
     showMenuAdd() {
       this.menuItem = {};
       this.dialogAddVisible = !0;
@@ -343,10 +359,14 @@ export default {
         });
       });
     },
-    // 编辑菜单
+    // 弹出编辑菜单框
     editMenuItem(item) {
       this.menuItem = item;
       this.dialogAddVisible = !0;
+    },
+    // 弹出编辑菜单框
+    updateDialogAddVisible(visible) {
+      this.dialogAddVisible = visible;
     },
     // 点击绑定组件
     bindCom(menuItem) {
@@ -443,11 +463,15 @@ export default {
         this.initSortable();
       });
     },
-    updateDialogAddVisible(visible) {
-      this.dialogAddVisible = visible;
+    // 弹出组件数据框
+    updateDialogAddComVisible(visible) {
+      this.dialogAddComVisible = visible;
     },
     // 点击增加一行当前组件数据
     handleClickAddComponentItem(comIndex) {
+      // rowIndex为-1是新增一条数据
+      this.rowIndex = -1;
+      this.rowItem = {};
       this.addComponentItemIndex = comIndex;
       this.componentList[comIndex].show = !0;
       this.$forceUpdate();
@@ -462,8 +486,16 @@ export default {
     },
     // 插入增加的一行数据
     addComItem(rowData) {
-      console.log(rowData);
-      this.componentList[this.addComponentItemIndex].dataList.push(rowData);
+      if (this.rowIndex >= 0) {
+        this.componentList[this.comRowIndex].dataList[this.rowIndex] = rowData;
+        this.$set(this.componentList[this.comRowIndex], this.rowIndex, rowData);
+        console.log(
+          '修改一行数据',
+          this.componentList[this.comRowIndex].dataList
+        );
+      } else {
+        this.componentList[this.addComponentItemIndex].dataList.push(rowData);
+      }
       this.$forceUpdate();
     },
     // 删除插入的一行数据
@@ -502,6 +534,21 @@ export default {
         // })
       });
     },
+    // 修改一行数据
+    editRow(scope, comIndex) {
+      if (this.componentList[comIndex].type === 1) {
+        this.activeComponent = 'templeComponent';
+      } else if (this.componentList[comIndex].type === 2) {
+        this.activeComponent = 'buddhistComponent';
+      } else {
+        this.activeComponent = 'goodsComponent';
+      }
+
+      this.comRowIndex = comIndex;
+      this.rowIndex = scope.$index;
+      this.rowItem = scope.row;
+      this.dialogAddComVisible = !0;
+    },
     // 添加一个组件
     addComponent(type, index) {
       let hasNotSave = !1;
@@ -521,10 +568,6 @@ export default {
           this.initSortable();
         });
       }
-    },
-    // 添加组件弹框显示隐藏
-    updateDialogAddComVisible(visible) {
-      this.dialogAddComVisible = visible;
     },
 
     // 保存组件
@@ -674,6 +717,15 @@ export default {
   width: 100px;
   height: 100px;
   border-radius: 8px;
+}
+.row-btn-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.row-btn {
+  margin-bottom: 10px;
+  margin-left: 0;
 }
 
 .bind-item {

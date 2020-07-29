@@ -1,8 +1,9 @@
 <template>
   <el-dialog
-    :title="'添加'"
+    :title="itemIndex >= 0 ? '编辑' : '添加'"
     :active-component="activeComponent"
     :visible.sync="sVisible"
+    :append-to-body="true"
     :before-close="
       () => {
         sVisible = false;
@@ -124,6 +125,14 @@ export default {
       default: 0,
       type: Number,
     },
+    item: {
+      default: {},
+      type: Object,
+    },
+    itemIndex: {
+      default: -1,
+      type: Number,
+    },
   },
   data() {
     return {
@@ -144,10 +153,6 @@ export default {
   watch: {
     sVisible(val) {
       this.$emit('updateComVisible', val);
-
-      if (val) {
-        this.init();
-      }
     },
     visible(val) {
       this.sVisible = val;
@@ -156,6 +161,22 @@ export default {
       if (val && val.length >= 5) {
         this.btnName = this.btnName.slice(0, 5);
       }
+    },
+    item: {
+      handler(obj, oldObj) {
+        console.log('handler一行数据', obj);
+        this.name = obj.name;
+        this.templeId = obj.contentId;
+        this.detail = obj.detail;
+        this.label = obj.label;
+        this.btnName = obj.btnName;
+        if (obj.pic) {
+          this.covers = [obj.pic];
+        } else {
+          this.covers = [];
+        }
+      },
+      deep: true,
     },
   },
   created() {
@@ -197,23 +218,11 @@ export default {
         }
       );
     },
-    init() {
-      this.templeId = '';
-      this.buddhistId = '';
-    },
 
     handleClickSave() {
       const { activeComponent } = this;
-      // const tag = activeComponent.split('Component')[0];
       const rowData = {};
       rowData.id = this.templeId;
-      // if (tag === 'temple') {
-      //   rowData = this[`${tag}List`].find(item => item.id === this[`${tag}Id`]);
-      // } else if (tag === 'buddhist') {
-      //   rowData = this.buddhistData;
-      // } else if (tag === 'goods') {
-      //   rowData = this.goodsData;
-      // }
 
       if (!rowData.id) {
         Notification({
@@ -230,11 +239,6 @@ export default {
       rowData.detail = this.detail;
       rowData.label = this.label;
       rowData.btnName = this.btnName;
-      this.covers[0] = '';
-      this.name = '';
-      this.detail = '';
-      this.label = '';
-      this.btnName = '';
       this.$emit('saveCom', rowData);
       this.$emit('updateComVisible', !1);
     },

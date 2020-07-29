@@ -2,6 +2,7 @@
   <el-dialog
     :title="'添加菜单（最多添加5个菜单）'"
     :visible.sync="sVisible"
+    :append-to-body="true"
     :before-close="
       () => {
         sVisible = false;
@@ -101,9 +102,13 @@ export default {
         }
         if (obj.pic) {
           this.covers = [obj.pic];
+        } else {
+          this.covers = [];
         }
         if (obj.coverPic) {
           this.introCovers = [obj.coverPic];
+        } else {
+          this.introCovers = [];
         }
       },
       deep: true,
