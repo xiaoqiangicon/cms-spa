@@ -6,8 +6,7 @@
         style="width: 600px;"
         type="success"
         :closable="false"
-        :title="headInfo.title"
-        :description="headInfo.desc"
+        v-html="headInfo"
       />
       <div class="header-right">
         <el-button type="primary" round @click="showEditDialog(1)">
@@ -40,18 +39,7 @@
         label="位置"
       />
       <el-table-column min-width="60px" prop="visitNum" label="查看次数" />
-      <el-table-column
-        v-if="adType === 1 || adType === 3"
-        min-width="60px"
-        prop="articleId"
-        label="跳转文章ID"
-      />
-      <el-table-column
-        v-if="adType === 2"
-        min-width="100px"
-        prop="link"
-        label="跳转链接"
-      />
+      <el-table-column min-width="100px" prop="link" label="跳转链接" />
       <el-table-column min-width="200px" label="生效时间">
         <template slot-scope="scope">
           <div class="valid-time">
@@ -164,22 +152,18 @@ export default {
   computed: {
     // 头部提示信息
     headInfo() {
-      const res = {
-        title: '',
-        desc: '',
-      };
-      if (this.adType === 1) {
-        res.title = '功能控制：1.SaaS后台首页弹窗 2.管理小程序首页弹窗';
-        res.desc =
-          '展示逻辑：只有一个广告位为开启状态：每次登录或打开都会展示。 多个广告位为开启状态：按照优先级越大排序。点击关闭或跳转后则下次会展示优先级后面在生效时间内的广告。相同生效时间内的广告，展示优先级最高的。';
-      }
-      if (this.adType === 2 || this.adType === 3) {
-        res.title =
-          '因小程序的限制：弹窗广告位和小程序首页推荐位只能使用文章的ID号，不能使用外链。';
-        res.desc =
-          'SaaS首页推荐位可添加多个：每次只能手动控制一个位置的内容是否展示。';
-      }
-      return res;
+      if (this.adType === 1)
+        return `
+功能控制：1.SaaS后台首页弹窗 2.管理小程序首页弹窗
+<br/><br/>
+因小程序的限制：弹窗广告位和小程序首页推荐位只能使用文章的ID或无支付的佛事ID，不能使用外链。
+<br/><br/>
+展示逻辑：只有一个广告位为开启状态：每次登录或打开都会展示。 多个广告位为开启状态：按照优先级越大排序。点击关闭或跳转后则下次会展示优先级后面在生效时间内的广告。相同生效时间内的广告，展示优先级最高的。`;
+      if (this.adType === 2)
+        return 'SaaS首页推荐位可添加多个：每次只能手动控制一个位置的内容是否展示。';
+      if (this.adType === 3)
+        return '因小程序的限制：弹窗广告位和小程序首页推荐位只能使用文章的ID或无支付的佛事ID，不能使用外链。';
+      return '';
     },
   },
   created() {

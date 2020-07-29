@@ -128,14 +128,14 @@ const routes = [
         component: () => import('../promo/index/App'),
         name: '事件管理',
         meta: { title: '事件管理', noCache: true },
-        controlMark: 'pw_promo',
+        controlMark: 'pw_send_order',
       },
       {
         path: 'index/transfer-list',
         component: () => import('../promo/index/App'),
         name: '事件管理 / 转单列表',
         meta: { title: '事件管理 / 转单列表', noCache: true },
-        controlMark: 'pw_promo',
+        controlMark: 'pw_send_order',
         hidden: !0,
       },
       {
@@ -143,7 +143,7 @@ const routes = [
         component: () => import('../promo/statistics/App'),
         name: '转单统计',
         meta: { title: '转单统计', noCache: true },
-        controlMark: 'pw_promo',
+        controlMark: 'pw_send_order',
       },
       {
         path: 'projectManage/:id/:id',

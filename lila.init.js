@@ -16,7 +16,7 @@ export default lila => {
 
   registerTask('qiniu', qiniuTask);
 
-  const envOption = ['-e, --env [env]', 'server env', /^(test|gray)$/, 'test'];
+  const envOption = ['-e, --env [env]', 'server env', /^(test|prod)$/, 'test'];
 
   addCmdOption('sync', ...envOption);
 
@@ -34,7 +34,7 @@ export default lila => {
 
   return ({ argv, cmd, entry }) => {
     const isDev = cmd === 'dev' || cmd === 'serve';
-    const isGray = argv.env === 'gray';
+    const isProd = argv.env === 'prod';
 
     const servers = [];
     try {
@@ -97,7 +97,7 @@ export default lila => {
         '@lila/clean-cache',
         {
           dir: 'build',
-          cacheFileName: `cache-${isGray ? 'gray' : 'test'}`,
+          cacheFileName: `cache-${isProd ? 'prod' : 'test'}`,
         },
       ],
       [
@@ -109,8 +109,8 @@ export default lila => {
       [
         '@lila/sync-html',
         {
-          server: isGray ? servers[1] : servers[0],
-          remotePath: isGray
+          server: isProd ? servers[1] : servers[0],
+          remotePath: isProd
             ? '/usr/local/resin/projects/cms/dist/html/index'
             : '/usr/local/resin/projects/guest_statistics/dist/html/index',
           ext: 'jsp',
@@ -120,7 +120,7 @@ export default lila => {
         '@lila/save-cache',
         {
           dir: 'build',
-          cacheFileName: `cache-${isGray ? 'gray' : 'test'}`,
+          cacheFileName: `cache-${isProd ? 'prod' : 'test'}`,
         },
       ],
       '@lila/del-build',
