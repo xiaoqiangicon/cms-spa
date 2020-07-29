@@ -40,6 +40,7 @@
             :key="key"
             class="component-item"
           >
+            <div class="del-component" @click="delComponent(key)">×</div>
             <div class="mg-b-20">
               <span class="mg-l-5"
                 >{{
@@ -77,13 +78,6 @@
                 >
                   {{ componentList[key].show ? '收缩' : '展开' }}列表
                 </el-button>
-                <el-button
-                  type="danger"
-                  size="small"
-                  @click="delComponent(key)"
-                >
-                  删除组件
-                </el-button>
               </div>
             </div>
             <el-table
@@ -120,13 +114,22 @@
               />
               <el-table-column label="操作" :align="'center'">
                 <template slot-scope="scope">
-                  <el-button
-                    type="success"
-                    size="mini"
-                    @click="delRow(scope.row, key)"
-                  >
-                    删除
-                  </el-button>
+                  <div class="row-btn">
+                    <el-button
+                      type="primary"
+                      size="mini"
+                      @click="delRow(scope.row, key)"
+                    >
+                      编辑
+                    </el-button>
+                    <el-button
+                      type="danger"
+                      size="mini"
+                      @click="delRow(scope.row, key)"
+                    >
+                      删除
+                    </el-button>
+                  </div>
                 </template>
               </el-table-column>
             </el-table>
@@ -301,8 +304,16 @@ export default {
     },
     // 添加菜单
     addMenu(menuData) {
+      // 新建时添加至菜单列表，否则修改
       if (!menuData.isModify) {
         this.menuList.push(menuData);
+      } else {
+        this.menuList.forEach((item, key) => {
+          if (item.id === menuData.id) {
+            this.menuList[key] = menuData;
+          }
+        });
+        this.$forceUpdate();
       }
     },
     // 删除菜单
@@ -493,10 +504,23 @@ export default {
     },
     // 添加一个组件
     addComponent(type, index) {
-      this.componentList.push({ type, show: !0, dataList: [] });
-      this.$nextTick(() => {
-        this.initSortable();
+      let hasNotSave = !1;
+      this.componentList.forEach(item => {
+        if (!item.id) {
+          Notification({
+            type: 'warning',
+            title: '提示',
+            message: '请先保存其他新建组件',
+          });
+          hasNotSave = !0;
+        }
       });
+      if (!hasNotSave) {
+        this.componentList.push({ type, show: !0, dataList: [] });
+        this.$nextTick(() => {
+          this.initSortable();
+        });
+      }
     },
     // 添加组件弹框显示隐藏
     updateDialogAddComVisible(visible) {
@@ -541,6 +565,11 @@ export default {
         type: 'warning',
       }).then(() => {
         const comId = this.componentList[comIndex].id;
+
+        if (!comId) {
+          this.componentList.pop();
+          return;
+        }
 
         seeFetch('promo/topicComponentEdit/delComponent', { id: comId }).then(
           res => {
@@ -611,6 +640,7 @@ export default {
 
 .component-box {
   display: flex;
+  margin-bottom: 20px;
   span {
     flex-shrink: 0;
   }
@@ -625,6 +655,20 @@ export default {
   margin-bottom: 10px;
   border: 1px solid #ccc;
   box-shadow: 3px 2px 5px rgba(0, 0, 0, 0.6);
+}
+.del-component {
+  position: absolute;
+  right: -10px;
+  top: -18px;
+  width: 30px;
+  height: 30px;
+  font-size: 26px;
+  border-radius: 50%;
+  background: #f56c6c;
+  color: #fff;
+  text-align: center;
+  line-height: 30px;
+  cursor: pointer;
 }
 .pic {
   width: 100px;

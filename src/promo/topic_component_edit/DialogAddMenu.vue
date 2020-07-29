@@ -92,8 +92,19 @@ export default {
         this.name = obj.name;
         this.id = obj.id;
         this.introduce = obj.detail;
-        this.covers[0] = obj.pic;
-        this.introCovers[0] = obj.coverPic;
+        if (obj.linkUrl) {
+          this.urlSwitch = !0;
+          this.url = obj.linkUrl;
+        } else {
+          this.urlSwitch = !1;
+          this.url = '';
+        }
+        if (obj.pic) {
+          this.covers = [obj.pic];
+        }
+        if (obj.coverPic) {
+          this.introCovers = [obj.coverPic];
+        }
       },
       deep: true,
     },
@@ -140,6 +151,9 @@ export default {
         });
         return;
       }
+      if (!this.urlSwitch) {
+        this.url = '';
+      }
       if (!this.introduce) {
         Notification({
           type: 'error',
@@ -165,6 +179,11 @@ export default {
           }
           this.$emit('save', params);
           this.$emit('updateVisible', !1);
+          Notification({
+            type: 'success',
+            title: '提示',
+            message: '保存成功',
+          });
         } else {
           Notification({
             type: 'error',
