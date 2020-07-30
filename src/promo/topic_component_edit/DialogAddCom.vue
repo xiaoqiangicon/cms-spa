@@ -55,27 +55,16 @@
 
     <div class="row">
       <span class="row-title">重定义名称</span>
-      <el-input
-        v-model="name"
-        :disabled="activeComponent === 'templeComponent'"
-        type="text"
-        placeholder="重定义名称（可不填）"
-      />
+      <el-input v-model="name" type="text" placeholder="重定义名称（可不填）" />
     </div>
     <div class="row">
       <span class="row-title">标签(多个用-连接)</span>
-      <el-input
-        v-model="label"
-        :disabled="activeComponent === 'templeComponent'"
-        type="text"
-        placeholder="多个标签用 - 连接"
-      />
+      <el-input v-model="label" type="text" placeholder="多个标签用 - 连接" />
     </div>
     <div class="row">
       <span class="row-title">描述重定义</span>
       <textarea
         v-model="detail"
-        :disabled="activeComponent === 'templeComponent'"
         placeholder="重定义描述（可不填）"
         class="intro"
       />
@@ -91,12 +80,7 @@
     </div>
     <div class="row">
       <span class="row-title">封面图重定义</span>
-      <Upload
-        v-if="activeComponent !== 'templeComponent'"
-        :images="covers"
-        :multiple="false"
-      />
-      <span v-else>当前不可设置封面图</span>
+      <Upload :images="covers" :multiple="false" />
     </div>
 
     <span slot="footer" class="dialog-footer">

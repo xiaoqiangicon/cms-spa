@@ -86,6 +86,7 @@
               ref="componentTable"
               border=""
               row-key="id"
+              :key="Math.random()"
               :data="componentList[key].dataList"
               stripe
               style="width: 100%"
@@ -184,12 +185,12 @@
       <el-button type="primary" @click="addBindCom">
         添加组件库
       </el-button>
-      <div ref="bindList" class="bind-list">
+      <draggable v-model="bindComList" ref="bindList" class="bind-list">
         <div v-for="(item, key) in bindComList" :key="key" class="bind-item">
           <span>{{ item.name }}</span>
           <span class="bind-close" @click="delBindCom(item)">×</span>
         </div>
-      </div>
+      </draggable>
       <el-button class="save-bind" type="primary" @click="saveBindCom">
         保存
       </el-button>
@@ -223,11 +224,13 @@ import { Notification } from 'element-ui';
 import Sortable from 'sortablejs';
 import DialogAddMenu from './DialogAddMenu.vue';
 import DialogAddCom from './DialogAddCom.vue';
+import draggable from 'vuedraggable';
 
 export default {
   components: {
     DialogAddMenu,
     DialogAddCom,
+    draggable,
   },
   data() {
     return {
@@ -277,6 +280,8 @@ export default {
           ],
         },
       },
+
+      scrollTop: 0,
     };
   },
   created() {
@@ -288,12 +293,21 @@ export default {
       this.getDetail();
     }
   },
+  beforeUpdate() {
+    this.scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+
+    console.log(this.scrollTop);
+  },
+  updated() {
+    if (this.$refs.componentTable) this.initSortable();
+    window.scrollTo(0, this.scrollTop);
+  },
   methods: {
     // 排序
     initSortable() {
       const self = this;
       const $aTbody = this.$refs.componentTable;
-
       $aTbody.forEach((item, key) => {
         const $tbody = item.$el.querySelector('tbody');
         Sortable.create($tbody, {
@@ -394,21 +408,6 @@ export default {
       this.bindComList = bindCom; // Sortable修改dom已经改变了视图，所以不能让vue监听到数据改变
 
       this.bindVisible = !0;
-      // 初始化绑定组件可拖拽
-      this.$nextTick(() => {
-        const self = this;
-        const $bindList = this.$refs.bindList;
-
-        Sortable.create($bindList, {
-          animation: 150,
-          onEnd({ newIndex, oldIndex }) {
-            // const { list } = self.bindComList;
-            // const oldRowData = list.splice(oldIndex, 1)[0];
-            // list.splice(newIndex, 0, oldRowData);
-            // console.log(JSON.parse(JSON.stringify(self.bindComList)));
-          },
-        });
-      });
     },
     // 选择可绑定组件框显示
     addBindCom() {
@@ -713,7 +712,7 @@ export default {
   }
 }
 .component-list {
-  width: 100%;
+  width: 92%;
   margin-bottom: 20px;
 }
 .component-item {
