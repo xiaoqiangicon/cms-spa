@@ -29,7 +29,7 @@
             :align="'center'"
           />
           <el-table-column prop="link" label="专题链接" :align="'center'" />
-          <el-table-column label="操作" :align="'center'">
+          <el-table-column label="操作" :align="'center'" width="264">
             <template slot-scope="scope">
               <el-button
                 type="success"

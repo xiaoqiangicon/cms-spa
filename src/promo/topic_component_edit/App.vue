@@ -86,7 +86,6 @@
               ref="componentTable"
               border=""
               row-key="id"
-              :key="Math.random()"
               :data="componentList[key].dataList"
               stripe
               style="width: 100%"
@@ -138,7 +137,7 @@
                       class="row-btn"
                       type="danger"
                       size="mini"
-                      @click="delRow(scope.row, key)"
+                      @click="delRow(scope, key)"
                     >
                       删除
                     </el-button>
@@ -392,19 +391,21 @@ export default {
           }
         });
       });
-      this.bindComList = bindCom;
+      this.bindComList = bindCom; // Sortable修改dom已经改变了视图，所以不能让vue监听到数据改变
+
       this.bindVisible = !0;
       // 初始化绑定组件可拖拽
       this.$nextTick(() => {
         const self = this;
         const $bindList = this.$refs.bindList;
+
         Sortable.create($bindList, {
           animation: 150,
           onEnd({ newIndex, oldIndex }) {
-            console.log(self.bindComList, self.componentList[0], 'fdj');
-            const dataList = self.bindComList;
-            const oldRowData = dataList.splice(oldIndex, 1)[0];
-            dataList.splice(newIndex, 0, oldRowData);
+            // const { list } = self.bindComList;
+            // const oldRowData = list.splice(oldIndex, 1)[0];
+            // list.splice(newIndex, 0, oldRowData);
+            // console.log(JSON.parse(JSON.stringify(self.bindComList)));
           },
         });
       });
@@ -515,19 +516,21 @@ export default {
       });
     },
     // 删除插入的一行数据
-    delRow(row, comIndex) {
-      console.log('删除一行数据，行，组件个数', row, comIndex);
-
+    delRow(scope, comIndex) {
+      console.log('删除一行数据，行，组件个数', scope.$index, comIndex);
+      let row = scope.row;
+      let rowIndex = scope.$index;
       this.$confirm('确定删除当前行吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
       }).then(() => {
-        this.componentList[comIndex].dataList.forEach((dataItem, key) => {
-          if (dataItem.contentId === row.contentId) {
-            this.componentList[comIndex].dataList.splice(key, 1);
-          }
-        });
+        // this.componentList[comIndex].dataList.forEach((dataItem, key) => {
+        //   if (dataItem.contentId === row.contentId) {
+        //     this.componentList[comIndex].dataList.splice(key, 1);
+        //   }
+        // });
+        this.componentList[comIndex].dataList.splice(rowIndex, 1);
 
         let { id, name, type, dataList } = this.componentList[comIndex];
         id = id || 0;
