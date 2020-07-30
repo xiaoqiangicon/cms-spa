@@ -284,7 +284,7 @@ export default {
             });
 
             this.$router.replace(
-              `/promo/topicEdit/${this.$route.params.id}/${res.data.topicId}`
+              `/promo/topicEdit/${this.$route.params.id}/${res.data.topicId}/${this.form.title}`
             );
           });
         }

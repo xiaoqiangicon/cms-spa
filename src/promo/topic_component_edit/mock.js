@@ -4,61 +4,71 @@ export const get_component = {
   data: {
     tagList: [
       {
-        id: 1,
-        name: 'namename',
-        pic: '',
-        linkUlr: '',
-        detail: '',
+        id: 3,
+        name: '菜单1',
+        pic:
+          'https://pic.zizaihome.com/8b3d3e77-675d-429e-a701-78c90cd836e0.jpg',
+        linkUrl: '',
+        detail: '菜单啊该是的但是的但是v',
         status: 0,
-        topicId: 34,
-        addTime: '2020-07023 18:54:28',
-        componentJSON: [1, 2],
+        topicId: 36,
+        addTime: '2020-07-28 14:02:09',
+        componentJSON: [5, 5, 27],
+        coverPic:
+          'https://pic.zizaihome.com/b9ba2b4d-8e98-456f-aff1-eb28d928f534.jpg',
       },
     ],
     componentList: [
       {
-        id: 1,
-        name: '测试',
-        type: 1,
-        dataList: [
-          {
-            contentId: 11,
-            label: '标签-1',
-            detail: '1234123412',
-            pic: '',
-            btnName: 'fasdf',
-            name: 'dfasdg',
-          },
-          {
-            contentId: 12,
-            label: '标签-23',
-            detail: '1234123412',
-            pic: '',
-            btnName: 'fasdf',
-            name: 'dfasdg',
-          },
-        ],
-      },
-      {
-        id: 2,
-        name: '测试2',
+        id: 5,
+        name: '佛事组件1',
         type: 2,
         dataList: [
           {
-            contentId: 21,
-            label: '标签-2',
-            detail: '1234123412',
-            pic:
-              'https://pic.zizaihome.com/9aa0e3ae-cfd0-11ea-bc71-00163e060b31.png',
-            btnName: 'fasdf',
-            name: 'dfasdg',
+            contentId: 8983,
+            label: '12',
+            detail: '阿道夫',
+            pic: '',
+            btnName: '按钮',
+            name: '按钮',
+          },
+          {
+            contentId: 8982,
+            label: '',
+            detail: '',
+            pic: '',
+            btnName: '',
+            name: '',
           },
         ],
       },
       {
-        id: 3,
-        name: '测试2',
-        type: 3,
+        id: 6,
+        name: '佛事组件1',
+        type: 2,
+        dataList: [
+          {
+            contentId: 8983,
+            label: '12',
+            detail: '阿道夫',
+            pic: '',
+            btnName: '按钮',
+            name: '按钮',
+          },
+          {
+            contentId: 8982,
+            label: '',
+            detail: '',
+            pic: '',
+            btnName: '',
+            name: '',
+          },
+        ],
+      },
+      {
+        id: 27,
+        name: 'fdas',
+        type: 1,
         dataList: [
           {
             contentId: 31,

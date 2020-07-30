@@ -96,6 +96,7 @@
         :images="covers"
         :multiple="false"
       />
+      <span v-else>当前不可设置封面图</span>
     </div>
 
     <span slot="footer" class="dialog-footer">
@@ -162,6 +163,11 @@ export default {
         this.btnName = this.btnName.slice(0, 5);
       }
     },
+    name(val, oldVal) {
+      if (val && val.length >= 30) {
+        this.name = this.name.slice(0, 30);
+      }
+    },
     item: {
       handler(obj, oldObj) {
         console.log('handler一行数据', obj);
@@ -222,23 +228,33 @@ export default {
     handleClickSave() {
       const { activeComponent } = this;
       const rowData = {};
-      rowData.id = this.templeId;
+      // rowData.id = this.templeId;
 
-      if (!rowData.id) {
+      if (activeComponent !== 'templeComponent' && !this.btnName) {
         Notification({
-          type: 'error',
+          type: 'warning',
           title: '提示',
-          message: '请选择需要添加的组件',
+          message: '请填写按钮文字',
         });
         return;
       }
+      if (activeComponent === 'templeComponent') {
+        if (!this.name) {
+          rowData.name = this.templeList.find(
+            val => val.id == this.templeId
+          ).name;
+        } else {
+          rowData.name = this.name;
+        }
+      } else {
+        rowData.name = this.name || '';
+      }
 
-      rowData.contentId = rowData.id;
+      rowData.contentId = this.templeId;
       rowData.pic = this.covers[0] || '';
-      rowData.name = this.name;
-      rowData.detail = this.detail;
-      rowData.label = this.label;
-      rowData.btnName = this.btnName;
+      rowData.detail = this.detail || '';
+      rowData.label = this.label || '';
+      rowData.btnName = this.btnName || '';
       this.$emit('saveCom', rowData);
       this.$emit('updateComVisible', !1);
     },

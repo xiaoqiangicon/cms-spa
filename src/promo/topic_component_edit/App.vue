@@ -1,6 +1,7 @@
 <template>
   <div class="contain">
     <el-card>
+      <p class="topic-title">{{ title }}</p>
       <div class="menu">
         <div class="">
           <span>菜单按钮：</span>
@@ -32,7 +33,7 @@
           </div>
         </div>
       </div>
-      <div class="component-box">
+      <div class="component-box" v-if="componentList.length">
         <span>页面组件：</span>
         <div class="component-list">
           <div
@@ -90,6 +91,15 @@
               stripe
               style="width: 100%"
             >
+              <el-table-column label="排序" :align="'center'">
+                <template slot-scope="scope">
+                  <img
+                    class="sort-pic"
+                    src="https://pic.zizaihome.com/a3bbf6ac-d211-11ea-ac7a-00163e060b31.png"
+                    alt=""
+                  />
+                </template>
+              </el-table-column>
               <el-table-column prop="contentId" label="ID" :align="'center'" />
               <el-table-column prop="name" label="名称" :align="'center'" />
               <el-table-column prop="label" label="标签" :align="'center'" />
@@ -222,6 +232,7 @@ export default {
   },
   data() {
     return {
+      title: '', // 当前专题名字
       topicId: '',
       dialogAddVisible: !1,
       menuList: [],
@@ -270,7 +281,8 @@ export default {
     };
   },
   created() {
-    let { id } = this.$route.params;
+    let { id, title } = this.$route.params;
+    this.title = title;
     id = parseInt(id, 10);
     if (id) {
       this.topicId = id;
@@ -386,11 +398,11 @@ export default {
       this.$nextTick(() => {
         const self = this;
         const $bindList = this.$refs.bindList;
-        console.log($bindList);
         Sortable.create($bindList, {
           animation: 150,
           onEnd({ newIndex, oldIndex }) {
-            const { dataList } = self.componentList[0];
+            console.log(self.bindComList, self.componentList[0], 'fdj');
+            const dataList = self.bindComList;
             const oldRowData = dataList.splice(oldIndex, 1)[0];
             dataList.splice(newIndex, 0, oldRowData);
           },
@@ -415,8 +427,7 @@ export default {
     },
     // 删除绑定得组件
     delBindCom(menuItem) {
-      console.log('menuItem', menuItem);
-      this.$confirm('确定删除当前行吗？', '提示', {
+      this.$confirm('确定取消绑定当前组件吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
@@ -440,6 +451,12 @@ export default {
           this.bindVisible = !1;
           this.selectComId = '';
           this.selectComVisible = !1;
+          // 不必刷新页面就可以看到绑定组件的增加修改
+          this.menuList.forEach((item, key) => {
+            if (item.id === this.tagId) {
+              item.componentJSON = componentJSON;
+            }
+          });
           Notification({
             type: 'success',
             title: '提示',
@@ -489,18 +506,17 @@ export default {
       if (this.rowIndex >= 0) {
         this.componentList[this.comRowIndex].dataList[this.rowIndex] = rowData;
         this.$set(this.componentList[this.comRowIndex], this.rowIndex, rowData);
-        console.log(
-          '修改一行数据',
-          this.componentList[this.comRowIndex].dataList
-        );
       } else {
         this.componentList[this.addComponentItemIndex].dataList.push(rowData);
       }
       this.$forceUpdate();
+      this.$nextTick(() => {
+        this.initSortable();
+      });
     },
     // 删除插入的一行数据
     delRow(row, comIndex) {
-      console.log(row, comIndex);
+      console.log('删除一行数据，行，组件个数', row, comIndex);
 
       this.$confirm('确定删除当前行吗？', '提示', {
         confirmButtonText: '确定',
@@ -557,7 +573,7 @@ export default {
           Notification({
             type: 'warning',
             title: '提示',
-            message: '请先保存其他新建组件',
+            message: '当前有未保存的新建组件',
           });
           hasNotSave = !0;
         }
@@ -647,6 +663,11 @@ export default {
   padding: 20px;
 }
 
+.topic-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
 .menu-list {
   display: flex;
   flex-wrap: wrap;
@@ -695,7 +716,7 @@ export default {
 .component-item {
   position: relative;
   padding: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 28px;
   border: 1px solid #ccc;
   box-shadow: 3px 2px 5px rgba(0, 0, 0, 0.6);
 }
@@ -712,6 +733,10 @@ export default {
   text-align: center;
   line-height: 30px;
   cursor: pointer;
+}
+.sort-pic {
+  width: 20px;
+  cursor: move;
 }
 .pic {
   width: 100px;

@@ -35,13 +35,17 @@
         <div class="row-name">
           简介：
         </div>
-        <textarea v-model="introduce" class="introduce" />
+        <textarea v-if="!urlSwitch" v-model="introduce" class="introduce" />
+        <span style="line-height: 32px;" v-else>开启链接后不可设置简介</span>
       </div>
       <div class="row">
         <div class="row-name">
           简介封面：
         </div>
-        <Upload :images="introCovers" :multiple="false" />
+        <Upload v-if="!urlSwitch" :images="introCovers" :multiple="false" />
+        <span style="line-height: 32px;" v-else
+          >开启链接后不可设置简介封面</span
+        >
       </div>
     </div>
     <span slot="footer" class="dialog-footer">
