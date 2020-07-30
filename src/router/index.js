@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import Layout from '../sys/views/layout/Layout';
-import oldRoutes from './old-routes';
 import routes from './routes';
 
 Vue.use(Router);
@@ -59,9 +58,6 @@ export const constantRouterMap = [
       },
     ],
   },
-  ...routes,
-  ...oldRoutes,
-  { path: '*', redirect: '/404', hidden: true },
 ];
 
 export default new Router({
@@ -69,4 +65,6 @@ export default new Router({
   routes: constantRouterMap,
 });
 
-export const asyncRouterMap = [];
+export const asyncRouterMap = routes;
+
+export const restFoundRoute = { path: '*', redirect: '/404', hidden: true };
