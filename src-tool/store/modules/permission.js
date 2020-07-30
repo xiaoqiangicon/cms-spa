@@ -1,8 +1,5 @@
 /* eslint-disable */
 import { asyncRouterMap, constantRouterMap } from '@/router';
-import { getAccessRoutes } from '../../util/speical';
-import share from '../../share';
-import { restFoundRoute } from '../../router';
 
 /**
  * 通过meta.role判断是否与当前用户权限匹配
@@ -51,18 +48,14 @@ const permission = {
   actions: {
     GenerateRoutes({ commit }, data) {
       return new Promise(resolve => {
-        // const { roles } = data;
-        // let accessedRouters;
-        // if (roles.includes('admin')) {
-        //   accessedRouters = asyncRouterMap;
-        // } else {
-        //   accessedRouters = filterAsyncRouter(asyncRouterMap, roles);
-        // }
-        // commit('SET_ROUTERS', accessedRouters);
-        commit('SET_ROUTERS', [
-          ...getAccessRoutes(asyncRouterMap, share.permissionInfo),
-          restFoundRoute,
-        ]);
+        const { roles } = data;
+        let accessedRouters;
+        if (roles.includes('admin')) {
+          accessedRouters = asyncRouterMap;
+        } else {
+          accessedRouters = filterAsyncRouter(asyncRouterMap, roles);
+        }
+        commit('SET_ROUTERS', accessedRouters);
         resolve();
       });
     },

@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import Layout from '../sys/views/layout/Layout';
-import routes from './routes';
 
 Vue.use(Router);
 
@@ -24,16 +23,6 @@ Vue.use(Router);
  * }
  * */
 export const constantRouterMap = [
-  // {
-  //   path: '/login',
-  //   component: () => import('@/sys/views/login/index'),
-  //   hidden: true,
-  // },
-  // {
-  //   path: '/auth-redirect',
-  //   component: () => import('@/sys/views/login/authredirect'),
-  //   hidden: true,
-  // },
   {
     path: '/404',
     component: () => import('../sys/views/errorPage/404'),
@@ -58,6 +47,44 @@ export const constantRouterMap = [
       },
     ],
   },
+  {
+    path: '/upload',
+    component: Layout,
+    redirect: '/upload/image',
+    name: '上传管理',
+    meta: { title: '上传管理', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        path: 'image',
+        component: () => import('../upload/image/App'),
+        name: '上传图片',
+        meta: { title: '上传图片', noCache: true },
+      },
+      {
+        path: 'file',
+        component: () => import('../upload/file/App'),
+        name: '上传文件',
+        meta: { title: '上传文件', noCache: true },
+      },
+    ],
+  },
+
+  {
+    path: '/link',
+    component: Layout,
+    redirect: '/link/open-install-url',
+    name: '链接管理',
+    meta: { title: '链接管理', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        path: 'open-install-url',
+        component: () => import('../link/open-install-url/App'),
+        name: '生成 OpenInstall 链接',
+        meta: { title: '生成 OpenInstall 链接', noCache: true },
+      },
+    ],
+  },
+  { path: '*', redirect: '/404', hidden: true },
 ];
 
 export default new Router({
@@ -65,6 +92,4 @@ export default new Router({
   routes: constantRouterMap,
 });
 
-export const asyncRouterMap = routes;
-
-export const restFoundRoute = { path: '*', redirect: '/404', hidden: true };
+export const asyncRouterMap = [];

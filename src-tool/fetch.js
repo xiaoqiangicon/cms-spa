@@ -26,14 +26,3 @@ const post = res => {
 seeFetch.config('common', {
   post: [post, post],
 });
-
-function globalAccessPost(res) {
-  res.data.names = res.data.menu.map(i => i.key);
-}
-
-seeFetch.config('global/access', {
-  url: ['/user/menu', '/mock/access-s.json', '/mock/access.json'],
-  method: ['post'],
-  stringify: [true],
-  post: [globalAccessPost, globalAccessPost],
-});
