@@ -202,6 +202,7 @@
     >
       <el-select v-model="selectComId" filterable placeholder="请选择">
         <el-option
+          v-if="item.id"
           v-for="item in componentList"
           :key="item.id"
           :label="item.name"

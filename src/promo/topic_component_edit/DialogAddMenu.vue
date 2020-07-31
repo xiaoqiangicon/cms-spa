@@ -18,7 +18,8 @@
       </div>
       <div class="row">
         <div class="row-name">
-          图标：
+          <p style="margin: 0">图标：</p>
+          <p style="margin: 0">(110*150最佳)</p>
         </div>
         <Upload :images="covers" :multiple="false" />
       </div>
@@ -40,7 +41,8 @@
       </div>
       <div class="row">
         <div class="row-name">
-          简介封面：
+          <p style="margin: 0">简介封面：</p>
+          <p style="margin: 0">(310*130最佳)</p>
         </div>
         <Upload v-if="!urlSwitch" :images="introCovers" :multiple="false" />
         <span style="line-height: 32px;" v-else
@@ -141,7 +143,7 @@ export default {
         });
         return;
       }
-      if (!this.introCovers.length) {
+      if (!this.urlSwitch && !this.introCovers.length) {
         Notification({
           type: 'error',
           title: '提示',
@@ -163,7 +165,7 @@ export default {
       if (!this.urlSwitch) {
         this.url = '';
       }
-      if (!this.introduce) {
+      if (!this.urlSwitch && !this.introduce) {
         Notification({
           type: 'error',
           title: '提示',

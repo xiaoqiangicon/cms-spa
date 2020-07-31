@@ -79,7 +79,10 @@
       />
     </div>
     <div class="row">
-      <span class="row-title">封面图重定义</span>
+      <div class="row-title">
+        <p style="margin: 0">封面图重定义</p>
+        <p style="margin: 0">(比例100*125最佳)</p>
+      </div>
       <Upload :images="covers" :multiple="false" />
     </div>
 
@@ -224,14 +227,23 @@ export default {
       }
       if (activeComponent === 'templeComponent') {
         if (!this.name) {
-          rowData.name = this.templeList.find(
-            val => val.id == this.templeId
-          ).name;
+          rowData.name = this.templeList
+            .find(val => val.id == this.templeId)
+            .name.slice(5);
         } else {
           rowData.name = this.name;
         }
       } else {
         rowData.name = this.name || '';
+      }
+
+      if (!this.templeId) {
+        Notification({
+          type: 'warning',
+          title: '提示',
+          message: '请选择ID',
+        });
+        return;
       }
 
       rowData.contentId = this.templeId;
