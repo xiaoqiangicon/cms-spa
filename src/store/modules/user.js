@@ -1,7 +1,9 @@
 /* eslint-disable */
 // import { loginByUsername, logout, getUserInfo } from '@/api/login';
 import cookie from 'js-cookie';
+import seeFetch from 'see-fetch';
 import { getToken, setToken, removeToken } from '../../sys/utils/auth';
+import share from '../../share';
 import img from '../../../images/logo.png';
 
 const user = {
@@ -67,44 +69,28 @@ const user = {
     // 获取用户信息
     GetUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        const data = {
-          roles: ['admin'],
-          token: 'admin',
-          introduction: '我是超级管理员',
-          avatar: img,
-          name: cookie.get('userMid') || '这谁呀',
-        };
+        seeFetch('global/access')
+          .then(res => {
+            share.permissionInfo = res.data;
 
-        commit('SET_ROLES', data.roles);
-        commit('SET_NAME', data.name);
-        commit('SET_AVATAR', data.avatar);
-        commit('SET_INTRODUCTION', data.introduction);
+            const data = {
+              roles: ['admin'],
+              token: 'admin',
+              introduction: '我是超级管理员',
+              avatar: img,
+              name: cookie.get('userMid') || '这谁呀',
+            };
 
-        resolve({ data });
+            commit('SET_ROLES', data.roles);
+            commit('SET_NAME', data.name);
+            commit('SET_AVATAR', data.avatar);
+            commit('SET_INTRODUCTION', data.introduction);
 
-        // getUserInfo(state.token)
-        //   .then(response => {
-        //     if (!response.data) {
-        //       // 由于mockjs 不支持自定义状态码只能这样hack
-        //       reject('error');
-        //     }
-        //     const data = response.data;
-        //
-        //     if (data.roles && data.roles.length > 0) {
-        //       // 验证返回的roles是否是一个非空数组
-        //       commit('SET_ROLES', data.roles);
-        //     } else {
-        //       reject('getInfo: roles must be a non-null array !');
-        //     }
-        //
-        //     commit('SET_NAME', data.name);
-        //     commit('SET_AVATAR', data.avatar);
-        //     commit('SET_INTRODUCTION', data.introduction);
-        //     resolve(response);
-        //   })
-        //   .catch(error => {
-        //     reject(error);
-        //   });
+            resolve({ data });
+          })
+          .catch(error => {
+            reject(error);
+          });
       });
     },
 

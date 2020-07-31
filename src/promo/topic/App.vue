@@ -29,14 +29,21 @@
             :align="'center'"
           />
           <el-table-column prop="link" label="专题链接" :align="'center'" />
-          <el-table-column label="操作" :align="'center'">
+          <el-table-column label="操作" :align="'center'" width="264">
             <template slot-scope="scope">
               <el-button
                 type="success"
                 size="mini"
                 @click="handleClickEdit(scope.row)"
               >
-                编辑
+                编辑页面
+              </el-button>
+              <el-button
+                type="success"
+                size="mini"
+                @click="handleClickEditCom(scope.row)"
+              >
+                编辑组件
               </el-button>
               <el-button
                 type="success"
@@ -131,6 +138,11 @@ export default {
       const { id } = rowData;
       // window.sessionStorage['promo/topic/item'] = JSON.stringify(rowData);
       this.$router.push(`/promo/topicEdit/${id}`);
+    },
+    handleClickEditCom(rowData) {
+      const { id, title } = rowData;
+
+      this.$router.push(`/promo/topicEdit/${id}/${id}/${title}`);
     },
     handleClickDelete(rowData) {
       this.$confirm('此操作将删除选中专题, 是否继续?', '提示', {

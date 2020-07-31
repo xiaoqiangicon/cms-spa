@@ -1,6 +1,7 @@
 <template>
   <div class="contain">
     <el-card>
+      <p class="topic-title">{{ title }}</p>
       <div class="menu">
         <div class="">
           <span>菜单按钮：</span>
@@ -32,7 +33,7 @@
           </div>
         </div>
       </div>
-      <div class="component-box">
+      <div class="component-box" v-if="componentList.length">
         <span>页面组件：</span>
         <div class="component-list">
           <div
@@ -40,6 +41,7 @@
             :key="key"
             class="component-item"
           >
+            <div class="del-component" @click="delComponent(key)">×</div>
             <div class="mg-b-20">
               <span class="mg-l-5"
                 >{{
@@ -77,13 +79,6 @@
                 >
                   {{ componentList[key].show ? '收缩' : '展开' }}列表
                 </el-button>
-                <el-button
-                  type="danger"
-                  size="small"
-                  @click="delComponent(key)"
-                >
-                  删除组件
-                </el-button>
               </div>
             </div>
             <el-table
@@ -91,10 +86,20 @@
               ref="componentTable"
               border=""
               row-key="id"
+              :key="Math.random()"
               :data="componentList[key].dataList"
               stripe
               style="width: 100%"
             >
+              <el-table-column label="排序" :align="'center'">
+                <template slot-scope="scope">
+                  <img
+                    class="sort-pic"
+                    src="https://pic.zizaihome.com/a3bbf6ac-d211-11ea-ac7a-00163e060b31.png"
+                    alt=""
+                  />
+                </template>
+              </el-table-column>
               <el-table-column prop="contentId" label="ID" :align="'center'" />
               <el-table-column prop="name" label="名称" :align="'center'" />
               <el-table-column prop="label" label="标签" :align="'center'" />
@@ -120,13 +125,24 @@
               />
               <el-table-column label="操作" :align="'center'">
                 <template slot-scope="scope">
-                  <el-button
-                    type="success"
-                    size="mini"
-                    @click="delRow(scope.row, key)"
-                  >
-                    删除
-                  </el-button>
+                  <div class="row-btn-box">
+                    <el-button
+                      class="row-btn"
+                      type="primary"
+                      size="mini"
+                      @click="editRow(scope, key)"
+                    >
+                      编辑
+                    </el-button>
+                    <el-button
+                      class="row-btn"
+                      type="danger"
+                      size="mini"
+                      @click="delRow(scope, key)"
+                    >
+                      删除
+                    </el-button>
+                  </div>
                 </template>
               </el-table-column>
             </el-table>
@@ -154,29 +170,39 @@
     />
     <DialogAddCom
       :active-component="activeComponent"
-      :item="comItem"
+      :item="rowItem"
       :visible="dialogAddComVisible"
       :add-component-item-index="addComponentItemIndex"
+      :itemIndex="rowIndex"
       @updateComVisible="updateDialogAddComVisible"
       @saveCom="addComItem"
     />
-    <el-dialog :title="'绑定组件'" :visible.sync="bindVisible">
+    <el-dialog
+      :title="'绑定组件'"
+      :visible.sync="bindVisible"
+      :append-to-body="true"
+    >
       <el-button type="primary" @click="addBindCom">
         添加组件库
       </el-button>
-      <div ref="bindList" class="bind-list">
+      <draggable v-model="bindComList" ref="bindList" class="bind-list">
         <div v-for="(item, key) in bindComList" :key="key" class="bind-item">
           <span>{{ item.name }}</span>
           <span class="bind-close" @click="delBindCom(item)">×</span>
         </div>
-      </div>
+      </draggable>
       <el-button class="save-bind" type="primary" @click="saveBindCom">
         保存
       </el-button>
     </el-dialog>
-    <el-dialog :title="'选择组件'" :visible.sync="selectComVisible">
+    <el-dialog
+      :title="'选择组件'"
+      :visible.sync="selectComVisible"
+      :append-to-body="true"
+    >
       <el-select v-model="selectComId" filterable placeholder="请选择">
         <el-option
+          v-if="item.id"
           v-for="item in componentList"
           :key="item.id"
           :label="item.name"
@@ -199,14 +225,17 @@ import { Notification } from 'element-ui';
 import Sortable from 'sortablejs';
 import DialogAddMenu from './DialogAddMenu.vue';
 import DialogAddCom from './DialogAddCom.vue';
+import draggable from 'vuedraggable';
 
 export default {
   components: {
     DialogAddMenu,
     DialogAddCom,
+    draggable,
   },
   data() {
     return {
+      title: '', // 当前专题名字
       topicId: '',
       dialogAddVisible: !1,
       menuList: [],
@@ -220,7 +249,9 @@ export default {
       selectComId: '',
 
       componentList: [], // 组件列表
-      comItem: {}, // 选择的组件某条数据
+      rowItem: {}, // 选择的组件某条数据
+      comRowIndex: 0, // 选择的某条数据附属于哪个组件
+      rowIndex: -1, // 选择某条数据的下标
       dialogAddComVisible: !1, // 添加组件项目弹框
       activeComponent: 'templeComponent', // 当前是什么类型
       addComponentItemIndex: 0, // 第几个组件添加项目
@@ -250,21 +281,34 @@ export default {
           ],
         },
       },
+
+      scrollTop: 0,
     };
   },
   created() {
-    let { id } = this.$route.params;
+    let { id, title } = this.$route.params;
+    this.title = title;
     id = parseInt(id, 10);
     if (id) {
       this.topicId = id;
       this.getDetail();
     }
   },
+  beforeUpdate() {
+    this.scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+
+    console.log(this.scrollTop);
+  },
+  updated() {
+    if (this.$refs.componentTable) this.initSortable();
+    window.scrollTo(0, this.scrollTop);
+  },
   methods: {
+    // 排序
     initSortable() {
       const self = this;
       const $aTbody = this.$refs.componentTable;
-
       $aTbody.forEach((item, key) => {
         const $tbody = item.$el.querySelector('tbody');
         Sortable.create($tbody, {
@@ -295,13 +339,24 @@ export default {
         }
       });
     },
+    // 弹出添加菜单框
     showMenuAdd() {
       this.menuItem = {};
       this.dialogAddVisible = !0;
     },
     // 添加菜单
     addMenu(menuData) {
-      this.menuList.push(menuData);
+      // 新建时添加至菜单列表，否则修改
+      if (!menuData.isModify) {
+        this.menuList.push(menuData);
+      } else {
+        this.menuList.forEach((item, key) => {
+          if (item.id === menuData.id) {
+            this.menuList[key] = menuData;
+          }
+        });
+        this.$forceUpdate();
+      }
     },
     // 删除菜单
     delMenu(item) {
@@ -330,10 +385,14 @@ export default {
         });
       });
     },
-    // 编辑菜单
+    // 弹出编辑菜单框
     editMenuItem(item) {
       this.menuItem = item;
       this.dialogAddVisible = !0;
+    },
+    // 弹出编辑菜单框
+    updateDialogAddVisible(visible) {
+      this.dialogAddVisible = visible;
     },
     // 点击绑定组件
     bindCom(menuItem) {
@@ -347,22 +406,9 @@ export default {
           }
         });
       });
-      this.bindComList = bindCom;
+      this.bindComList = bindCom; // Sortable修改dom已经改变了视图，所以不能让vue监听到数据改变
+
       this.bindVisible = !0;
-      // 初始化绑定组件可拖拽
-      this.$nextTick(() => {
-        const self = this;
-        const $bindList = this.$refs.bindList;
-        console.log($bindList);
-        Sortable.create($bindList, {
-          animation: 150,
-          onEnd({ newIndex, oldIndex }) {
-            const { dataList } = self.componentList[0];
-            const oldRowData = dataList.splice(oldIndex, 1)[0];
-            dataList.splice(newIndex, 0, oldRowData);
-          },
-        });
-      });
     },
     // 选择可绑定组件框显示
     addBindCom() {
@@ -382,8 +428,7 @@ export default {
     },
     // 删除绑定得组件
     delBindCom(menuItem) {
-      console.log('menuItem', menuItem);
-      this.$confirm('确定删除当前行吗？', '提示', {
+      this.$confirm('确定取消绑定当前组件吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
@@ -407,6 +452,12 @@ export default {
           this.bindVisible = !1;
           this.selectComId = '';
           this.selectComVisible = !1;
+          // 不必刷新页面就可以看到绑定组件的增加修改
+          this.menuList.forEach((item, key) => {
+            if (item.id === this.tagId) {
+              item.componentJSON = componentJSON;
+            }
+          });
           Notification({
             type: 'success',
             title: '提示',
@@ -430,11 +481,15 @@ export default {
         this.initSortable();
       });
     },
-    updateDialogAddVisible(visible) {
-      this.dialogAddVisible = visible;
+    // 弹出组件数据框
+    updateDialogAddComVisible(visible) {
+      this.dialogAddComVisible = visible;
     },
     // 点击增加一行当前组件数据
     handleClickAddComponentItem(comIndex) {
+      // rowIndex为-1是新增一条数据
+      this.rowIndex = -1;
+      this.rowItem = {};
       this.addComponentItemIndex = comIndex;
       this.componentList[comIndex].show = !0;
       this.$forceUpdate();
@@ -449,24 +504,33 @@ export default {
     },
     // 插入增加的一行数据
     addComItem(rowData) {
-      console.log(rowData);
-      this.componentList[this.addComponentItemIndex].dataList.push(rowData);
+      if (this.rowIndex >= 0) {
+        this.componentList[this.comRowIndex].dataList[this.rowIndex] = rowData;
+        this.$set(this.componentList[this.comRowIndex], this.rowIndex, rowData);
+      } else {
+        this.componentList[this.addComponentItemIndex].dataList.push(rowData);
+      }
       this.$forceUpdate();
+      this.$nextTick(() => {
+        this.initSortable();
+      });
     },
     // 删除插入的一行数据
-    delRow(row, comIndex) {
-      console.log(row, comIndex);
-
+    delRow(scope, comIndex) {
+      console.log('删除一行数据，行，组件个数', scope.$index, comIndex);
+      let row = scope.row;
+      let rowIndex = scope.$index;
       this.$confirm('确定删除当前行吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
       }).then(() => {
-        this.componentList[comIndex].dataList.forEach((dataItem, key) => {
-          if (dataItem.contentId === row.contentId) {
-            this.componentList[comIndex].dataList.splice(key, 1);
-          }
-        });
+        // this.componentList[comIndex].dataList.forEach((dataItem, key) => {
+        //   if (dataItem.contentId === row.contentId) {
+        //     this.componentList[comIndex].dataList.splice(key, 1);
+        //   }
+        // });
+        this.componentList[comIndex].dataList.splice(rowIndex, 1);
 
         let { id, name, type, dataList } = this.componentList[comIndex];
         id = id || 0;
@@ -489,16 +553,40 @@ export default {
         // })
       });
     },
+    // 修改一行数据
+    editRow(scope, comIndex) {
+      if (this.componentList[comIndex].type === 1) {
+        this.activeComponent = 'templeComponent';
+      } else if (this.componentList[comIndex].type === 2) {
+        this.activeComponent = 'buddhistComponent';
+      } else {
+        this.activeComponent = 'goodsComponent';
+      }
+
+      this.comRowIndex = comIndex;
+      this.rowIndex = scope.$index;
+      this.rowItem = scope.row;
+      this.dialogAddComVisible = !0;
+    },
     // 添加一个组件
     addComponent(type, index) {
-      this.componentList.push({ type, show: !0, dataList: [] });
-      this.$nextTick(() => {
-        this.initSortable();
+      let hasNotSave = !1;
+      this.componentList.forEach(item => {
+        if (!item.id) {
+          Notification({
+            type: 'warning',
+            title: '提示',
+            message: '当前有未保存的新建组件',
+          });
+          hasNotSave = !0;
+        }
       });
-    },
-    // 添加组件弹框显示隐藏
-    updateDialogAddComVisible(visible) {
-      this.dialogAddComVisible = visible;
+      if (!hasNotSave) {
+        this.componentList.push({ type, show: !0, dataList: [] });
+        this.$nextTick(() => {
+          this.initSortable();
+        });
+      }
     },
 
     // 保存组件
@@ -515,6 +603,7 @@ export default {
 
       const params = { id, name, type, topicId: this.topicId, dataList };
       seeFetch('promo/topicComponentEdit/addComponent', params).then(res => {
+        this.componentList[comIndex].id = res.data.id;
         if (!res.errorCode) {
           Notification({
             type: 'success',
@@ -538,6 +627,11 @@ export default {
         type: 'warning',
       }).then(() => {
         const comId = this.componentList[comIndex].id;
+
+        if (!comId) {
+          this.componentList.pop();
+          return;
+        }
 
         seeFetch('promo/topicComponentEdit/delComponent', { id: comId }).then(
           res => {
@@ -570,6 +664,11 @@ export default {
 <style lang="less" scoped>
 .contain {
   padding: 20px;
+}
+
+.topic-title {
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .menu-list {
@@ -608,24 +707,53 @@ export default {
 
 .component-box {
   display: flex;
+  margin-bottom: 20px;
   span {
     flex-shrink: 0;
   }
 }
 .component-list {
+  width: 92%;
   margin-bottom: 20px;
 }
 .component-item {
   position: relative;
   padding: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 28px;
   border: 1px solid #ccc;
   box-shadow: 3px 2px 5px rgba(0, 0, 0, 0.6);
+}
+.del-component {
+  position: absolute;
+  right: -10px;
+  top: -18px;
+  width: 30px;
+  height: 30px;
+  font-size: 26px;
+  border-radius: 50%;
+  background: #f56c6c;
+  color: #fff;
+  text-align: center;
+  line-height: 30px;
+  cursor: pointer;
+}
+.sort-pic {
+  width: 20px;
+  cursor: move;
 }
 .pic {
   width: 100px;
   height: 100px;
   border-radius: 8px;
+}
+.row-btn-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.row-btn {
+  margin-bottom: 10px;
+  margin-left: 0;
 }
 
 .bind-item {

@@ -2,6 +2,7 @@
   <el-dialog
     :title="'添加菜单（最多添加5个菜单）'"
     :visible.sync="sVisible"
+    :append-to-body="true"
     :before-close="
       () => {
         sVisible = false;
@@ -17,7 +18,8 @@
       </div>
       <div class="row">
         <div class="row-name">
-          图标：
+          <p style="margin: 0">图标：</p>
+          <p style="margin: 0">(110*150最佳)</p>
         </div>
         <Upload :images="covers" :multiple="false" />
       </div>
@@ -34,13 +36,18 @@
         <div class="row-name">
           简介：
         </div>
-        <textarea v-model="introduce" class="introduce" />
+        <textarea v-if="!urlSwitch" v-model="introduce" class="introduce" />
+        <span style="line-height: 32px;" v-else>开启链接后不可设置简介</span>
       </div>
       <div class="row">
         <div class="row-name">
-          简介封面：
+          <p style="margin: 0">简介封面：</p>
+          <p style="margin: 0">(310*130最佳)</p>
         </div>
-        <Upload :images="introCovers" :multiple="false" />
+        <Upload v-if="!urlSwitch" :images="introCovers" :multiple="false" />
+        <span style="line-height: 32px;" v-else
+          >开启链接后不可设置简介封面</span
+        >
       </div>
     </div>
     <span slot="footer" class="dialog-footer">
@@ -86,10 +93,31 @@ export default {
     visible(val) {
       this.sVisible = val;
     },
-    item(obj) {
-      this.name = obj.name;
-      this.id = obj.id;
-      this.introduce = obj.introduce;
+    item: {
+      handler(obj, oldObj) {
+        console.log('菜单数据', obj);
+        this.name = obj.name;
+        this.id = obj.id;
+        this.introduce = obj.detail;
+        if (obj.linkUrl) {
+          this.urlSwitch = !0;
+          this.url = obj.linkUrl;
+        } else {
+          this.urlSwitch = !1;
+          this.url = '';
+        }
+        if (obj.pic) {
+          this.covers = [obj.pic];
+        } else {
+          this.covers = [];
+        }
+        if (obj.coverPic) {
+          this.introCovers = [obj.coverPic];
+        } else {
+          this.introCovers = [];
+        }
+      },
+      deep: true,
     },
     name(val, oldVal) {
       if (val && val.length >= 5) {
@@ -107,22 +135,22 @@ export default {
         });
         return;
       }
-      // if (!this.covers.length) {
-      //   Notification({
-      //     type: 'error',
-      //     title: '提示',
-      //     message: '请上传图标',
-      //   });
-      //   return;
-      // }
-      // if (!this.introCovers.length) {
-      //   Notification({
-      //     type: 'error',
-      //     title: '提示',
-      //     message: '请上传简介封面',
-      //   });
-      //   return;
-      // }
+      if (!this.covers.length) {
+        Notification({
+          type: 'error',
+          title: '提示',
+          message: '请上传图标',
+        });
+        return;
+      }
+      if (!this.urlSwitch && !this.introCovers.length) {
+        Notification({
+          type: 'error',
+          title: '提示',
+          message: '请上传简介封面',
+        });
+        return;
+      }
       if (
         this.urlSwitch &&
         this.url.indexOf('https://wx.zizaihome.com/') === -1
@@ -134,7 +162,10 @@ export default {
         });
         return;
       }
-      if (!this.introduce) {
+      if (!this.urlSwitch) {
+        this.url = '';
+      }
+      if (!this.urlSwitch && !this.introduce) {
         Notification({
           type: 'error',
           title: '提示',
@@ -143,7 +174,7 @@ export default {
         return;
       }
       const params = {
-        id: 0,
+        id: this.item.id || 0,
         name: this.name,
         pic: this.covers[0],
         coverPic: this.introCovers[0],
@@ -154,8 +185,16 @@ export default {
       seeFetch('promo/topicComponentEdit/addTag', params).then(res => {
         if (!res.errorCode) {
           params.id = res.data.id;
+          if (this.item.id) {
+            params.isModify = !0;
+          }
           this.$emit('save', params);
           this.$emit('updateVisible', !1);
+          Notification({
+            type: 'success',
+            title: '提示',
+            message: '保存成功',
+          });
         } else {
           Notification({
             type: 'error',

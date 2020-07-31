@@ -7,6 +7,7 @@ export const getErpADList = {
       id,
       sort: 1 + id,
       articleId: 100,
+      commodityId: 100,
       name: `测试${id}`,
       addTime: '2019-12-20 16:34:57',
       updateTime: '2019-12-20 17:39:28',

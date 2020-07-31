@@ -21,13 +21,20 @@
             <el-option label="3" value="3" />
           </el-select>
         </el-form-item>
-        <el-form-item
+        <div
           v-if="adType === 1 || adType === 3"
-          label="文章ID"
-          prop="articleId"
+          style="border: dashed 1px #ccc; padding: 20px; border-radius: 10px"
         >
-          <el-input v-model="editForm.articleId" autocomplete="off" />
-        </el-form-item>
+          <el-form-item label="文章ID" prop="articleId">
+            <el-input v-model="editForm.articleId" autocomplete="off" />
+          </el-form-item>
+          <el-form-item label="佛事ID" prop="commodityId">
+            <el-input v-model="editForm.commodityId" autocomplete="off" />
+          </el-form-item>
+          <p class="mg-b-0">
+            文章Id与佛事Id只能填写其中一个
+          </p>
+        </div>
         <el-form-item v-if="adType === 2" label="跳转链接" prop="link">
           <el-input v-model="editForm.link" autocomplete="off" />
         </el-form-item>
@@ -91,7 +98,6 @@
 </template>
 
 <script>
-import { Notification } from 'element-ui';
 import seeFetch from 'see-fetch';
 import './fetch';
 import { dateToString } from '../../util';
@@ -114,6 +120,7 @@ export default {
         name: '',
         position: '',
         articleId: '',
+        commodityId: '',
         link: '',
         sort: '',
         startTime: '',
@@ -138,9 +145,15 @@ export default {
         ],
         articleId: [
           {
-            required: true,
             pattern: /^[0-9]*$/,
             message: '请正确输入文章ID',
+            trigger: 'blur',
+          },
+        ],
+        commodityId: [
+          {
+            pattern: /^[0-9]*$/,
+            message: '请正确输入佛事ID',
             trigger: 'blur',
           },
         ],
@@ -186,7 +199,7 @@ export default {
   },
   watch: {
     // 显示对话框时 重置表单数据
-    visible(newVal, oldVal) {
+    visible(newVal) {
       if (!newVal) return;
       this.id = this.type === 1 ? 0 : this.data.id;
       this.vaildTime = [];
@@ -226,6 +239,18 @@ export default {
             type: 'error',
           });
         } else {
+          let error = '';
+          if (this.editForm.articleId && this.editForm.commodityId) {
+            error = '文章Id与佛事Id只能保留其中一个';
+          } else if (!this.editForm.articleId && !this.editForm.commodityId) {
+            error = '文章Id与佛事Id至少要填写一个';
+          }
+
+          if (error) {
+            this.$message.error(error);
+            return;
+          }
+
           seeFetch('erpAD/addAndUpdateErpAD', {
             type: this.adType,
             id: that.id,

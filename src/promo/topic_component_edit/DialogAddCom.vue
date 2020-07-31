@@ -1,8 +1,9 @@
 <template>
   <el-dialog
-    :title="'添加'"
+    :title="itemIndex >= 0 ? '编辑' : '添加'"
     :active-component="activeComponent"
     :visible.sync="sVisible"
+    :append-to-body="true"
     :before-close="
       () => {
         sVisible = false;
@@ -54,27 +55,16 @@
 
     <div class="row">
       <span class="row-title">重定义名称</span>
-      <el-input
-        v-model="name"
-        :disabled="activeComponent === 'templeComponent'"
-        type="text"
-        placeholder="重定义名称（可不填）"
-      />
+      <el-input v-model="name" type="text" placeholder="重定义名称（可不填）" />
     </div>
     <div class="row">
       <span class="row-title">标签(多个用-连接)</span>
-      <el-input
-        v-model="label"
-        :disabled="activeComponent === 'templeComponent'"
-        type="text"
-        placeholder="多个标签用 - 连接"
-      />
+      <el-input v-model="label" type="text" placeholder="多个标签用 - 连接" />
     </div>
     <div class="row">
       <span class="row-title">描述重定义</span>
       <textarea
         v-model="detail"
-        :disabled="activeComponent === 'templeComponent'"
         placeholder="重定义描述（可不填）"
         class="intro"
       />
@@ -89,12 +79,11 @@
       />
     </div>
     <div class="row">
-      <span class="row-title">封面图重定义</span>
-      <Upload
-        v-if="activeComponent !== 'templeComponent'"
-        :images="covers"
-        :multiple="false"
-      />
+      <div class="row-title">
+        <p style="margin: 0">封面图重定义</p>
+        <p style="margin: 0">(比例100*125最佳)</p>
+      </div>
+      <Upload :images="covers" :multiple="false" />
     </div>
 
     <span slot="footer" class="dialog-footer">
@@ -124,6 +113,14 @@ export default {
       default: 0,
       type: Number,
     },
+    item: {
+      default: {},
+      type: Object,
+    },
+    itemIndex: {
+      default: -1,
+      type: Number,
+    },
   },
   data() {
     return {
@@ -144,13 +141,35 @@ export default {
   watch: {
     sVisible(val) {
       this.$emit('updateComVisible', val);
-
-      if (val) {
-        this.init();
-      }
     },
     visible(val) {
       this.sVisible = val;
+    },
+    btnName(val, oldVal) {
+      if (val && val.length >= 5) {
+        this.btnName = this.btnName.slice(0, 5);
+      }
+    },
+    name(val, oldVal) {
+      if (val && val.length >= 30) {
+        this.name = this.name.slice(0, 30);
+      }
+    },
+    item: {
+      handler(obj, oldObj) {
+        console.log('handler一行数据', obj);
+        this.name = obj.name;
+        this.templeId = obj.contentId;
+        this.detail = obj.detail;
+        this.label = obj.label;
+        this.btnName = obj.btnName;
+        if (obj.pic) {
+          this.covers = [obj.pic];
+        } else {
+          this.covers = [];
+        }
+      },
+      deep: true,
     },
   },
   created() {
@@ -192,44 +211,46 @@ export default {
         }
       );
     },
-    init() {
-      this.templeId = '';
-      this.buddhistId = '';
-    },
 
     handleClickSave() {
       const { activeComponent } = this;
-      // const tag = activeComponent.split('Component')[0];
       const rowData = {};
-      rowData.id = this.templeId;
-      // if (tag === 'temple') {
-      //   rowData = this[`${tag}List`].find(item => item.id === this[`${tag}Id`]);
-      // } else if (tag === 'buddhist') {
-      //   rowData = this.buddhistData;
-      // } else if (tag === 'goods') {
-      //   rowData = this.goodsData;
-      // }
+      // rowData.id = this.templeId;
 
-      if (!rowData.id) {
+      if (activeComponent !== 'templeComponent' && !this.btnName) {
         Notification({
-          type: 'error',
+          type: 'warning',
           title: '提示',
-          message: '请选择需要添加的组件',
+          message: '请填写按钮文字',
+        });
+        return;
+      }
+      if (activeComponent === 'templeComponent') {
+        if (!this.name) {
+          rowData.name = this.templeList
+            .find(val => val.id == this.templeId)
+            .name.slice(5);
+        } else {
+          rowData.name = this.name;
+        }
+      } else {
+        rowData.name = this.name || '';
+      }
+
+      if (!this.templeId) {
+        Notification({
+          type: 'warning',
+          title: '提示',
+          message: '请选择ID',
         });
         return;
       }
 
-      rowData.contentId = rowData.id;
+      rowData.contentId = this.templeId;
       rowData.pic = this.covers[0] || '';
-      rowData.name = this.name;
-      rowData.detail = this.detail;
-      rowData.label = this.label;
-      rowData.btnName = this.btnName;
-      this.covers[0] = '';
-      this.name = '';
-      this.detail = '';
-      this.label = '';
-      this.btnName = '';
+      rowData.detail = this.detail || '';
+      rowData.label = this.label || '';
+      rowData.btnName = this.btnName || '';
       this.$emit('saveCom', rowData);
       this.$emit('updateComVisible', !1);
     },

@@ -1,0 +1,1017 @@
+[
+  {
+    "path": "/ling",
+    "component": 1,
+    "redirect": "/ling/index",
+    "name": "ling",
+    "meta": {
+      "title": "要灵灵管理",
+      "icon": "fa-circle",
+      "noCache": 1
+    },
+    "children": [
+      {
+        "path": "index",
+        "component": 1,
+        "name": "ling-index",
+        "meta": {
+          "title": "礼品管理",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "edit/:id",
+        "component": 1,
+        "name": "ling-edit",
+        "meta": {
+          "title": "礼品添加 / 编辑",
+          "noCache": 1
+        },
+        "hidden": 1
+      },
+      {
+        "path": "exchange",
+        "component": 1,
+        "name": "ling-exchange",
+        "meta": {
+          "title": "兑奖管理",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "gift",
+        "component": 1,
+        "name": "ling-gift",
+        "meta": {
+          "title": "暴富奖品",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "send",
+        "component": 1,
+        "name": "ling-send",
+        "meta": {
+          "title": "暴富发奖",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "bubble",
+        "component": 1,
+        "name": "ling-bubble",
+        "meta": {
+          "title": "气泡广告",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "entry",
+        "component": 1,
+        "name": "ling-entry",
+        "meta": {
+          "title": "许愿入口",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "fate",
+        "component": 1,
+        "name": "ling-fate",
+        "meta": {
+          "title": "好运攻略",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "/wish/marker",
+        "name": "wish-marker",
+        "meta": {
+          "title": "祈福牌管理"
+        }
+      },
+      {
+        "path": "face",
+        "component": 1,
+        "name": "ling-face",
+        "meta": {
+          "title": "互动发言",
+          "noCache": 1
+        }
+      }
+    ]
+  },
+  {
+    "path": "/fubi",
+    "component": 1,
+    "redirect": "/fubi/index",
+    "name": "fubi",
+    "meta": {
+      "title": "福币分销",
+      "icon": "fa-circle",
+      "noCache": 1
+    },
+    "children": [
+      {
+        "path": "index",
+        "component": 1,
+        "name": "fubi-index",
+        "meta": {
+          "title": "福币商城",
+          "noCache": 1
+        }
+      }
+    ]
+  },
+  {
+    "path": "/promo",
+    "component": 1,
+    "redirect": "/promo/index",
+    "name": "promo",
+    "meta": {
+      "title": "运营事件",
+      "icon": "fa-circle",
+      "noCache": 1
+    },
+    "children": [
+      {
+        "path": "index",
+        "component": 1,
+        "name": "promo-index",
+        "meta": {
+          "title": "事件管理",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "index/transfer-list",
+        "component": 1,
+        "name": "promo-index-transfer-list",
+        "meta": {
+          "title": "事件管理 / 转单列表",
+          "noCache": 1
+        },
+        "hidden": 1
+      },
+      {
+        "path": "statistics",
+        "component": 1,
+        "name": "promo-statistics",
+        "meta": {
+          "title": "转单统计",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "ci",
+        "component": 1,
+        "name": "promo-ci",
+        "meta": {
+          "title": "慈光计划",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "topic",
+        "component": 1,
+        "name": "promo-topic",
+        "meta": {
+          "title": "专题管理",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "topicEdit/:id",
+        "component": 1,
+        "name": "promo-topicEdit",
+        "meta": {
+          "title": "专题列表 / 编辑专题",
+          "noCache": 1
+        },
+        "hidden": 1
+      },
+      {
+        "path": "topicEdit/:id/:id",
+        "component": 1,
+        "name": "promo-topicEdit2",
+        "meta": {
+          "title": "专题列表 / 编辑专题 / 编辑组件",
+          "noCache": 1
+        },
+        "hidden": 1
+      },
+      {
+        "path": "topicCreate/:id",
+        "component": 1,
+        "name": "promo-topicCreate",
+        "meta": {
+          "title": "专题列表 / 新建专题",
+          "noCache": 1
+        },
+        "hidden": 1
+      },
+      {
+        "path": "/event/thousand",
+        "name": "event-thousand",
+        "meta": {
+          "title": "千寺祈福"
+        }
+      },
+      {
+        "path": "/goods/index",
+        "name": "goods-index",
+        "meta": {
+          "title": "自在好物"
+        }
+      },
+      {
+        "path": "transferSet/:id",
+        "component": 1,
+        "name": "promo-transferSet",
+        "meta": {
+          "title": "转单系统 / 转单设置",
+          "noCache": 1
+        },
+        "hidden": 1
+      },
+      {
+        "path": "mergeSet/:id",
+        "component": 1,
+        "name": "promo-mergeSet",
+        "meta": {
+          "title": "转单系统 / 组合设置",
+          "noCache": 1
+        },
+        "hidden": 1
+      },
+      {
+        "path": "buddhistEdit/:id",
+        "component": 1,
+        "name": "promo-buddhistEdit",
+        "meta": {
+          "title": "推广佛事 / 推广编辑",
+          "noCache": 1
+        },
+        "hidden": 1
+      },
+      {
+        "path": "fubiRecord/:id",
+        "component": 1,
+        "name": "promo-fubiRecord",
+        "meta": {
+          "title": "福币分享 / 记录",
+          "noCache": 1
+        },
+        "hidden": 1
+      },
+      {
+        "path": "pay-pop",
+        "component": 1,
+        "name": "promo-pay-pop",
+        "meta": {
+          "title": "支付弹窗设置",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "projectManage",
+        "component": 1,
+        "name": "promo-projectManage",
+        "meta": {
+          "title": "第三方项目管理",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "projectManage/:id",
+        "component": 1,
+        "name": "promo-projectManage-id",
+        "meta": {
+          "title": "第三方项目管理 / 绑定佛事列表",
+          "noCache": 1
+        },
+        "hidden": 1
+      },
+      {
+        "path": "projectManage/:id/:id",
+        "component": 1,
+        "name": "promo-projectManage-id-id",
+        "meta": {
+          "title": "绑定佛事列表 / 详情",
+          "noCache": 1
+        },
+        "hidden": 1
+      }
+    ]
+  },
+  {
+    "path": "/temple",
+    "component": 1,
+    "redirect": "/temple/super",
+    "name": "temple",
+    "meta": {
+      "title": "寺院管理",
+      "icon": "fa-circle",
+      "noCache": 1
+    },
+    "children": [
+      {
+        "path": "super",
+        "component": 1,
+        "name": "temple-super",
+        "meta": {
+          "title": "超级访问",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "notice",
+        "component": 1,
+        "name": "temple-notice",
+        "meta": {
+          "title": "寺院通知",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "/temple/verify",
+        "name": "temple-verify",
+        "meta": {
+          "title": "寺院审核"
+        }
+      },
+      {
+        "path": "/temple/certification",
+        "name": "temple-certification",
+        "meta": {
+          "title": "寺院列表"
+        }
+      },
+      {
+        "path": "/finance/verifyIndex",
+        "name": "finance-verifyIndex",
+        "meta": {
+          "title": "善款资料审核"
+        }
+      },
+      {
+        "path": "comment",
+        "component": 1,
+        "name": "temple-comment",
+        "meta": {
+          "title": "评价管理",
+          "noCache": 1
+        }
+      },
+      {
+        "name": "temple-integral-task",
+        "path": "integral-task",
+        "component": 1,
+        "meta": {
+          "title": "积分任务",
+          "noCache": 1
+        }
+      },
+      {
+        "name": "temple-integrate",
+        "path": "integrate",
+        "component": 1,
+        "meta": {
+          "title": "积分记录",
+          "noCache": 1
+        }
+      }
+    ]
+  },
+  {
+    "path": "/finance",
+    "component": 1,
+    "redirect": "/finance/pending",
+    "name": "finance",
+    "meta": {
+      "title": "善款中心",
+      "icon": "fa-circle",
+      "noCache": 1
+    },
+    "children": [
+      {
+        "path": "pending",
+        "component": 1,
+        "name": "finance-pending",
+        "meta": {
+          "title": "待处理事项",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "refund",
+        "component": 1,
+        "name": "finance-refund",
+        "meta": {
+          "title": "退款列表",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "taking/:id",
+        "component": 1,
+        "name": "finance-taking",
+        "meta": {
+          "title": "提现账单详情",
+          "noCache": 1
+        },
+        "hidden": 1
+      },
+      {
+        "path": "stat",
+        "component": 1,
+        "name": "finance-stat",
+        "meta": {
+          "title": "善款统计",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "summary",
+        "component": 1,
+        "name": "finance-summary",
+        "meta": {
+          "title": "善款明细",
+          "noCache": 1
+        },
+        "hidden": 1
+      },
+      {
+        "path": "special",
+        "component": 1,
+        "name": "finance-special",
+        "meta": {
+          "title": "特殊提现",
+          "noCache": 1
+        },
+        "hidden": 1
+      },
+      {
+        "path": "receipt",
+        "component": 1,
+        "name": "finance-receipt",
+        "meta": {
+          "title": "发票管理",
+          "naCache": 1
+        }
+      },
+      {
+        "path": "income-stat",
+        "component": 1,
+        "name": "finance-income-stat",
+        "meta": {
+          "title": "营收统计",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "income",
+        "name": "finance-income",
+        "component": 1,
+        "meta": {
+          "title": "营收管理",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "record",
+        "name": "finance-record",
+        "component": 1,
+        "meta": {
+          "title": "人工记账",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "remark",
+        "name": "finance-remark",
+        "component": 1,
+        "meta": {
+          "title": "提醒备注",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "trade-stat",
+        "name": "finance-trade-stat",
+        "component": 1,
+        "meta": {
+          "title": "交易统计",
+          "noCache": 1
+        }
+      }
+    ]
+  },
+  {
+    "path": "/cooperation",
+    "component": 1,
+    "name": "cooperation",
+    "meta": {
+      "title": "第三方项目",
+      "icon": "fa-circle",
+      "noCache": 1
+    },
+    "children": [
+      {
+        "path": "/cooperation/projectManage",
+        "component": 1,
+        "name": "cooperation-projectManage",
+        "meta": {
+          "title": "项目管理",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "/cooperation/projectManage/:id",
+        "component": 1,
+        "name": "cooperation-projectManage-id",
+        "meta": {
+          "title": "项目详情",
+          "noCache": 1
+        },
+        "hidden": 1
+      }
+    ]
+  },
+  {
+    "path": "/qu",
+    "component": 1,
+    "redirect": "/qu/article",
+    "name": "qu",
+    "meta": {
+      "title": "趣头条管理",
+      "icon": "fa-circle",
+      "noCache": 1
+    },
+    "children": [
+      {
+        "path": "article",
+        "component": 1,
+        "name": "qu-article",
+        "meta": {
+          "title": "订阅文章列表",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "material",
+        "component": 1,
+        "name": "qu-material",
+        "meta": {
+          "title": "素材库",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "source",
+        "component": 1,
+        "name": "qu-source",
+        "meta": {
+          "title": "订阅源管理",
+          "noCache": 1
+        }
+      }
+    ]
+  },
+  {
+    "path": "/order",
+    "component": 1,
+    "redirect": "/order/index",
+    "name": "order",
+    "meta": {
+      "title": "订单管理",
+      "icon": "fa-circle",
+      "noCache": 1
+    },
+    "children": [
+      {
+        "path": "/order/templeOrderList",
+        "name": "order-templeOrderList",
+        "meta": {
+          "title": "寺院监控"
+        }
+      },
+      {
+        "path": "/orderManage/statisticsDetail",
+        "name": "order-statisticsDetail",
+        "meta": {
+          "title": "订单查询"
+        }
+      },
+      {
+        "path": "refund",
+        "component": 1,
+        "name": "order-refund",
+        "meta": {
+          "title": "退款记录",
+          "noCache": 1
+        }
+      }
+    ]
+  },
+  {
+    "path": "/stat",
+    "component": 1,
+    "name": "stat",
+    "meta": {
+      "title": "数据统计",
+      "icon": "fa-circle",
+      "noCache": 1
+    },
+    "children": [
+      {
+        "name": "stat-sum",
+        "path": "/stat/sum",
+        "meta": {
+          "title": "数据汇总"
+        }
+      },
+      {
+        "name": "stat-statisticsIndex",
+        "path": "/stat/statisticsIndex",
+        "meta": {
+          "title": "分析报表"
+        }
+      },
+      {
+        "name": "stat-statisticsIndex-module",
+        "path": "/stat/statisticsIndex?type=module",
+        "meta": {
+          "title": "模块数据"
+        }
+      },
+      {
+        "name": "stat-templeIndex",
+        "path": "/stat/templeIndex",
+        "meta": {
+          "title": "寺院数据"
+        }
+      },
+      {
+        "name": "stat-buddishData",
+        "path": "/stat/buddishData",
+        "meta": {
+          "title": "佛事数据"
+        }
+      },
+      {
+        "name": "stat-promoIndex",
+        "path": "/stat/promoIndex",
+        "meta": {
+          "title": "推广数据"
+        }
+      },
+      {
+        "name": "stat-channel",
+        "component": 1,
+        "path": "channel",
+        "meta": {
+          "title": "渠道统计"
+        }
+      },
+      {
+        "path": "detail/:channel/:channelId/:addTime",
+        "component": 1,
+        "name": "stat-detail",
+        "meta": {
+          "title": "渠道统计详情",
+          "noCache": 1
+        },
+        "hidden": 1
+      }
+    ]
+  },
+  {
+    "path": "/wish",
+    "component": 1,
+    "name": "wish",
+    "meta": {
+      "title": "法师模块",
+      "icon": "fa-circle",
+      "noCache": 1
+    },
+    "children": [
+      {
+        "path": "project",
+        "component": 1,
+        "name": "wish-project",
+        "meta": {
+          "title": "加持项目",
+          "noCache": 1
+        }
+      },
+      {
+        "path": "edit/:name",
+        "component": 1,
+        "name": "wish-edit",
+        "meta": {
+          "title": "编辑项目",
+          "noCache": 1
+        },
+        "hidden": 1
+      },
+      {
+        "path": "support-manege",
+        "name": "wish-support-manege",
+        "component": 1,
+        "meta": {
+          "title": "法师订单",
+          "noCache": 1
+        }
+      },
+      {
+        "name": "wish-plus",
+        "path": "/wish/plus",
+        "meta": {
+          "title": "加持订单"
+        }
+      },
+      {
+        "name": "wish-master",
+        "path": "/wish/master",
+        "meta": {
+          "title": "法师管理"
+        }
+      },
+      {
+        "name": "wish-index",
+        "path": "/wish/index",
+        "meta": {
+          "title": "心愿管理"
+        }
+      },
+      {
+        "name": "wish-return",
+        "path": "/wish/return",
+        "meta": {
+          "title": "还愿管理"
+        }
+      },
+      {
+        "name": "wish-verify",
+        "path": "/wish/verify",
+        "meta": {
+          "title": "寺院认证"
+        }
+      },
+      {
+        "name": "wish-template",
+        "path": "/wish/template",
+        "meta": {
+          "title": "经咒落地页管理"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/buddhist",
+    "component": 1,
+    "name": "buddhist",
+    "meta": {
+      "title": "佛事管理",
+      "icon": "fa-circle",
+      "noCache": 1
+    },
+    "children": [
+      {
+        "name": "buddhist-verify",
+        "path": "/buddhist/verify",
+        "meta": {
+          "title": "佛事审核"
+        }
+      },
+      {
+        "name": "buddhist-template",
+        "path": "/buddhist/template",
+        "meta": {
+          "title": "佛事模板"
+        }
+      },
+      {
+        "name": "buddhist-classification",
+        "path": "/buddhist/classification",
+        "meta": {
+          "title": "佛事分类"
+        }
+      },
+      {
+        "name": "buddhist-tag",
+        "path": "/buddhist/tag",
+        "meta": {
+          "title": "佛事标签"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/ad",
+    "component": 1,
+    "name": "ad",
+    "meta": {
+      "title": "广告管理",
+      "icon": "fa-circle",
+      "noCache": 1
+    },
+    "children": [
+      {
+        "name": "ad-buddhist",
+        "path": "/ad/buddhist",
+        "meta": {
+          "title": "佛事推荐"
+        }
+      },
+      {
+        "path": "system-popup",
+        "name": "ad-system-popup",
+        "component": 1,
+        "meta": {
+          "title": "系统广告",
+          "noCache": 1
+        }
+      }
+    ]
+  },
+  {
+    "path": "/buddha",
+    "name": "buddha",
+    "meta": {
+      "title": "供奉管理",
+      "icon": "fa-circle"
+    },
+    "children": [
+      {
+        "name": "buddha-manage",
+        "path": "/buddha/manage",
+        "meta": {
+          "title": "供奉列表"
+        }
+      },
+      {
+        "name": "region-manage",
+        "path": "/region/manage",
+        "meta": {
+          "title": "区域列表"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/volunteer",
+    "name": "volunteer",
+    "meta": {
+      "title": "义工管理",
+      "icon": "fa-circle"
+    },
+    "children": [
+      {
+        "name": "volunteer-manage",
+        "path": "/volunteer/manage",
+        "meta": {
+          "title": "复制弘法寺义工表单"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/help",
+    "name": "help",
+    "meta": {
+      "title": "帮助中心",
+      "icon": "fa-circle"
+    },
+    "children": [
+      {
+        "name": "help-center",
+        "path": "/help/center",
+        "meta": {
+          "title": "设置帮助中心内容"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/images_manage",
+    "name": "images_manage",
+    "meta": {
+      "title": "图片管理",
+      "icon": "fa-circle"
+    },
+    "children": [
+      {
+        "name": "images_manage-index",
+        "path": "/images_manage/index",
+        "meta": {
+          "title": "系统图片管理"
+        }
+      },
+      {
+        "name": "images_manage-icon",
+        "path": "/images_manage/icon",
+        "meta": {
+          "title": "系统图标管理"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/machine",
+    "name": "machine",
+    "meta": {
+      "title": "寺院硬件",
+      "icon": "fa-circle"
+    },
+    "children": [
+      {
+        "name": "machine-list",
+        "path": "/machine/list",
+        "meta": {
+          "title": "满福屏管理"
+        }
+      },
+      {
+        "name": "machine-bottomBgList",
+        "path": "/machine/bottomBgList",
+        "meta": {
+          "title": "底部电子海报背景"
+        }
+      },
+      {
+        "name": "statistics-diagram",
+        "path": "/statistics/diagram",
+        "meta": {
+          "title": "客流统计"
+        }
+      },
+      {
+        "name": "camera-manage",
+        "path": "/camera/manage",
+        "meta": {
+          "title": "摄像头管理"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/buddhism",
+    "name": "buddhism",
+    "meta": {
+      "title": "佛语日签",
+      "icon": "fa-circle"
+    },
+    "children": [
+      {
+        "name": "buddhism-language",
+        "path": "/buddhism/language",
+        "meta": {
+          "title": "佛语日签列表"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/vr",
+    "name": "vr",
+    "meta": {
+      "title": "实境礼佛",
+      "icon": "fa-circle"
+    },
+    "children": [
+      {
+        "name": "vr-musicIndex",
+        "path": "/vr/musicIndex",
+        "meta": {
+          "title": "音乐管理"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/oprule",
+    "name": "oprule",
+    "meta": {
+      "title": "用户管理",
+      "icon": "fa-circle"
+    },
+    "children": [
+      {
+        "name": "oprule-group",
+        "path": "/oprule/group",
+        "meta": {
+          "title": "用户分群"
+        }
+      },
+      {
+        "name": "oprule-treat",
+        "path": "/oprule/treat",
+        "meta": {
+          "title": "运营策略"
+        }
+      }
+    ]
+  }
+]

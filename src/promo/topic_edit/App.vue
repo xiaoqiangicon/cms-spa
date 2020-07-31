@@ -15,7 +15,7 @@
       <el-form-item label="发布心愿">
         <el-switch v-model="form.isShowWish" />
       </el-form-item>
-      <el-form-item prop="cover" label="封面图片">
+      <el-form-item prop="cover" label="封面图片(按比例缩放)">
         <Upload :images="form.cover" :multiple="false" />
       </el-form-item>
       <el-form-item label="页面颜色">
@@ -284,7 +284,7 @@ export default {
             });
 
             this.$router.replace(
-              `/promo/topicEdit/${this.$route.params.id}/${res.data.topicId}`
+              `/promo/topicEdit/${this.$route.params.id}/${res.data.topicId}/${this.form.title}`
             );
           });
         }

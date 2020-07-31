@@ -24,8 +24,7 @@
       <span class="l-hg-32"> 生成的链接 </span>&nbsp;&nbsp;&nbsp;&nbsp;
       <span ref="link">{{ link }}</span
       ><br /><br />
-      <el-button size="small" @click="make">
-        生成链接 </el-button
+      <el-button size="small" @click="make"> 生成链接 </el-button
       >&nbsp;&nbsp;&nbsp;&nbsp;
       <el-button size="small" @click="copy">
         生成并复制链接
