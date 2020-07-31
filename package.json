@@ -21,10 +21,10 @@
     "coverage": "npm run test-cover && opn coverage/lcov-report/index.html",
     "dev": "lila dev",
     "sync": "lila sync",
-    "sync:gray": "lila sync -e gray",
+    "sync:prod": "lila sync -e prod",
     "dev-login": "lila dev login",
     "sync-login": "lila sync login",
-    "sync-login:gray": "lila sync login -e gray"
+    "sync-login:prod": "lila sync login -e prod"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
