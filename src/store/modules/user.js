@@ -78,7 +78,7 @@ const user = {
               token: 'admin',
               introduction: '我是超级管理员',
               avatar: img,
-              name: cookie.get('username') || '这谁呀',
+              name: cookie.get('userMid') || '这谁呀',
             };
 
             commit('SET_ROLES', data.roles);
