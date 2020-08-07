@@ -146,14 +146,14 @@ export default {
     save() {
       const { subList, buddhistId } = this;
 
-      if (!subList.length) {
-        Notification({
-          type: 'error',
-          title: '提示',
-          message: '至少选择一个选择项',
-        });
-        return;
-      }
+      // if (!subList.length) {
+      //   Notification({
+      //     type: 'error',
+      //     title: '提示',
+      //     message: '至少选择一个选择项',
+      //   });
+      //   return;
+      // }
 
       this.$confirm('请确认信息准确无误，保存后将不可修改类型', '提示', {
         confirmButtonText: '确定',

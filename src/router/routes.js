@@ -139,6 +139,13 @@ export default [
         hidden: !0,
       },
       {
+        path: 'topicStatistic/:id',
+        component: () => import('../promo/topic_statistic/App'),
+        name: 'promo-topicStatistic',
+        meta: { title: '专题列表 / 专题数据', noCache: true },
+        hidden: !0,
+      },
+      {
         path: 'topicCreate/:id',
         component: () => import('../promo/topic_edit/App'),
         name: 'promo-topicCreate',

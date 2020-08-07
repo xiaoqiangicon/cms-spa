@@ -126,3 +126,42 @@ export const del_component = {
   errorCode: 0,
   data: '',
 };
+
+export const edit_schedule = {
+  msg: '',
+  errorCode: 0,
+  data: {
+    id: 1,
+  },
+};
+
+export const del_schedule = {
+  msg: '',
+  errorCode: 0,
+};
+
+export const get_schedule = {
+  msg: '',
+  errorCode: 0,
+  data: {
+    list: [
+      {
+        id: 1,
+        content: '内容1',
+        img: '/sample/image1.jpg,/sample/image2.jpg,/sample/image3.jpg',
+        video:
+          'https://pic.zizaihome.com/7fd190efef910bfaf44b77f6cf64ffda.mp4,https://pic.zizaihome.com/20a4d52e-8805-11e9-a870-00163e0c1e1c.mp4',
+        addTime: '2020-08-07',
+      },
+      {
+        id: 2,
+        content: '内容2',
+        img: '',
+        video:
+          'https://pic.zizaihome.com/7fd190efef910bfaf44b77f6cf64ffda.mp4,https://pic.zizaihome.com/20a4d52e-8805-11e9-a870-00163e0c1e1c.mp4',
+        addTime: '2020-08-08',
+      },
+    ],
+    pageNo: 1,
+  },
+};

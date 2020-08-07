@@ -12,10 +12,13 @@
       <el-form-item prop="introduce" label="分享描述">
         <el-input v-model="form.introduce" type="textarea" rows="5" />
       </el-form-item>
+      <el-form-item prop="url" label="浮窗链接">
+        <el-input v-model="form.url" />
+      </el-form-item>
       <el-form-item label="发布心愿">
         <el-switch v-model="form.isShowWish" />
       </el-form-item>
-      <el-form-item prop="cover" label="封面图片(按比例缩放)">
+      <el-form-item prop="cover" label="封面图片(比例750*636最佳)">
         <Upload :images="form.cover" :multiple="false" />
       </el-form-item>
       <el-form-item label="页面颜色">

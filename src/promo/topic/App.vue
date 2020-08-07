@@ -29,7 +29,7 @@
             :align="'center'"
           />
           <el-table-column prop="link" label="专题链接" :align="'center'" />
-          <el-table-column label="操作" :align="'center'" width="264">
+          <el-table-column label="操作" :align="'center'" width="344">
             <template slot-scope="scope">
               <el-button
                 type="success"
@@ -44,6 +44,14 @@
                 @click="handleClickEditCom(scope.row)"
               >
                 编辑组件
+              </el-button>
+              <el-button
+                type="success"
+                size="mini"
+                v-if="!1"
+                @click="handleClickStatistic(scope.row)"
+              >
+                数据
               </el-button>
               <el-button
                 type="success"
@@ -138,6 +146,11 @@ export default {
       const { id } = rowData;
       // window.sessionStorage['promo/topic/item'] = JSON.stringify(rowData);
       this.$router.push(`/promo/topicEdit/${id}`);
+    },
+    handleClickStatistic(rowData) {
+      const { id } = rowData;
+
+      this.$router.push(`/promo/topicStatistic/${id}`);
     },
     handleClickEditCom(rowData) {
       const { id, title } = rowData;

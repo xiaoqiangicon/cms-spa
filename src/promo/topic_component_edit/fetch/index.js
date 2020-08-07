@@ -5,3 +5,6 @@ import './add_tag';
 import './add_component_tag';
 import './get_buddhist_data';
 import './get_temple_list';
+import './del_schedule';
+import './edit_schedule';
+import './get_schedule';
