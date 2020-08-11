@@ -1,14 +1,13 @@
 <template>
-  <div class="video-player-mask" v-show="playVisible" @click.self="onClickMask">
+  <div v-show="playVisible" class="video-player-mask" @click.self="onClickMask">
     <div class="video-player-container">
-      <video id="video-player" class="video-js" controls preload="auto">
-        <source id="video-source" :src="src" type="video/mp4" />
+      <video ref="videoPlayer" class="video-js vjs-big-play-centered vjs-4-3">
         <p class="vjs-no-js">
           To view this video please enable JavaScript, and consider upgrading to
           a web browser that
-          <a href="http://videojs.com/html5-video-support/" target="_blank">
-            supports HTML5 video
-          </a>
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
         </p>
       </video>
     </div>
@@ -17,52 +16,62 @@
 
 <script>
 import videojs from 'video.js';
-
-let videoPlayer;
+import 'video.js/dist/video-js.css';
 
 export default {
   name: 'VideoPlayer',
-  props: ['src', 'playVisible'],
-  data: () => {
-    return {
-      mounted: false,
-    };
+  props: {
+    src: {
+      type: String,
+      default: '',
+    },
+    playVisible: {
+      type: Boolean,
+      default: !1,
+    },
   },
+  data: () => ({
+    player: null,
+    options: {
+      controls: !0,
+      preload: 'auto',
+      autoplay: !1,
+      fluid: !0,
+      language: 'zh-cN',
+      muted: !1,
+      sources: '',
+    },
+  }),
   watch: {
-    playVisible(newValue, oldValue) {
+    playVisible(newValue) {
       if (newValue) {
-        // 每次显示时 要 重置数据
-        if (this.mounted) {
-          this.init();
-        }
+        this.reload();
       }
     },
   },
-
   mounted() {
     this.$nextTick(() => {
-      // 初始化video.js
-      videoPlayer = videojs('video-player');
-      videoPlayer.ready(() => {
-        this.mounted = true;
-        console.log('初始化videojs成功');
-      });
+      this.player = videojs(this.$refs.videoPlayer, this.options, () => {});
     });
   },
-
   methods: {
-    init() {
-      videoPlayer.src(this.src);
-      videoPlayer.load();
+    reload() {
+      const { player, src } = this;
+      if (!src) return;
+
+      player.pause();
+      player.src(src);
+      player.load(src);
     },
     onClickMask() {
+      this.player.pause();
       this.$emit('updateVideoPlayer', !1);
     },
   },
 };
 </script>
 
-<style>
+<style lang="less" scoped>
 .video-player-mask {
   position: fixed;
   top: 0;
@@ -70,7 +79,7 @@ export default {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 999;
+  z-index: 99999999;
 }
 .video-player-container {
   width: 600px;

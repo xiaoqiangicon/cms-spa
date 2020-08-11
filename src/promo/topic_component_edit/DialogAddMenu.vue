@@ -90,7 +90,7 @@
             <span>图片视频</span>
             <div class="">
               <div class="upload-btn">
-                <div class="add-img">添加图片</div>
+                <div class="add-img" ref="upload">添加图片</div>
                 <el-upload
                   ref="uploadVideo"
                   :show-file-list="false"
@@ -184,6 +184,26 @@
                 <div class="item-schedule-content">
                   {{ item.content }}
                 </div>
+                <div class="media">
+                  <div
+                    class="fb-cell img-cell"
+                    v-for="(imgItem, key) in item.images"
+                    :key="key"
+                  >
+                    <img :src="imgItem" alt="" />
+                  </div>
+                  <div
+                    class="fb-cell video-cell"
+                    v-for="(videoItem, key) in item.videos"
+                    :key="key"
+                  >
+                    <video :src="videoItem"></video>
+                    <div
+                      class="video-play"
+                      @click="onClickPlayVideo(videoItem)"
+                    ></div>
+                  </div>
+                </div>
               </div>
               <div v-else class="item-edit-content">
                 <div class="schedule-row">
@@ -199,7 +219,7 @@
                   <span>图片视频</span>
                   <div class="">
                     <div class="upload-btn">
-                      <div class="add-img">添加图片</div>
+                      <div class="add-img" ref="upload">添加图片</div>
                       <el-upload
                         ref="uploadVideo"
                         :show-file-list="false"
@@ -240,7 +260,7 @@
                           @click="onClickPlayVideo(item)"
                         ></div>
                         <div
-                          @click="onClickVideoDelete(item)"
+                          @click="onClickItemVideoDelete(item)"
                           class="video-delete"
                         ></div>
                       </div>
@@ -282,6 +302,8 @@ import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
 import Upload from '../../com/upload/Upload.vue';
 import VideoPlayer from './VideoPlayer.vue';
+import { makeUploadImageOptions } from '../../configs/upload';
+import upload from '../../../../pro-com/src/upload';
 
 export default {
   name: 'App',
@@ -300,7 +322,7 @@ export default {
   },
   data() {
     return {
-      uploadUrl: `${window.location.origin}/zzhadmin/uploadPic/`, // 上传地址 返回 {msg, result:0, url}
+      uploadUrl: `${window.location.origin}/upload/`, // 上传地址 返回 {msg, result:0, url}
 
       tab: 1,
       id: 0,
@@ -330,6 +352,9 @@ export default {
       // 播放视频
       videoPlayerSrc: '',
       playVisible: !1,
+      initUpload: !1, // 初始化上传图片
+
+      saving: !1,
     };
   },
   watch: {
@@ -372,7 +397,23 @@ export default {
     },
   },
   updated() {
-    console.log('updated');
+    const { upload: uploadEl } = this.$refs;
+
+    if (uploadEl) {
+      upload(
+        makeUploadImageOptions({
+          el: uploadEl,
+          done: url => {
+            if (this.tab === 2) {
+              this.images.push(url);
+            } else {
+              this.scheduleItem.images.push(url);
+            }
+          },
+          multiple: !0,
+        })
+      );
+    }
   },
   methods: {
     changeTab(tab) {
@@ -452,7 +493,7 @@ export default {
         coverPic: this.introCovers[0],
         linkUrl: this.url,
         detail: this.introduce,
-        topicId: this.$route.params.id,
+        topicId: parseInt(this.$route.params.id, 10),
       };
       seeFetch('promo/topicComponentEdit/addTag', params).then(res => {
         if (!res.errorCode) {
@@ -540,8 +581,12 @@ export default {
       };
     },
     handleUploadVideoSuccess(res) {
-      console.log('handleUploadVideoSuccess');
-      this.videos.push(res.url);
+      console.log('handleUploadVideoSuccess', res);
+      if (this.tab === 2) {
+        this.videos.push(res.data.pic);
+      } else {
+        this.scheduleItem.videos.push(res.data.pic);
+      }
       this.curUploadVideo = {
         uploading: !1,
         progress: 0,
@@ -565,7 +610,7 @@ export default {
     },
     saveSchedule() {
       const { scheduleContent, scheduleUrl, videos, images } = this;
-      let topicId = this.$route.params.id;
+      let topicId = parseInt(this.$route.params.id, 10);
       let tagId = this.item.id;
       if (!scheduleContent) {
         Notification({
@@ -576,29 +621,36 @@ export default {
         return;
       }
 
-      seeFetch('promo/topicComponentEdit/editSchedule', {
-        topicId,
-        tabId: tagId,
-        content: scheduleContent,
-        img: images.join(','),
-        video: videos.join(','),
-      }).then(res => {
-        if (res.errorCode === 0) {
-          Notification({
-            title: '提示',
-            type: 'success',
-            message: '发布进展成功',
-          });
-          this.changeTab(3);
-        } else {
-          Notification({
-            title: '提示',
-            type: 'error',
-            message: '发布进展失败',
-          });
-          return;
-        }
-      });
+      if (!this.saving) {
+        this.saving = !0;
+        seeFetch('promo/topicComponentEdit/editSchedule', {
+          topicId,
+          tabId: tagId,
+          content: scheduleContent,
+          img: images.join(','),
+          video: videos.join(','),
+        }).then(res => {
+          if (res.errorCode === 0) {
+            Notification({
+              title: '提示',
+              type: 'success',
+              message: '发布进展成功',
+            });
+            this.scheduleContent = '';
+            this.images = [];
+            this.videos = [];
+            this.changeTab(3);
+          } else {
+            Notification({
+              title: '提示',
+              type: 'error',
+              message: '发布进展失败',
+            });
+            return;
+          }
+          this.saving = !1;
+        });
+      }
     },
 
     // 发布记录
@@ -620,38 +672,49 @@ export default {
       images.splice(this.scheduleItem.images.indexOf(img), 1);
       this.scheduleItem.images = images;
     },
-    saveScheduleItem(item) {
+    onClickItemVideoDelete(video) {
+      let videos = [...this.scheduleItem.videos];
+      videos.splice(this.scheduleItem.videos.indexOf(video), 1);
+      this.scheduleItem.videos = videos;
+    },
+    saveScheduleItem(scheduleItem) {
       let params = {};
-      params.id = item.id;
-      params.topicId = this.$router.params.id;
+      params.id = scheduleItem.id;
+      params.topicId = parseInt(this.$route.params.id, 10);
       params.tabId = this.item.id;
-      params.content = item.content;
-      params.img = item.images.join(',');
-      params.video = item.videos.join(',');
-      seeFetch('promo/topicComponentEdit/editSchedule', params, res => {
-        if (res.errorCode === 0) {
-          Notification({
-            title: '提示',
-            type: 'success',
-            message: '保存成功',
-          });
-          item.isModify = !1;
+      params.content = scheduleItem.content;
+      params.img = scheduleItem.images.join(',');
+      params.video = scheduleItem.videos.join(',');
 
-          this.$forceUpdate();
-        } else {
-          Notification({
-            title: '提示',
-            type: 'error',
-            message: '保存失败',
-          });
-          return;
-        }
-      });
+      console.log('saving', params, scheduleItem);
+      if (!this.saving) {
+        this.saving = !0;
+        seeFetch('promo/topicComponentEdit/editSchedule', params).then(res => {
+          if (res.errorCode === 0) {
+            Notification({
+              title: '提示',
+              type: 'success',
+              message: '保存成功',
+            });
+            scheduleItem.isModify = !1;
+            this.$forceUpdate();
+          } else {
+            Notification({
+              title: '提示',
+              type: 'error',
+              message: '保存失败',
+            });
+            return;
+          }
+        });
+        this.saving = !1;
+      }
     },
     updateVideoPlayer(status) {
       this.playVisible = status;
     },
     close() {
+      this.tab = 1;
       this.$emit('updateVisible', !1);
     },
   },
@@ -772,6 +835,7 @@ export default {
   display: flex;
 }
 .add-img {
+  position: relative;
   width: 80px;
   height: 28px;
   margin-right: 20px;
@@ -785,6 +849,10 @@ export default {
 }
 .media {
   margin-top: 20px;
+}
+.item-shcedule-media {
+  display: flex;
+  flex-wrap: wrap;
 }
 .fb-cell {
   font-size: 0;
@@ -847,6 +915,12 @@ export default {
 }
 
 // tab 3
+.schedule-empty {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 80px;
+}
 .schedule-item {
   border: 1px solid #ccc;
   box-shadow: 2px 2px 5px #999;

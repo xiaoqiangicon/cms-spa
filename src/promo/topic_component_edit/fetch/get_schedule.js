@@ -20,7 +20,7 @@ seeFetch.config('promo/topicComponentEdit/listSchedule', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/topic/editSchedule',
+    '/topic/listSchedule',
     '/promo/topic_component_edit/mock/get_schedule',
     '/promo/topic_component_edit/mock/get_schedule',
   ],

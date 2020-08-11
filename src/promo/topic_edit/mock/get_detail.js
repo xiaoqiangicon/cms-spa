@@ -9,6 +9,8 @@ export default {
     introduce:
       '简介描述简介描述简介描述简介描述简介描述简介描述简介描述简介描述简介描述简介描述简介描述简介描述简介描述简介描述简介描述简介描述简介描述',
     coverPic: '../../../../sample/image3.jpg',
+    icon: '../../../../sample/image1.jpg',
+    link: 'www.baidu.com',
     templeComponent: {
       templeTitle: '寺院组件名',
       list: [1, 2, 3, 4, 5, 6].map(inx => ({

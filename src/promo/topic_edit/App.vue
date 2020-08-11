@@ -13,12 +13,18 @@
         <el-input v-model="form.introduce" type="textarea" rows="5" />
       </el-form-item>
       <el-form-item prop="url" label="浮窗链接">
-        <el-input v-model="form.url" />
+        <el-input v-model="form.link" />
+      </el-form-item>
+      <el-form-item prop="icon" label="浮窗icon(比例为90*92最佳)">
+        <Upload :images="form.icon" :multiple="false" />
       </el-form-item>
       <el-form-item label="发布心愿">
         <el-switch v-model="form.isShowWish" />
       </el-form-item>
-      <el-form-item prop="cover" label="封面图片(比例750*636最佳)">
+      <el-form-item
+        prop="cover"
+        label="封面图片(比例750*772最佳,下部136像素留白填充)"
+      >
         <Upload :images="form.cover" :multiple="false" />
       </el-form-item>
       <el-form-item label="页面颜色">
@@ -75,9 +81,11 @@ export default {
         introduce: '',
         isShowWish: !1,
         cover: [],
+        icon: [],
         bgColor: '',
         btnBgColor: '',
         textColor: '',
+        link: '',
         components: [],
         templeComponent: { title: '', list: [] },
         buddhistComponent: { title: '', list: [] },
@@ -210,9 +218,8 @@ export default {
             introduce,
             isShowWish,
             cover,
-            // templeComponent,
-            // buddhistComponent,
-            // goodsComponent,
+            link,
+            icon,
           } = this.form;
           // 数据检验
           const verifyMessage = [];
@@ -220,16 +227,8 @@ export default {
           if (!bgColor) verifyMessage.push('请选择背景颜色');
           if (!btnBgColor) verifyMessage.push('请选择按钮背景颜色');
           if (!textColor) verifyMessage.push('请选择文本颜色');
-
-          // 每个组件至少有一个子项
-          // if (templeComponent.list.length && !templeComponent.title)
-          //   verifyMessage.push('请填写寺院组件名称');
-
-          // if (buddhistComponent.list.length && !buddhistComponent.title)
-          //   verifyMessage.push('请填写佛事组件名称');
-
-          // if (goodsComponent.list.length && !goodsComponent.title)
-          //   verifyMessage.push('请填写商品组件名称');
+          if (link && !icon.length) verifyMessage.push('请上传浮窗图片');
+          if (!link && icon.length) verifyMessage.push('请填写浮窗链接');
 
           if (verifyMessage.length) {
             Notification({
@@ -239,24 +238,6 @@ export default {
             });
             return;
           }
-
-          // const componentJson = [
-          //   {
-          //     type: 1,
-          //     title: templeComponent.title,
-          //     ids: templeComponent.list.map(item => item.id).join(','),
-          //   },
-          //   {
-          //     type: 2,
-          //     title: buddhistComponent.title,
-          //     ids: buddhistComponent.list.map(item => item.id).join(','),
-          //   },
-          //   {
-          //     type: 3,
-          //     title: goodsComponent.title,
-          //     ids: goodsComponent.list.map(item => item.id).join(','),
-          //   },
-          // ];
 
           // 数据上传
           seeFetch('promo/topicEdit/update', {
@@ -268,7 +249,8 @@ export default {
             bgColor,
             btnBgColor,
             textColor,
-            // componentJson,
+            link,
+            icon: icon[0],
           }).then(res => {
             if (!res.success) {
               Notification({
