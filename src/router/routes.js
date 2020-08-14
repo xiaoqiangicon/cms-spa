@@ -405,6 +405,49 @@ export default [
     ],
   },
   {
+    name: 'sl-promo',
+    path: '/sl-promo',
+    component: Layout,
+    redirect: '/sl-promo/project',
+    meta: { title: '推广管理', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        name: 'sl-promo-staff',
+        path: 'staff',
+        component: () => import('../sl-promo/staff/App.vue'),
+        meta: { title: '人员管理', noCache: true },
+      },
+    ],
+  },
+  {
+    name: 'sl-business-promo',
+    path: '/sl-business-promo',
+    component: Layout,
+    redirect: '/sl-business-promo/project',
+    meta: { title: '推广管理', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        name: 'sl-business-promo-seller',
+        path: 'seller',
+        component: () => import('../sl-business-promo/seller/App.vue'),
+        meta: { title: '人员管理', noCache: true },
+      },
+      {
+        name: 'sl-business-promo-seller-detail',
+        path: 'seller-detail',
+        component: () => import('../sl-business-promo/seller-detail/App.vue'),
+        meta: { title: '销售员', noCache: true },
+        hidden: true,
+      },
+      {
+        name: 'sl-business-promo-recruit',
+        path: 'recruit',
+        component: () => import('../sl-business-promo/recruit/App.vue'),
+        meta: { title: '招募设置', noCache: true },
+      },
+    ],
+  },
+  {
     path: '/order',
     component: Layout,
     redirect: '/order/index',
