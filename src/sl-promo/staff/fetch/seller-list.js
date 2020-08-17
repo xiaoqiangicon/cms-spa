@@ -10,6 +10,10 @@ const refactor = {
   data: {
     list: [
       {
+        // 昵称
+        nickname: 'nickName',
+        // 用户头像
+        avatar: 'headImg',
         phone: 'mobile',
         // 总订单数
         totalOrders: 'orderNum',
@@ -23,13 +27,13 @@ const refactor = {
   },
 };
 
-seeFetch.config('sl-promo/staff/businessList', {
+seeFetch.config('sl-promo/staff/sellerList', {
   method: ['post'],
   stringify: [!0],
   url: [
     '/cooperation/getBusinessUserList',
-    '/sl-promo/staff/mock/businessListS',
-    '/sl-promo/staff/mock/businessList',
+    '/sl-promo/staff/mock/sellerListS',
+    '/sl-promo/staff/mock/sellerList',
   ],
   req: [req, req],
   refactor: [refactor, refactor],

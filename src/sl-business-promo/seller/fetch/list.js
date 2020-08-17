@@ -32,7 +32,7 @@ seeFetch.config('sl-business-promo/seller/list', {
   stringify: [!0],
   url: [
     '/cooperation/getBusinessUserList',
-    '/sl-business-promo/seller/mock/list1',
+    '/sl-business-promo/seller/mock/listS',
     '/sl-business-promo/seller/mock/list',
   ],
   req: [req, req],

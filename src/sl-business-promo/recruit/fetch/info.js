@@ -19,7 +19,7 @@ seeFetch.config('sl-business-promo/recruit/info', {
   stringify: [!0],
   url: [
     '/cooperation/getBusinessUserMessage',
-    '/sl-business-promo/recruit/mock/info1',
+    '/sl-business-promo/recruit/mock/infoS',
     '/sl-business-promo/recruit/mock/info',
   ],
   refactor: [refactor, refactor],

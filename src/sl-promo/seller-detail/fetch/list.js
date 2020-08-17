@@ -2,8 +2,7 @@
 import seeFetch from 'see-fetch';
 
 const req = {
-  // todo 缺少销售员的键
-  userId: 'userId',
+  userId: 'businessUserId',
   status: 'type',
 };
 
@@ -26,13 +25,13 @@ const refactor = {
   },
 };
 
-seeFetch.config('sl-business-promo/seller-detail/list', {
+seeFetch.config('sl-promo/seller-detail/list', {
   method: ['post'],
   stringify: [!0],
   url: [
     '/cooperation/getCooperationSellOrder',
-    '/sl-business-promo/seller-detail/mock/listS',
-    '/sl-business-promo/seller-detail/mock/list',
+    '/sl-promo/seller-detail/mock/listS',
+    '/sl-promo/seller-detail/mock/list',
   ],
   req: [req, req],
   refactor: [refactor, refactor],

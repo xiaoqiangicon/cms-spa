@@ -417,6 +417,20 @@ export default [
         component: () => import('../sl-promo/staff/App.vue'),
         meta: { title: '人员管理', noCache: true },
       },
+      {
+        name: 'sl-promo-seller-detail',
+        path: 'seller-detail',
+        component: () => import('../sl-promo/seller-detail/App.vue'),
+        meta: { title: '销售员', noCache: true },
+        hidden: true,
+      },
+      {
+        name: 'sl-promo-business-detail',
+        path: 'business-detail',
+        component: () => import('../sl-promo/business-detail/App.vue'),
+        meta: { title: '业务员', noCache: true },
+        hidden: true,
+      },
     ],
   },
   {

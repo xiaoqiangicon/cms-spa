@@ -10,7 +10,7 @@ seeFetch.config('sl-promo/staff/updateBusiness', {
   stringify: [!0],
   url: [
     '/cooperation/addAndUpdateBusinessUser',
-    '/sl-promo/staff/mock/updateBusiness1',
+    '/sl-promo/staff/mock/updateBusinessS',
     '/sl-promo/staff/mock/updateBusiness',
   ],
   req: [req, req],

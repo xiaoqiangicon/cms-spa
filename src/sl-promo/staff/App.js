@@ -25,10 +25,43 @@ export default {
         sort: 0,
       },
       businessDialogVisible: false,
+      // 所有业务员
+      allBusiness: [],
+      seller: {
+        list: [],
+        currentPage: 1,
+        pageSize: 20,
+        total: 0,
+        loading: false,
+        keyword: '',
+        sort: 0,
+        status: 0,
+        businessId: 0,
+      },
     };
   },
   created() {
     this.fetchBusinessList();
+    this.fetchAllBusiness();
+    this.fetchSellerList();
+
+    const { initAction, initActionData } = this.$store.state.slPromoStaff;
+
+    // 查看某个业务员的销售员列表
+    if (initAction === 'sellersOfBusiness') {
+      setTimeout(() => {
+        this.seller.businessId = initActionData.id;
+        this.seller.status = 0;
+        this.seller.sort = 0;
+        this.seller.keyword = '';
+        this.tabName = 'seller';
+        this.sellerSearch();
+      }, 500);
+    }
+
+    // 重置
+    this.$store.state.slPromoStaff.initAction = '';
+    this.$store.state.slPromoStaff.initActionData = null;
   },
   methods: {
     fetchBusinessList() {
@@ -78,7 +111,13 @@ export default {
       });
       this.businessDialogVisible = true;
     },
-    detailBusiness(item) {},
+    detailBusiness(item) {
+      window.sessionStorage.setItem(
+        'sl-promo/business-detail:item',
+        JSON.stringify(item.row)
+      );
+      this.$router.push(`/sl-promo/business-detail`);
+    },
     delBusiness(item) {
       this.$confirm(
         `你确定要删除业务员 ${item.row.name} 吗？<br/><br/><span class="gray">删除后当前业务员旗下的销售员会与此业务员解除绑定。销售员同时所属的推广专题不可访问，销售员已产生的数据不受影响。<br/><br/><span class="red">请谨慎操作！</span></span>`,
@@ -141,6 +180,131 @@ export default {
         });
         this.businessDialogVisible = false;
         this.fetchBusinessList();
+      });
+    },
+    toSellers(item) {
+      this.seller.businessId = item.row.id;
+      this.seller.status = 0;
+      this.seller.sort = 0;
+      this.seller.keyword = '';
+      this.tabName = 'seller';
+      this.sellerSearch();
+    },
+    fetchAllBusiness() {
+      seeFetch('sl-promo/staff/businessList', {
+        pageNum: 1,
+        pageSize: 10000,
+        keyword: '',
+        sort: 0,
+      }).then(res => {
+        if (res.data && res.data.list) {
+          this.allBusiness = res.data.list;
+        }
+      });
+    },
+    fetchSellerList() {
+      this.seller.loading = true;
+
+      seeFetch('sl-promo/staff/sellerList', {
+        pageNum: this.seller.currentPage,
+        pageSize: this.seller.pageSize,
+        keyword: this.seller.keyword,
+        sort: this.seller.sort,
+        status: this.seller.status,
+        businessId: this.seller.businessId,
+      }).then(res => {
+        this.seller.loading = !1;
+
+        if (!res.success || !res.data) {
+          Notification.error({
+            title: '提示',
+            message: res.message,
+          });
+          return;
+        }
+
+        this.seller.total = res.data.total;
+        this.seller.list = res.data.list;
+
+        window.scrollTo(0, 0);
+      });
+    },
+    sellerCurrentChange(val) {
+      this.seller.currentPage = val;
+      this.fetchSellerList();
+    },
+    sellerSizeChange(val) {
+      this.seller.pageSize = val;
+      this.fetchSellerList();
+    },
+    sellerSearch() {
+      this.seller.currentPage = 1;
+      this.fetchSellerList();
+    },
+    detailSeller(item) {
+      window.sessionStorage.setItem(
+        'sl-promo/seller-detail:item',
+        JSON.stringify(item.row)
+      );
+      this.$router.push(`/sl-promo/seller-detail`);
+    },
+    blockSeller(item) {
+      this.$confirm(
+        `你确定限制销售员 ${item.row.name} 吗？<br/><br/><span class="gray">禁止后不影响之前推广的分成结算，也可取消禁用；已推广的链接若产生新的订单将不再对其进行结算。</span>`,
+        '提示',
+        {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          dangerouslyUseHTMLString: true,
+        }
+      ).then(() => {
+        seeFetch('sl-promo/staff/updateSeller', {
+          id: item.row.id,
+          status: 2,
+        }).then(res => {
+          if (!res.success) {
+            Notification.error({
+              title: '提示',
+              message: res.message,
+            });
+            return;
+          }
+
+          Notification.success({
+            title: '提示',
+            message: '限制成功',
+          });
+
+          this.fetchSellerList();
+        });
+      });
+    },
+    unblockSeller(item) {
+      this.$confirm(`你确定取消限制销售员 ${item.row.name} 吗？`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(() => {
+        seeFetch('sl-promo/staff/updateSeller', {
+          id: item.row.id,
+          status: 0,
+        }).then(res => {
+          if (!res.success) {
+            Notification.error({
+              title: '提示',
+              message: res.message,
+            });
+            return;
+          }
+
+          Notification.success({
+            title: '提示',
+            message: '取消限制成功',
+          });
+
+          this.fetchSellerList();
+        });
       });
     },
   },

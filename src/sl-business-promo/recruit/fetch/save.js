@@ -17,7 +17,7 @@ seeFetch.config('sl-business-promo/recruit/save', {
   stringify: [!0],
   url: [
     '/cooperation/updateRecruitSetting',
-    '/sl-business-promo/recruit/mock/save1',
+    '/sl-business-promo/recruit/mock/saveS',
     '/sl-business-promo/recruit/mock/save',
   ],
   req: [req, req],

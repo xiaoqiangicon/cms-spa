@@ -6,7 +6,7 @@ seeFetch.config('sl-promo/staff/delBusiness', {
   stringify: [!0],
   url: [
     '/cooperation/delBusinessUser',
-    '/sl-promo/staff/mock/delBusiness1',
+    '/sl-promo/staff/mock/delBusinessS',
     '/sl-promo/staff/mock/delBusiness',
   ],
 });

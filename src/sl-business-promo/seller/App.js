@@ -205,7 +205,7 @@ export default {
         });
       });
     },
-    unblock() {
+    unblock(item) {
       this.$confirm(`你确定取消限制销售员 ${item.row.name} 吗？`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

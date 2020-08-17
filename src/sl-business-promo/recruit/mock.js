@@ -12,7 +12,7 @@ export const info = {
   },
 };
 
-export const info1 = {
+export const infoS = {
   errorCode: 0,
   data: {
     // 是否招募
@@ -27,4 +27,4 @@ export const info1 = {
 };
 
 export const save = { success: true };
-export const save1 = { errorCode: 0 };
+export const saveS = { errorCode: 0 };

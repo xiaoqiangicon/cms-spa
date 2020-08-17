@@ -30,7 +30,7 @@ export const list = {
   },
 };
 
-export const list1 = {
+export const listS = {
   errorCode: 0,
   data: {
     total: 99,
@@ -63,4 +63,4 @@ export const list1 = {
 };
 
 export const update = { success: true };
-export const update1 = { errorCode: 0 };
+export const updateS = { errorCode: 0 };
