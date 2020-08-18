@@ -269,7 +269,7 @@ export default {
             });
 
             this.$router.replace(
-              `/promo/topicEdit/${this.$route.params.id}/${res.data.topicId}/${this.form.title}`
+              `/promo/topicEditComponent/${res.data.topicId}/${this.form.title}`
             );
           });
         }

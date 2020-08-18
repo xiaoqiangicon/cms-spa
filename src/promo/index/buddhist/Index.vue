@@ -25,10 +25,10 @@
         />
       </el-select>
       <el-input
-        v-model.number="buddhistId"
-        placeholder="请输入佛事ID"
+        v-model="buddhistId"
+        placeholder="请输入佛事名或佛事ID"
         size="small"
-        style="width:200px;"
+        style="width:240px;"
       >
         <el-button slot="append" icon="el-icon-search" @click="refresh" />
       </el-input>
@@ -426,7 +426,7 @@ export default {
         page,
         pageSize,
         templeId,
-        buddhistId,
+        content: buddhistId,
       }).then(res => {
         if (!res.success) {
           Notification({

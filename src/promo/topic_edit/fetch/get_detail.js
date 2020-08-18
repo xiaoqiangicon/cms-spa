@@ -33,7 +33,7 @@ const refactor = {
 
 const post = res => {
   res.data.cover = res.data.cover.split(',');
-  res.data.icon = res.data.icon.split(',');
+  res.data.icon = res.data.icon ? res.data.icon.split(',') : [];
   // 添加默认字段
   if (!res.data.templeComponent)
     res.data.templeComponent = { title: '', list: [] };

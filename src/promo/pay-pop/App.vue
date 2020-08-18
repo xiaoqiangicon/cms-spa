@@ -14,20 +14,22 @@
           <el-option label="已过期" :value="0" />
         </el-select>
         <el-button class="fl-right" size="small" @click="toAdd">
-          添加弹窗
+          添加
         </el-button>
       </div>
       <div class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
           <el-table-column prop="id" label="弹窗ID" />
           <el-table-column prop="title" label="标题" />
-          <el-table-column label="图片（点击放大）">
+          <el-table-column label="图片（点击放大）" :align="'center'">
             <template slot-scope="item">
               <el-image
+                v-if="item.row.cover"
                 style="width: 100px; height: 100px"
                 :src="item.row.cover"
                 :preview-src-list="[item.row.cover]"
               />
+              <div v-else>-</div>
             </template>
           </el-table-column>
           <el-table-column label="是否生效">
@@ -150,12 +152,17 @@ export default {
       this.$store.state.promoPayPop.add.visible = !0;
       this.$store.state.promoPayPop.add.isUpdate = !0;
       this.$store.state.promoPayPop.add.updateId = item.id;
-      this.$store.state.promoPayPop.add.covers = [item.cover];
+      this.$store.state.promoPayPop.add.covers = item.cover ? [item.cover] : [];
       this.$store.state.promoPayPop.add.takeEffectTimeRange = [
         item.startTime,
         item.endTime,
       ];
       this.$store.state.promoPayPop.add.sort = item.sort || '';
+      if (item.cover) {
+        this.$store.state.promoPayPop.add.isLink = '1';
+      } else {
+        this.$store.state.promoPayPop.add.isLink = '2';
+      }
       // this.$store.state.promoPayPop.add.moduleContentId =
       //   item.moduleContentId || '';
       // this.$store.state.promoPayPop.add.minAmount = item.minAmount || '';

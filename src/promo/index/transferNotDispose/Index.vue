@@ -4,13 +4,20 @@
       <div class="mg-t-20 top">
         <div>
           <span style="margin-left: 4px;margin-right: 6px;">佛事名称</span>
-          <el-autocomplete
-            v-model="commodityName"
-            class="autocomplete"
-            :fetch-suggestions="querySearch"
-            placeholder="请输入佛事名称"
-            @select="refreshCommodityList"
-          />
+          <el-select
+            v-model="commodityId"
+            filterable
+            placeholder="请选择佛事名称"
+            @change="refreshCommodityList"
+          >
+            <el-option
+              v-for="item in commodityIdList"
+              :key="item.id"
+              :label="item.value"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
         </div>
         <el-button slot="append" type="primary" @click="download">
           下载
@@ -146,27 +153,7 @@ export default {
       const url = `/conversionOrder/getNotDisposeConversionOrderExcel?commodityId=${commodityId}`;
       window.open(url);
     },
-    querySearch(queryString, cb) {
-      // seeFetch('promo/index/transferNotDispose/getCommodityList', {
-      // }).then(res => {
-      //   this.commodityIdList = res.data;
-      //   var commodityIdList = this.commodityIdList;
-
-      //   cb(commodityIdList);
-      // })
-      var { commodityIdList } = this;
-      var commodityIdList = commodityIdList
-        ? commodityIdList.filter(this.createFilter(queryString))
-        : commodityIdList;
-      cb(commodityIdList);
-    },
-    createFilter(queryString) {
-      return restaurant =>
-        restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
-    },
-    refreshCommodityList(item) {
-      this.commodityId = item.id;
-      this.commodityName = item.name;
+    refreshCommodityList() {
       this.refresh();
     },
     onSizeChange(pageSize) {

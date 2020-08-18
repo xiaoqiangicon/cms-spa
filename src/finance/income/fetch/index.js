@@ -18,3 +18,4 @@ import './zi-ying-modify-records';
 import './add-zi-ying-use';
 import './zi-ying-use-records';
 import './del-zi-ying-use';
+import './get-buddhist-list';

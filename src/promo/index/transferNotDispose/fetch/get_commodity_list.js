@@ -6,7 +6,7 @@ const post = res => {
     id: 0,
   });
   res.data.forEach(item => {
-    item.value = item.name;
+    item.value = item.id + ' - ' + item.name;
   });
 };
 

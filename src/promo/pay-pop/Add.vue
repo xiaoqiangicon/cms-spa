@@ -5,6 +5,10 @@
     :before-close="clickCancel"
     width="600px"
   >
+    <el-tabs v-model="activeTab">
+      <el-tab-pane label="弹窗" name="1"></el-tab-pane>
+      <el-tab-pane label="H5链接" name="2"></el-tab-pane>
+    </el-tabs>
     <div class="content">
       <h2>基本设置</h2>
       <hr />
@@ -14,7 +18,7 @@
         </div>
         <el-input v-model="title" style="width: 100%;" />
       </div>
-      <div class="row">
+      <div class="row" v-show="activeTab == 1">
         <div class="row-name">
           图片：
         </div>
@@ -47,8 +51,11 @@
           跳转链接：
         </div>
         <el-input v-model="redirect" style="width: 100%;" />
+        <p class="mg-t-10" v-if="activeTab === '2'">
+          1.H5规范必须有关闭或返回按钮<br />2.此跳转H5页面会在功德证书之前执行。
+        </p>
       </div>
-      <h2>弹窗规则</h2>
+      <h2>规则</h2>
       <hr />
       <div class="row">
         <div class="row-name">
@@ -207,6 +214,7 @@ export default {
   },
   data() {
     return {
+      activeTab: '1',
       saving: !1,
       userGroups: [],
     };
@@ -219,7 +227,16 @@ export default {
       this.userGroups = res.data || [];
     });
   },
+  watch: {
+    visible() {
+      this.activeTab = this.isLink;
+    },
+  },
   methods: {
+    handleSelect(tab, event) {
+      console.log(tab, typeof tab);
+      // this.activeTab = tab;
+    },
     clickCancel() {
       this.$store.state.promoPayPop.add.visible = !1;
     },
@@ -257,16 +274,22 @@ export default {
         payEnv,
         // 是否只显示一次（1：是，0：否）
         showOnce,
+        // 是否是H5链接
+        isLink,
       } = this;
 
       const registeredDaysInt = parseInt(registeredDays, 10);
 
       if (!title) error = '标题不能为空';
-      else if (!covers.length) error = '图片不能为空';
+      else if (this.activeTab === '1' && !covers.length) error = '图片不能为空';
       else if (!takeEffectTimeRange.length) error = '生效时间不能为空';
+      else if (!sort) error = '优先级不能为空';
+      else if (!maxAmount) error = '金额范围不能为空';
       else if (!redirect) error = '跳转链接不能为空';
       else if (Number.isNaN(registeredDaysInt) || registeredDaysInt < 0)
         error = '用户注册多少天不能为空，且须是大于或等于0的数字';
+      else if (redirect.indexOf('https://wx.zizaihome.com') === -1)
+        error = '你填写的域名不在系统白名单内';
 
       if (error) {
         Notification({
@@ -276,7 +299,7 @@ export default {
         return;
       }
 
-      const cover = covers[0];
+      const cover = covers[0] || '';
       const startTime = takeEffectTimeRange[0];
       const endTime = takeEffectTimeRange[1];
 
@@ -361,6 +384,18 @@ export default {
   },
 };
 </script>
+
+<style>
+.el-dialog__body {
+  padding-top: 0 !important;
+}
+.el-tabs__content {
+  display: none;
+}
+.el-tabs--top {
+  padding: 0 20px;
+}
+</style>
 
 <style lang="less" scoped>
 .content {

@@ -193,7 +193,7 @@ export default {
     toDetail(row) {
       const id = row.commodityId;
 
-      this.$router.push(`/promo/projectManage/${this.$route.params.id}/${id}`);
+      this.$router.push(`/promo/projectManageDetail/${id}`);
     },
     clickOk() {
       const { takeEffectTimeRange } = this;

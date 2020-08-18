@@ -27,6 +27,24 @@ export const foShi1 = {
   },
 };
 
+export const buddhistList = {
+  msg: '',
+  errorCode: 0,
+  data: {
+    list: [
+      {
+        name: '[1]供奉长生禄位',
+        id: 1,
+      },
+      {
+        name: '[2]供奉长生莲位',
+        id: 2,
+      },
+    ],
+    count: 5334,
+  },
+};
+
 export const listFoShi = {
   success: true,
   totalCount: 99,
