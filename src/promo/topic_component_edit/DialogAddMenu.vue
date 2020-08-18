@@ -40,7 +40,7 @@
           <div class="row">
             <div class="row-name">
               <p style="margin: 0">图标：</p>
-              <p style="margin: 0">(110*150最佳)</p>
+              <p style="margin: 0">(120*120最佳)</p>
             </div>
             <Upload :images="covers" :multiple="false" />
           </div>
@@ -65,7 +65,7 @@
           <div class="row">
             <div class="row-name">
               <p style="margin: 0">简介封面：</p>
-              <p style="margin: 0">(310*130最佳)</p>
+              <p style="margin: 0">(110*150最佳)</p>
             </div>
             <Upload v-if="!urlSwitch" :images="introCovers" :multiple="false" />
             <span style="line-height: 32px;" v-else
