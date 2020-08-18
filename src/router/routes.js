@@ -412,6 +412,19 @@ export default [
     meta: { title: '推广管理', icon: 'fa-circle', noCache: true },
     children: [
       {
+        name: 'sl-promo-project',
+        path: 'project',
+        component: () => import('../sl-promo/project/App.vue'),
+        meta: { title: '项目管理', noCache: true },
+      },
+      {
+        name: 'sl-promo-project-detail',
+        path: 'project-detail',
+        component: () => import('../sl-promo/project-detail/App.vue'),
+        meta: { title: '项目详情', noCache: true },
+        hidden: true,
+      },
+      {
         name: 'sl-promo-staff',
         path: 'staff',
         component: () => import('../sl-promo/staff/App.vue'),
@@ -440,6 +453,19 @@ export default [
     redirect: '/sl-business-promo/project',
     meta: { title: '推广管理', icon: 'fa-circle', noCache: true },
     children: [
+      {
+        name: 'sl-business-promo-project',
+        path: 'project',
+        component: () => import('../sl-business-promo/project/App.vue'),
+        meta: { title: '项目管理', noCache: true },
+      },
+      {
+        name: 'sl-business-promo-project-detail',
+        path: 'project-detail',
+        component: () => import('../sl-business-promo/project-detail/App.vue'),
+        meta: { title: '项目详情', noCache: true },
+        hidden: true,
+      },
       {
         name: 'sl-business-promo-seller',
         path: 'seller',
