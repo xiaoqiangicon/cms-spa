@@ -20,6 +20,7 @@ const responseRefactor = {
       faShiProfit: 'bonzeMoney',
       time: 'incomeTime',
       type: 'commodityType',
+      outcome: 'useMoney',
     },
   ],
 };
@@ -52,27 +53,31 @@ const postHandle = res => {
       foShiName: '合计',
       foShiNameWithId: '合计',
       amount: res.data
-        .map(item => item.amount)
+        .map(item => item.amount || 0)
         .reduce((sum, value) => sum + value)
         .toFixed(2),
       profit: res.data
-        .map(item => item.profit)
+        .map(item => item.profit || 0)
         .reduce((sum, value) => sum + value)
         .toFixed(2),
       chargeRate: '-',
       yueGuangBaoHe: res.data
-        .map(item => item.yueGuangBaoHe)
+        .map(item => item.yueGuangBaoHe || 0)
         .reduce((sum, value) => sum + value)
         .toFixed(2),
       manualRecord: res.data
-        .map(item => item.manualRecord)
+        .map(item => item.manualRecord || 0)
         .reduce((sum, value) => sum + value)
         .toFixed(2),
       orderCount: res.data
-        .map(item => item.orderCount)
+        .map(item => item.orderCount || 0)
         .reduce((sum, value) => sum + value),
       faShiProfit: res.data
-        .map(item => item.faShiProfit)
+        .map(item => item.faShiProfit || 0)
+        .reduce((sum, value) => sum + value)
+        .toFixed(2),
+      outcome: res.data
+        .map(item => item.outcome || 0)
         .reduce((sum, value) => sum + value)
         .toFixed(2),
       time: '合计',

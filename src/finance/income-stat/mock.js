@@ -121,10 +121,28 @@ export const summary1 = {
     totalEarningsMoney: 12345678,
     yearEarningsMoney: 1234567,
     monthEarningsMoney: 123456,
+    // 本月执行款收入
+    monthWait4UseMoney: 34567,
+    // 本月执行款支出
+    monthUseRecordMoney: 4567,
     monthEarningsMoneyList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(
       month => ({
-        incomeTime: `2018-${month > 9 ? month : `0${month}`}`,
+        incomeTime: `2020-${month > 9 ? month : `0${month}`}`,
         earningsMoney: randomMoney(),
+      })
+    ),
+    // 本月执行款收入列表
+    monthWait4UseMoneyList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(
+      month => ({
+        incomeTime: `2020-${month > 9 ? month : `0${month}`}`,
+        earningsMoney: randomMoney(),
+      })
+    ),
+    // 本月执行款支出列表
+    monthUseRecordMoneyList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(
+      month => ({
+        incomeTime: `2020-${month > 9 ? month : `0${month}`}`,
+        money: randomMoney(),
       })
     ),
     yearEarningsMoneyProportion: [

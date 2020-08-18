@@ -37,6 +37,8 @@ const responseRefactor = {
   total: 'data.totalEarningsMoney',
   yearTotal: 'data.yearEarningsMoney',
   monthTotal: 'data.monthEarningsMoney',
+  toUseMonthTotal: 'data.monthWait4UseMoney',
+  usedMonthTotal: 'data.monthUseRecordMoney',
   projects: 'data.yearEarningsMoneyProportion',
   _projects: [
     { id: 'type', amount: 'earningsMoney', subType: 'commodityType' },
@@ -99,6 +101,24 @@ const postHandle = res => {
       res.yearList[
         parseInt(item.incomeTime.split('-')[1], 10) - 1
       ] = parseFloat(parseFloat(item.earningsMoney).toFixed(2));
+    });
+  }
+
+  res.toUseList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  if (res.data.monthWait4UseMoneyList) {
+    res.data.monthWait4UseMoneyList.forEach(item => {
+      res.toUseList[
+        parseInt(item.incomeTime.split('-')[1], 10) - 1
+      ] = parseFloat(parseFloat(item.earningsMoney).toFixed(2));
+    });
+  }
+
+  res.usedList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  if (res.data.monthUseRecordMoneyList) {
+    res.data.monthUseRecordMoneyList.forEach(item => {
+      res.usedList[
+        parseInt(item.incomeTime.split('-')[1], 10) - 1
+      ] = parseFloat(parseFloat(item.money).toFixed(2));
     });
   }
 };
