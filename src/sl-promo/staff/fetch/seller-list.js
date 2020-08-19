@@ -31,7 +31,7 @@ seeFetch.config('sl-promo/staff/sellerList', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/cooperation/getBusinessUserList',
+    '/cooperation/getSellerList',
     '/sl-promo/staff/mock/sellerListS',
     '/sl-promo/staff/mock/sellerList',
   ],

@@ -2,8 +2,7 @@
 import seeFetch from 'see-fetch';
 
 const req = {
-  // todo 缺少销售员的键
-  userId: 'userId',
+  userId: 'sellerUserId',
   status: 'type',
 };
 

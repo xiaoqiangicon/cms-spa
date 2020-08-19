@@ -44,8 +44,7 @@ export const businessListS = {
         // 总收入
         sellerEarning: 789,
         // 旗下销售员
-        // todo 缺少这个字段
-        totalSellers: 3456,
+        sellerNum: 3456,
         addTime: '2020-01-01 01:01:01',
       })),
   },

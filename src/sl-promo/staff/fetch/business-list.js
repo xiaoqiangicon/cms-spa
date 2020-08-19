@@ -17,6 +17,8 @@ const refactor = {
         totalAmount: 'sales',
         // 总收入
         totalIncome: 'sellerEarning',
+        // 旗下销售员
+        totalSellers: 'sellerNum',
         createTime: 'addTime',
       },
     ],

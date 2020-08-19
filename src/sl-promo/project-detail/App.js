@@ -157,7 +157,6 @@ export default {
         status: this.status,
         startTime: this.startTime,
         endTime: this.endTime,
-        // todo 接口缺少这个参数
         keyword: this.keyword,
       }).then(res => {
         this.sale.loading = !1;

@@ -31,7 +31,7 @@
             plain
             round
             style="padding: 5px 10px;"
-            >销售员</el-button
+            >业务员</el-button
           ><br />
         </div>
         <div class="mg-t-10">

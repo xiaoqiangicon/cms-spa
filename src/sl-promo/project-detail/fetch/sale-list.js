@@ -3,6 +3,7 @@ import seeFetch from 'see-fetch';
 
 const req = {
   status: 'type',
+  keyword: 'content',
 };
 
 const refactor = {

@@ -55,7 +55,7 @@
                 </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column prop="totalSellers" label="累计收入">
+            <el-table-column prop="totalSellers" label="旗下销售员">
               <template slot-scope="item">
                 {{ item.row.totalSellers }}
                 <el-button

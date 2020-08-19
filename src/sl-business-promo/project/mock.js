@@ -25,7 +25,6 @@ export const list = {
         totalOrders: 123,
         // 添加时间
         addTime: '2020-01-01 01:01:01',
-        // todo 上架状态
       })),
   },
 };
