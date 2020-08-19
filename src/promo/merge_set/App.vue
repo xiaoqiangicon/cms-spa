@@ -12,8 +12,11 @@
             >佛事状态：{{ isEnd ? '已结束' : '进行中' }}</span
           >
         </div>
-        <div class="tip mg-t-20">
+        <div class="tip fl-left mg-t-20 mg-r-20">
           组合订单：是用于APP“超度”和“祈福”模块的订单自动调度到寺院的功能。其中转单系统与推广佛事为互斥关系，但两者都可设置分享激励
+        </div>
+        <div class="tip fl-left mg-t-20" style="min-height: 82px;">
+          可绑定手动转单规格，下单后可自行在转单列表手动转单
         </div>
       </div>
     </el-card>

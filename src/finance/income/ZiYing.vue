@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <div class="tip mg-b-20">
+      添加佛事之后会把历史数据统计出来，并且统计进入到营收统计中，已经加入转单的规格不会被统计
+    </div>
     <div class="clearfix">
       <el-select
         v-model="filterType"
@@ -296,6 +299,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.tip {
+  width: 600px;
+  padding: 20px;
+  background: #f6ffed;
+  border: 1px solid #b7eb8f;
+  border-radius: 4px;
+}
 .body {
   margin-top: 20px;
 }

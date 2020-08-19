@@ -27,6 +27,7 @@ const pre = params => {
       subdivideId: sub.id,
       price: sub.transferPrice,
       percent: sub.transferRate,
+      isDel: sub.isDel,
     })),
   }));
   return res;
