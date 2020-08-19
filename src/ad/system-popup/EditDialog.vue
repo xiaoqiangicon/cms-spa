@@ -240,10 +240,12 @@ export default {
           });
         } else {
           let error = '';
-          if (this.editForm.articleId && this.editForm.commodityId) {
-            error = '文章Id与佛事Id只能保留其中一个';
-          } else if (!this.editForm.articleId && !this.editForm.commodityId) {
-            error = '文章Id与佛事Id至少要填写一个';
+          if (this.adType === 1 || this.adType === 3) {
+            if (this.editForm.articleId && this.editForm.commodityId) {
+              error = '文章Id与佛事Id只能保留其中一个';
+            } else if (!this.editForm.articleId && !this.editForm.commodityId) {
+              error = '文章Id与佛事Id至少要填写一个';
+            }
           }
 
           if (error) {
