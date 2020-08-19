@@ -155,7 +155,7 @@ export default {
     handleClickEditCom(rowData) {
       const { id, title } = rowData;
 
-      this.$router.push(`/promo/topicEdit/${id}/${id}/${title}`);
+      this.$router.push(`/promo/topicEditComponent/${id}/${title}`);
     },
     handleClickDelete(rowData) {
       this.$confirm('此操作将删除选中专题, 是否继续?', '提示', {

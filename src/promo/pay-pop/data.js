@@ -13,6 +13,8 @@ export const addProps = [
   { name: 'sort', full: !0, default: '' },
   // 跳转链接
   { name: 'redirect', full: !0, default: '' },
+  // 是否是H5链接, '1'不是,'2'是
+  { name: 'isLink', full: !1, default: '1' },
   // 模块
   { name: 'moduleId', full: !0, default: 0 },
   // 模块内容ID（0表示全部）

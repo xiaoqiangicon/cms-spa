@@ -49,7 +49,7 @@ export const list1 = {
       // 标题
       title: `寺院 ${id}`,
       // 封面
-      pic: '/sample/image1.jpg',
+      pic: id % 2 ? '/sample/image1.jpg' : '',
       // 开始时间
       startDate: '2020-01-01 01:01:01',
       // 结束时间

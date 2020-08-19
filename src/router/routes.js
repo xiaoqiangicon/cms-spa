@@ -132,8 +132,8 @@ export default [
         hidden: !0,
       },
       {
-        path: 'topicEdit/:id/:id/:title',
-        component: () => import('../promo/topic_component_edit/App.vue'),
+        path: 'topicEditComponent/:id/:title',
+        component: () => import('../promo/topic_component_edit/App'),
         name: 'promo-topicEdit2',
         meta: { title: '专题列表 / 编辑专题 / 编辑组件', noCache: true },
         hidden: !0,
@@ -194,7 +194,7 @@ export default [
         path: 'pay-pop',
         component: () => import('../promo/pay-pop/App.vue'),
         name: 'promo-pay-pop',
-        meta: { title: '支付弹窗设置', noCache: true },
+        meta: { title: '支付完成设置', noCache: true },
       },
       {
         path: 'projectManage',
@@ -210,8 +210,8 @@ export default [
         hidden: !0,
       },
       {
-        path: 'projectManage/:id/:id',
-        component: () => import('../promo/project_item_detail/App.vue'),
+        path: 'projectManageDetail/:id',
+        component: () => import('../promo/project_item_detail/App'),
         name: 'promo-projectManage-id-id',
         meta: { title: '绑定佛事列表 / 详情', noCache: true },
         hidden: !0,

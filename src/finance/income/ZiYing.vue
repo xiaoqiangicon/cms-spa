@@ -16,14 +16,20 @@
           :label="item.name"
         />
       </el-select>
-      <el-input
+      <el-select
         v-model="search"
-        placeholder="请输入佛事ID或佛事名称"
+        filterable
+        placeholder="请选择佛事ID或佛事名称"
         size="small"
-        style="width: 250px;"
+        @change="doSearch"
       >
-        <el-button slot="append" icon="el-icon-search" @click="doSearch" />
-      </el-input>
+        <el-option
+          v-for="item in buddhistList"
+          :key="item.id"
+          :value="item.id"
+          :label="item.name"
+        />
+      </el-select>
       <el-button class="fl-right" size="small" @click="toAdd">
         添加自营佛事
       </el-button>
@@ -179,11 +185,13 @@ export default {
       currentPage: 1,
       totalCount: 0,
       list: [],
+      buddhistList: [],
       ziYingTypes,
     };
   },
   created() {
     this.fetchList();
+    this.fetchBuddhistList();
   },
   methods: {
     fetchList() {
@@ -207,6 +215,13 @@ export default {
         this.list = res.data;
 
         window.scrollTo(0, 0);
+      });
+    },
+    fetchBuddhistList() {
+      seeFetch('finance/income/getBuddhistList', { templeId: 0 }).then(res => {
+        if (res.errorCode === 0) {
+          this.buddhistList = res.data.list;
+        }
       });
     },
     pageChange(page) {
