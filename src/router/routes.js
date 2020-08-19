@@ -485,6 +485,41 @@ export default [
         component: () => import('../sl-business-promo/recruit/App.vue'),
         meta: { title: '招募设置', noCache: true },
       },
+      {
+        path: 'topic',
+        component: () => import('../sl-business-promo/topic/App.vue'),
+        name: 'sl-business-promo-topic',
+        meta: { title: '专题管理', noCache: true },
+      },
+      {
+        path: 'topicEdit/:id',
+        component: () => import('../sl-business-promo/topic_edit/App.vue'),
+        name: 'sl-business-promo-topicEdit',
+        meta: { title: '专题列表 / 编辑专题', noCache: true },
+        hidden: !0,
+      },
+      {
+        path: 'topicEditComponent/:id/:title',
+        component: () =>
+          import('../sl-business-promo/topic_component_edit/App'),
+        name: 'sl-business-promo-topicEdit2',
+        meta: { title: '专题列表 / 编辑专题 / 编辑组件', noCache: true },
+        hidden: !0,
+      },
+      {
+        path: 'topicStatistic/:id',
+        component: () => import('../sl-business-promo/topic_statistic/App.vue'),
+        name: 'sl-business-promo-topicStatistic',
+        meta: { title: '专题列表 / 专题数据', noCache: true },
+        hidden: !0,
+      },
+      {
+        path: 'topicCreate/:id',
+        component: () => import('../sl-business-promo/topic_edit/App.vue'),
+        name: 'sl-business-promo-topicCreate',
+        meta: { title: '专题列表 / 新建专题', noCache: true },
+        hidden: !0,
+      },
     ],
   },
   {

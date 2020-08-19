@@ -105,11 +105,9 @@ export const saleListS = {
         payTime: '支付时间',
         // 销售员所属的业务员id
         businessUserId: i + 1,
-        // todo 缺少这个字段
         businessUserName: `业务员${i + 1}`,
         // 销售员所属的业务员id
         sellerUserId: i + 1,
-        // todo 缺少这个字段
         sellerUserName: `业务员${i + 1}`,
       })),
   },

@@ -1,6 +1,7 @@
 export const info = {
   success: true,
   data: {
+    id: 123,
     // 是否招募
     recruit: 1,
     // 是否审核
@@ -15,6 +16,7 @@ export const info = {
 export const infoS = {
   errorCode: 0,
   data: {
+    id: 123,
     // 是否招募
     isRecruit: 0,
     // 是否审核

@@ -17,6 +17,7 @@ export default {
   name: 'App',
   data() {
     return {
+      id: 0,
       // 是否招募
       recruit: 1,
       // 是否审核
@@ -43,6 +44,7 @@ export default {
       seeFetch('sl-business-promo/recruit/info').then(res => {
         this.loading = false;
         if (res.data) {
+          this.id = res.data.id;
           this.recruit = res.data.recruit;
           this.verify = res.data.verify;
           this.title = res.data.title;
@@ -51,7 +53,15 @@ export default {
       });
     },
     promo() {
-      MessageBox.alert('/', '招募链接');
+      const link = `https://slxs.zizaihome.cn/?businessUserId=${this.id}`;
+      const toolLink = 'http://tool.zizaisweet.cn/#/link/qr-code';
+      MessageBox.alert(
+        `${link}<br/><br/><a href="${toolLink}" target="_blank" class="blue">点击这里生成二维码</a>`,
+        '招募链接',
+        {
+          dangerouslyUseHTMLString: true,
+        }
+      );
     },
     save() {
       const title = this.title.trim();

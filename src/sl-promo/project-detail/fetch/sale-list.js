@@ -20,6 +20,7 @@ const refactor = {
         businessIncome: 'businessMoney',
         // 销售员收入
         sellerIncome: 'sellerMoney',
+        sellerName: 'sellerUserName',
       },
     ],
   },
