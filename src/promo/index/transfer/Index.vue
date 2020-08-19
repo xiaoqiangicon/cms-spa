@@ -7,6 +7,21 @@
             <div class="tip fl-left">
               转单系统：手动调度APP的订单给指定的寺院处理、自动调度为APP超度和祈福的组合单其中转单系统与推广佛事为互斥关系，但两者都可设置分享激励
             </div>
+            <div
+              class="tip fl-left"
+              style="min-height: 102px;margin-left: 20px;margin-bottom: 20px;margin-right: 20px;"
+            >
+              新增规格需要重新添加转单佛事规格，并且重新设置转单比例或金额
+            </div>
+            <div
+              class="tip fl-left"
+              style="min-height: 102px;margin-right: 20px;margin-bottom: 20px;"
+            >
+              随喜、已加入自营佛事并且已经生成订单、无需支付、加入组合订单都不可加入到手动转单
+            </div>
+            <div class="tip fl-left" style="min-height: 102px;">
+              名山代办寺院的佛事不能转给自在家相关寺院
+            </div>
             <div class="fl-right mg-t-40">
               <el-button
                 type="primary"

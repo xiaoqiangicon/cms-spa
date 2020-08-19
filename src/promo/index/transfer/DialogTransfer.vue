@@ -253,9 +253,12 @@ export default {
         : this.transferOrderDetail.subId;
 
       // 获取转单选择项的原价
-      const { price: originPrice } = this.transferSubList.find(
-        item => item.id === subId
-      );
+      // const { price: originPrice } = this.transferSubList.find(
+      //   item => item.id === subId
+      // );
+      let transferItem = this.transferSubList.find(item => item.id === subId);
+
+      const originPrice = transferItem ? transferItem.price : 0;
 
       // 这里有可能设置了寺院选择项 有可能没设置
       const transferTempleSubList = this.transferTempleList.find(

@@ -441,6 +441,7 @@ export default {
                 id: sub.id,
                 transferPrice: sub.price <= 0 ? 0 : sub.transferPrice,
                 transferRate: sub.transferRate,
+                isDel: 0,
               };
 
               res.subList.push(newItem);
@@ -464,9 +465,14 @@ export default {
               ) {
                 error = `${errorPrefix}转单金额不能超过价格`;
               }
+            } else if (!sub.selected && sub.price > 0) {
+              const newItem = {
+                id: sub.id,
+                isDel: 1,
+              };
+              res.subList.push(newItem);
             }
           });
-
           return res;
         }
       );
@@ -479,14 +485,13 @@ export default {
         });
         return null;
       }
-
       return params;
     },
     save() {
       const params = this.createSubmitData();
 
       if (!params) return;
-
+      console.log('params', params);
       seeFetch('promo/transfer_set/update_transfer_set', params).then(res => {
         if (!res.success) {
           Notification({

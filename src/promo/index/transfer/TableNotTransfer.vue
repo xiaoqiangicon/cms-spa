@@ -249,19 +249,20 @@ export default {
         ? this.transferSubId
         : this.transferOrderDetail.subId;
 
+      console.log('rowData', rowData, subId, this.transferSubList);
       // 获取转单选择项的原价
-      const { price: originPrice } = this.transferSubList.find(
-        item => item.id === subId
-      );
+      // const { price: originPrice } = this.transferSubList.find(
+      //   item => item.id === subId
+      // );
 
-      if (originPrice <= 0) {
-        Notification({
-          type: 'warning',
-          title: '提示',
-          message: '当前未转单项属于无需支付或随喜，禁止转单',
-        });
-        return;
-      }
+      // if (originPrice <= 0) {
+      //   Notification({
+      //     type: 'warning',
+      //     title: '提示',
+      //     message: '当前未转单项属于无需支付或随喜，禁止转单',
+      //   });
+      //   return;
+      // }
 
       this.$store.state.promoIndex.dialogTransferSelectionId =
         rowData.subdivideId;
