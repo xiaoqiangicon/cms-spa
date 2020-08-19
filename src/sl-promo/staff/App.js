@@ -112,11 +112,7 @@ export default {
       this.businessDialogVisible = true;
     },
     detailBusiness(item) {
-      window.sessionStorage.setItem(
-        'sl-promo/business-detail:item',
-        JSON.stringify(item.row)
-      );
-      this.$router.push(`/sl-promo/business-detail`);
+      this.$router.push(`/sl-promo/business-detail/${item.row.id}`);
     },
     delBusiness(item) {
       this.$confirm(
@@ -242,11 +238,7 @@ export default {
       this.fetchSellerList();
     },
     detailSeller(item) {
-      window.sessionStorage.setItem(
-        'sl-promo/seller-detail:item',
-        JSON.stringify(item.row)
-      );
-      this.$router.push(`/sl-promo/seller-detail`);
+      this.$router.push(`/sl-promo/seller-detail/${item.row.id}`);
     },
     blockSeller(item) {
       this.$confirm(

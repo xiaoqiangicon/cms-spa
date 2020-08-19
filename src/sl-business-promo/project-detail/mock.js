@@ -75,7 +75,7 @@ export const saleList = {
         businessUserName: `业务员${i + 1}`,
         // 销售员所属的业务员id
         sellerUserId: i + 1,
-        sellerUserName: `业务员${i + 1}`,
+        sellerUserName: `销售员${i + 1}`,
       })),
   },
 };
@@ -108,7 +108,7 @@ export const saleListS = {
         businessUserName: `业务员${i + 1}`,
         // 销售员所属的业务员id
         sellerUserId: i + 1,
-        sellerUserName: `业务员${i + 1}`,
+        sellerUserName: `销售员${i + 1}`,
       })),
   },
 };

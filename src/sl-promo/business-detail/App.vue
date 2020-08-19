@@ -1,5 +1,5 @@
 <template>
-  <div class="pd-20">
+  <div class="pd-20" v-loading="preLoading">
     <el-card>
       <div class="clearfix">
         <div class="bd-rd-4 pd-15 fl-right bd-d">

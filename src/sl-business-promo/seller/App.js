@@ -167,11 +167,7 @@ export default {
       });
     },
     detail(item) {
-      window.sessionStorage.setItem(
-        'sl-business-promo/seller-detail:item',
-        JSON.stringify(item.row)
-      );
-      this.$router.push(`/sl-business-promo/seller-detail`);
+      this.$router.push(`/sl-business-promo/seller-detail/${item.row.id}`);
     },
     block(item) {
       this.$confirm(

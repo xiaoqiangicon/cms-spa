@@ -188,10 +188,10 @@ export default {
       this.fetchSaleList();
     },
     toBusiness(item) {
-      // todo 没有业务员数据可以带过去
+      this.$router.push(`/sl-promo/business-detail/${item.row.businessUserId}`);
     },
     toSeller(item) {
-      // todo 没有销售员数据可以带过去
+      this.$router.push(`/sl-promo/seller-detail/${item.row.sellerUserId}`);
     },
     changeOnline(value) {
       seeFetch('sl-promo/project-detail/online', {

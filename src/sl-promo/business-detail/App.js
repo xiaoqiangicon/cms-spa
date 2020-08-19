@@ -6,6 +6,7 @@ export default {
   name: 'App',
   data() {
     return {
+      id: 0,
       item: {},
       status: -1,
       startTime: '',
@@ -15,18 +16,33 @@ export default {
       pageSize: 20,
       total: 0,
       loading: false,
+      preLoading: true,
     };
   },
   created() {
-    const item = window.sessionStorage.getItem('sl-promo/business-detail:item');
+    const id = this.$route.params.id;
 
-    if (!item) {
+    if (!id) {
       MessageBox.alert('页面数据有误');
       return;
     }
 
-    this.item = JSON.parse(item);
-    this.fetchList();
+    this.id = id;
+    seeFetch('sl-promo/business-detail/detail', { businessUserId: id }).then(
+      res => {
+        if (!res.success || !res.data) {
+          Notification.error({
+            title: '提示',
+            message: res.message,
+          });
+          return;
+        }
+
+        this.item = res.data;
+        this.preLoading = false;
+        this.fetchList();
+      }
+    );
   },
   methods: {
     fetchList() {

@@ -53,3 +53,43 @@ export const listS = {
       })),
   },
 };
+
+export const detail = {
+  success: true,
+  data: {
+    id: 11,
+    // 用户名
+    name: `用户名11`,
+    // 电话号码
+    phone: '12312312312',
+    // 总订单数
+    totalOrders: 123,
+    // 总销售额
+    totalAmount: 456,
+    // 总收入
+    totalIncome: 789,
+    // 旗下销售员
+    totalSellers: 3456,
+    createTime: '2020-01-01 01:01:01',
+  },
+};
+
+export const detailS = {
+  errorCode: 0,
+  data: {
+    id: 11,
+    // 用户名
+    name: `用户名11`,
+    // 电话号码
+    mobile: '12312312312',
+    // 总订单数
+    orderNum: 123,
+    // 总销售额
+    sales: 456,
+    // 总收入
+    sellerEarning: 789,
+    // 旗下销售员
+    sellerNum: 3456,
+    addTime: '2020-01-01 01:01:01',
+  },
+};

@@ -22,19 +22,6 @@ const refactor = {
         // 总收入
         totalIncome: 'sellerEarning',
         createTime: 'addTime',
-        businessUserName: 'businessUser.name',
-        businessUser: {
-          phone: 'mobile',
-          // 总订单数
-          totalOrders: 'orderNum',
-          // 总销售额
-          totalAmount: 'sales',
-          // 总收入
-          totalIncome: 'sellerEarning',
-          // 旗下销售员
-          totalSellers: 'sellerNum',
-          createTime: 'addTime',
-        },
       },
     ],
   },

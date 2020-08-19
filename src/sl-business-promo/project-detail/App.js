@@ -278,7 +278,7 @@ export default {
       this.fetchSaleList();
     },
     toSeller(item) {
-      // todo 没有销售员数据可以带过去
+      this.$router.push(`/sl-business-promo/seller-detail/${item.row.id}`);
     },
   },
 };
