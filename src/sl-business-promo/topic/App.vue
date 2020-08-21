@@ -88,7 +88,18 @@
     </el-card>
     <el-dialog title="专题链接" :visible.sync="linkDialogVisible" width="40%">
       <div v-loading="linkDialogLoading">
-        <div>
+        <div class="link-row clearfix">
+          <span style="line-height: 28px">自己推广</span>
+          <el-button
+            size="mini"
+            type="primary"
+            plain
+            class="fl-right"
+            @click="showSelfLink"
+            >复制链接</el-button
+          >
+        </div>
+        <div class="mg-t-10">
           <div
             class="link-row clearfix"
             v-for="(item, index) in activeSellers"

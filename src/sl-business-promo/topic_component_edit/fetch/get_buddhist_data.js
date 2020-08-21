@@ -15,7 +15,7 @@ seeFetch.config('sl-business-promo/topicComponentEdit/getBuddhistData', {
   method: ['post'],
   stringify: [!0],
   url: [
-    '/ceremony/namelist',
+    '/topic/cooperationCermonyList',
     '/sl-business-promo/topic_component_edit/mock/get_buddhist_data',
     '/sl-business-promo/topic_component_edit/mock/get_buddhist_data',
   ],

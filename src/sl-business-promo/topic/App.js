@@ -27,6 +27,8 @@ export default {
       linkTopicLink: '',
       // 正在加载已激活的销售员
       linkDialogLoading: false,
+      // 自身加密的Id
+      selfId: '',
     };
   },
   created() {
@@ -34,6 +36,7 @@ export default {
 
     seeFetch('sl-business-promo/topic/allSellers').then(res => {
       if (res.data && res.data.list) {
+        this.selfId = res.data.ssbid;
         this.allSellers = res.data.list;
       }
     });
@@ -182,13 +185,33 @@ export default {
       });
     },
     showLink(item) {
+      const originalItem = this.allSellers.find(i => i.id === item.id);
+
+      if (!originalItem) {
+        Notification.error('找不到销售员数据，请联系开发者');
+        return;
+      }
+
       const link = `${this.linkTopicLink}${
         this.linkTopicLink.indexOf('?') > -1 ? '&' : '?'
-      }sellerUserId=${item.id}`;
+      }gp_businessUserId=${this.selfId}&gp_sellerUserId=${originalItem.sid}`;
       const toolLink = 'http://tool.zizaisweet.cn/#/link/qr-code';
       MessageBox.alert(
         `${link}<br/><br/><a href="${toolLink}" target="_blank" class="blue">点击这里生成二维码</a>`,
         `${item.name}专题链接`,
+        {
+          dangerouslyUseHTMLString: true,
+        }
+      );
+    },
+    showSelfLink() {
+      const link = `${this.linkTopicLink}${
+        this.linkTopicLink.indexOf('?') > -1 ? '&' : '?'
+      }gp_businessUserId=${this.selfId}&gp_sellerUserId=`;
+      const toolLink = 'http://tool.zizaisweet.cn/#/link/qr-code';
+      MessageBox.alert(
+        `${link}<br/><br/><a href="${toolLink}" target="_blank" class="blue">点击这里生成二维码</a>`,
+        '专题链接',
         {
           dangerouslyUseHTMLString: true,
         }

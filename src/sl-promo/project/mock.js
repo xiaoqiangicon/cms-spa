@@ -25,8 +25,8 @@ export const list = {
         totalOrders: 123,
         // 添加时间
         addTime: '2020-01-01 01:01:01',
-        // 上架状态
-        online: i % 2,
+        // 下架状态
+        offline: i % 2,
       })),
   },
 };
@@ -56,11 +56,11 @@ export const listS = {
         orderNum: 123,
         // 添加时间
         addTime: '2020-01-01 01:01:01',
-        // 上架状态
+        // 下架状态
         status: i % 2,
       })),
   },
 };
 
-export const online = { success: true };
-export const onlineS = { errorCode: 0 };
+export const offline = { success: true };
+export const offlineS = { errorCode: 0 };

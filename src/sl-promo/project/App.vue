@@ -72,10 +72,10 @@
           </template>
           <template slot-scope="item">
             <el-switch
-              :value="!!item.row.online"
+              :value="!item.row.offline"
               active-text="是"
               inactive-text="否"
-              @change="value => changeOnline(value, item)"
+              @change="value => changeOffline(value, item)"
             />
           </template>
         </el-table-column>

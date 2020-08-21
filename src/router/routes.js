@@ -444,6 +444,12 @@ export default [
         meta: { title: '业务员', noCache: true },
         hidden: true,
       },
+      {
+        name: 'sl-promo-finance',
+        path: 'finance',
+        component: () => import('../sl-promo/finance/App.vue'),
+        meta: { title: '财务统计', noCache: true },
+      },
     ],
   },
   {

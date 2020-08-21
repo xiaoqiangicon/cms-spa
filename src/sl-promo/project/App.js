@@ -70,10 +70,10 @@ export default {
       this.$store.state.slPromoProjectDetail.initAction = 'tabSale';
       this.$router.push('/sl-promo/project-detail');
     },
-    changeOnline(value, { row: item }) {
-      seeFetch('sl-promo/project/online', {
+    changeOffline(value, { row: item }) {
+      seeFetch('sl-promo/project/offline', {
         id: item.id,
-        status: value ? 1 : 0,
+        status: value ? 0 : 1,
       }).then(res => {
         if (!res.success) {
           Notification.error({
@@ -84,7 +84,7 @@ export default {
         }
 
         // eslint-disable-next-line no-param-reassign
-        item.online = value ? 1 : 0;
+        item.offline = value ? 0 : 1;
 
         Notification.success({
           title: '提示',

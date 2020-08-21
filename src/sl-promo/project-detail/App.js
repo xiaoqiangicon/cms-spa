@@ -127,6 +127,8 @@ export default {
           {
             id: item.id,
             companyMoney: inputPrice,
+            sellMoney: item.sellMoney,
+            retailMoney: item.retailMoney,
           },
         ],
       }).then(res => {
@@ -158,6 +160,7 @@ export default {
         startTime: this.startTime,
         endTime: this.endTime,
         keyword: this.keyword,
+        commodityId: this.foShiItem.id,
       }).then(res => {
         this.sale.loading = !1;
 
@@ -193,10 +196,10 @@ export default {
     toSeller(item) {
       this.$router.push(`/sl-promo/seller-detail/${item.row.sellerUserId}`);
     },
-    changeOnline(value) {
-      seeFetch('sl-promo/project-detail/online', {
+    changeOffline(value) {
+      seeFetch('sl-promo/project-detail/offline', {
         id: this.foShiItem.id,
-        status: value ? 1 : 0,
+        status: value ? 0 : 1,
       }).then(res => {
         if (!res.success) {
           Notification.error({
@@ -207,7 +210,7 @@ export default {
         }
 
         // eslint-disable-next-line no-param-reassign
-        this.foShiItem.online = value ? 1 : 0;
+        this.foShiItem.offline = value ? 0 : 1;
 
         // 更新缓存数据
         window.sessionStorage.setItem(

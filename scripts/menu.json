@@ -1,86 +1,86 @@
 [
   {
     "path": "/ling",
-    "component": 1,
+    "component": true,
     "redirect": "/ling/index",
     "name": "ling",
     "meta": {
       "title": "要灵灵管理",
       "icon": "fa-circle",
-      "noCache": 1
+      "noCache": true
     },
     "children": [
       {
         "path": "index",
-        "component": 1,
+        "component": true,
         "name": "ling-index",
         "meta": {
           "title": "礼品管理",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "edit/:id",
-        "component": 1,
+        "component": true,
         "name": "ling-edit",
         "meta": {
           "title": "礼品添加 / 编辑",
-          "noCache": 1
+          "noCache": true
         },
-        "hidden": 1
+        "hidden": true
       },
       {
         "path": "exchange",
-        "component": 1,
+        "component": true,
         "name": "ling-exchange",
         "meta": {
           "title": "兑奖管理",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "gift",
-        "component": 1,
+        "component": true,
         "name": "ling-gift",
         "meta": {
           "title": "暴富奖品",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "send",
-        "component": 1,
+        "component": true,
         "name": "ling-send",
         "meta": {
           "title": "暴富发奖",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "bubble",
-        "component": 1,
+        "component": true,
         "name": "ling-bubble",
         "meta": {
           "title": "气泡广告",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "entry",
-        "component": 1,
+        "component": true,
         "name": "ling-entry",
         "meta": {
           "title": "许愿入口",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "fate",
-        "component": 1,
+        "component": true,
         "name": "ling-fate",
         "meta": {
           "title": "好运攻略",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
@@ -92,123 +92,133 @@
       },
       {
         "path": "face",
-        "component": 1,
+        "component": true,
         "name": "ling-face",
         "meta": {
           "title": "互动发言",
-          "noCache": 1
+          "noCache": true
         }
       }
     ]
   },
   {
     "path": "/fubi",
-    "component": 1,
+    "component": true,
     "redirect": "/fubi/index",
     "name": "fubi",
     "meta": {
       "title": "福币分销",
       "icon": "fa-circle",
-      "noCache": 1
+      "noCache": true
     },
     "children": [
       {
         "path": "index",
-        "component": 1,
+        "component": true,
         "name": "fubi-index",
         "meta": {
           "title": "福币商城",
-          "noCache": 1
+          "noCache": true
         }
       }
     ]
   },
   {
     "path": "/promo",
-    "component": 1,
+    "component": true,
     "redirect": "/promo/index",
     "name": "promo",
     "meta": {
       "title": "运营事件",
       "icon": "fa-circle",
-      "noCache": 1
+      "noCache": true
     },
     "children": [
       {
         "path": "index",
-        "component": 1,
+        "component": true,
         "name": "promo-index",
         "meta": {
           "title": "事件管理",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "index/transfer-list",
-        "component": 1,
+        "component": true,
         "name": "promo-index-transfer-list",
         "meta": {
           "title": "事件管理 / 转单列表",
-          "noCache": 1
+          "noCache": true
         },
-        "hidden": 1
+        "hidden": true
       },
       {
         "path": "statistics",
-        "component": 1,
+        "component": true,
         "name": "promo-statistics",
         "meta": {
           "title": "转单统计",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "ci",
-        "component": 1,
+        "component": true,
         "name": "promo-ci",
         "meta": {
           "title": "慈光计划",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "topic",
-        "component": 1,
+        "component": true,
         "name": "promo-topic",
         "meta": {
           "title": "专题管理",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "topicEdit/:id",
-        "component": 1,
+        "component": true,
         "name": "promo-topicEdit",
         "meta": {
           "title": "专题列表 / 编辑专题",
-          "noCache": 1
+          "noCache": true
         },
-        "hidden": 1
+        "hidden": true
       },
       {
-        "path": "topicEdit/:id/:id",
-        "component": 1,
+        "path": "topicEditComponent/:id/:title",
+        "component": true,
         "name": "promo-topicEdit2",
         "meta": {
           "title": "专题列表 / 编辑专题 / 编辑组件",
-          "noCache": 1
+          "noCache": true
         },
-        "hidden": 1
+        "hidden": true
+      },
+      {
+        "path": "topicStatistic/:id",
+        "component": true,
+        "name": "promo-topicStatistic",
+        "meta": {
+          "title": "专题列表 / 专题数据",
+          "noCache": true
+        },
+        "hidden": true
       },
       {
         "path": "topicCreate/:id",
-        "component": 1,
+        "component": true,
         "name": "promo-topicCreate",
         "meta": {
           "title": "专题列表 / 新建专题",
-          "noCache": 1
+          "noCache": true
         },
-        "hidden": 1
+        "hidden": true
       },
       {
         "path": "/event/thousand",
@@ -226,111 +236,111 @@
       },
       {
         "path": "transferSet/:id",
-        "component": 1,
+        "component": true,
         "name": "promo-transferSet",
         "meta": {
           "title": "转单系统 / 转单设置",
-          "noCache": 1
+          "noCache": true
         },
-        "hidden": 1
+        "hidden": true
       },
       {
         "path": "mergeSet/:id",
-        "component": 1,
+        "component": true,
         "name": "promo-mergeSet",
         "meta": {
           "title": "转单系统 / 组合设置",
-          "noCache": 1
+          "noCache": true
         },
-        "hidden": 1
+        "hidden": true
       },
       {
         "path": "buddhistEdit/:id",
-        "component": 1,
+        "component": true,
         "name": "promo-buddhistEdit",
         "meta": {
           "title": "推广佛事 / 推广编辑",
-          "noCache": 1
+          "noCache": true
         },
-        "hidden": 1
+        "hidden": true
       },
       {
         "path": "fubiRecord/:id",
-        "component": 1,
+        "component": true,
         "name": "promo-fubiRecord",
         "meta": {
           "title": "福币分享 / 记录",
-          "noCache": 1
+          "noCache": true
         },
-        "hidden": 1
+        "hidden": true
       },
       {
         "path": "pay-pop",
-        "component": 1,
+        "component": true,
         "name": "promo-pay-pop",
         "meta": {
-          "title": "支付弹窗设置",
-          "noCache": 1
+          "title": "支付完成设置",
+          "noCache": true
         }
       },
       {
         "path": "projectManage",
-        "component": 1,
+        "component": true,
         "name": "promo-projectManage",
         "meta": {
           "title": "第三方项目管理",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "projectManage/:id",
-        "component": 1,
+        "component": true,
         "name": "promo-projectManage-id",
         "meta": {
           "title": "第三方项目管理 / 绑定佛事列表",
-          "noCache": 1
+          "noCache": true
         },
-        "hidden": 1
+        "hidden": true
       },
       {
-        "path": "projectManage/:id/:id",
-        "component": 1,
+        "path": "projectManageDetail/:id",
+        "component": true,
         "name": "promo-projectManage-id-id",
         "meta": {
           "title": "绑定佛事列表 / 详情",
-          "noCache": 1
+          "noCache": true
         },
-        "hidden": 1
+        "hidden": true
       }
     ]
   },
   {
     "path": "/temple",
-    "component": 1,
+    "component": true,
     "redirect": "/temple/super",
     "name": "temple",
     "meta": {
       "title": "寺院管理",
       "icon": "fa-circle",
-      "noCache": 1
+      "noCache": true
     },
     "children": [
       {
         "path": "super",
-        "component": 1,
+        "component": true,
         "name": "temple-super",
         "meta": {
           "title": "超级访问",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "notice",
-        "component": 1,
+        "component": true,
         "name": "temple-notice",
         "meta": {
           "title": "寺院通知",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
@@ -356,237 +366,413 @@
       },
       {
         "path": "comment",
-        "component": 1,
+        "component": true,
         "name": "temple-comment",
         "meta": {
           "title": "评价管理",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "name": "temple-integral-task",
         "path": "integral-task",
-        "component": 1,
+        "component": true,
         "meta": {
           "title": "积分任务",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "name": "temple-integrate",
         "path": "integrate",
-        "component": 1,
+        "component": true,
         "meta": {
           "title": "积分记录",
-          "noCache": 1
+          "noCache": true
         }
       }
     ]
   },
   {
     "path": "/finance",
-    "component": 1,
+    "component": true,
     "redirect": "/finance/pending",
     "name": "finance",
     "meta": {
       "title": "善款中心",
       "icon": "fa-circle",
-      "noCache": 1
+      "noCache": true
     },
     "children": [
       {
         "path": "pending",
-        "component": 1,
+        "component": true,
         "name": "finance-pending",
         "meta": {
           "title": "待处理事项",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "refund",
-        "component": 1,
+        "component": true,
         "name": "finance-refund",
         "meta": {
           "title": "退款列表",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "taking/:id",
-        "component": 1,
+        "component": true,
         "name": "finance-taking",
         "meta": {
           "title": "提现账单详情",
-          "noCache": 1
+          "noCache": true
         },
-        "hidden": 1
+        "hidden": true
       },
       {
         "path": "stat",
-        "component": 1,
+        "component": true,
         "name": "finance-stat",
         "meta": {
           "title": "善款统计",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "summary",
-        "component": 1,
+        "component": true,
         "name": "finance-summary",
         "meta": {
           "title": "善款明细",
-          "noCache": 1
+          "noCache": true
         },
-        "hidden": 1
+        "hidden": true
       },
       {
         "path": "special",
-        "component": 1,
+        "component": true,
         "name": "finance-special",
         "meta": {
           "title": "特殊提现",
-          "noCache": 1
+          "noCache": true
         },
-        "hidden": 1
+        "hidden": true
       },
       {
         "path": "receipt",
-        "component": 1,
+        "component": true,
         "name": "finance-receipt",
         "meta": {
           "title": "发票管理",
-          "naCache": 1
+          "naCache": true
         }
       },
       {
         "path": "income-stat",
-        "component": 1,
+        "component": true,
         "name": "finance-income-stat",
         "meta": {
           "title": "营收统计",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "income",
         "name": "finance-income",
-        "component": 1,
+        "component": true,
         "meta": {
           "title": "营收管理",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "record",
         "name": "finance-record",
-        "component": 1,
+        "component": true,
         "meta": {
           "title": "人工记账",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "remark",
         "name": "finance-remark",
-        "component": 1,
+        "component": true,
         "meta": {
           "title": "提醒备注",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "trade-stat",
         "name": "finance-trade-stat",
-        "component": 1,
+        "component": true,
         "meta": {
           "title": "交易统计",
-          "noCache": 1
+          "noCache": true
         }
       }
     ]
   },
   {
     "path": "/cooperation",
-    "component": 1,
+    "component": true,
     "name": "cooperation",
     "meta": {
       "title": "第三方项目",
       "icon": "fa-circle",
-      "noCache": 1
+      "noCache": true
     },
     "children": [
       {
         "path": "/cooperation/projectManage",
-        "component": 1,
+        "component": true,
         "name": "cooperation-projectManage",
         "meta": {
           "title": "项目管理",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "/cooperation/projectManage/:id",
-        "component": 1,
+        "component": true,
         "name": "cooperation-projectManage-id",
         "meta": {
           "title": "项目详情",
-          "noCache": 1
+          "noCache": true
         },
-        "hidden": 1
+        "hidden": true
       }
     ]
   },
   {
     "path": "/qu",
-    "component": 1,
+    "component": true,
     "redirect": "/qu/article",
     "name": "qu",
     "meta": {
       "title": "趣头条管理",
       "icon": "fa-circle",
-      "noCache": 1
+      "noCache": true
     },
     "children": [
       {
         "path": "article",
-        "component": 1,
+        "component": true,
         "name": "qu-article",
         "meta": {
           "title": "订阅文章列表",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "material",
-        "component": 1,
+        "component": true,
         "name": "qu-material",
         "meta": {
           "title": "素材库",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "source",
-        "component": 1,
+        "component": true,
         "name": "qu-source",
         "meta": {
           "title": "订阅源管理",
-          "noCache": 1
+          "noCache": true
         }
       }
     ]
   },
   {
+    "name": "sl-promo",
+    "path": "/sl-promo",
+    "component": true,
+    "redirect": "/sl-promo/project",
+    "meta": {
+      "title": "推广管理",
+      "icon": "fa-circle",
+      "noCache": true
+    },
+    "children": [
+      {
+        "name": "sl-promo-project",
+        "path": "project",
+        "component": true,
+        "meta": {
+          "title": "项目管理",
+          "noCache": true
+        }
+      },
+      {
+        "name": "sl-promo-project-detail",
+        "path": "project-detail",
+        "component": true,
+        "meta": {
+          "title": "项目详情",
+          "noCache": true
+        },
+        "hidden": true
+      },
+      {
+        "name": "sl-promo-staff",
+        "path": "staff",
+        "component": true,
+        "meta": {
+          "title": "人员管理",
+          "noCache": true
+        }
+      },
+      {
+        "name": "sl-promo-seller-detail",
+        "path": "seller-detail/:id",
+        "component": true,
+        "meta": {
+          "title": "销售员",
+          "noCache": true
+        },
+        "hidden": true
+      },
+      {
+        "name": "sl-promo-business-detail",
+        "path": "business-detail/:id",
+        "component": true,
+        "meta": {
+          "title": "业务员",
+          "noCache": true
+        },
+        "hidden": true
+      },
+      {
+        "name": "sl-promo-finance",
+        "path": "finance",
+        "component": true,
+        "meta": { "title": "财务统计", "noCache": true }
+      }
+    ]
+  },
+  {
+    "name": "sl-business-promo",
+    "path": "/sl-business-promo",
+    "component": true,
+    "redirect": "/sl-business-promo/project",
+    "meta": {
+      "title": "推广管理",
+      "icon": "fa-circle",
+      "noCache": true
+    },
+    "children": [
+      {
+        "name": "sl-business-promo-project",
+        "path": "project",
+        "component": true,
+        "meta": {
+          "title": "项目管理",
+          "noCache": true
+        }
+      },
+      {
+        "name": "sl-business-promo-project-detail",
+        "path": "project-detail",
+        "component": true,
+        "meta": {
+          "title": "项目详情",
+          "noCache": true
+        },
+        "hidden": true
+      },
+      {
+        "name": "sl-business-promo-seller",
+        "path": "seller",
+        "component": true,
+        "meta": {
+          "title": "人员管理",
+          "noCache": true
+        }
+      },
+      {
+        "name": "sl-business-promo-seller-detail",
+        "path": "seller-detail/:id",
+        "component": true,
+        "meta": {
+          "title": "销售员",
+          "noCache": true
+        },
+        "hidden": true
+      },
+      {
+        "name": "sl-business-promo-recruit",
+        "path": "recruit",
+        "component": true,
+        "meta": {
+          "title": "招募设置",
+          "noCache": true
+        }
+      },
+      {
+        "path": "topic",
+        "component": true,
+        "name": "sl-business-promo-topic",
+        "meta": {
+          "title": "专题管理",
+          "noCache": true
+        }
+      },
+      {
+        "path": "topicEdit/:id",
+        "component": true,
+        "name": "sl-business-promo-topicEdit",
+        "meta": {
+          "title": "专题列表 / 编辑专题",
+          "noCache": true
+        },
+        "hidden": true
+      },
+      {
+        "path": "topicEditComponent/:id/:title",
+        "component": true,
+        "name": "sl-business-promo-topicEdit2",
+        "meta": {
+          "title": "专题列表 / 编辑专题 / 编辑组件",
+          "noCache": true
+        },
+        "hidden": true
+      },
+      {
+        "path": "topicStatistic/:id",
+        "component": true,
+        "name": "sl-business-promo-topicStatistic",
+        "meta": {
+          "title": "专题列表 / 专题数据",
+          "noCache": true
+        },
+        "hidden": true
+      },
+      {
+        "path": "topicCreate/:id",
+        "component": true,
+        "name": "sl-business-promo-topicCreate",
+        "meta": {
+          "title": "专题列表 / 新建专题",
+          "noCache": true
+        },
+        "hidden": true
+      }
+    ]
+  },
+  {
     "path": "/order",
-    "component": 1,
+    "component": true,
     "redirect": "/order/index",
     "name": "order",
     "meta": {
       "title": "订单管理",
       "icon": "fa-circle",
-      "noCache": 1
+      "noCache": true
     },
     "children": [
       {
@@ -605,23 +791,23 @@
       },
       {
         "path": "refund",
-        "component": 1,
+        "component": true,
         "name": "order-refund",
         "meta": {
           "title": "退款记录",
-          "noCache": 1
+          "noCache": true
         }
       }
     ]
   },
   {
     "path": "/stat",
-    "component": 1,
+    "component": true,
     "name": "stat",
     "meta": {
       "title": "数据统计",
       "icon": "fa-circle",
-      "noCache": 1
+      "noCache": true
     },
     "children": [
       {
@@ -668,7 +854,7 @@
       },
       {
         "name": "stat-channel",
-        "component": 1,
+        "component": true,
         "path": "channel",
         "meta": {
           "title": "渠道统计"
@@ -676,52 +862,52 @@
       },
       {
         "path": "detail/:channel/:channelId/:addTime",
-        "component": 1,
+        "component": true,
         "name": "stat-detail",
         "meta": {
           "title": "渠道统计详情",
-          "noCache": 1
+          "noCache": true
         },
-        "hidden": 1
+        "hidden": true
       }
     ]
   },
   {
     "path": "/wish",
-    "component": 1,
+    "component": true,
     "name": "wish",
     "meta": {
       "title": "法师模块",
       "icon": "fa-circle",
-      "noCache": 1
+      "noCache": true
     },
     "children": [
       {
         "path": "project",
-        "component": 1,
+        "component": true,
         "name": "wish-project",
         "meta": {
           "title": "加持项目",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
         "path": "edit/:name",
-        "component": 1,
+        "component": true,
         "name": "wish-edit",
         "meta": {
           "title": "编辑项目",
-          "noCache": 1
+          "noCache": true
         },
-        "hidden": 1
+        "hidden": true
       },
       {
         "path": "support-manege",
         "name": "wish-support-manege",
-        "component": 1,
+        "component": true,
         "meta": {
           "title": "法师订单",
-          "noCache": 1
+          "noCache": true
         }
       },
       {
@@ -770,12 +956,12 @@
   },
   {
     "path": "/buddhist",
-    "component": 1,
+    "component": true,
     "name": "buddhist",
     "meta": {
       "title": "佛事管理",
       "icon": "fa-circle",
-      "noCache": 1
+      "noCache": true
     },
     "children": [
       {
@@ -810,12 +996,12 @@
   },
   {
     "path": "/ad",
-    "component": 1,
+    "component": true,
     "name": "ad",
     "meta": {
       "title": "广告管理",
       "icon": "fa-circle",
-      "noCache": 1
+      "noCache": true
     },
     "children": [
       {
@@ -828,10 +1014,10 @@
       {
         "path": "system-popup",
         "name": "ad-system-popup",
-        "component": 1,
+        "component": true,
         "meta": {
           "title": "系统广告",
-          "noCache": 1
+          "noCache": true
         }
       }
     ]

@@ -17,10 +17,10 @@
           <div class="fl-right" v-if="foShiItem.status !== 1">
             <span>推广状态：</span>
             <el-switch
-              :value="!!foShiItem.online"
+              :value="!foShiItem.offline"
               active-text="是"
               inactive-text="否"
-              @change="value => changeOnline(value)"
+              @change="value => changeOffline(value)"
             />
           </div>
         </div>

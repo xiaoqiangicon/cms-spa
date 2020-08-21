@@ -53,7 +53,7 @@ export default {
       });
     },
     promo() {
-      const link = `https://slxs.zizaihome.cn/?businessUserId=${this.id}`;
+      const link = `https://slxs.zizaihome.cn/cooperation/index?businessUserId=${this.id}`;
       const toolLink = 'http://tool.zizaisweet.cn/#/link/qr-code';
       MessageBox.alert(
         `${link}<br/><br/><a href="${toolLink}" target="_blank" class="blue">点击这里生成二维码</a>`,

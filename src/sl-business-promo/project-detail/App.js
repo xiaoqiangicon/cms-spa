@@ -138,6 +138,8 @@ export default {
           {
             id: item.id,
             sellMoney: inputPrice,
+            companyMoney: item.companyMoney,
+            retailMoney: item.retailMoney,
           },
         ],
       }).then(res => {
@@ -216,6 +218,8 @@ export default {
           {
             id: item.id,
             retailMoney: inputPrice,
+            companyMoney: item.companyMoney,
+            sellMoney: item.sellMoney,
           },
         ],
       }).then(res => {

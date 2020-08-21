@@ -11,8 +11,8 @@ const refactor = {
     list: [
       {
         id: 'commodityId',
-        // 上架状态
-        online: 'status',
+        // 下架状态
+        offline: 'status',
         // 状态（-1：未开始，0：进行中，1：已结束）
         status: 'isEnd',
         // 支付金额

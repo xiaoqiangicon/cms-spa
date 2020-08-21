@@ -13,13 +13,16 @@ export const allSellers = {
 export const allSellersS = {
   result: 1,
   data: {
+    // 业务员加密Id
+    ssbid: 'ssbid12345',
     list: '.'
       .repeat(10)
       .split('')
       .map((d, i) => ({
         id: i + 1,
         name: `销售员${i + 1}`,
-        sid: '123',
+        // 销售员加密Id
+        sid: 'sid123',
       })),
   },
 };

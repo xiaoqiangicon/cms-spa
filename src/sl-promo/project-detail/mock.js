@@ -105,5 +105,5 @@ export const saleListS = {
   },
 };
 
-export const online = { success: true };
-export const onlineS = { errorCode: 0 };
+export const offline = { success: true };
+export const offlineS = { errorCode: 0 };
