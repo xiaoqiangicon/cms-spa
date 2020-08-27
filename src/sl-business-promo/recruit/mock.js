@@ -10,6 +10,8 @@ export const info = {
     title: '标题标题标题标题标题标题',
     // 介绍
     intro: '介绍介绍介绍介绍介绍介绍',
+    // 用户名字
+    username: '用户名字',
   },
 };
 
@@ -25,6 +27,8 @@ export const infoS = {
     recruitTitle: '标题标题标题标题标题标题',
     // 介绍
     recruitDetail: '介绍介绍介绍介绍介绍介绍',
+    // 用户名字
+    name: '用户名字',
   },
 };
 

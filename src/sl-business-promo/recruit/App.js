@@ -2,6 +2,7 @@ import seeFetch from 'see-fetch';
 import { Message, Notification, MessageBox } from 'element-ui';
 
 import StoreImage from '../../../../pro-com/src/store-image';
+import QRCode from '../../../../pro-com/src/libs-es5/qrcode';
 import { makeOptions as makeStoreImageOptions } from '../../configs/store-image';
 import '../../configs/ueditor';
 import '../../../../pro-com/src/ueditor/ueditor.config';
@@ -27,6 +28,11 @@ export default {
       // 加载中
       loading: true,
       loadingText: '',
+      // 分享链接
+      shareDialogVisible: false,
+      shareLink: '',
+      // 用户名字
+      username: '',
     };
   },
   mounted() {
@@ -48,20 +54,41 @@ export default {
           this.recruit = res.data.recruit;
           this.verify = res.data.verify;
           this.title = res.data.title;
+          this.username = res.data.username;
           editor.setContent(res.data.intro);
+          this.shareLink = `https://slxs.zizaihome.cn/cooperation/index?businessUserId=${this.id}`;
         }
       });
     },
     promo() {
-      const link = `https://slxs.zizaihome.cn/cooperation/index?businessUserId=${this.id}`;
-      const toolLink = 'http://tool.zizaisweet.cn/#/link/qr-code';
-      MessageBox.alert(
-        `${link}<br/><br/><a href="${toolLink}" target="_blank" class="blue">点击这里生成二维码</a>`,
-        '招募链接',
-        {
-          dangerouslyUseHTMLString: true,
-        }
-      );
+      this.shareDialogVisible = true;
+
+      setTimeout(() => {
+        const { qrCodeBox } = this.$refs;
+        qrCodeBox.innerHTML = '';
+        // eslint-disable-next-line no-new
+        new QRCode(qrCodeBox, {
+          text: this.shareLink,
+          width: 258,
+          height: 258,
+        });
+      }, 300);
+    },
+    copy() {
+      const { copyContainer } = this.$refs;
+      const selection = window.getSelection();
+
+      if (selection.rangeCount > 0) {
+        selection.removeAllRanges();
+      }
+
+      const range = window.document.createRange();
+      range.selectNode(copyContainer.$el.querySelector('input'));
+      selection.addRange(range);
+
+      window.document.execCommand('copy');
+
+      Message.success('复制成功');
     },
     save() {
       const title = this.title.trim();

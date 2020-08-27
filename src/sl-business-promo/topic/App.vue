@@ -156,6 +156,40 @@
         >
       </div>
     </el-dialog>
+    <el-dialog
+      title="专题链接"
+      :visible.sync="shareDialogVisible"
+      width="700px"
+    >
+      <el-row>
+        <el-col :span="12">
+          <div style="width: 300px; margin: 0 auto; padding-top: 168px">
+            <el-input v-model="shareLink" ref="copyContainer" />
+            <div class="mg-t-20 t-a-center">
+              <el-button type="success" @click="copy">复制链接分享</el-button>
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <div style="width: 300px; margin: 0 auto;">
+            <div
+              class="wd-100-pc pd-20 t-a-center"
+              style="border: 1px dashed #999;"
+            >
+              <div ref="qrCodeBox" style="height: 258px" />
+              <div class="mg-t-20">{{ linkTopicTitle }}</div>
+              <div class="mg-t-20">
+                <span class="f-s-20 mg-r-10">{{ username }}</span
+                >推荐
+              </div>
+            </div>
+            <div class="t-a-center mg-t-20">
+              微信截图分享（虚线框内）
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+    </el-dialog>
   </div>
 </template>
 

@@ -159,7 +159,7 @@ export default {
 
           Notification.success({
             title: '提示',
-            message: '通过成功',
+            message: '拒绝成功',
           });
 
           this.fetchVerifyList();

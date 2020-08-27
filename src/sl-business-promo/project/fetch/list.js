@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign, prefer-destructuring */
 import seeFetch from 'see-fetch';
-import { safeFloat } from '../../../../../pro-com/src/utils';
 
 const req = {
   keyword: 'content',

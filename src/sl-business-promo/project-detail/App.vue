@@ -20,6 +20,9 @@
         <el-tab-pane label="价格设置" name="setting">
           <div class="clearfix">
             计算方式：业务员利润 = 零售价 - 渠道价 - 销售员提成金额
+            <el-button type="primary" @click="saveSettings" size="small"
+              >保存设置</el-button
+            >
           </div>
           <el-table
             v-loading="setting.loading"
@@ -67,16 +70,13 @@
                   "
                 >
                   <span
-                    v-if="setting.listState[item.$index].loading"
-                    class="pd-l-15"
-                    ><i class="el-icon-loading"></i
-                  ></span>
-                  <span
-                    v-else-if="item.row.costPrice > 0"
+                    v-if="item.row.costPrice > 0"
                     @click="updateSelection(item)"
                     class="edit-item"
                   >
-                    {{ item.row.salePrice }}
+                    <span :class="{ red: item.row.salePriceChanged }">{{
+                      item.row.salePrice
+                    }}</span>
                     <i class="el-icon-edit" v-if="foShiItem.status !== 1"></i>
                   </span>
                   <span v-else>-</span>
@@ -113,16 +113,13 @@
                   "
                 >
                   <span
-                    v-if="setting.listState[item.$index].loading2"
-                    class="pd-l-15"
-                    ><i class="el-icon-loading"></i
-                  ></span>
-                  <span
-                    v-else-if="item.row.costPrice > 0"
+                    v-if="item.row.costPrice > 0"
                     @click="updateSelection2(item)"
                     class="edit-item"
                   >
-                    {{ item.row.sellerProfit }}
+                    <span :class="{ red: item.row.sellerProfitChanged }">{{
+                      item.row.sellerProfit
+                    }}</span>
                     <i class="el-icon-edit" v-if="foShiItem.status !== 1"></i>
                   </span>
                   <span v-else>-</span>
@@ -175,16 +172,22 @@
             <el-table-column prop="orderNum" label="订单号码" />
             <el-table-column prop="payTime" label="支付时间" />
             <el-table-column prop="name" label="名称" />
+            <el-table-column prop="buyNum" label="购买数量" />
             <el-table-column prop="payAmount" label="支付金额（元）" />
+            <el-table-column prop="channelPrice" label="渠道价（元）" />
             <el-table-column prop="businessIncome" label="业务员收入（元）" />
             <el-table-column prop="sellerIncome" label="销售员提成金额（元）" />
             <el-table-column label="销售员">
               <template slot-scope="item">
-                <el-button type="text" @click="toSeller(item)"
+                <el-button
+                  type="text"
+                  @click="toSeller(item)"
+                  v-if="item.row.sellerUserId"
                   >{{ item.row.sellerUserId }}-{{
                     item.row.sellerUserName
                   }}</el-button
                 >
+                <span v-else>-</span>
               </template>
             </el-table-column>
             <el-table-column label="状态">

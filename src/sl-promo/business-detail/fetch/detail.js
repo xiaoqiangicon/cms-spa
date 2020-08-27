@@ -9,7 +9,9 @@ const refactor = {
     // 总销售额
     totalAmount: 'sales',
     // 总收入
-    totalIncome: 'sellerEarning',
+    totalIncome: 'earning',
+    // 销售员总收入
+    sellersTotalIncome: 'sellerEarning',
     // 旗下销售员
     totalSellers: 'sellerNum',
     createTime: 'addTime',

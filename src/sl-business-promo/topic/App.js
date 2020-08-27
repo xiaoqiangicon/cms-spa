@@ -1,6 +1,7 @@
 import './fetch/index';
 import seeFetch from 'see-fetch';
 import { Notification, Message, MessageBox } from 'element-ui';
+import QRCode from '../../../../pro-com/src/libs-es5/qrcode';
 
 export default {
   name: 'App',
@@ -25,14 +26,27 @@ export default {
       // 当前链接的专题Id
       linkTopicId: 0,
       linkTopicLink: '',
+      linkTopicTitle: '',
       // 正在加载已激活的销售员
       linkDialogLoading: false,
       // 自身加密的Id
       selfId: '',
+      // 分享链接
+      shareDialogVisible: false,
+      shareLink: '',
+      // 用户名字
+      username: '',
     };
   },
   created() {
     this.getList();
+
+    // 获取名字
+    seeFetch('sl-business-promo/recruit/info').then(res => {
+      if (res.data) {
+        this.username = res.data.username;
+      }
+    });
 
     seeFetch('sl-business-promo/topic/allSellers').then(res => {
       if (res.data && res.data.list) {
@@ -128,11 +142,14 @@ export default {
     handleLink(item) {
       this.linkTopicId = item.id;
       this.linkTopicLink = item.link;
+      this.linkTopicTitle = item.title;
       this.activeSellers = [];
       this.linkDialogVisible = true;
       this.linkDialogLoading = true;
 
-      seeFetch('sl-business-promo/topic/activeSellers').then(res => {
+      seeFetch('sl-business-promo/topic/activeSellers', {
+        topicId: item.id,
+      }).then(res => {
         if (res.data && res.data.list) {
           this.activeSellers = res.data.list;
         }
@@ -184,6 +201,22 @@ export default {
         });
       });
     },
+    copy() {
+      const { copyContainer } = this.$refs;
+      const selection = window.getSelection();
+
+      if (selection.rangeCount > 0) {
+        selection.removeAllRanges();
+      }
+
+      const range = window.document.createRange();
+      range.selectNode(copyContainer.$el.querySelector('input'));
+      selection.addRange(range);
+
+      window.document.execCommand('copy');
+
+      Message.success('复制成功');
+    },
     showLink(item) {
       const originalItem = this.allSellers.find(i => i.id === item.id);
 
@@ -192,30 +225,38 @@ export default {
         return;
       }
 
-      const link = `${this.linkTopicLink}${
+      this.shareDialogVisible = true;
+      this.shareLink = `${this.linkTopicLink}${
         this.linkTopicLink.indexOf('?') > -1 ? '&' : '?'
       }gp_businessUserId=${this.selfId}&gp_sellerUserId=${originalItem.sid}`;
-      const toolLink = 'http://tool.zizaisweet.cn/#/link/qr-code';
-      MessageBox.alert(
-        `${link}<br/><br/><a href="${toolLink}" target="_blank" class="blue">点击这里生成二维码</a>`,
-        `${item.name}专题链接`,
-        {
-          dangerouslyUseHTMLString: true,
-        }
-      );
+
+      setTimeout(() => {
+        const { qrCodeBox } = this.$refs;
+        qrCodeBox.innerHTML = '';
+        // eslint-disable-next-line no-new
+        new QRCode(qrCodeBox, {
+          text: this.shareLink,
+          width: 258,
+          height: 258,
+        });
+      }, 300);
     },
     showSelfLink() {
-      const link = `${this.linkTopicLink}${
+      this.shareDialogVisible = true;
+      this.shareLink = `${this.linkTopicLink}${
         this.linkTopicLink.indexOf('?') > -1 ? '&' : '?'
       }gp_businessUserId=${this.selfId}&gp_sellerUserId=`;
-      const toolLink = 'http://tool.zizaisweet.cn/#/link/qr-code';
-      MessageBox.alert(
-        `${link}<br/><br/><a href="${toolLink}" target="_blank" class="blue">点击这里生成二维码</a>`,
-        '专题链接',
-        {
-          dangerouslyUseHTMLString: true,
-        }
-      );
+
+      setTimeout(() => {
+        const { qrCodeBox } = this.$refs;
+        qrCodeBox.innerHTML = '';
+        // eslint-disable-next-line no-new
+        new QRCode(qrCodeBox, {
+          text: this.shareLink,
+          width: 258,
+          height: 258,
+        });
+      }, 300);
     },
   },
 };

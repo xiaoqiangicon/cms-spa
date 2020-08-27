@@ -151,11 +151,11 @@
       </div>
       <div class="btn-list">
         <span>添加组件：</span>
-        <el-button type="primary" @click="addComponent(1)">
+        <el-button type="primary" @click="addComponent(1)" v-if="false">
           寺院组件
         </el-button>
         <el-button type="primary" @click="addComponent(2)">
-          佛事组件
+          项目组件
         </el-button>
         <el-button type="primary" @click="addComponent(3)">
           商品组件
@@ -269,7 +269,7 @@ export default {
           ],
         },
         buddhistComponent: {
-          name: '佛事组件',
+          name: '项目组件',
           col: [{ prop: 'id', label: 'ID' }, { prop: 'name', label: '名称' }],
         },
         goodsComponent: {

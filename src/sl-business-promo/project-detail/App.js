@@ -13,7 +13,6 @@ export default {
       setting: {
         // 选择项
         list: [],
-        listState: [],
         loading: false,
       },
       // 是否显示编辑选择项
@@ -82,10 +81,6 @@ export default {
         this.setting.loading = false;
         if (res.data) {
           this.setting.list = res.data;
-          this.setting.listState = res.data.map(() => ({
-            loading: false,
-            loading2: false,
-          }));
         }
       });
     },
@@ -108,10 +103,11 @@ export default {
     // 不知为何 @change 事件不生效，只能用 @blur
     blurSalePrice() {
       const item = this.setting.list[this.editSalePriceIndex];
-      const state = this.setting.listState[this.editSalePriceIndex];
       const originalPrice = parseFloat(item.salePrice) || 0;
       const editPrice = this.editSalePrice.trim();
       const inputPrice = parseFloat(editPrice);
+
+      const sellerProfit = item.sellerProfit || 0;
 
       if (Number.isNaN(inputPrice) || !numberRegExp.test(editPrice)) {
         Message.warning('请输入数字');
@@ -130,31 +126,15 @@ export default {
         Message.warning('不能小于渠道价');
         return;
       }
+      if (inputPrice - item.channelPrice < sellerProfit) {
+        this.resetInputSalePrice();
+        Message.warning('零售价不能小于 渠道价+销售员提成金额');
+        return;
+      }
 
-      state.loading = true;
       this.resetInputSalePrice();
-      seeFetch('sl-business-promo/project-detail/updateSelection', {
-        subdivideList: [
-          {
-            id: item.id,
-            sellMoney: inputPrice,
-            companyMoney: item.companyMoney,
-            retailMoney: item.retailMoney,
-          },
-        ],
-      }).then(res => {
-        if (!res.success) {
-          Notification.error({
-            title: '提示',
-            message: res.message,
-          });
-          return;
-        }
-
-        item.salePrice = inputPrice;
-        state.loading = false;
-        Message.success('保存成功');
-      });
+      item.salePrice = inputPrice;
+      item.salePriceChanged = true;
     },
     resetInputSalePrice() {
       this.editSalePriceItem = null;
@@ -181,13 +161,14 @@ export default {
     // 不知为何 @change 事件不生效，只能用 @blur
     blurSellerProfit() {
       const item = this.setting.list[this.editSellerProfitIndex];
-      const state = this.setting.listState[this.editSellerProfitIndex];
       const originalPrice = parseFloat(item.sellerProfit) || 0;
       const editPrice = this.editSellerProfit.trim();
       const inputPrice = parseFloat(editPrice);
 
+      const salePrice = item.salePrice;
+
       // 没有零售价
-      if (!item.salePrice) {
+      if (!salePrice) {
         this.resetInputSellerProfit();
         Message.warning('请先设置零售价');
         return;
@@ -203,7 +184,7 @@ export default {
         return;
       }
 
-      const totalProfit = item.salePrice - item.channelPrice;
+      const totalProfit = salePrice - item.channelPrice;
       // 不大于总利润
       if (inputPrice - totalProfit > 0) {
         this.resetInputSellerProfit();
@@ -211,30 +192,9 @@ export default {
         return;
       }
 
-      state.loading2 = true;
       this.resetInputSellerProfit();
-      seeFetch('sl-business-promo/project-detail/updateSelection', {
-        subdivideList: [
-          {
-            id: item.id,
-            retailMoney: inputPrice,
-            companyMoney: item.companyMoney,
-            sellMoney: item.sellMoney,
-          },
-        ],
-      }).then(res => {
-        if (!res.success) {
-          Notification.error({
-            title: '提示',
-            message: res.message,
-          });
-          return;
-        }
-
-        item.sellerProfit = inputPrice;
-        state.loading2 = false;
-        Message.success('保存成功');
-      });
+      item.sellerProfit = inputPrice;
+      item.sellerProfitChanged = true;
     },
     resetInputSellerProfit() {
       this.editSellerProfitItem = null;
@@ -246,12 +206,13 @@ export default {
       this.sale.loading = true;
 
       seeFetch('sl-business-promo/project-detail/saleList', {
-        pageNum: this.currentPage,
-        pageSize: this.pageSize,
-        status: this.status,
-        startTime: this.startTime,
-        endTime: this.endTime,
-        keyword: this.keyword,
+        pageNum: this.sale.currentPage,
+        pageSize: this.sale.pageSize,
+        status: this.sale.status,
+        startTime: this.sale.startTime,
+        endTime: this.sale.endTime,
+        keyword: this.sale.keyword,
+        commodityId: this.foShiItem.id,
       }).then(res => {
         this.sale.loading = !1;
 
@@ -282,7 +243,57 @@ export default {
       this.fetchSaleList();
     },
     toSeller(item) {
-      this.$router.push(`/sl-business-promo/seller-detail/${item.row.id}`);
+      this.$router.push(
+        `/sl-business-promo/seller-detail/${item.row.sellerUserId}`
+      );
+    },
+    saveSettings() {
+      if (this.setting.loading) return;
+
+      let error;
+      this.setting.list.forEach(item => {
+        if (error) return;
+
+        if (item.costPrice && !item.salePrice) {
+          error = `选择项（${item.name}）的零售价未设置，不能保存`;
+        }
+      });
+
+      if (error) {
+        Message.warning(error);
+        return;
+      }
+
+      this.setting.loading = true;
+      seeFetch('sl-business-promo/project-detail/updateSelection', {
+        subdivideList: this.setting.list.map(item => ({
+          id: item.id,
+          sellMoney: item.sellerProfit || 0,
+          retailMoney: item.salePrice,
+          companyMoney: item.companyMoney,
+        })),
+      }).then(res => {
+        this.setting.loading = false;
+
+        if (!res.success) {
+          Notification.error({
+            title: '提示',
+            message: res.message,
+          });
+          return;
+        }
+
+        Notification.success({
+          title: '提示',
+          message: '保存成功',
+        });
+        // 保存数据
+        this.setting.list = this.setting.list.map(item => ({
+          ...item,
+          sellerProfitChanged: false,
+          salePriceChanged: false,
+        }));
+      });
     },
   },
 };

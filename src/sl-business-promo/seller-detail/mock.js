@@ -43,7 +43,7 @@ export const listS = {
         // 状态（1未处理 2确认中 0已处理）
         status: i % 3,
         // 支付金额
-        contentOrderMoney: 456,
+        orderMoney: 456,
         // 业务员收入
         businessMoney: 789,
         // 销售员收入

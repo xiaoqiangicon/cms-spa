@@ -117,7 +117,7 @@ export const sellerListS = {
         // 总销售额
         sales: 456,
         // 总收入
-        sellerEarning: 789,
+        earning: 789,
         addTime: '2020-01-01 01:01:01',
         // 销售员所属的业务员id
         businessUserId: i + 1,

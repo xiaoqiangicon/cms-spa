@@ -13,7 +13,6 @@ export default {
       setting: {
         // 选择项
         list: [],
-        listState: [],
         loading: false,
       },
       // 是否显示编辑选择项
@@ -74,7 +73,6 @@ export default {
         this.setting.loading = false;
         if (res.data) {
           this.setting.list = res.data;
-          this.setting.listState = res.data.map(() => ({ loading: false }));
         }
       });
     },
@@ -97,7 +95,6 @@ export default {
     // 不知为何 @change 事件不生效，只能用 @blur
     blurChannelPrice() {
       const item = this.setting.list[this.editChannelPriceIndex];
-      const state = this.setting.listState[this.editChannelPriceIndex];
       const originalPrice = parseFloat(item.channelPrice) || 0;
       const editPrice = this.editChannelPrice.trim();
       const inputPrice = parseFloat(editPrice);
@@ -120,29 +117,9 @@ export default {
         return;
       }
 
-      state.loading = true;
       this.resetInputChannelPrice();
-      seeFetch('sl-promo/project-detail/updateSelection', {
-        subdivideList: [
-          {
-            id: item.id,
-            companyMoney: inputPrice,
-            sellMoney: item.sellMoney,
-            retailMoney: item.retailMoney,
-          },
-        ],
-      }).then(res => {
-        if (!res.success) {
-          Notification.error({
-            title: '提示',
-            message: res.message,
-          });
-          return;
-        }
-
-        item.channelPrice = inputPrice;
-        state.loading = false;
-      });
+      item.channelPrice = inputPrice;
+      item.channelPriceChanged = true;
     },
     resetInputChannelPrice() {
       this.editChannelPriceItem = null;
@@ -154,12 +131,12 @@ export default {
       this.sale.loading = true;
 
       seeFetch('sl-promo/project-detail/saleList', {
-        pageNum: this.currentPage,
-        pageSize: this.pageSize,
-        status: this.status,
-        startTime: this.startTime,
-        endTime: this.endTime,
-        keyword: this.keyword,
+        pageNum: this.sale.currentPage,
+        pageSize: this.sale.pageSize,
+        status: this.sale.status,
+        startTime: this.sale.startTime,
+        endTime: this.sale.endTime,
+        keyword: this.sale.keyword,
         commodityId: this.foShiItem.id,
       }).then(res => {
         this.sale.loading = !1;
@@ -222,6 +199,53 @@ export default {
           title: '提示',
           message: '修改成功',
         });
+      });
+    },
+    saveSettings() {
+      if (this.setting.loading) return;
+
+      let error;
+      this.setting.list.forEach(item => {
+        if (error) return;
+
+        if (item.costPrice && !item.channelPrice) {
+          error = `选择项（${item.name}）的渠道价未设置，不能保存`;
+        }
+      });
+
+      if (error) {
+        Message.warning(error);
+        return;
+      }
+
+      this.setting.loading = true;
+      seeFetch('sl-promo/project-detail/updateSelection', {
+        subdivideList: this.setting.list.map(item => ({
+          id: item.id,
+          companyMoney: item.channelPrice,
+          sellMoney: item.sellMoney,
+          retailMoney: item.retailMoney,
+        })),
+      }).then(res => {
+        this.setting.loading = false;
+
+        if (!res.success) {
+          Notification.error({
+            title: '提示',
+            message: res.message,
+          });
+          return;
+        }
+
+        Notification.success({
+          title: '提示',
+          message: '保存成功',
+        });
+        // 保存数据
+        this.setting.list = this.setting.list.map(item => ({
+          ...item,
+          channelPriceChanged: false,
+        }));
       });
     },
   },

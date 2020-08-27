@@ -13,9 +13,9 @@ const refactor = {
         // 订单号码
         orderNum: 'orderNo',
         // 支付金额
-        payAmount: 'contentOrderMoney',
+        payAmount: 'orderMoney',
         // 零售价
-        saleAmount: 'contentOrderMoney',
+        saleAmount: 'orderMoney',
         // 业务员收入
         businessIncome: 'businessMoney',
         // 销售员收入

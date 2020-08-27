@@ -30,6 +30,9 @@
           <div class="clearfix">
             计算方式：利润 = 渠道价 -
             供应价（活动报名、无需支付和随喜支付项不计算在内）
+            <el-button type="primary" @click="saveSettings" size="small"
+              >保存设置</el-button
+            >
           </div>
           <el-table
             v-loading="setting.loading"
@@ -42,7 +45,7 @@
                 {{ item.row.name }}
               </template>
             </el-table-column>
-            <el-table-column prop="phone" label="供应价（元）">
+            <el-table-column prop="price" label="供应价（元）">
               <template slot-scope="item">
                 <span v-if="item.row.costPrice > 0">{{
                   item.row.costPrice
@@ -82,16 +85,13 @@
                   "
                 >
                   <span
-                    v-if="setting.listState[item.$index].loading"
-                    class="pd-l-15"
-                    ><i class="el-icon-loading"></i
-                  ></span>
-                  <span
-                    v-else-if="item.row.costPrice > 0"
+                    v-if="item.row.costPrice > 0"
                     @click="updateSelection(item)"
                     class="edit-item"
                   >
-                    {{ item.row.channelPrice }}
+                    <span :class="{ red: item.row.channelPriceChanged }">{{
+                      item.row.channelPrice
+                    }}</span>
                     <i class="el-icon-edit" v-if="foShiItem.status !== 1"></i>
                   </span>
                   <span v-else>-</span>
@@ -152,10 +152,10 @@
             <el-table-column prop="orderNum" label="订单号码" />
             <el-table-column prop="payTime" label="支付时间" />
             <el-table-column prop="name" label="名称" />
-            <el-table-column prop="payAmount" label="支付金额（元）" />
-            <el-table-column prop="saleAmount" label="零售价（元）" />
-            <el-table-column prop="businessIncome" label="业务员收入（元）" />
-            <el-table-column prop="sellerIncome" label="销售员收入（元）" />
+            <el-table-column prop="buyNum" label="购买数量" />
+            <el-table-column prop="payAmount" label="支付金额/零售价（元）" />
+            <el-table-column prop="channelPrice" label="渠道价（元）" />
+            <el-table-column prop="originalPrice" label="供应价（元）" />
             <el-table-column label="所属业务员">
               <template slot-scope="item">
                 <el-button type="text" @click="toBusiness(item)"
@@ -167,11 +167,15 @@
             </el-table-column>
             <el-table-column label="销售员">
               <template slot-scope="item">
-                <el-button type="text" @click="toSeller(item)"
+                <el-button
+                  type="text"
+                  @click="toSeller(item)"
+                  v-if="item.row.sellerUserId"
                   >{{ item.row.sellerUserId }}-{{
                     item.row.sellerUserName
                   }}</el-button
                 >
+                <span v-else>-</span>
               </template>
             </el-table-column>
             <el-table-column label="状态">

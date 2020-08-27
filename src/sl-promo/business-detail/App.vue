@@ -15,6 +15,10 @@
           <div style="font-size: 24px">{{ item.totalOrders }}</div>
         </div>
         <div class="bd-rd-4 pd-15 fl-right bd-d mg-r-10">
+          <div>旗下销售员累计收入（元）</div>
+          <div style="font-size: 24px">{{ item.sellersTotalIncome }}</div>
+        </div>
+        <div class="bd-rd-4 pd-15 fl-right bd-d mg-r-10">
           <div>旗下销售员（人）</div>
           <div style="font-size: 24px">
             <span class="blue">{{ item.totalSellers }}</span>

@@ -11,6 +11,8 @@ const refactor = {
     title: 'recruitTitle',
     // 介绍
     intro: 'recruitDetail',
+    // 用户名字
+    username: 'name',
   },
 };
 

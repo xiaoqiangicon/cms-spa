@@ -43,7 +43,7 @@ export const listS = {
         // 状态（1未处理 2确认中 0已处理）
         status: i % 3,
         // 支付金额
-        contentOrderMoney: 456,
+        orderMoney: 456,
         // 业务员收入
         businessMoney: 789,
         // 销售员收入
@@ -67,7 +67,9 @@ export const detail = {
     // 总销售额
     totalAmount: 456,
     // 总收入
-    totalIncome: 789,
+    totalIncome: 567,
+    // 销售员总收入
+    sellersTotalIncome: 789,
     // 旗下销售员
     totalSellers: 3456,
     createTime: '2020-01-01 01:01:01',
@@ -87,6 +89,8 @@ export const detailS = {
     // 总销售额
     sales: 456,
     // 总收入
+    earning: 567,
+    // 销售员总收入
     sellerEarning: 789,
     // 旗下销售员
     sellerNum: 3456,
