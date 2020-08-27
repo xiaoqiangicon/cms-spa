@@ -45,6 +45,13 @@ import masterProject from '../master/project/state';
 // 佛事管理
 import buddhistIntegrate from '../buddhist/integrate/state';
 
+// 胜乐账户人员管理
+import slPromoStaff from '../sl-promo/staff/state';
+// 胜乐账户项目详情
+import slPromoProjectDetail from '../sl-promo/project-detail/state';
+// 胜乐业务员账户项目详情
+import slBusinessPromoProjectDetail from '../sl-business-promo/project-detail/state';
+
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -91,6 +98,13 @@ const store = new Vuex.Store({
 
     // 佛事管理
     buddhistIntegrate,
+
+    // 胜乐账户人员管理
+    slPromoStaff,
+    // 胜乐账户项目详情
+    slPromoProjectDetail,
+    // 胜乐业务员账户项目详情
+    slBusinessPromoProjectDetail,
   },
   getters,
 });

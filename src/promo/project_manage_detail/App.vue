@@ -32,6 +32,11 @@
           label="筹集金额"
           :align="'center'"
         />
+        <el-table-column
+          prop="sellerEarning"
+          label="需付胜乐金额"
+          :align="'center'"
+        />
         <el-table-column label="浏览/参与人次" :align="'center'">
           <template slot-scope="scope">
             <div>{{ scope.row.view_count }} / {{ scope.row.join_num }}</div>

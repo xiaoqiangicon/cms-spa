@@ -72,6 +72,10 @@
     "title": "运营事件 >>> 专题列表 / 编辑专题 / 编辑组件"
   },
   {
+    "key": "promo-topicStatistic",
+    "title": "运营事件 >>> 专题列表 / 专题数据"
+  },
+  {
     "key": "promo-topicCreate",
     "title": "运营事件 >>> 专题列表 / 新建专题"
   },
@@ -101,7 +105,7 @@
   },
   {
     "key": "promo-pay-pop",
-    "title": "运营事件 >>> 支付弹窗设置"
+    "title": "运营事件 >>> 支付完成设置"
   },
   {
     "key": "promo-projectManage",
@@ -214,6 +218,70 @@
   {
     "key": "qu-source",
     "title": "趣头条管理 >>> 订阅源管理"
+  },
+  {
+    "key": "sl-promo-project",
+    "title": "推广管理 >>> 项目管理"
+  },
+  {
+    "key": "sl-promo-project-detail",
+    "title": "推广管理 >>> 项目详情"
+  },
+  {
+    "key": "sl-promo-staff",
+    "title": "推广管理 >>> 人员管理"
+  },
+  {
+    "key": "sl-promo-seller-detail",
+    "title": "推广管理 >>> 销售员"
+  },
+  {
+    "key": "sl-promo-business-detail",
+    "title": "推广管理 >>> 业务员"
+  },
+  {
+    "key": "sl-promo-finance",
+    "title": "推广管理 >>> 财务统计"
+  },
+  {
+    "key": "sl-business-promo-project",
+    "title": "推广管理 >>> 项目管理"
+  },
+  {
+    "key": "sl-business-promo-project-detail",
+    "title": "推广管理 >>> 项目详情"
+  },
+  {
+    "key": "sl-business-promo-seller",
+    "title": "推广管理 >>> 人员管理"
+  },
+  {
+    "key": "sl-business-promo-seller-detail",
+    "title": "推广管理 >>> 销售员"
+  },
+  {
+    "key": "sl-business-promo-recruit",
+    "title": "推广管理 >>> 招募设置"
+  },
+  {
+    "key": "sl-business-promo-topic",
+    "title": "推广管理 >>> 专题管理"
+  },
+  {
+    "key": "sl-business-promo-topicEdit",
+    "title": "推广管理 >>> 专题列表 / 编辑专题"
+  },
+  {
+    "key": "sl-business-promo-topicEdit2",
+    "title": "推广管理 >>> 专题列表 / 编辑专题 / 编辑组件"
+  },
+  {
+    "key": "sl-business-promo-topicStatistic",
+    "title": "推广管理 >>> 专题列表 / 专题数据"
+  },
+  {
+    "key": "sl-business-promo-topicCreate",
+    "title": "推广管理 >>> 专题列表 / 新建专题"
   },
   {
     "key": "order-templeOrderList",

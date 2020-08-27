@@ -11,6 +11,7 @@ export const list = {
         startTime: '2020-02-02',
         endTime: '2020-02-03',
         collect_money: 10.0,
+        sellerEarning: 123,
         url: 'https://wx.zizaihome.com/commodity/commodityAuth/400302209309',
       },
       {
@@ -21,6 +22,7 @@ export const list = {
         startTime: '2020-02-02',
         endTime: '2020-02-03',
         collect_money: 10.0,
+        sellerEarning: 456,
         url: 'https://wx.zizaihome.com/commodity/commodityAuth/400302209309',
       },
     ],
