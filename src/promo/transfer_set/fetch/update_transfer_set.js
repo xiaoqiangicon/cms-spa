@@ -29,6 +29,7 @@ const pre = params => {
       percent: sub.transferRate,
       isDel: sub.isDel,
     })),
+    isDel: item.isDel,
   }));
   return res;
 };
