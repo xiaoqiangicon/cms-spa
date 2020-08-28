@@ -151,7 +151,12 @@
           >
             <el-table-column prop="orderNum" label="订单号码" />
             <el-table-column prop="payTime" label="支付时间" />
-            <el-table-column prop="name" label="名称" />
+            <el-table-column label="名称">
+              <template slot-scope="item">
+                {{ item.row.contentName }}<br />
+                <span class="gray f-s-12">{{ item.row.contentDetail }}</span>
+              </template>
+            </el-table-column>
             <el-table-column prop="buyNum" label="购买数量" />
             <el-table-column prop="payAmount" label="支付金额/零售价（元）" />
             <el-table-column prop="channelPrice" label="渠道价（元）" />

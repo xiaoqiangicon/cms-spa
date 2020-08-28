@@ -11,8 +11,6 @@ const refactor = {
   data: {
     list: [
       {
-        // 名称
-        name: 'contentName',
         // 订单号码
         orderNum: 'orderNo',
         // 支付金额

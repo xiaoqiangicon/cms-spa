@@ -2,7 +2,7 @@
 import seeFetch from 'see-fetch';
 
 const req = {
-  userId: 'businessUserId',
+  userId: 'sellerUserId',
   status: 'type',
 };
 
