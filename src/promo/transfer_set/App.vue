@@ -34,6 +34,7 @@
           <div
             v-for="item in transferTempleList"
             :key="item.id"
+            v-if="!item.isDel"
             class="item"
             :class="{ active: item.id === templeId }"
             @click="changeTemple(item.id)"
@@ -433,10 +434,9 @@ export default {
       params.transferTempleList = clone(transferTempleList);
       params.transferTempleList = params.transferTempleList.map(
         (item, templeIndex) => {
-          const res = { id: item.id, subList: [] };
-
+          const res = { id: item.id, subList: [], isDel: item.isDel ? 1 : 0 };
           item.subList.forEach((sub, selectionIndex) => {
-            if (sub.selected && sub.price > 0) {
+            if (sub.selected && sub.price > 0 && !item.isDel) {
               const newItem = {
                 id: sub.id,
                 transferPrice: sub.price <= 0 ? 0 : sub.transferPrice,
@@ -465,7 +465,13 @@ export default {
               ) {
                 error = `${errorPrefix}转单金额不能超过价格`;
               }
-            } else if (!sub.selected && sub.price > 0) {
+            } else if (!sub.selected && sub.price > 0 && !item.isDel) {
+              const newItem = {
+                id: sub.id,
+                isDel: 1,
+              };
+              res.subList.push(newItem);
+            } else if (item.isDel) {
               const newItem = {
                 id: sub.id,
                 isDel: 1,
@@ -489,7 +495,6 @@ export default {
     },
     save() {
       const params = this.createSubmitData();
-
       if (!params) return;
       console.log('params', params);
       seeFetch('promo/transfer_set/update_transfer_set', params).then(res => {
@@ -551,7 +556,10 @@ export default {
           const index = this.transferTempleList.findIndex(
             item => item.id === id
           );
-          this.transferTempleList.splice(index, 1);
+          console.log(this.transferTempleList[index]);
+          // this.transferTempleList.splice(index, 1);
+          this.transferTempleList[index].isDel = !0;
+          this.$forceUpdate();
         })
         .catch(() => {});
     },
