@@ -141,6 +141,7 @@ export default {
       dialogVisible: !1,
       detailVisible: !1,
       rowData: { orderNo: 1, price: 1 }, // 选中的rowData
+      refunding: !1, // 退款中
     };
   },
   created() {
@@ -188,9 +189,12 @@ export default {
       this.rowData = rowData.row;
     },
     refund() {
+      if (this.refunding) return;
+      this.refunding = !0;
       seeFetch('finance/refund/refund', { orderId: this.rowData.orderNo }).then(
         res => {
           if (res.errorCode === 0) {
+            this.refunding = !1;
             this.dialogVisible = !1;
             window.location.reload();
           }
