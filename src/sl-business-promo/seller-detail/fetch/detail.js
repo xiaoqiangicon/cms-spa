@@ -13,7 +13,7 @@ const refactor = {
     // 总销售额
     totalAmount: 'sales',
     // 总收入
-    totalIncome: 'sellerEarning',
+    totalIncome: 'earning',
     createTime: 'addTime',
   },
 };

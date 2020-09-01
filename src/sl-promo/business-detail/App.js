@@ -89,5 +89,8 @@ export default {
       this.$store.state.slPromoStaff.initActionData = { id: this.item.id };
       this.$router.push('/sl-promo/staff');
     },
+    toSeller(item) {
+      this.$router.push(`/sl-promo/seller-detail/${item.row.sellerUserId}`);
+    },
   },
 };

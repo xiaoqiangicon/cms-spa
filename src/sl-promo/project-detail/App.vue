@@ -223,6 +223,15 @@
                   style="padding: 5px 10px;"
                   >未处理</el-button
                 >
+                <el-button
+                  v-if="item.row.status === -1"
+                  type="error"
+                  size="mini"
+                  plain
+                  round
+                  style="padding: 5px 10px;"
+                  >已退款</el-button
+                >
               </template>
             </el-table-column>
           </el-table>

@@ -42,7 +42,7 @@ export const businessListS = {
         // 总销售额
         sales: 456,
         // 总收入
-        sellerEarning: 789,
+        earning: 789,
         // 旗下销售员
         sellerNum: 3456,
         addTime: '2020-01-01 01:01:01',
