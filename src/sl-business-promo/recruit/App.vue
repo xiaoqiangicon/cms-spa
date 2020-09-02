@@ -63,8 +63,10 @@
     >
       <el-row>
         <el-col :span="12">
-          <div style="width: 300px; margin: 0 auto; padding-top: 168px">
-            <el-input v-model="shareLink" ref="copyContainer" />
+          <div style="width: 300px; margin: 0 auto; padding-top: 120px">
+            <div class="pd-10 bd-rd-4 bd-e" ref="copyContainer">
+              {{ shareLink }}
+            </div>
             <div class="mg-t-20 t-a-center">
               <el-button type="success" @click="copy">复制链接分享</el-button>
             </div>
