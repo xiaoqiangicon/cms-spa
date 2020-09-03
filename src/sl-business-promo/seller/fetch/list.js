@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign, prefer-destructuring */
 import seeFetch from 'see-fetch';
+import { safeFloat } from '../../../../../pro-com/src/utils';
 
 const req = {
   keyword: 'content',
@@ -27,6 +28,15 @@ const refactor = {
   },
 };
 
+const post = res => {
+  if (res.data && res.data.list) {
+    res.data.list.forEach(item => {
+      item.totalAmount = safeFloat(item.totalAmount || 0) || 0;
+      item.totalIncome = safeFloat(item.totalIncome || 0) || 0;
+    });
+  }
+};
+
 seeFetch.config('sl-business-promo/seller/list', {
   method: ['post'],
   stringify: [!0],
@@ -37,4 +47,5 @@ seeFetch.config('sl-business-promo/seller/list', {
   ],
   req: [req, req],
   refactor: [refactor, refactor],
+  post: [post, post],
 });

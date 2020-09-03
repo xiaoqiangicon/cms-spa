@@ -29,11 +29,17 @@ const refactor = {
 const post = res => {
   if (res.data && res.data.list) {
     res.data.list.forEach(item => {
-      item.channelPrice = safeFloat(
-        (item.payAmount || 0) -
-          (item.businessIncome || 0) -
-          (item.sellerIncome || 0)
-      );
+      item.payAmount = safeFloat(item.payAmount || 0) || 0;
+      item.originalPrice = safeFloat(item.originalPrice || 0) || 0;
+      item.businessIncome = safeFloat(item.businessIncome || 0) || 0;
+      item.sellerIncome = safeFloat(item.sellerIncome || 0) || 0;
+
+      item.channelPrice =
+        safeFloat(
+          (item.payAmount || 0) -
+            (item.businessIncome || 0) -
+            (item.sellerIncome || 0)
+        ) || 0;
     });
   }
 };
