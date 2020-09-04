@@ -27,7 +27,6 @@ const responseRefactor = {
 /* eslint-disable no-param-reassign */
 const preHandle = req => {
   req.pageNum -= 1;
-  req.pageSize = 10;
 };
 
 /* eslint-disable no-param-reassign */
@@ -43,6 +42,7 @@ const postHandle = res => {
       //     item.usedAmount
       //   ).toFixed(2)
       // );
+      item.fullName = item.commodityId + ' - ' + item.commodityName;
       item.remainAmount = parseFloat(
         (item.amount - item.profitAmount - item.usedAmount).toFixed(2)
       );

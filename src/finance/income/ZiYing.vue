@@ -28,9 +28,9 @@
       >
         <el-option
           v-for="item in buddhistList"
-          :key="item.id"
-          :value="item.id"
-          :label="item.name"
+          :key="item.commodityId"
+          :value="item.commodityId"
+          :label="item.fullName"
         />
       </el-select>
       <el-button class="fl-right" size="small" @click="toAdd">
@@ -143,6 +143,7 @@
       <el-pagination
         :total="totalCount"
         :current-page="currentPage"
+        :page-size="pageSize"
         background
         layout="prev, pager, next"
         style="margin-top: 40px"
@@ -187,6 +188,7 @@ export default {
       filterType: 2,
       currentPage: 1,
       totalCount: 0,
+      pageSize: 10,
       list: [],
       buddhistList: [],
       ziYingTypes,
@@ -194,7 +196,7 @@ export default {
   },
   created() {
     this.fetchList();
-    this.fetchBuddhistList();
+    this.fetchBuddhist();
   },
   methods: {
     fetchList() {
@@ -203,6 +205,7 @@ export default {
         type: this.filterType,
         search: this.search,
         page: this.currentPage,
+        pageSize: this.pageSize,
       }).then(res => {
         this.loading = !1;
 
@@ -220,11 +223,14 @@ export default {
         window.scrollTo(0, 0);
       });
     },
-    fetchBuddhistList() {
-      seeFetch('finance/income/getBuddhistList', { templeId: 0 }).then(res => {
-        if (res.errorCode === 0) {
-          this.buddhistList = res.data.list;
-        }
+    fetchBuddhist() {
+      seeFetch('finance/income/listZiYing', {
+        type: this.filterType,
+        search: '',
+        page: 1,
+        pageSize: 5000,
+      }).then(res => {
+        this.buddhistList = res.data;
       });
     },
     pageChange(page) {
@@ -234,6 +240,7 @@ export default {
     doSearch() {
       this.currentPage = 1;
       this.fetchList();
+      this.fetchBuddhist();
     },
     toEdit({ row: item }) {
       ziYingAddProps.forEach(({ name }) => {
