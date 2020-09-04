@@ -32,6 +32,17 @@
         需要统计的自在家链接地址，佛事、文章或专题页面
       </p>
     </div>
+    <div class="input-block">
+      <span class="input-name">渠道类型</span>
+      <el-select v-model="type" placeholder="渠道类型">
+        <el-option
+          v-for="item in typeList"
+          :key="item.id"
+          :value="item.id"
+          :label="item.name"
+        />
+      </el-select>
+    </div>
     <div>
       <span class="input-name">过期时间</span>
       <el-date-picker v-model="endDate" type="date" placeholder="选择日期" />
@@ -80,6 +91,17 @@ export default {
       newItem: {},
       id: 0,
       channelName: '',
+      typeList: [
+        { id: 1, name: '闪屏' },
+        { id: 2, name: '首页弹窗' },
+        { id: 3, name: '支付后弹窗' },
+        { id: 4, name: '好物三格' },
+        { id: 5, name: '公众号推文' },
+        { id: 6, name: '私域流量' },
+        { id: 7, name: '十宫格' },
+        { id: 0, name: '其他运营位' },
+      ],
+      type: '',
       channel: '',
       url: '',
       endDate: '',
@@ -98,6 +120,7 @@ export default {
         this.url = this.newItem.url;
         this.endDate = this.newItem.endDate;
         this.id = this.newItem.id;
+        this.type = this.newItem.type;
       },
       deep: true,
     },
@@ -136,6 +159,13 @@ export default {
         });
         return;
       }
+      if (!this.type) {
+        Notification({
+          title: '请选择渠道类型',
+          type: 'warning',
+        });
+        return;
+      }
       if (this.url.indexOf('p_mc') !== -1) {
         Notification({
           title: '链接请不要带上渠道参数',
@@ -157,6 +187,7 @@ export default {
         url: this.url,
         endDate: this.format(this.endDate),
         remark: this.item.remark,
+        type: this.type,
       }).then(res => {
         if (res.errorCode == -1) {
           Notification({
@@ -198,6 +229,7 @@ p {
 }
 .input-name {
   margin-right: 8px;
+  font-weight: bold;
 }
 .input-txt {
   width: 300px;

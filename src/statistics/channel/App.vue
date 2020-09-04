@@ -5,6 +5,19 @@
         <div class="search-box">
           <span>渠道名搜索</span>
           <el-input v-model="channelSearch" class="search-input" />
+          <el-select
+            style="width: 50%;"
+            v-model="type"
+            placeholder="渠道类型"
+            @change="onChangeType"
+          >
+            <el-option
+              v-for="item in typeList"
+              :key="item.id"
+              :value="item.id"
+              :label="item.name"
+            />
+          </el-select>
           <el-button class="search" type="primary" @click="searchChannel">
             搜索
           </el-button>
@@ -35,7 +48,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="endDate" label="过期时间" />
-          <el-table-column label="备注" width="200">
+          <el-table-column label="备注" width="180">
             <template slot-scope="scope">
               <div class="remark-box">
                 <div>
@@ -115,8 +128,19 @@ export default {
       total: 10,
       page: 0,
       currentPage: 0,
-      pageSize: 10,
+      pageSize: 30,
       channelSearch: '', // 渠道号搜索
+      type: '', // 分类
+      typeList: [
+        { id: 1, name: '闪屏' },
+        { id: 2, name: '首页弹窗' },
+        { id: 3, name: '支付后弹窗' },
+        { id: 4, name: '好物三格' },
+        { id: 5, name: '公众号推文' },
+        { id: 6, name: '私域流量' },
+        { id: 7, name: '十宫格' },
+        { id: 0, name: '其他运营位' },
+      ],
       isNew: false, //  是否是创建新的渠道
       item: {}, // 当前点击的这一行的数据
       modifyRemark: !1,
@@ -132,6 +156,8 @@ export default {
       seeFetch('statistics/channel/list', {
         channel: this.channelSearch,
         pageNum: this.currentPage,
+        pageSize: this.pageSize,
+        type: this.type,
       }).then(res => {
         if (!res.success) {
           Notification({
@@ -150,9 +176,11 @@ export default {
         window.scrollTo(0, 0);
       });
     },
+    onChangeType() {
+      this.fetchList();
+    },
     searchChannel() {
       this.fetchList();
-      console.log(1111);
     },
     add() {
       this.isNew = true;
@@ -242,7 +270,11 @@ export default {
   display: flex;
   align-items: center;
   span {
-    width: 124px;
+    width: 70px;
+    flex-shrink: 0;
+  }
+  .search {
+    margin-left: 20px;
   }
 }
 .search-input {
