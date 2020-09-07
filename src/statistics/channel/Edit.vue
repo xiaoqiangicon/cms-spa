@@ -130,6 +130,7 @@ export default {
         this.channel = '';
         this.url = '';
         this.endDate = '';
+        this.type = '';
       }
     },
   },
@@ -159,7 +160,7 @@ export default {
         });
         return;
       }
-      if (!this.type) {
+      if (!this.type && this.type !== 0) {
         Notification({
           title: '请选择渠道类型',
           type: 'warning',
@@ -260,5 +261,6 @@ p {
   outline: none;
   background-color: #409eff;
   color: white;
+  cursor: pointer;
 }
 </style>
