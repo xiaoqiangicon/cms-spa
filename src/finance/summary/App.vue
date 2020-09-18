@@ -83,7 +83,7 @@
           <el-option
             v-for="item in subIds"
             :key="item.id"
-            :label="item.name"
+            :label="item.id + ' - ' + item.name"
             :value="item.id"
           />
         </el-select>
@@ -244,6 +244,8 @@ export default {
     },
     afterFetchTypes() {
       const typeItem = this.types.find(i => i.id === this.filterType);
+
+      console.log(typeItem);
 
       if (!typeItem) this.subIds = [];
       else this.subIds = typeItem.children;
