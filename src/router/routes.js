@@ -354,6 +354,12 @@ export default [
         component: () => import('../finance/trade-stat/App.vue'),
         meta: { title: '交易统计', noCache: true },
       },
+      {
+        path: 'pickup',
+        name: 'finance-pickup',
+        component: () => import('../fund/pending/App.vue'),
+        meta: { title: '用户提现申请', noCache: true },
+      },
     ],
   },
   {
@@ -687,6 +693,12 @@ export default [
         path: '/buddhist/tag',
         meta: { title: '佛事标签' },
       },
+      {
+        path: 'buddhist/promote',
+        component: () => import('../buddhist/promote/App.vue'),
+        name: 'buddhist-promote',
+        meta: { title: '创作者推广库', noCache: true },
+      },
     ],
   },
   {
@@ -705,6 +717,20 @@ export default [
         name: 'ad-system-popup',
         component: () => import('../ad/system-popup/App.vue'),
         meta: { title: '系统广告', noCache: true },
+      },
+    ],
+  },
+  {
+    path: '/creator',
+    name: 'creator',
+    component: Layout,
+    meta: { title: '创作者管理', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        name: 'creator-personnel',
+        path: '/creator/personnel',
+        component: () => import('../creator/personnel/App.vue'),
+        meta: { title: '人员管理', noCache: true },
       },
     ],
   },

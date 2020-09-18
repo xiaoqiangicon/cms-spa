@@ -200,6 +200,10 @@
     "title": "善款中心 >>> 交易统计"
   },
   {
+    "key": "finance-pickup",
+    "title": "善款中心 >>> 用户提现申请"
+  },
+  {
     "key": "cooperation-projectManage",
     "title": "第三方项目 >>> 项目管理"
   },
@@ -380,12 +384,20 @@
     "title": "佛事管理 >>> 佛事标签"
   },
   {
+    "key": "buddhist-promote",
+    "title": "佛事管理 >>> 佛事推广库"
+  },
+  {
     "key": "ad-buddhist",
     "title": "广告管理 >>> 佛事推荐"
   },
   {
     "key": "ad-system-popup",
     "title": "广告管理 >>> 系统广告"
+  },
+  {
+    "key": "creator-personnel",
+    "title": "创作者管理 >>> 人员管理"
   },
   {
     "key": "buddha-manage",
