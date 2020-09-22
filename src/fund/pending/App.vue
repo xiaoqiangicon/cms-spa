@@ -16,6 +16,7 @@
           <el-button type="text">提现完成</el-button> </span
         >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <span
+          v-if="!1"
           :class="filterStatus === 3 ? 'active-btn' : ''"
           @click="filterStatusChange(3)"
         >
@@ -26,6 +27,7 @@
           effect="dark"
           content="若用户操作重新提交申请，则提现将会重新生成一条记录，此记录会保留"
           placement="top-start"
+          v-if="!1"
         >
           <span style="cursor: pointer;">?</span>
         </el-tooltip>
@@ -44,8 +46,8 @@
           <el-option :value="0" label="全部" />
           <el-option
             v-for="item in personList"
-            :key="item.id"
-            :value="item.id"
+            :key="item.userId"
+            :value="item.userId"
             :label="item.searchName"
           />
         </el-select>

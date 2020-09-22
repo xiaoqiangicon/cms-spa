@@ -87,7 +87,7 @@
           <el-button
             type="warning"
             @click="reject"
-            v-if="detailData.status === 1 || detailData.status === 2"
+            v-if="!1 && (detailData.status === 1 || detailData.status === 2)"
             >打回</el-button
           >
           <el-button
