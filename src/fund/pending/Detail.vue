@@ -178,7 +178,7 @@ export default {
       window.open(`/video/getPickUpMessageExcel?pickUpId=${this.pickUpId}`);
     },
     confirm() {
-      if (this.detailData.feedbackPic.length) {
+      if (this.detailData.feedbackPic && this.detailData.feedbackPic.length) {
         this.handleImages = this.detailData.feedbackPic.split(',');
       }
       this.showUpload = !0;

@@ -47,7 +47,7 @@
               <div class="notVerify" v-else>未认证</div>
             </template>
           </el-table-column>
-          <el-table-column label="权限" :align="'center'">
+          <el-table-column label="权限" :align="'center'" v-if="!1">
             <template slot-scope="scope">
               <div>
                 <div
@@ -70,7 +70,7 @@
           </el-table-column>
           <el-table-column label="操作" :align="'center'">
             <template slot-scope="scope">
-              <el-button type="text" @click="toRight(scope.row)">
+              <el-button type="text" @click="toRight(scope.row)" v-if="!1">
                 权限
               </el-button>
               <el-button type="text" @click="toDetail(scope.row)">
@@ -98,7 +98,7 @@
           <span>关联橱窗的功能</span>
           <el-switch v-model="isOpenWindow" active-color="#13ce66"> </el-switch>
         </div>
-        <div class="right-item">
+        <div class="right-item" v-if="!1">
           <span>短视频随喜按钮</span>
           <el-switch v-model="isOpenDonate" active-color="#13ce66"> </el-switch>
         </div>

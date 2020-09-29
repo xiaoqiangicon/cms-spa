@@ -139,6 +139,7 @@ export default {
         { id: 5, name: '公众号推文' },
         { id: 6, name: '私域流量' },
         { id: 7, name: '十宫格' },
+        { id: 8, name: '公众号菜单' },
         { id: 0, name: '其他运营位' },
       ],
       isNew: false, //  是否是创建新的渠道
