@@ -27,7 +27,7 @@
         <el-table v-loading="loading" :data="list" style="width: 100%">
           <el-table-column prop="addTime" label="添加时间" :align="'center'" />
           <el-table-column prop="account" label="AppID" :align="'center'" />
-          <el-table-column prop="name" label="真实姓名" :align="'center'" />
+          <el-table-column prop="nickName" label="APP昵称" :align="'center'" />
           <el-table-column
             prop="videoNum"
             label="审核通过的视频"

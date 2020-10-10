@@ -178,9 +178,11 @@ export default {
       });
     },
     onChangeType() {
+      this.currentPage = 0;
       this.fetchList();
     },
     searchChannel() {
+      this.currentPage = 0;
       this.fetchList();
     },
     add() {
@@ -249,6 +251,7 @@ export default {
     pageChange(page) {
       this.page = page;
       this.currentPage = this.page - 1;
+      this.channelSearch = '';
       this.fetchList();
     },
   },
