@@ -30,7 +30,7 @@
           <el-table-column prop="nickName" label="APP昵称" :align="'center'" />
           <el-table-column
             prop="videoNum"
-            label="审核通过的视频"
+            label="已发布的视频"
             :align="'center'"
           />
           <el-table-column
