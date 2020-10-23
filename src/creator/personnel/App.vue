@@ -28,14 +28,37 @@
           <el-table-column prop="addTime" label="添加时间" :align="'center'" />
           <el-table-column prop="account" label="AppID" :align="'center'" />
           <el-table-column prop="nickName" label="APP昵称" :align="'center'" />
-          <el-table-column
-            prop="videoNum"
-            label="已发布的视频"
-            :align="'center'"
-          />
+          <el-table-column label="已发布的视频" :align="'center'">
+            <template slot-scope="scope">
+              <div style="cursor: pointer" @click="toCircle">
+                {{ scope.row.videoNum }}
+              </div>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="累计播放量" :align="'center'">
+            <template slot-scope="scope">
+              <div class="">
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="单条视频播放时间达到单个视频时长的80%计为一次有效播放。"
+                  placement="top"
+                >
+                  <span style="cursor:pointer">{{ scope.row.openNum }}</span>
+                </el-tooltip>
+              </div>
+            </template>
+          </el-table-column>
+
           <el-table-column
             prop="likeNum"
             label="视频累计点赞数"
+            :align="'center'"
+          />
+          <el-table-column
+            prop="commentNum"
+            label="累计评论量"
             :align="'center'"
           />
           <el-table-column prop="followNum" label="关注量" :align="'center'" />
@@ -185,6 +208,15 @@ export default {
           return;
         }
       });
+    },
+    toCircle() {
+      if (window.location.href.indexOf('gstest') !== -1) {
+        window.open(
+          'http://chanzai-test.zizaihome.com/app_h5/backend#/circle/index'
+        );
+      } else {
+        window.open('http://appcms.zizaihome.com/app_h5/backend#/circle/index');
+      }
     },
     onChangeUser() {
       this.currentPage = 1;
