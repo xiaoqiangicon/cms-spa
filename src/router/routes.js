@@ -735,6 +735,20 @@ export default [
     ],
   },
   {
+    path: '/hardware',
+    name: 'hardware',
+    component: Layout,
+    meta: { title: '智能硬件', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        name: 'hardware-manage',
+        path: '/hardware/manage',
+        component: () => import('../hardware/hardware_manage/App.vue'),
+        meta: { title: '设备管理', noCache: true },
+      },
+    ],
+  },
+  {
     path: '/buddha',
     name: 'buddha',
     meta: {
@@ -851,6 +865,12 @@ export default [
         meta: {
           title: '摄像头管理',
         },
+      },
+      {
+        name: 'hardware-manage',
+        path: '/hardware/manage',
+        component: () => import('../hardware/hardware_manage/App.vue'),
+        meta: { title: '设备管理', noCache: true },
       },
     ],
   },

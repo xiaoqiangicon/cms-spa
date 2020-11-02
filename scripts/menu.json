@@ -1139,6 +1139,12 @@
         "meta": {
           "title": "摄像头管理"
         }
+      },
+      {
+        "name": "hardware-manage",
+        "path": "/hardware/manage",
+        "component": true,
+        "meta": { "title": "设备管理" }
       }
     ]
   },

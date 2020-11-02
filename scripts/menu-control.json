@@ -440,6 +440,10 @@
     "title": "寺院硬件 >>> 摄像头管理"
   },
   {
+    "key": "hardware-manage",
+    "title": "寺院硬件 >>> 设备管理"
+  },
+  {
     "key": "buddhism-language",
     "title": "佛语日签 >>> 佛语日签列表"
   },
