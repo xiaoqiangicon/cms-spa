@@ -82,7 +82,7 @@
         </div>
         <el-input v-model="moduleContentId" style="width: 100%;" />
         <p class="mg-t-10">
-          如佛事ID，日行一善ID（注意：0或不填表示全部）
+          如佛事ID，日行一善ID（注意：0或不填表示全部。填写一个负数ID表示该ID的项目支付之后不展示弹窗）
         </p>
       </div>
       <div class="row">
