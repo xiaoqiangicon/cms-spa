@@ -1,6 +1,6 @@
 export const getList = {
   msg: '成功',
-  code: 0,
+  errorCode: 0,
   data: {
     deviceList: [
       {
@@ -44,7 +44,7 @@ export const update = {
 
 export const edit = {
   msg: '成功',
-  code: 0,
+  errorCode: 0,
   data: {
     id: 10,
   },
@@ -52,13 +52,40 @@ export const edit = {
 
 export const typeList = {
   msg: '成功',
-  code: 0,
+  errorCode: 0,
   data: [
     {
       name: '客流摄像头',
-      value: 'guest_ipc',
+      vaule: 'guest_ipc',
       supportNetwork: 1,
       needValidCode: 1,
+    },
+    {
+      name: '客流摄像头2',
+      vaule: 'guest_ipb',
+      supportNetwork: 1,
+      needValidCode: 1,
+    },
+    {
+      name: '客流摄像头3',
+      vaule: 'guest_ipd',
+      supportNetwork: 1,
+      needValidCode: 1,
+    },
+  ],
+};
+
+export const getTempleList = {
+  msg: '',
+  errorCode: 0,
+  data: [
+    {
+      id: 6186,
+      name: '重庆下岩寺',
+    },
+    {
+      id: 8828,
+      name: '本焕寺',
     },
   ],
 };

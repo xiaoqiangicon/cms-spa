@@ -10,28 +10,40 @@
             <div class="cell-body">
               <div class="row mg-b-20">
                 <p class="row-title">寺院名称</p>
-                <input class="input-text" type="text" v-model="name" />
-              </div>
-              <div class="row mg-b-20">
-                <p class="row-title">设备类型</p>
-                <el-select v-model="type" @change="changeType">
+                <el-select value-key="value" filterable v-model="templeId">
                   <el-option
-                    v-for="item in typeList"
-                    :key="item.value"
+                    v-for="item in templeList"
+                    :key="item.id"
                     :label="item.name"
-                    :value="item.value"
+                    :value="item.id"
                   >
                   </el-option>
                 </el-select>
               </div>
-              <div class="row mg-b-20" v-if="showNetWork">
+              <div class="row mg-b-20">
+                <p class="row-title">设备类型</p>
+                <el-select
+                  value-key="value"
+                  v-model="type"
+                  @change="changeType"
+                >
+                  <el-option
+                    v-for="item in typeList"
+                    :key="item.vaule"
+                    :label="item.name"
+                    :value="item.vaule"
+                  >
+                  </el-option>
+                </el-select>
+              </div>
+              <div class="row mg-b-20" v-if="!showNetWork">
                 <p class="row-title">绑定网关</p>
                 <el-select value-key="value" v-model="gate">
                   <el-option
                     v-for="item in gateList"
-                    :key="item.vaule"
+                    :key="item.id"
                     :label="item.name"
-                    :value="item.vaule"
+                    :value="item.deviceSerial"
                   >
                   </el-option>
                 </el-select>
@@ -40,7 +52,7 @@
                 <p class="row-title">设备编号</p>
                 <input class="input-text" type="text" v-model="deviceSerial" />
               </div>
-              <div class="row mg-b-20" v-if="needValidCode || validateCode">
+              <div class="row mg-b-20" v-if="needValidCode">
                 <p class="row-title">验证码</p>
                 <input class="input-text" type="text" v-model="validateCode" />
               </div>
@@ -66,7 +78,7 @@ import { MessageBox } from 'element-ui';
 
 export default {
   name: 'Detail',
-  props: ['detail', 'showDetail', 'typeList'],
+  props: ['detail', 'showDetail'],
   data() {
     return {
       id: '',
@@ -76,22 +88,62 @@ export default {
       type: '',
       deviceSerial: '',
       validateCode: '',
-      templeName: '',
+      templeId: '',
+      templeList: [],
+      typeList: [],
 
-      showNetWork: !1,
+      showNetWork: !0,
       needValidCode: !1,
     };
   },
+  created() {
+    this.fetchTempleList();
+    this.fetchTypeList();
+    this.fetchGateList();
+  },
   watch: {
     detail(newVal) {
-      this.id = newVal.id;
-      this.name = newVal.name;
-      this.type = newVal.type;
-      this.validateCode = newVal.validateCode;
-      this.deviceSerial = newVal.deviceSerial;
+      this.id = newVal.id || 0;
+      this.name = newVal.name || '';
+      this.type = newVal.type || '';
+      this.validateCode = newVal.validateCode || '';
+      this.gate = this.validateCode || '';
+      this.deviceSerial = newVal.deviceSerial || '';
+      this.templeId = newVal.templeId || '';
+      if (this.id) {
+        this.typeList.forEach(item => {
+          if (item.value === this.type) {
+            this.needValidCode = item.needValidCode;
+            this.showNetWork = item.showNetWork;
+          }
+        });
+      }
     },
   },
   methods: {
+    fetchTempleList() {
+      seeFetch('hardware/hardwareManage/getTempleList', {}).then(res => {
+        if (res.errorCode === 0) {
+          this.templeList = res.data;
+        }
+      });
+    },
+    fetchTypeList() {
+      seeFetch('hardware/hardwareManage/typeList', {}).then(res => {
+        if (res.errorCode === 0) {
+          this.typeList = res.data;
+        }
+      });
+    },
+    fetchGateList() {
+      seeFetch('hardware/hardwareManage/getList', {
+        type: 'gate_way',
+      }).then(res => {
+        if (res.errorCode === 0) {
+          this.gateList = res.data.deviceList;
+        }
+      });
+    },
     save() {
       if (!this.name || !this.type || !this.deviceSerial) {
         MessageBox.alert('请输入必要信息');
@@ -101,31 +153,21 @@ export default {
         id: this.id,
         name: this.name,
         type: this.type,
-        validateCode: this.validateCode,
+        validateCode: this.showNetWork ? this.validateCode : this.gate,
         deviceSerial: this.deviceSerial,
+        templeId: this.templeId,
       }).then(res => {
-        if (res.code === 0) {
+        if (res.errorCode === 0) {
           window.location.reload();
         }
       });
     },
     changeType() {
-      console.log(this.type);
+      console.log('changeType', this.type);
       this.typeList.forEach(item => {
-        if (item.value === this.type) {
-          console.log(1234);
+        if (item.vaule === this.type) {
           this.showNetWork = item.supportNetwork;
           this.needValidCode = item.needValidCode;
-
-          if (item.supportNetwork) {
-            seeFetch('hardware/hardwareManage/getList', {
-              type: item.value,
-            }).then(res => {
-              if (res.code === 0) {
-                this.gateList = res.data.deviceList;
-              }
-            });
-          }
         }
       });
     },

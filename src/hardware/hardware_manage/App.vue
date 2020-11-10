@@ -19,7 +19,6 @@
           label="设备信息编号"
           :align="'center'"
         />
-        <el-table-column prop="typeStr" label="所在位置" :align="'center'" />
         <el-table-column prop="name" label="所在位置" :align="'center'" />
         <el-table-column prop="statusStr" label="设备状态" :align="'center'" />
         <el-table-column prop="addTime" label="添加时间" :align="'center'" />
@@ -33,7 +32,6 @@
     </el-card>
     <Detail
       :detail="detail"
-      :typeList="typeList"
       :showDetail="showDetail"
       @hideDetail="hideDetail"
     />
@@ -53,7 +51,6 @@ export default {
     return {
       list: [], // 把返回的列表进行组装分类
       detail: {}, // 详情数据
-      typeList: [],
 
       showDetail: !1,
       currentPage: 1,
@@ -66,7 +63,6 @@ export default {
   },
   created() {
     this.fetchList();
-    this.fetchTypeList();
   },
   methods: {
     fetchList() {
@@ -76,13 +72,6 @@ export default {
       }).then(res => {
         if (res.errorCode === 0) {
           this.list = res.data.deviceList;
-        }
-      });
-    },
-    fetchTypeList() {
-      seeFetch('hardware/hardwareManage/typeList', {}).then(res => {
-        if (res.errorCode === 0) {
-          this.typeList = res.data;
         }
       });
     },
