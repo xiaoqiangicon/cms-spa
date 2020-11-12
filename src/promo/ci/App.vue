@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <el-tabs v-model="activeName" type="border-card">
-      <el-tab-pane label="生成订单" name="order" />
-      <el-tab-pane label="订单列表" name="list" />
+      <el-tab-pane v-if="!1" label="生成订单" name="order" />
+      <el-tab-pane v-if="!1" label="订单列表" name="list" />
       <el-tab-pane label="进展动态" name="dynamic" />
       <keep-alive>
         <component :is="curTabCom" />
@@ -50,7 +50,7 @@ export default {
   },
   data() {
     return {
-      activeName: 'order',
+      activeName: 'dynamic',
     };
   },
   computed: {

@@ -1,6 +1,21 @@
 <template>
   <div>
     <div class="top">
+      <el-select
+        v-model="type"
+        placeholder="请选择"
+        size="small"
+        style="width: 260px;"
+        filterable
+        @change="refresh"
+      >
+        <el-option
+          v-for="item in typeList"
+          :key="item.type"
+          :value="item.type"
+          :label="item.name"
+        />
+      </el-select>
       <el-button type="primary" size="small" @click="handleClickCreate">
         发 布
       </el-button>
@@ -64,6 +79,7 @@
     <DialogEdit
       :detail="curDetail"
       :visible="dialogEditVisible"
+      :typeList="typeList"
       @updateVisible="updateDialogEditVisible"
       @success="refresh"
     />
@@ -90,6 +106,26 @@ export default {
         total: 0,
       },
 
+      type: 0,
+      typeList: [
+        {
+          type: 0,
+          name: '慈光计划',
+        },
+        {
+          type: 1,
+          name: '超度',
+        },
+        {
+          type: 2,
+          name: '祈福',
+        },
+        {
+          type: 3,
+          name: '千寺祈福',
+        },
+      ],
+
       dialogEditVisible: !1,
 
       curDetail: {
@@ -115,7 +151,11 @@ export default {
     getList() {
       const { page, pageSize } = this.pagination;
       this.loading = !0;
-      seeFetch('promo/ci/dynamic/getList', { page, pageSize }).then(res => {
+      seeFetch('promo/ci/dynamic/getList', {
+        page,
+        pageSize,
+        type: this.type,
+      }).then(res => {
         if (!res.success) {
           Notification({
             type: 'error',
@@ -192,8 +232,9 @@ export default {
 
 <style lang="less">
 .top {
-  height: 50px;
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0 30px;
 }
 .img-container {
   width: 100px;

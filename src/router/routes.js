@@ -116,7 +116,7 @@ export default [
         path: 'ci',
         component: () => import('../promo/ci/App.vue'),
         name: 'promo-ci',
-        meta: { title: '慈光计划', noCache: true },
+        meta: { title: '项目进展', noCache: true },
       },
       {
         path: 'topic',

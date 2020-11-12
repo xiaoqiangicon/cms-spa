@@ -13,6 +13,23 @@
   >
     <div class="content">
       <el-form ref="form" :model="detail" label-width="80px">
+        <el-form-item v-show="detail.id === 0" label="发布项目">
+          <el-select
+            v-model="type"
+            placeholder="请选择"
+            size="small"
+            style="width: 260px;"
+            filterable
+            @change="refresh"
+          >
+            <el-option
+              v-for="item in typeList"
+              :key="item.type"
+              :value="item.type"
+              :label="item.name"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item label="内容">
           <el-input
             v-model="detail.content"
@@ -61,11 +78,13 @@ export default {
         ifPush: !1,
       }),
     },
+    typeList: Object,
   },
   data() {
     return {
       loading: !1,
       sVisible: this.visible,
+      type: 0,
     };
   },
   watch: {
@@ -78,7 +97,7 @@ export default {
   },
   methods: {
     save() {
-      const { id, content, images, ifPush } = this.detail;
+      const { id, content, images, ifPush, type } = this.detail;
       // 数据验证
       const verifyMsg = [];
 
@@ -96,27 +115,31 @@ export default {
       }
 
       this.loading = !0;
-      seeFetch('promo/ci/dynamic/update', { id, content, images, ifPush }).then(
-        res => {
-          if (!res.success) {
-            Notification({
-              type: 'error',
-              title: '提示',
-              message: res.message,
-            });
-            return;
-          }
-
+      seeFetch('promo/ci/dynamic/update', {
+        id,
+        content,
+        images,
+        ifPush,
+        type: type >= 0 ? type : this.type,
+      }).then(res => {
+        if (!res.success) {
           Notification({
+            type: 'error',
             title: '提示',
-            type: 'success',
-            message: '保存成功',
+            message: res.message,
           });
-          this.$emit('updateVisible', !1);
-          this.loading = !1;
-          this.$emit('success');
+          return;
         }
-      );
+
+        Notification({
+          title: '提示',
+          type: 'success',
+          message: '保存成功',
+        });
+        this.$emit('updateVisible', !1);
+        this.loading = !1;
+        this.$emit('success');
+      });
     },
   },
 };
