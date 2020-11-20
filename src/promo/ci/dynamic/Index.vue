@@ -106,12 +106,8 @@ export default {
         total: 0,
       },
 
-      type: 0,
+      type: 1,
       typeList: [
-        {
-          type: 0,
-          name: '慈光计划',
-        },
         {
           type: 1,
           name: '超度',

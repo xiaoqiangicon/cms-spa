@@ -9,6 +9,10 @@ import {
   ziYingModifyRecordsProps,
   ziYingUseProps,
   ziYingUseRecordsProps,
+  kindUseRecordsProps,
+  kindUseProps,
+  kindAddProps,
+  kindModifyRecordsProps,
 } from './data';
 
 const shiJingAddMutations = {};
@@ -165,6 +169,67 @@ ziYingUseRecordsProps.forEach(({ name, default: defaultValue }) => {
     typeof defaultValue === 'function' ? defaultValue() : defaultValue;
 });
 
+const kindUseMutations = {};
+const kindUseState = {};
+const kindUseRecordsMutations = {};
+const kindUseRecordsState = {};
+const kindAddMutations = {};
+const kindAddState = {};
+const kindModifyRecordsMutations = {};
+const kindModifyRecordsState = {};
+
+kindUseProps.forEach(({ name }) => {
+  const key = `update${name.slice(0, 1).toUpperCase()}${name.slice(1)}`;
+  kindUseMutations[key] = (state, payload) => {
+    // eslint-disable-next-line no-param-reassign
+    state[name] = payload;
+  };
+});
+
+kindUseProps.forEach(({ name, default: defaultValue }) => {
+  kindUseState[name] =
+    typeof defaultValue === 'function' ? defaultValue() : defaultValue;
+});
+
+kindUseRecordsProps.forEach(({ name }) => {
+  const key = `update${name.slice(0, 1).toUpperCase()}${name.slice(1)}`;
+  kindUseRecordsMutations[key] = (state, payload) => {
+    // eslint-disable-next-line no-param-reassign
+    state[name] = payload;
+  };
+});
+
+kindUseRecordsProps.forEach(({ name, default: defaultValue }) => {
+  kindUseRecordsState[name] =
+    typeof defaultValue === 'function' ? defaultValue() : defaultValue;
+});
+
+kindAddProps.forEach(({ name }) => {
+  const key = `update${name.slice(0, 1).toUpperCase()}${name.slice(1)}`;
+  kindAddMutations[key] = (state, payload) => {
+    // eslint-disable-next-line no-param-reassign
+    state[name] = payload;
+  };
+});
+
+kindAddProps.forEach(({ name, default: defaultValue }) => {
+  kindAddState[name] =
+    typeof defaultValue === 'function' ? defaultValue() : defaultValue;
+});
+
+kindModifyRecordsProps.forEach(({ name }) => {
+  const key = `update${name.slice(0, 1).toUpperCase()}${name.slice(1)}`;
+  kindModifyRecordsMutations[key] = (state, payload) => {
+    // eslint-disable-next-line no-param-reassign
+    state[name] = payload;
+  };
+});
+
+kindModifyRecordsProps.forEach(({ name, default: defaultValue }) => {
+  kindModifyRecordsState[name] =
+    typeof defaultValue === 'function' ? defaultValue() : defaultValue;
+});
+
 export default {
   namespaced: true,
   modules: {
@@ -217,6 +282,26 @@ export default {
       namespaced: true,
       state: ziYingUseRecordsState,
       mutations: ziYingUseRecordsMutations,
+    },
+    kindUse: {
+      namespaced: true,
+      state: kindUseState,
+      mutations: kindUseMutations,
+    },
+    kindUseRecords: {
+      namespaced: true,
+      state: kindUseRecordsState,
+      mutations: kindUseRecordsMutations,
+    },
+    kindAdd: {
+      namespaced: true,
+      state: kindAddState,
+      mutations: kindAddMutations,
+    },
+    kindModifyRecords: {
+      namespaced: true,
+      state: kindModifyRecordsState,
+      mutations: kindModifyRecordsMutations,
     },
   },
 };
