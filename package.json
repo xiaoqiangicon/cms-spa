@@ -25,8 +25,8 @@
     "dev-login": "lila dev login",
     "sync-login": "lila sync login",
     "sync-login:prod": "lila sync login -e prod",
-    "dev-tool": "lila dev --init tool.lila.init.js",
-    "sync-tool": "lila sync --init tool.lila.init.js"
+    "dev-tool": "lila dev --init lila.init.tool.js",
+    "sync-tool": "lila sync --init lila.init.tool.js"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

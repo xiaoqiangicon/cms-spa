@@ -100,6 +100,8 @@ export default {
         { id: 6, name: '私域流量' },
         { id: 7, name: '十宫格' },
         { id: 8, name: '公众号菜单' },
+        { id: 9, name: '视频号' },
+        { id: 10, name: '公众号回复' },
         { id: 0, name: '其他运营位' },
       ],
       type: '',

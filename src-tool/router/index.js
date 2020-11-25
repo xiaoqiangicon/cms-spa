@@ -72,7 +72,7 @@ export const constantRouterMap = [
   {
     path: '/link',
     component: Layout,
-    redirect: '/link/open-install-url',
+    // redirect: '/link/open-install-url',
     name: '链接管理',
     meta: { title: '链接管理', icon: 'fa-circle', noCache: true },
     children: [
@@ -81,6 +81,12 @@ export const constantRouterMap = [
         component: () => import('../link/open-install-url/App'),
         name: '生成 OpenInstall 链接',
         meta: { title: '生成 OpenInstall 链接', noCache: true },
+      },
+      {
+        path: 'open-short-link',
+        component: () => import('../link/short-link/App'),
+        name: '生成短链接',
+        meta: { title: '生成短链接', noCache: true },
       },
     ],
   },
