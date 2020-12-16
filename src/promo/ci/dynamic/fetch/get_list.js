@@ -26,7 +26,8 @@ const refactor = {
 const post = res => {
   res.data.list.forEach(item => {
     /* eslint-disable-next-line no-param-reassign */
-    item.images = item.images.split(',');
+    item.images = item.images ? item.images.split(',') : [];
+    item.videos = item.video ? item.video.split(',') : [];
   });
 };
 

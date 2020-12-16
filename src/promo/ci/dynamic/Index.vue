@@ -38,6 +38,15 @@
               >
                 <img :src="img" alt="" />
               </div>
+              <div
+                v-for="video in scope.row.videos"
+                :key="video"
+                class="img-container"
+              >
+                <img :src="video + '?vframe/jpg/offset/1'" alt="" />
+                <span class="pause-icon"></span>
+                <div class="mask" @click="onClickPlayVideo(video)"></div>
+              </div>
             </div>
           </template>
         </el-table-column>
@@ -81,20 +90,29 @@
       :visible="dialogEditVisible"
       :typeList="typeList"
       @updateVisible="updateDialogEditVisible"
+      @editPlayVideo="editPlayVideo"
       @success="refresh"
+    />
+    <VideoPlayer
+      @hidePlayer="hidePlayer"
+      :src="videoPlayerSrc"
+      :visible="playerVisible"
     />
   </div>
 </template>
 
 <script>
+// video.js
 import seeFetch from 'see-fetch';
 import './fetch';
 import { Notification } from 'element-ui';
 import DialogEdit from './DialogEdit';
+import VideoPlayer from './VideoPlayer';
 
 export default {
   components: {
     DialogEdit,
+    VideoPlayer,
   },
   data() {
     return {
@@ -128,8 +146,13 @@ export default {
         id: 0,
         content: '',
         images: [],
+        videos: [],
         ifPush: !1,
       },
+
+      videoPlayerSrc:
+        'https://pic.zizaihome.com/6e33a93e-8457-4e9c-8dd1-62e993c7ca83.mp4',
+      playerVisible: !1,
     };
   },
   computed: {},
@@ -166,11 +189,24 @@ export default {
         this.loading = !1;
       });
     },
+    hidePlayer() {
+      this.playerVisible = !1;
+    },
+    onClickPlayVideo(video) {
+      this.videoPlayerSrc = video;
+      console.log('video', this.videoPlayerSrc);
+      this.playerVisible = !0;
+    },
+    editPlayVideo(data) {
+      this.videoPlayerSrc = data.src;
+      this.playerVisible = !0;
+    },
     handleClickCreate() {
       this.curDetail = {
         id: 0,
         content: '',
         images: [],
+        videos: [],
         ifPush: !1,
       };
       this.dialogEditVisible = !0;
@@ -233,6 +269,7 @@ export default {
   margin: 20px 0 30px;
 }
 .img-container {
+  position: relative;
   width: 100px;
   height: 100px;
   display: inline-block;
@@ -241,6 +278,26 @@ export default {
     width: 100%;
     height: 100%;
     border-radius: 5px;
+  }
+  .mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .pause-icon {
+    position: absolute;
+    background-image: url('https://pic.zizaihome.com/7788d7f2-8007-11e8-b517-00163e0c001e.png');
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 </style>
