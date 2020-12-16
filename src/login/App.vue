@@ -35,6 +35,16 @@
         />
       </el-form-item>
 
+      <el-form-item ref="validate" class="validate" prop="code">
+        <el-input
+          v-model="form.code"
+          type="text"
+          name="code"
+          placeholder="请输入验证码"
+        />
+        <img class="validate-img" :src="codeImg" alt="" @click="refresh" />
+      </el-form-item>
+
       <el-button
         :loading="loading"
         type="primary"
@@ -72,6 +82,7 @@ export default {
       form: {
         username: '',
         password: '',
+        code: '',
       },
       rules: {
         username: [
@@ -82,11 +93,22 @@ export default {
         ],
       },
       loading: false,
+      codeImg: '',
     };
+  },
+  created() {
+    this.getValidateImg();
   },
   methods: {
     handleLogin() {
       const self = this;
+      if (!this.form.code) {
+        Notification({
+          title: '提示',
+          message: '请输入验证码',
+        });
+        return;
+      }
       this.$refs.form.validate(valid => {
         if (valid) {
           self.loading = !0;
@@ -97,6 +119,7 @@ export default {
             data: {
               account: self.form.username,
               pwd: self.form.password,
+              code: self.form.code,
             },
             success(res) {
               if (res.errorCode > -1) window.location.href = '/';
@@ -121,6 +144,25 @@ export default {
         }
         return false;
       });
+    },
+    getValidateImg() {
+      const { validate } = this.$refs;
+      var This = this;
+
+      var xhr = new XMLHttpRequest();
+      xhr.open('get', '/getcode', true);
+      xhr.responseType = 'blob';
+      xhr.onload = function() {
+        if (this.status === 200) {
+          var blob = this.response;
+
+          This.codeImg = window.URL.createObjectURL(blob);
+        }
+      };
+      xhr.send();
+    },
+    refresh() {
+      this.getValidateImg();
     },
   },
 };
@@ -170,6 +212,9 @@ $cursor: #fff;
     border-radius: 5px;
     color: #454545;
   }
+  .el-form-item__content {
+    display: flex;
+  }
 }
 </style>
 
@@ -207,6 +252,10 @@ $light_gray: #eee;
       top: 5px;
       right: 0;
     }
+  }
+  .validate-img {
+    width: 120px;
+    cursor: pointer;
   }
 }
 </style>

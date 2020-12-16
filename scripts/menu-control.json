@@ -152,6 +152,10 @@
     "title": "寺院管理 >>> 积分记录"
   },
   {
+    "key": "temple-board",
+    "title": "寺院管理 >>> 大看板"
+  },
+  {
     "key": "finance-pending",
     "title": "善款中心 >>> 待处理事项"
   },

@@ -390,6 +390,20 @@
           "title": "积分记录",
           "noCache": true
         }
+      },
+      {
+        "path": "/finance/verifyIndex",
+        "name": "finance-verifyIndex",
+        "meta": {
+          "title": "善款资料审核"
+        }
+      },
+      {
+        "path": "/temple/board",
+        "name": "temple-board",
+        "meta": {
+          "title": "大看板"
+        }
       }
     ]
   },
