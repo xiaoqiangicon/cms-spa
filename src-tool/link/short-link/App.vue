@@ -22,10 +22,10 @@
         size="small"
         style="width: 500px;"
       /><br /><br />
-      <span class="l-hg-32"> 短信外部链接 </span>&nbsp;&nbsp;&nbsp;&nbsp;
+      <span class="l-hg-32"> 微信内部链接 </span>&nbsp;&nbsp;&nbsp;&nbsp;
       <span ref="link">{{ shortLink }}</span
       ><br /><br />
-      <span class="l-hg-32"> 微信内部链接 </span>&nbsp;&nbsp;&nbsp;&nbsp;
+      <span class="l-hg-32"> 短信外部链接 </span>&nbsp;&nbsp;&nbsp;&nbsp;
       <span ref="wxLink">{{ wxLink }}</span
       ><br /><br />
       <el-button size="small" @click="make"> 生成链接 </el-button
