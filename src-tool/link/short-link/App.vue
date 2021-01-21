@@ -28,13 +28,19 @@
       <span class="l-hg-32"> 短信外部链接 </span>&nbsp;&nbsp;&nbsp;&nbsp;
       <span ref="wxLink">{{ wxLink }}</span
       ><br /><br />
+      <span class="l-hg-32"> 直接弹起规格链接 </span>&nbsp;&nbsp;&nbsp;&nbsp;
+      <span ref="showActionLink">{{ showActionLink }}</span
+      ><br /><br />
       <el-button size="small" @click="make"> 生成链接 </el-button
       >&nbsp;&nbsp;&nbsp;&nbsp;
       <el-button v-if="shortLink" size="small" @click="copy(1)">
-        复制外部链接 </el-button
+        复制内部链接 </el-button
       >&nbsp;&nbsp;&nbsp;&nbsp;
       <el-button v-if="wxLink" size="small" @click="copy(2)">
-        复制内部链接
+        复制外部链接
+      </el-button>
+      <el-button v-if="showActionLink" size="small" @click="copy(3)">
+        复制直接弹起规格链接
       </el-button>
     </el-card>
   </div>
@@ -52,6 +58,7 @@ export default {
       openUrl: '',
       shortLink: '',
       wxLink: '',
+      showActionLink: '',
     };
   },
   methods: {
@@ -60,11 +67,14 @@ export default {
         if (res.errorCode === 0) {
           this.shortLink = res.data.url;
           this.wxLink = res.data.outsideUrl;
+          let openUrlArr = this.openUrl.split('?');
+          this.showActionLink =
+            openUrlArr[0] + '?' + 'isShowAction=1&' + openUrlArr[1];
         }
       });
     },
     copy(type) {
-      const { link: linkEl } = this.$refs;
+      const { link: linkEl, showActionLink: showActionLinkEl } = this.$refs;
       const { wxLink: wxLinkEl } = this.$refs;
       const selection = window.getSelection();
 
@@ -75,8 +85,10 @@ export default {
       const range = window.document.createRange();
       if (type === 1) {
         range.selectNode(linkEl);
-      } else {
+      } else if (type === 2) {
         range.selectNode(wxLinkEl);
+      } else {
+        range.selectNode(showActionLinkEl);
       }
 
       selection.addRange(range);

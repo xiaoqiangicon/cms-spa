@@ -270,6 +270,12 @@ export default [
         component: () => import('../buddhist/integrate/App.vue'),
         meta: { title: '积分记录', noCache: true },
       },
+      {
+        name: 'temple-integration',
+        path: 'integration',
+        component: () => import('../temple/integration/App.vue'),
+        meta: { title: '寺院积分', noCache: true },
+      },
     ],
   },
   {

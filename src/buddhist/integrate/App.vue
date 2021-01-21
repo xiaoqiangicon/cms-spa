@@ -23,6 +23,21 @@
                 :value="item.id"
               />
             </el-select>
+            <span style="margin: 0 10px 0 20px;">积分类型：</span>
+            <el-select
+              v-model="integrateType"
+              width="300"
+              placeholder="请选择积分类型"
+              filterable
+              @change="onChangeType"
+            >
+              <el-option
+                v-for="item in integrateList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
           </div>
           <button class="add-integrate" @click="add">
             添加任务积分
@@ -83,6 +98,21 @@ export default {
     return {
       loading: !1,
       list: [],
+      integrateType: -1,
+      integrateList: [
+        {
+          id: -1,
+          name: '全部',
+        },
+        {
+          id: 0,
+          name: '积分任务',
+        },
+        {
+          id: 1,
+          name: '积分兑换',
+        },
+      ],
       templeList: [],
 
       isNew: 1, // 添加or修改
@@ -108,6 +138,7 @@ export default {
         pageSize: this.pageSize,
         pageNum: this.currentPage,
         templeId: this.templeId,
+        type: this.integrateType,
       }).then(res => {
         if (!res.success) {
           Notification({
@@ -143,6 +174,10 @@ export default {
 
         this.templeList = res.data;
       });
+    },
+    onChangeType() {
+      this.currentPage = 0;
+      this.fetchList();
     },
     refresh() {
       this.fetchList();

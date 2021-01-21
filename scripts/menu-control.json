@@ -152,6 +152,10 @@
     "title": "寺院管理 >>> 积分记录"
   },
   {
+    "key": "temple-integration",
+    "title": "寺院管理 >>> 寺院积分"
+  },
+  {
     "key": "temple-board",
     "title": "寺院管理 >>> 大看板"
   },

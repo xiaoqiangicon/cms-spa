@@ -392,6 +392,15 @@
         }
       },
       {
+        "name": "temple-integration",
+        "path": "integration",
+        "component": true,
+        "meta": {
+          "title": "寺院积分",
+          "noCache": true
+        }
+      },
+      {
         "path": "/finance/verifyIndex",
         "name": "finance-verifyIndex",
         "meta": {
