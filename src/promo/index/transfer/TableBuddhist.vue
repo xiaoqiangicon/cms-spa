@@ -198,15 +198,13 @@ export default {
       // 此处存在特殊逻辑
       const url = `${window.location.origin}${window.location.pathname}?#/promo/index/transfer-list`;
       // 应运营需要，重新打开一个页面
-      window.open(url);
+      window.location.href = url;
     },
     toTransferSet(item) {
       window.sessionStorage['promo/index/transfer/item'] = JSON.stringify(item);
-      window.open(
-        `${window.location.pathname}#/promo/transferSet/${item.buddhistId}`,
-        '_blank'
-      );
-      // this.$router.push(`/promo/transferSet/${item.buddhistId}`);
+      // window.location.herf = `${window.location.pathname}#/promo/transferSet/${item.buddhistId}`;
+      // console.log(`${window.location.pathname}#/promo/transferSet/${item.buddhistId}`)
+      this.$router.push(`/promo/transferSet/${item.buddhistId}`);
     },
     toMergeSet(item) {
       window.sessionStorage['promo/index/transfer/item'] = JSON.stringify(item);

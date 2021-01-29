@@ -40,7 +40,13 @@
       />
       <el-table-column min-width="60px" prop="visitNum" label="查看次数" />
       <el-table-column min-width="100px" prop="link" label="跳转链接" />
-      <el-table-column min-width="200px" label="生效时间">
+      <el-table-column
+        min-width="100px"
+        prop="tobeExpire"
+        :align="'center'"
+        label="佛事有效性"
+      />
+      <el-table-column min-width="200px" label="生效时间" :align="'center'">
         <template slot-scope="scope">
           <div class="valid-time">
             <div class="start-time">

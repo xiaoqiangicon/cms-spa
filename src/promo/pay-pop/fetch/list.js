@@ -50,6 +50,7 @@ const post = res => {
   if (res.data) {
     const nowNum = numOfDateTime(now.dateTime);
     res.data.forEach(item => {
+      item.tobeExpire = item.tobeExpire === 0 ? '正常' : '到期';
       // timeStatus(1：进行中，2：未开始，3：已结束)
       if (item.startTime && item.endTime) {
         const startTimeNum = numOfDateTime(item.startTime);
