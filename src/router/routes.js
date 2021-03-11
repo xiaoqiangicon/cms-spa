@@ -398,7 +398,7 @@ export default [
     children: [
       {
         path: 'article',
-        component: () => import('../qu/article/App.vue'),
+        component: () => import('../qu/article-new/App.vue'),
         name: 'qu-article',
         meta: { title: '订阅文章列表', noCache: true },
       },
