@@ -22,6 +22,22 @@
           style="width: 200px;"
           @change="doSearch"
         />
+        <span style="margin-left: 20px;">选择区域：</span>
+        <el-select
+          v-model="area"
+          size="small"
+          placeholder="请选择区域"
+          filterable
+          @change="doSearch"
+        >
+          <el-option :key="0" label="全部" :value="0" />
+          <el-option
+            v-for="item in areaList"
+            :key="item.name"
+            :label="item.name"
+            :value="item.name"
+          />
+        </el-select>
         <el-input
           v-model="filterSearch"
           placeholder="订单号搜索"
@@ -35,8 +51,14 @@
       <div class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
           <el-table-column prop="fromTypeText" label="来源" :align="'center'" />
-          <el-table-column prop="name" label="名称" :align="'center'" />
+          <el-table-column prop="name" label="佛事名称" :align="'center'" />
+          <el-table-column
+            prop="subdivideName"
+            label="选择项名称"
+            :align="'center'"
+          />
           <el-table-column prop="orderNo" label="订单ID" :align="'center'" />
+          <el-table-column prop="area" label="订单分管大区" :align="'center'" />
           <el-table-column
             prop="templeName"
             label="订单寺院"
@@ -60,7 +82,7 @@
           </el-table-column>
           <el-table-column
             prop="refundTime"
-            label="退款时间"
+            label="用户申请退款(时间)"
             :align="'center'"
           />
           <el-table-column prop="payTime" label="支付时间" :align="'center'" />
@@ -91,10 +113,22 @@
     </el-card>
     <div v-show="dialogVisible" class="dialog" @click="hideDialog">
       <div class="dialog-content">
-        <p class="dialog-title">订单类型：{{ rowData.orderTypeStr }}</p>
-        <p class="dialog-tip">
-          您确定将此订单设为"退款状态"吗？
+        <p class="dialog-title">
+          <span>订单类型：</span>{{ rowData.orderTypeStr }}
         </p>
+        <div class="dialog-row">
+          <span>退款说明：</span>
+          <el-input
+            style="width: 70%"
+            type="textarea"
+            :rows="5"
+            v-model="content"
+          />
+        </div>
+        <div class="dialog-row">
+          <span>上传图片：</span>
+          <Upload :images="uploadImages" :multiple="!0" />
+        </div>
         <div class="btn-box">
           <el-button size="small" @click="cancel">
             取消
@@ -151,6 +185,7 @@
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
 import { setTimeout } from 'timers';
+import Upload from '../../../com/upload/Upload';
 
 export default {
   data() {
@@ -164,10 +199,35 @@ export default {
       dialogVisible: !1,
       rowData: {},
       detailDialog: !1,
+      content: '',
+      uploadImages: [],
+      area: '',
+      areaList: [
+        { name: '华东一' },
+        { name: '华东二' },
+        { name: '华东三' },
+        { name: '华南' },
+        { name: '华北' },
+        { name: '华中' },
+        { name: '东北' },
+        { name: '西南' },
+        { name: '西北' },
+      ],
     };
+  },
+  components: {
+    Upload,
   },
   created() {
     this.fetchList();
+  },
+  watch: {
+    dialogVisible: function(newVal) {
+      if (!newVal) {
+        this.content = '';
+        this.handleImages = [];
+      }
+    },
   },
   methods: {
     fetchList() {
@@ -179,6 +239,7 @@ export default {
         search: this.filterSearch,
         page: this.page,
         type: 1,
+        area: this.area || '',
       }).then(res => {
         if (!res.success) {
           Notification({
@@ -204,14 +265,30 @@ export default {
       this.fetchList();
     },
     refund(rowData) {
-      seeFetch('order/refund/refund', { orderId: rowData.orderNo }).then(
-        res => {
-          if (res.errorCode === 0) {
-            this.dialogVisible = !1;
-            window.location.reload();
-          }
+      if (!this.content) {
+        Notification({
+          title: '提示',
+          message: '请填写退款说明',
+        });
+        return;
+      }
+      if (!this.uploadImages.length) {
+        Notification({
+          title: '提示',
+          message: '请至少上传一张图片',
+        });
+        return;
+      }
+      seeFetch('order/refund/refund', {
+        orderId: rowData.orderNo,
+        content: this.content,
+        imgs: this.uploadImages.join(','),
+      }).then(res => {
+        if (res.errorCode === 0) {
+          this.dialogVisible = !1;
+          window.location.reload();
         }
-      );
+      });
     },
     showRefund(item) {
       this.rowData = item.row;
@@ -265,7 +342,7 @@ p {
   left: 50%;
   top: 24vh;
   transform: translate(-50%, 0);
-  width: 450px;
+  width: 600px;
   padding-top: 20px;
   padding-bottom: 20px;
   background-color: #fff;
@@ -291,6 +368,19 @@ p {
   border-radius: 8px;
   &:nth-last-child(1) {
     margin-right: 0;
+  }
+}
+.dialog-title span {
+  margin-right: 14px;
+}
+.dialog-row {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  span {
+    padding-left: 20px;
+    margin-right: 14px;
+    font-size: 16px;
   }
 }
 .btn-box {

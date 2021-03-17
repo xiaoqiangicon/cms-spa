@@ -35,13 +35,19 @@
       <div class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
           <el-table-column prop="fromTypeText" label="来源" :align="'center'" />
-          <el-table-column prop="name" label="名称" :align="'center'" />
+          <el-table-column prop="name" label="佛事名称" :align="'center'" />
+          <el-table-column
+            prop="subdivideName"
+            label="选择项名称"
+            :align="'center'"
+          />
           <el-table-column prop="orderNo" label="订单ID" :align="'center'" />
           <el-table-column
             prop="templeName"
             label="订单寺院"
             :align="'center'"
           />
+          <el-table-column prop="area" label="分管大区" :align="'center'" />
           <el-table-column prop="price" label="金额" :align="'center'" />
           <el-table-column
             label="订单状态"
@@ -50,7 +56,7 @@
           />
           <el-table-column
             prop="refundTime"
-            label="退款时间"
+            label="用户申请退款时间"
             :align="'center'"
           />
           <el-table-column prop="payTime" label="支付时间" :align="'center'" />
