@@ -286,6 +286,7 @@ export default {
           title: '提示',
           message: '更新成功',
         });
+        window.location.reload();
       });
     },
   },
