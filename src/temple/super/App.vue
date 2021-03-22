@@ -261,7 +261,9 @@ export default {
     // 显示管理对话框 设置当前用户数据
     showAdminManage(item, index) {
       this.dialogAdmin = item;
-      this.dialogAdminVModel = item.otherTempleIds.split(',');
+      this.dialogAdminVModel = item.otherTempleIds
+        ? item.otherTempleIds.split(',')
+        : [];
       this.dialogAreaList = item.areas;
       this.dialogManageVisible = true;
     },
