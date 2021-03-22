@@ -116,7 +116,7 @@ export default [
         path: 'ci',
         component: () => import('../promo/ci/App.vue'),
         name: 'promo-ci',
-        meta: { title: '慈光计划', noCache: true },
+        meta: { title: '项目进展', noCache: true },
       },
       {
         path: 'topic',
@@ -229,7 +229,7 @@ export default [
         path: 'super',
         component: () => import('../temple/super/App.vue'),
         name: 'temple-super',
-        meta: { title: '超级访问', noCache: true },
+        meta: { title: '大区权限管理', noCache: true },
       },
       {
         path: 'notice',
@@ -269,6 +269,12 @@ export default [
         path: 'integrate',
         component: () => import('../buddhist/integrate/App.vue'),
         meta: { title: '积分记录', noCache: true },
+      },
+      {
+        name: 'temple-integration',
+        path: 'integration',
+        component: () => import('../temple/integration/App.vue'),
+        meta: { title: '寺院积分', noCache: true },
       },
     ],
   },
@@ -353,6 +359,12 @@ export default [
         name: 'finance-trade-stat',
         component: () => import('../finance/trade-stat/App.vue'),
         meta: { title: '交易统计', noCache: true },
+      },
+      {
+        path: 'pickup',
+        name: 'finance-pickup',
+        component: () => import('../fund/pending/App.vue'),
+        meta: { title: '用户提现申请', noCache: true },
       },
     ],
   },
@@ -687,6 +699,12 @@ export default [
         path: '/buddhist/tag',
         meta: { title: '佛事标签' },
       },
+      {
+        path: 'buddhist/promote',
+        component: () => import('../buddhist/promote/App.vue'),
+        name: 'buddhist-promote',
+        meta: { title: '创作者推广库', noCache: true },
+      },
     ],
   },
   {
@@ -705,6 +723,34 @@ export default [
         name: 'ad-system-popup',
         component: () => import('../ad/system-popup/App.vue'),
         meta: { title: '系统广告', noCache: true },
+      },
+    ],
+  },
+  {
+    path: '/creator',
+    name: 'creator',
+    component: Layout,
+    meta: { title: '创作者管理', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        name: 'creator-personnel',
+        path: '/creator/personnel',
+        component: () => import('../creator/personnel/App.vue'),
+        meta: { title: '人员管理', noCache: true },
+      },
+    ],
+  },
+  {
+    path: '/hardware',
+    name: 'hardware',
+    component: Layout,
+    meta: { title: '智能硬件', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        name: 'hardware-manage',
+        path: '/hardware/manage',
+        component: () => import('../hardware/hardware_manage/App.vue'),
+        meta: { title: '设备管理', noCache: true },
       },
     ],
   },
@@ -825,6 +871,12 @@ export default [
         meta: {
           title: '摄像头管理',
         },
+      },
+      {
+        name: 'hardware-manage',
+        path: '/hardware/manage',
+        component: () => import('../hardware/hardware_manage/App.vue'),
+        meta: { title: '设备管理', noCache: true },
       },
     ],
   },

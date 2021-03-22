@@ -58,7 +58,7 @@
           <el-option
             v-for="item in subIds"
             :key="item.id"
-            :label="item.name"
+            :label="item.id + '-' + item.name"
             :value="item.id"
           />
         </el-select>

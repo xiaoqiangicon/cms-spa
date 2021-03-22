@@ -35,14 +35,33 @@
         />
       </el-form-item>
 
+      <el-form-item ref="validate" class="validate" prop="code">
+        <el-input
+          v-model="form.code"
+          type="text"
+          name="code"
+          placeholder="请输入验证码"
+        />
+        <img class="validate-img" :src="codeImg" alt="" @click="refresh" />
+      </el-form-item>
+
       <el-button
         :loading="loading"
         type="primary"
-        style="width:100%;margin-bottom:30px;"
+        style="width:100%;margin-bottom:20px;"
         @click.native.prevent="handleLogin"
       >
         {{ $t('login.logIn') }}
       </el-button>
+      <div class="fs-login">
+        <img
+          @click="toFsLogin"
+          class="fs-logo"
+          src="https://pic.zizaihome.com/29bab525-bd4e-4d6c-8352-6a0c642d8fd7.png"
+          alt="飞书登陆图标"
+        />
+        <span @click="toFsLogin" class="fs-text">飞书登陆</span>
+      </div>
     </el-form>
   </div>
 </template>
@@ -50,6 +69,7 @@
 <script>
 import request from 'reqwest';
 import { Notification } from 'element-ui';
+import { urlParams } from '../../../pro-com/src/utils';
 
 export default {
   name: 'App',
@@ -72,6 +92,7 @@ export default {
       form: {
         username: '',
         password: '',
+        code: '',
       },
       rules: {
         username: [
@@ -82,11 +103,27 @@ export default {
         ],
       },
       loading: false,
+      codeImg: '',
     };
+  },
+  created() {
+    if (urlParams.isFromFS) {
+      window.location.replace(
+        'https://open.feishu.cn/open-apis/authen/v1/user_auth_page_beta?app_id=cli_9f72b88be769900d&redirect_uri=http%3A%2F%2Fcms.miaoyan.org%2FfeishuLogin&state='
+      );
+    }
+    this.getValidateImg();
   },
   methods: {
     handleLogin() {
       const self = this;
+      if (!this.form.code) {
+        Notification({
+          title: '提示',
+          message: '请输入验证码',
+        });
+        return;
+      }
       this.$refs.form.validate(valid => {
         if (valid) {
           self.loading = !0;
@@ -97,11 +134,13 @@ export default {
             data: {
               account: self.form.username,
               pwd: self.form.password,
+              code: self.form.code,
             },
             success(res) {
               if (res.errorCode > -1) window.location.href = '/';
               else {
                 self.loading = !1;
+                self.refresh();
                 Notification({
                   title: '提示',
                   message: res.msg,
@@ -121,6 +160,29 @@ export default {
         }
         return false;
       });
+    },
+    toFsLogin() {
+      window.location.href =
+        'https://open.feishu.cn/open-apis/authen/v1/user_auth_page_beta?app_id=cli_9f72b88be769900d&redirect_uri=http%3A%2F%2Fcms.miaoyan.org%2FfeishuLogin&state=';
+    },
+    getValidateImg() {
+      const { validate } = this.$refs;
+      var This = this;
+
+      var xhr = new XMLHttpRequest();
+      xhr.open('get', '/getcode', true);
+      xhr.responseType = 'blob';
+      xhr.onload = function() {
+        if (this.status === 200) {
+          var blob = this.response;
+
+          This.codeImg = window.URL.createObjectURL(blob);
+        }
+      };
+      xhr.send();
+    },
+    refresh() {
+      this.getValidateImg();
     },
   },
 };
@@ -170,6 +232,9 @@ $cursor: #fff;
     border-radius: 5px;
     color: #454545;
   }
+  .el-form-item__content {
+    display: flex;
+  }
 }
 </style>
 
@@ -208,5 +273,23 @@ $light_gray: #eee;
       right: 0;
     }
   }
+  .validate-img {
+    width: 120px;
+    cursor: pointer;
+  }
+}
+.fs-login {
+  text-align: center;
+}
+.fs-logo {
+  width: 30px;
+  cursor: pointer;
+}
+.fs-text {
+  margin-left: 5px;
+  color: #eee;
+  font-size: 12px;
+  cursor: pointer;
+  vertical-align: middle;
 }
 </style>

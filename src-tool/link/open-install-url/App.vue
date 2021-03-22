@@ -19,8 +19,10 @@
         size="small"
         style="width: 500px;"
       /><br /><br />
-      <span class="l-hg-32"> 是否自动 </span>&nbsp;&nbsp;&nbsp;&nbsp;
-      <el-switch v-model="autoWakeUp" />（是否进入页面就自动唤醒）<br /><br />
+      <span v-if="!1" class="l-hg-32"> 是否自动 </span>
+      <el-switch v-if="!1" v-model="autoWakeUp" /><span v-if="!1"
+        >（是否进入页面就自动唤醒）</span
+      >
       <span class="l-hg-32"> 生成的链接 </span>&nbsp;&nbsp;&nbsp;&nbsp;
       <span ref="link">{{ link }}</span
       ><br /><br />
@@ -79,5 +81,9 @@ export default {
 .container {
   width: 100%;
   padding: 40px 20px;
+}
+span {
+  display: inline-block;
+  min-width: 80px;
 }
 </style>

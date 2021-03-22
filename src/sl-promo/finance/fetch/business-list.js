@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign, prefer-destructuring */
 import seeFetch from 'see-fetch';
+import { safeFloat } from '../../../../../pro-com/src/utils';
 
 const refactor = {
   data: [
@@ -17,6 +18,15 @@ const refactor = {
   ],
 };
 
+const post = res => {
+  if (res.data) {
+    res.data.forEach(item => {
+      item.totalAmount = safeFloat(item.totalAmount || 0) || 0;
+      item.totalIncome = safeFloat(item.totalIncome || 0) || 0;
+    });
+  }
+};
+
 seeFetch.config('sl-promo/finance/businessList', {
   method: ['post'],
   stringify: [!0],
@@ -26,4 +36,5 @@ seeFetch.config('sl-promo/finance/businessList', {
     '/sl-promo/finance/mock/businessList',
   ],
   refactor: [refactor, refactor],
+  post: [post, post],
 });

@@ -50,6 +50,14 @@
                 </el-tooltip>
               </template>
             </el-table-column>
+            <el-table-column label="退款代扣金额">
+              <template slot-scope="item">
+                <span class="red" v-if="item.row.refundMoney"
+                  >-{{ item.row.refundMoney }}</span
+                >
+                <span v-else>-</span>
+              </template>
+            </el-table-column>
           </el-table>
         </el-tab-pane>
         <el-tab-pane label="销售员" name="seller">

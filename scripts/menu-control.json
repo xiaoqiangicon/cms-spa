@@ -57,7 +57,7 @@
   },
   {
     "key": "promo-ci",
-    "title": "运营事件 >>> 慈光计划"
+    "title": "运营事件 >>> 项目进展"
   },
   {
     "key": "promo-topic",
@@ -152,6 +152,14 @@
     "title": "寺院管理 >>> 积分记录"
   },
   {
+    "key": "temple-integration",
+    "title": "寺院管理 >>> 寺院积分"
+  },
+  {
+    "key": "temple-board",
+    "title": "寺院管理 >>> 大看板"
+  },
+  {
     "key": "finance-pending",
     "title": "善款中心 >>> 待处理事项"
   },
@@ -198,6 +206,10 @@
   {
     "key": "finance-trade-stat",
     "title": "善款中心 >>> 交易统计"
+  },
+  {
+    "key": "finance-pickup",
+    "title": "善款中心 >>> 用户提现申请"
   },
   {
     "key": "cooperation-projectManage",
@@ -380,12 +392,20 @@
     "title": "佛事管理 >>> 佛事标签"
   },
   {
+    "key": "buddhist-promote",
+    "title": "佛事管理 >>> 佛事推广库"
+  },
+  {
     "key": "ad-buddhist",
     "title": "广告管理 >>> 佛事推荐"
   },
   {
     "key": "ad-system-popup",
     "title": "广告管理 >>> 系统广告"
+  },
+  {
+    "key": "creator-personnel",
+    "title": "创作者管理 >>> 人员管理"
   },
   {
     "key": "buddha-manage",
@@ -426,6 +446,10 @@
   {
     "key": "camera-manage",
     "title": "寺院硬件 >>> 摄像头管理"
+  },
+  {
+    "key": "hardware-manage",
+    "title": "寺院硬件 >>> 设备管理"
   },
   {
     "key": "buddhism-language",

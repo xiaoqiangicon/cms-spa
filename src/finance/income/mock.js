@@ -163,16 +163,36 @@ export const temples1 = {
   })),
 };
 
-export const addFoShi = { success: !0 };
-export const addFoShi1 = { errorCode: 0 };
-export const confirm = { success: !0 };
-export const confirm1 = { errorCode: 0 };
-export const updateShiJing = { success: !0 };
-export const updateShiJing1 = { errorCode: 0 };
-export const updateGongFeng = { success: !0 };
-export const updateGongFeng1 = { errorCode: 0 };
-export const updateFoShi = { success: !0 };
-export const updateFoShi1 = { errorCode: 0 };
+export const addFoShi = {
+  success: !0,
+};
+export const addFoShi1 = {
+  errorCode: 0,
+};
+export const confirm = {
+  success: !0,
+};
+export const confirm1 = {
+  errorCode: 0,
+};
+export const updateShiJing = {
+  success: !0,
+};
+export const updateShiJing1 = {
+  errorCode: 0,
+};
+export const updateGongFeng = {
+  success: !0,
+};
+export const updateGongFeng1 = {
+  errorCode: 0,
+};
+export const updateFoShi = {
+  success: !0,
+};
+export const updateFoShi1 = {
+  errorCode: 0,
+};
 
 export const listZiYing = {
   success: true,
@@ -228,12 +248,24 @@ export const ziYingFoShi1 = {
   })),
 };
 
-export const updateZiYing = { success: !0 };
-export const updateZiYing1 = { errorCode: 0 };
-export const addZiYingUse = { success: !0 };
-export const addZiYingUse1 = { errorCode: 0 };
-export const delZiYingUse = { success: !0 };
-export const delZiYingUse1 = { errorCode: 0 };
+export const updateZiYing = {
+  success: !0,
+};
+export const updateZiYing1 = {
+  errorCode: 0,
+};
+export const addZiYingUse = {
+  success: !0,
+};
+export const addZiYingUse1 = {
+  errorCode: 0,
+};
+export const delZiYingUse = {
+  success: !0,
+};
+export const delZiYingUse1 = {
+  errorCode: 0,
+};
 
 export const ziYingModifyRecords = {
   success: true,
@@ -279,4 +311,67 @@ export const ziYingUseRecords1 = {
     })),
     cnt: 55,
   },
+};
+
+export const getProjectList = {
+  msg: '',
+  errorCode: 0,
+  data: {
+    companyMoney: 0,
+    expenditure: 100,
+    id: 1,
+    money: 82279.42,
+    name: '日行一善',
+    proportion: 0,
+    id: 123,
+  },
+};
+
+export const addProjectExpenditure = {
+  msg: '',
+  errorCode: 0,
+  data: '',
+};
+export const delProjectExpenditure = {
+  msg: '',
+  errorCode: 0,
+  data: '',
+};
+export const addProjectProportion = {
+  msg: '',
+  errorCode: 0,
+  data: '',
+};
+export const getExpenditureList = {
+  msg: '',
+  errorCode: 0,
+  data: [
+    {
+      id: 2,
+      money: 100,
+      addTime: '11-02 17:56:13',
+      updateTime: '11-02 17:56:14',
+      status: 0,
+      statisticsId: 1,
+      managerName: 'xieshuwen',
+      managerId: 37,
+      content: '测试',
+    },
+  ],
+};
+export const getProportionList = {
+  msg: '',
+  errorCode: 0,
+  data: [
+    {
+      id: 2,
+      proportion: 0,
+      addTime: '11-02 17:49:35',
+      updateTime: '11-02 17:49:35',
+      status: 0,
+      statisticsId: 1,
+      managerName: 'xieshuwen',
+      managerId: 37,
+    },
+  ],
 };

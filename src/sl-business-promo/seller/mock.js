@@ -56,7 +56,7 @@ export const listS = {
         // 总销售额
         sales: 456,
         // 总收入
-        sellerEarning: 789,
+        earning: 789,
         addTime: '2020-01-01 01:01:01',
       })),
   },

@@ -10,7 +10,9 @@ export const list = {
         // 订单号码
         orderNum: '订单号码',
         // 名称
-        name: '名称',
+        contentName: '名称',
+        // 规格名字
+        contentDetail: '规格名字',
         // 状态（1未处理 2确认中 0已处理）
         status: i % 3,
         // 支付金额
@@ -39,7 +41,9 @@ export const listS = {
         // 订单号码
         orderNo: '订单号码',
         // 名称
-        name: '名称',
+        contentName: '名称',
+        // 规格名字
+        contentDetail: '规格名字',
         // 状态（1未处理 2确认中 0已处理）
         status: i % 3,
         // 支付金额
@@ -104,7 +108,7 @@ export const detailS = {
     // 总销售额
     sales: 456,
     // 总收入
-    sellerEarning: 789,
+    earning: 789,
     addTime: '2020-01-01 01:01:01',
     // 销售员所属的业务员id
     businessUserId: 22,

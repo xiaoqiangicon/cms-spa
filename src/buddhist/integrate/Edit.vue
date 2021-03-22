@@ -29,6 +29,24 @@
       </div>
     </div>
     <div class="input-block">
+      <div class="search-box">
+        <span>积分类型：</span>
+        <el-select
+          v-model.number="integrateType"
+          width="300"
+          placeholder="请选择积分类型"
+          filterable
+        >
+          <el-option
+            v-for="item in integrateList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
+      </div>
+    </div>
+    <div class="input-block">
       <span>积分：</span>
       <el-select
         v-model.number="status"
@@ -94,6 +112,17 @@ export default {
       status: 0,
       coin: 0,
       newItem: {},
+      integrateType: '',
+      integrateList: [
+        {
+          id: 0,
+          name: '积分任务',
+        },
+        {
+          id: 1,
+          name: '积分兑换',
+        },
+      ],
       operateList: [
         {
           name: '增加',
@@ -123,6 +152,7 @@ export default {
         }
         this.mission = this.newItem.mission;
         this.templeId = this.newItem.templeId;
+        this.integrateType = this.newItem.type;
       },
       deep: true,
     },
@@ -140,6 +170,13 @@ export default {
       this.$store.state.buddhistIntegrate.editVisible = !1;
     },
     save() {
+      if (this.integrateType !== 0 && this.integrateType !== 1) {
+        Notification({
+          title: `请选择积分类型`,
+          type: 'warning',
+        });
+        return;
+      }
       if (this.isNew) {
         if (!this.mission) {
           Notification({
@@ -164,6 +201,7 @@ export default {
         }
         seeFetch('buddhist/integrate/insertMission', {
           templeId: this.templeId,
+          type: this.integrateType,
           coin:
             this.status == 0
               ? parseInt(this.coin, 10)

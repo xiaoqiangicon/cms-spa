@@ -167,7 +167,7 @@
         "component": true,
         "name": "promo-ci",
         "meta": {
-          "title": "慈光计划",
+          "title": "项目进展",
           "noCache": true
         }
       },
@@ -389,6 +389,29 @@
         "meta": {
           "title": "积分记录",
           "noCache": true
+        }
+      },
+      {
+        "name": "temple-integration",
+        "path": "integration",
+        "component": true,
+        "meta": {
+          "title": "寺院积分",
+          "noCache": true
+        }
+      },
+      {
+        "path": "/finance/verifyIndex",
+        "name": "finance-verifyIndex",
+        "meta": {
+          "title": "善款资料审核"
+        }
+      },
+      {
+        "path": "/temple/board",
+        "name": "temple-board",
+        "meta": {
+          "title": "大看板"
         }
       }
     ]
@@ -1139,6 +1162,12 @@
         "meta": {
           "title": "摄像头管理"
         }
+      },
+      {
+        "name": "hardware-manage",
+        "path": "/hardware/manage",
+        "component": true,
+        "meta": { "title": "设备管理" }
       }
     ]
   },

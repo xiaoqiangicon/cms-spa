@@ -10,7 +10,9 @@ export const list = {
         // 订单号码
         orderNum: '订单号码',
         // 名称
-        name: '名称',
+        contentName: '名称',
+        // 规格名字
+        contentDetail: '规格名字',
         // 状态（1未处理 2确认中 0已处理）
         status: i % 3,
         // 支付金额
@@ -39,7 +41,9 @@ export const listS = {
         // 订单号码
         orderNo: '订单号码',
         // 名称
-        name: '名称',
+        contentName: '名称',
+        // 规格名字
+        contentDetail: '规格名字',
         // 状态（1未处理 2确认中 0已处理）
         status: i % 3,
         // 支付金额

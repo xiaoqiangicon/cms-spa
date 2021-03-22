@@ -63,7 +63,12 @@
       <el-table v-loading="loading" :data="list" class="wd-100-pc mg-t-20">
         <el-table-column prop="orderNum" label="订单号码" />
         <el-table-column prop="payTime" label="支付时间" />
-        <el-table-column prop="name" label="名称" />
+        <el-table-column label="名称">
+          <template slot-scope="item">
+            {{ item.row.contentName }}<br />
+            <span class="gray f-s-12">{{ item.row.contentDetail }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="payAmount" label="支付金额（元）" />
         <el-table-column prop="saleAmount" label="零售价（元）" />
         <el-table-column prop="businessIncome" label="业务员收入（元）" />
@@ -107,6 +112,15 @@
               round
               style="padding: 5px 10px;"
               >未处理</el-button
+            >
+            <el-button
+              v-if="item.row.status === -1"
+              type="error"
+              size="mini"
+              plain
+              round
+              style="padding: 5px 10px;"
+              >已退款</el-button
             >
           </template>
         </el-table-column>

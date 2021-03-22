@@ -43,6 +43,12 @@
               >
             </template>
           </el-table-column>
+          <el-table-column
+            min-width="100px"
+            prop="tobeExpire"
+            :align="'center'"
+            label="佛事有效性"
+          />
           <el-table-column prop="title" label="点击/关闭数">
             <template slot-scope="item">
               {{ item.row.clickCount }}/{{ item.row.closeCount }}

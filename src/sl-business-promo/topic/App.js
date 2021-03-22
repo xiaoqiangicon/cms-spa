@@ -210,7 +210,7 @@ export default {
       }
 
       const range = window.document.createRange();
-      range.selectNode(copyContainer.$el.querySelector('input'));
+      range.selectNode(copyContainer);
       selection.addRange(range);
 
       window.document.execCommand('copy');

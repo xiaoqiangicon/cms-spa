@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign, prefer-destructuring */
 import seeFetch from 'see-fetch';
+import { safeFloat } from '../../../../../pro-com/src/utils';
 
 const req = {
   keyword: 'content',
@@ -16,13 +17,22 @@ const refactor = {
         // 总销售额
         totalAmount: 'sales',
         // 总收入
-        totalIncome: 'sellerEarning',
+        totalIncome: 'earning',
         // 旗下销售员
         totalSellers: 'sellerNum',
         createTime: 'addTime',
       },
     ],
   },
+};
+
+const post = res => {
+  if (res.data && res.data.list) {
+    res.data.list.forEach(item => {
+      item.totalAmount = safeFloat(item.totalAmount || 0) || 0;
+      item.totalIncome = safeFloat(item.totalIncome || 0) || 0;
+    });
+  }
 };
 
 seeFetch.config('sl-promo/staff/businessList', {
@@ -35,4 +45,5 @@ seeFetch.config('sl-promo/staff/businessList', {
   ],
   req: [req, req],
   refactor: [refactor, refactor],
+  post: [post, post],
 });
