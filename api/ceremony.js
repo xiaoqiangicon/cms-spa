@@ -62,8 +62,7 @@ export const getScheduleList = {
         isShow: 1,
         addTime: '2021-03-16 16:07:52',
         status: 0,
-        video:
-          'https://pic.zizaihome.com/d26db34b-3739-4fbb-beb7-2c0b4bd0c9e0.mp4',
+        video: '',
         url: '',
         pushTime: '2021-03-16 16:07:52',
         addSource: 2,

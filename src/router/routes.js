@@ -221,7 +221,6 @@ export default [
         component: () => import('../promo/push_schedule/App'),
         name: 'promo-pushSchedule',
         meta: { title: '佛事进展', noCache: true },
-        hidden: !0,
       },
     ],
   },

@@ -311,6 +311,15 @@
           "noCache": true
         },
         "hidden": true
+      },
+      {
+        "path": "pushSchedule",
+        "component": true,
+        "name": "promo-pushSchedule",
+        "meta": {
+          "title": "佛事进展",
+          "noCache": true
+        }
       }
     ]
   },

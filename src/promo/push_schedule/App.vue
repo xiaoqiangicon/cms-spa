@@ -341,13 +341,15 @@ export default {
       this.isNeedPushDisabled = false;
       if (scheduleJSON == null) {
         this.scheduleData.commodityId = '请选择';
-        this.scheduleData.pushTime = Date.now();
+        this.scheduleData.pushTime = new Date();
         this.scheduleData.content = '';
         this.scheduleData.isNeedPush = 1;
         this.scheduleData.url = '';
         this.scheduleData.img = [];
         this.scheduleData.video = [];
         this.scheduleData.isShow = 0;
+        this.changeUrlRadio('0');
+        this.urlType = 0;
       } else {
         this.scheduleData.commodityId = scheduleJSON.commodityId;
         this.scheduleData.pushTime = scheduleJSON.pushTime;
@@ -359,9 +361,11 @@ export default {
         this.scheduleData.id = scheduleJSON.id;
         this.scheduleData.isShow = scheduleJSON.isShow;
         if (this.scheduleData.url == '') {
-          this.changeUrlRadio(0);
+          this.changeUrlRadio('0');
+          this.urlType = 0;
         } else {
-          this.changeUrlRadio(1);
+          this.changeUrlRadio('1');
+          this.urlType = 1;
         }
         if (scheduleJSON.isShow == 1) {
           this.pushTimeDisabled = true;
@@ -385,6 +389,7 @@ export default {
       var status = -1;
       seeFetch('addCommoditySchedule', { id, status }).then(res => {
         this.deleteDialogVisible = false;
+        this.refresh();
       });
     },
     //添加和更新数据
@@ -393,12 +398,15 @@ export default {
       var pushTime = this.scheduleData.pushTime;
       var isNeedPush = this.scheduleData.isNeedPush;
       var isShow = this.scheduleData.isShow;
+      var type = this.listType;
       // console.log(pushTime instanceof Date);
+      console.log(pushTime);
       if (pushTime instanceof Date) {
         if (
           pushTime.getHours() < new Date().getHours() &&
           isNeedPush == 1 &&
-          isShow == 0
+          isShow == 0 &&
+          type != 3
         ) {
           alert('推送时间不能小于当前时间');
           return;
@@ -408,7 +416,8 @@ export default {
         if (
           new Date(pushTime).getTime() < new Date().getTime() &&
           isNeedPush == 1 &&
-          isShow == 0
+          isShow == 0 &&
+          type != 3
         ) {
           alert('推送时间不能小于当前时间');
           return;
@@ -434,12 +443,30 @@ export default {
       }
       var id = this.scheduleData.id;
       console.log(pushTime);
-      if (pushTime.slice(pushTime.length - 5, pushTime.length) != '00:00') {
+      if (
+        pushTime.slice(pushTime.length - 5, pushTime.length) != '00:00' &&
+        isNeedPush == 1 &&
+        isShow == 0 &&
+        type != 3
+      ) {
         alert('推送时间必须为整点');
+        return;
       }
-      // seeFetch('addCommoditySchedule',{id,commodityId,pushTime,content,isNeedPush,url,img,video}).then(
-      // (res) => {this.dialogVisible = false;}
-      // )
+
+      seeFetch('addCommoditySchedule', {
+        id,
+        commodityId,
+        pushTime,
+        content,
+        isNeedPush,
+        url,
+        img,
+        video,
+        type,
+      }).then(res => {
+        this.dialogVisible = false;
+        this.refresh();
+      });
     },
     //获取佛事列表
     getScheduleCommodityList() {
@@ -471,8 +498,16 @@ export default {
         commodityId,
       }).then(res => {
         for (var i = 0; i < res.data.list.length; i++) {
-          res.data.list[i]['video'] = res.data.list[i]['video'].split(',');
-          res.data.list[i]['img'] = res.data.list[i]['img'].split(',');
+          if (res.data.list[i]['video'] != '') {
+            res.data.list[i]['video'] = res.data.list[i]['video'].split(',');
+          } else {
+            res.data.list[i]['video'] = [];
+          }
+          if (res.data.list[i]['img'] != '') {
+            res.data.list[i]['img'] = res.data.list[i]['img'].split(',');
+          } else {
+            res.data.list[i]['img'] = [];
+          }
         }
         this.tableData = res.data.list;
         this.pagination.total = res.data.total;
