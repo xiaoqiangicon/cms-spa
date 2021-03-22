@@ -11,6 +11,24 @@
     <el-card style="min-height:400px;">
       <el-table v-loading="tableLoading" :data="adminList" style="width: 100%">
         <el-table-column prop="account" label="登录账号" min-width="160" />
+        <el-table-column label="cms账户绑定" min-width="230">
+          <template slot-scope="scope">
+            <el-select
+              v-model="adminList[scope.$index].cmsAccount"
+              v-loading="!accountList.length"
+              filterable
+              placeholder="请选择或搜索cms账户"
+              @change="changeCms(scope.row)"
+            >
+              <el-option
+                v-for="item in accountList"
+                :key="item.account"
+                :label="item.name"
+                :value="item.account"
+              />
+            </el-select>
+          </template>
+        </el-table-column>
 
         <el-table-column label="访问寺院名称" min-width="230">
           <template slot-scope="scope">
@@ -19,9 +37,10 @@
               v-loading="!allTempleList.length"
               filterable
               placeholder="请选择或搜索寺院名称"
+              @change="bindTemple(scope.row)"
             >
               <el-option
-                v-for="item in getTempleInfo(scope.row.temples)"
+                v-for="item in getTempleInfo(scope.row.bindTempleIds)"
                 :key="item.id"
                 :label="item.name"
                 :value="item.id"
@@ -32,15 +51,12 @@
 
         <el-table-column fixed="right" label="操作" width="200">
           <template slot-scope="scope">
-            <el-button type="primary" @click="updateAdmin(scope.row)">
-              保存
-            </el-button>
             <el-button
               v-if="scope.row.temples.indexOf('-1') === -1"
               type="primary"
               @click="showAdminManage(scope.row, scope.$index)"
             >
-              管理
+              大区管理
             </el-button>
           </template>
         </el-table-column>
@@ -48,16 +64,34 @@
     </el-card>
 
     <el-dialog title="管理" :visible.sync="dialogManageVisible">
-      <el-form ref="form" label-width="80px">
-        <el-form-item label="登录账号">
+      <el-form ref="form" label-width="120px">
+        <el-form-item label="登录账号" :align="'left'">
           {{ dialogAdmin.account || '' }}
         </el-form-item>
-        <el-form-item label="允许访问">
+        <el-form-item label="可访问大区">
+          {{ dialogAreaList.length }}
+        </el-form-item>
+        <el-select
+          v-model="dialogAreaList"
+          v-loading="!areaList.length"
+          filterable
+          multiple
+          style="margin-left: 10px; width: 80%;cursor: pointer;margin-bottom: 20px;"
+          placeholder="请选择或搜索大区名称"
+        >
+          <el-option
+            v-for="item in areaList"
+            :key="item"
+            :label="item"
+            :value="item"
+          />
+        </el-select>
+
+        <el-form-item label="可访问ERP系统">
           {{ dialogAdminVModel.length }}
         </el-form-item>
         <el-select
           v-model="dialogAdminVModel"
-          v-loading="!allTempleList.length"
           filterable
           multiple
           collapse-tags
@@ -65,11 +99,11 @@
           placeholder="请选择或搜索寺院名称"
         >
           <el-option
-            v-for="item in allTempleList"
-            :key="item.id"
+            v-for="item in bindTempleList"
+            :key="item.templeId"
             :label="item.name"
-            :value="item.id"
-            :disabled="dialogAdmin.templeId == item.id ? true : false"
+            :value="item.templeId"
+            :disabled="dialogAdmin.templeId == item.templeId ? true : false"
           />
         </el-select>
       </el-form>
@@ -92,12 +126,25 @@ export default {
   data() {
     return {
       tableLoading: true,
-      dialogManageVisible: false,
-      adminList: [],
-      allTempleList: [],
-      dialogAdmin: {},
-      dialogAdminIndex: '',
-      dialogAdminVModel: [],
+      dialogManageVisible: false, // 是否展示管理弹框
+      adminList: [], // erp账号列表
+      allTempleList: [], // 所有寺院列表
+      dialogAdmin: {}, // 选中的erp账号信息
+      dialogAdminVModel: [], // 选中的erp账号绑定寺院列表
+      dialogAreaList: [], // 选中的erp账号绑定的大区列表
+      accountList: [], // 可绑定的cms账号列表
+      accountId: 0, // 绑定的cms账号id
+      areaList: [], // 地区列表
+      bindTempleList: [
+        { templeId: '13', name: '自在家测试帐号' },
+        { templeId: '5591', name: '自在家' },
+        { templeId: '5614', name: '禅在' },
+        { templeId: '5642', name: '寺院活动' },
+        { templeId: '5722', name: '自在好物' },
+        { templeId: '6372', name: '名山推荐' },
+        { templeId: '6482', name: '活动推荐' },
+        { templeId: '6483', name: '寺院推荐' },
+      ], // 固定的不属于大区的寺院
     };
   },
   created() {
@@ -149,8 +196,20 @@ export default {
           });
         }
       );
+      // 获取可绑定的cms账号
+      seeFetch('temple/super/getAccountList', {}).then(res => {
+        if (res.success) {
+          this.accountList = res.data;
+        }
+      });
+      // 获取大区列表
+      seeFetch('temple/super/getArea', { refresh: 1 }).then(res => {
+        if (res.success) {
+          this.areaList = res.areaList;
+        }
+      });
     },
-    // 根据id返回对应寺院信息
+    // 根据id返回对应绑定寺院信息
     getTempleInfo(ids) {
       if (ids && ids.length && this.allTempleList.length) {
         if (ids.indexOf('-1') !== -1) {
@@ -160,8 +219,28 @@ export default {
       }
       return [];
     },
+    // 绑定cms账号
+    changeCms(row) {
+      seeFetch('temple/super/updateCms', {
+        account: row.account,
+        cmsAccount: row.cmsAccount,
+      }).then(res => {
+        if (res.success) {
+          Notification({
+            title: '提示',
+            message: '绑定cms账号成功',
+          });
+        } else {
+          Notification({
+            title: '提示',
+            type: 'error',
+            message: res.msg,
+          });
+        }
+      });
+    },
     // 更新用户绑定的寺院ID
-    updateAdmin(adminItem) {
+    bindTemple(adminItem) {
       const { account, templeId } = adminItem;
       seeFetch('temple/super/updateAdmin', { account, templeId }).then(res => {
         if (!res.success) {
@@ -182,8 +261,8 @@ export default {
     // 显示管理对话框 设置当前用户数据
     showAdminManage(item, index) {
       this.dialogAdmin = item;
-      this.dialogAdminVModel = [...item.temples];
-      this.dialogAdminIndex = index;
+      this.dialogAdminVModel = item.otherTempleIds.split(',');
+      this.dialogAreaList = item.areas;
       this.dialogManageVisible = true;
     },
     // 更新绑定可选的寺院
@@ -192,6 +271,7 @@ export default {
       seeFetch('temple/super/updateAdminTempleBind', {
         account: that.dialogAdmin.account,
         bindTempleIds: that.dialogAdminVModel.join(','),
+        area: that.dialogAreaList.join(','),
       }).then(res => {
         if (!res.success) {
           Notification({
@@ -200,9 +280,6 @@ export default {
           });
           return;
         }
-        that.adminList[that.dialogAdminIndex].temples = [
-          ...that.dialogAdminVModel,
-        ];
         that.dialogManageVisible = false;
         Notification({
           type: 'success',
