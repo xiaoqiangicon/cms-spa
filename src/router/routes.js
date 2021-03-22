@@ -235,7 +235,7 @@ export default [
         path: 'super',
         component: () => import('../temple/super/App.vue'),
         name: 'temple-super',
-        meta: { title: '超级访问', noCache: true },
+        meta: { title: '大区权限管理', noCache: true },
       },
       {
         path: 'notice',

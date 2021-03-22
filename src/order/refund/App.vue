@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <el-tabs v-model="activeName" type="border-card">
-      <el-tab-pane label="用户退款审核" name="verify">
+      <el-tab-pane label="申请退款列表" name="verify">
         <Verify />
       </el-tab-pane>
-      <el-tab-pane label="已审核" name="verifyed">
+      <el-tab-pane label="申请状态：财务审核中" name="verifyed">
         <Verifyed />
       </el-tab-pane>
-      <el-tab-pane label="已退款" name="refund">
+      <el-tab-pane label="申请状态：已退款" name="refund">
         <Refund />
       </el-tab-pane>
     </el-tabs>
