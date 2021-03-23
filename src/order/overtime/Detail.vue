@@ -24,15 +24,6 @@
       <div class="row-left">支付流水号</div>
       <div class="row-right">{{ detail.order_id }}</div>
     </div>
-    <hr />
-    <div class="row">
-      <div class="row-left">联系人：</div>
-      <div class="row-right"></div>
-    </div>
-    <div class="row">
-      <div class="row-left">联系电话：</div>
-      <div class="row-right"></div>
-    </div>
     <div class="row">
       <div class="row-left">备注：</div>
       <div class="row-right">{{ detail.userComment }}</div>
@@ -54,6 +45,15 @@
     <div class="row" v-if="type === 0">
       <div class="row-left">上传反馈视频</div>
       <div class="row-right">
+        <div
+          v-for="item in uploadVideos"
+          :key="item"
+          class="fb-cell video-cell"
+        >
+          <video :src="item"></video>
+          <div class="video-play" @click="onClickPlayVideo(item)"></div>
+          <div @click="onClickVideoDelete(item)" class="video-delete"></div>
+        </div>
         <el-upload
           ref="uploadVideo"
           :show-file-list="false"
@@ -113,7 +113,7 @@ export default {
     uploadUrl() {
       return window.location.hostname.indexOf('localhost') === -1
         ? '/upload'
-        : '/mock/upload.json';
+        : '/order/overtime/mock/upload';
     },
   },
   components: {
@@ -192,11 +192,14 @@ export default {
         progress: 0,
       };
     },
+    onClickPlayVideo(video) {
+      this.$emit('editPlayVideo', { src: video, playerVisible: !0 });
+    },
     save() {
       let picUrl = this.uploadImg.join(',');
       let videoUrl = this.uploadVideos.join(',');
       seeFetch('order/overtime/finish', {
-        orderId: this.detail.orderId,
+        orderId: this.detail.order_id,
         picUrl,
         videoUrl,
       }).then(res => {
@@ -230,6 +233,57 @@ export default {
 .row-left {
   width: 160px;
   flex-shrink: 0;
+}
+.video-cell {
+  video {
+    width: 100%;
+    height: 100%;
+    background-color: #edeef5;
+  }
+}
+.video-delete,
+.video-uploading-delete {
+  background: url('https://pic.zizaihome.com/4c8b28d8-455b-11e9-9667-00163e0c001e.png')
+    no-repeat;
+  background-size: 24px 24px;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: -10px;
+  right: -10px;
+  cursor: pointer;
+  z-index: 99999;
+}
+.upload-video-container {
+  display: inline-block;
+  vertical-align: top;
+}
+.fb-cell {
+  font-size: 0;
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  position: relative;
+  vertical-align: middle;
+}
+.upload-icon {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+}
+.video-play {
+  background: url('https://pic.zizaihome.com/7788d7f2-8007-11e8-b517-00163e0c001e.png')
+    no-repeat;
+  background-size: 30px 30px;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
 }
 hr {
   height: 1px;
