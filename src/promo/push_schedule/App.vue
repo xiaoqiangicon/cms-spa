@@ -350,6 +350,7 @@ export default {
         this.scheduleData.isShow = 0;
         this.changeUrlRadio('0');
         this.urlType = 0;
+        this.scheduleData.id = 0;
       } else {
         this.scheduleData.commodityId = scheduleJSON.commodityId;
         this.scheduleData.pushTime = scheduleJSON.pushTime;
