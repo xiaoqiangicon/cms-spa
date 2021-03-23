@@ -564,6 +564,15 @@ export default [
         meta: { title: '订单查询' },
       },
       {
+        path: 'overtime',
+        component: () => import('../order/overtime/App.vue'),
+        name: 'order-overtime',
+        meta: {
+          title: '超时订单',
+          noCache: true,
+        },
+      },
+      {
         path: 'refund',
         component: () => import('../order/refund/App.vue'),
         name: 'order-refund',

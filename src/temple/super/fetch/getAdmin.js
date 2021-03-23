@@ -2,7 +2,7 @@ import seeFetch from 'see-fetch';
 
 const post = res => {
   res.data.adminList.forEach(item => {
-    item.areas = item.area.split(',');
+    item.areas = item.area ? item.area.split(',') : [];
   });
 };
 

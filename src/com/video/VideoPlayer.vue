@@ -1,0 +1,95 @@
+<template>
+  <div class="video-player-mask" v-show="visible" @click.self="onClickMask">
+    <div class="video-player-container">
+      <video id="video-player" class="video-js" controls preload="auto">
+        <source id="video-source" :src="src" type="video/mp4" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to
+          a web browser that
+          <a href="http://videojs.com/html5-video-support/" target="_blank">
+            supports HTML5 video
+          </a>
+        </p>
+      </video>
+    </div>
+  </div>
+</template>
+
+<script>
+import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
+let videoPlayer;
+
+export default {
+  name: 'VideoPlayer',
+  props: {
+    src: {
+      type: String,
+      default:
+        'https://pic.zizaihome.com/6e33a93e-8457-4e9c-8dd1-62e993c7ca83.mp4',
+    },
+    visible: {
+      type: Boolean,
+      default: !1,
+    },
+  },
+  data: () => {
+    return {
+      mounted: false,
+    };
+  },
+  watch: {
+    visible(newValue, oldValue) {
+      console.log(newValue);
+      if (newValue) {
+        // 每次显示时 要 重置数据
+        if (this.mounted) {
+          this.init();
+        }
+      }
+    },
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      // 初始化video.js
+      videoPlayer = videojs('video-player');
+      videoPlayer.ready(() => {
+        this.mounted = true;
+        console.log('初始化videojs成功');
+      });
+    });
+  },
+
+  methods: {
+    init() {
+      videoPlayer.src(this.src);
+      videoPlayer.load();
+    },
+    onClickMask() {
+      this.$emit('hidePlayer', !1);
+      // this.$store.commit({ type: 'updateVideoPlayerVisible', state: false });
+    },
+  },
+};
+</script>
+
+<style>
+.video-player-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 3999;
+}
+.video-player-container {
+  width: 600px;
+  height: 400px;
+  margin: 100px auto;
+}
+.video-js {
+  width: 100%;
+}
+</style>

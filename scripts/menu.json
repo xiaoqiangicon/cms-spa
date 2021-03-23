@@ -822,6 +822,15 @@
         }
       },
       {
+        "path": "overtime",
+        "component": true,
+        "name": "order-overtime",
+        "meta": {
+          "title": "超时订单",
+          "noCache": true
+        }
+      },
+      {
         "path": "refund",
         "component": true,
         "name": "order-refund",
