@@ -12,7 +12,6 @@ export const list = {
         buy_num: 1,
         order_id: 1749364,
         pay_type: 1,
-        isChanzai: 1,
         posiscript: [
           {
             id: 512111,
@@ -45,7 +44,7 @@ export const list = {
         buyer_info_id: 1476378,
         temple_id: 4,
         abbot_id: 0,
-        dispose_pic_url: '/sample/image1.jpg,/sample/image2.jpg',
+        dispose_pic_url: 'test.jpg',
         is_print: 0,
         name: '有视频，存为草稿',
         subdivideName: '佛前供斋',
@@ -59,8 +58,7 @@ export const list = {
         shareBlessCoin: 0,
         payBlessCoin: 0,
         getCoinUserId: 0,
-        dispose_video_url:
-          'https://pic.zizaihome.com/6e33a93e-8457-4e9c-8dd1-62e993c7ca83.mp4',
+        dispose_video_url: 'test.mp4',
         isConversion: 0,
         conversion_father_order_id: 0,
         is_cryptonym_wish: 0,
@@ -82,4 +80,12 @@ export const finish = {
   msg: '',
   errorCode: 0,
   data: '',
+};
+
+export const upload = {
+  msg: '',
+  errorCode: 0,
+  data: {
+    pic: 'https://pic.zizaihome.com/c4c80eb6-aaa0-4c81-bafc-80d636454f57.mp4',
+  },
 };

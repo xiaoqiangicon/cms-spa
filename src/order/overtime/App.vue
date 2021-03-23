@@ -1,6 +1,15 @@
 <template>
   <div class="container">
-    <div class="search"></div>
+    <div class="search">
+      <span>佛事搜索</span>
+      <el-input v-model="searchCommodityName">
+        <el-button
+          slot="append"
+          icon="el-icon-search"
+          @click="search"
+        ></el-button>
+      </el-input>
+    </div>
     <el-tabs v-model="activeName" type="border-card">
       <el-tab-pane label="未处理" name="notDispose">
         <List :type="type" :list="list" />
@@ -27,6 +36,8 @@ export default {
       type: 0,
       searchCommodityName: '',
       activeName: 'notDispose',
+      pageNum: 0,
+      pageSize: 100,
     };
   },
   created() {
@@ -50,6 +61,8 @@ export default {
   methods: {
     fetchList() {
       seeFetch('order/overtime/list', {
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
         type: this.type,
         commodityName: this.searchCommodityName,
       }).then(res => {
@@ -63,13 +76,31 @@ export default {
         }
       });
     },
+    search() {
+      this.fetchList();
+    },
   },
 };
 </script>
+
+<style>
+.el-input-group {
+  width: 360px;
+}
+</style>
 
 <style lang="less" scoped>
 .container {
   width: 100%;
   padding: 40px 20px;
+}
+.search {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  span {
+    flex-shrink: 0;
+    margin-right: 20px;
+  }
 }
 </style>

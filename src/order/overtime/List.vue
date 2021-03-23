@@ -1,14 +1,13 @@
 <template>
   <div class="contain">
     <el-table :data="list" style="width: 100%">
-      <el-table-column prop="fromTypeText" label="来源" :align="'center'" />
       <el-table-column prop="name" label="佛事名称" :align="'center'" />
       <el-table-column prop="templeName" label="订单寺院" :align="'center'" />
       <el-table-column prop="price" label="金额" :align="'center'" />
       <el-table-column prop="userComment" label="备注" :align="'center'" />
       <el-table-column
         label="反馈内容"
-        width="300px"
+        width="240px"
         v-if="type === 1"
         :align="'center'"
       >
@@ -46,7 +45,7 @@
       </el-table-column>
     </el-table>
     <el-dialog :visible.sync="dialogVisible" :title="'详情'">
-      <Detail :detail="detail" :type="type" />
+      <Detail @editPlayVideo="editPlayVideo" :detail="detail" :type="type" />
     </el-dialog>
     <VideoPlayer
       @hidePlayer="hidePlayer"
@@ -92,6 +91,10 @@ export default {
     onClickPlayVideo(video) {
       this.videoPlayerSrc = video;
       console.log('video', this.videoPlayerSrc);
+      this.playerVisible = !0;
+    },
+    editPlayVideo(data) {
+      this.videoPlayerSrc = data.src;
       this.playerVisible = !0;
     },
     hidePlayer() {
