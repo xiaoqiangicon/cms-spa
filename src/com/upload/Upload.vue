@@ -12,12 +12,12 @@
           X
         </button>
       </div>
-    </div>
-    <div v-show="!hideUpload" ref="upload" class="image cs-pointer">
-      <img
-        class="image-img"
-        src="https://pic.zizaihome.com/0f919be8-308e-11e8-b78b-00163e0c001e.png"
-      />
+      <div v-show="!hideUpload" ref="upload" class="image cs-pointer">
+        <img
+          class="image-img"
+          src="https://pic.zizaihome.com/0f919be8-308e-11e8-b78b-00163e0c001e.png"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -76,6 +76,7 @@ export default {
   display: inline-block;
   height: 100px;
   margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .image-img {
