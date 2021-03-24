@@ -156,6 +156,7 @@ export default {
       });
     },
     search() {
+      this.page = 0;
       this.fetchList();
     },
     changePage(data) {
