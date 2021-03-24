@@ -71,7 +71,7 @@ export default {
       type: 0,
       searchCommodityName: '',
       activeName: 'notDispose',
-      page: 0,
+      page: 1,
       total: 0,
       pageSize: 25,
       loading: !0,
@@ -159,7 +159,7 @@ export default {
       this.fetchList();
     },
     changePage(data) {
-      this.page = data - 1;
+      this.page = data;
       this.fetchList();
     },
   },
