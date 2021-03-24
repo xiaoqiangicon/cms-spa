@@ -216,6 +216,12 @@ export default [
         meta: { title: '绑定佛事列表 / 详情', noCache: true },
         hidden: !0,
       },
+      {
+        path: 'pushSchedule',
+        component: () => import('../promo/push_schedule/App'),
+        name: 'promo-pushSchedule',
+        meta: { title: '佛事进展', noCache: true },
+      },
     ],
   },
   {
@@ -398,7 +404,7 @@ export default [
     children: [
       {
         path: 'article',
-        component: () => import('../qu/article/App.vue'),
+        component: () => import('../qu/article-new/App.vue'),
         name: 'qu-article',
         meta: { title: '订阅文章列表', noCache: true },
       },
