@@ -44,6 +44,15 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      :total="total"
+      :current-page="page"
+      :page-size="pageSize"
+      background
+      layout="prev, pager, next"
+      style="margin-top: 40px"
+      @current-change="pageChange"
+    />
     <el-dialog :visible.sync="dialogVisible" :title="'详情'">
       <Detail @editPlayVideo="editPlayVideo" :detail="detail" :type="type" />
     </el-dialog>
@@ -81,6 +90,18 @@ export default {
       type: Array,
       default: [],
     },
+    total: {
+      required: !0,
+      type: Number,
+    },
+    page: {
+      required: !0,
+      type: Number,
+    },
+    pageSize: {
+      required: !0,
+      type: Number,
+    },
   },
   components: {
     Detail,
@@ -103,6 +124,9 @@ export default {
     toDetail(row) {
       this.detail = row;
       this.dialogVisible = !0;
+    },
+    pageChange(page) {
+      this.$emit('changePage', page);
     },
   },
 };

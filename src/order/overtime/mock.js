@@ -72,7 +72,7 @@ export const list = {
         templeName: '寺院管理后台',
       },
     ],
-    total: 1,
+    total: 100,
   },
 };
 
@@ -88,4 +88,25 @@ export const upload = {
   data: {
     pic: 'https://pic.zizaihome.com/c4c80eb6-aaa0-4c81-bafc-80d636454f57.mp4',
   },
+};
+
+export const templeList = {
+  msg: '',
+  errorCode: 0,
+  data: [
+    {
+      id: 1,
+      name: 'yi',
+    },
+    {
+      id: 2,
+      name: 'er',
+    },
+  ],
+};
+
+export const getMoreList = {
+  msg: '',
+  errorCode: 0,
+  data: '',
 };
