@@ -18,7 +18,7 @@
     </div>
     <div class="row">
       <div class="row-left">下单时间</div>
-      <div class="row-right">{{ detail.add_time }}</div>
+      <div class="row-right">{{ detail.pay_time }}</div>
     </div>
     <div class="row">
       <div class="row-left">支付流水号</div>

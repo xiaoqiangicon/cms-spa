@@ -44,7 +44,7 @@ export const list = {
         buyer_info_id: 1476378,
         temple_id: 4,
         abbot_id: 0,
-        dispose_pic_url: 'test.jpg',
+        dispose_pic_url: '/sample/image1.jpg',
         is_print: 0,
         name: '有视频，存为草稿',
         subdivideName: '佛前供斋',
