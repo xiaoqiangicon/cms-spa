@@ -14,7 +14,11 @@
         <template slot-scope="scope">
           <div class="detail">
             <div class="" v-for="item in scope.row.pics" :key="item">
-              <img class="dispose-img" :src="item" alt="" />
+              <el-image
+                style="width: 100px; height: 100px;margin-right: 10px;margin-bottom: 10px;border-radius: 4px;"
+                :src="item"
+                :preview-src-list="[item]"
+              />
             </div>
             <div
               class="video-container"
