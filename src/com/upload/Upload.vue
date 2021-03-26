@@ -7,7 +7,7 @@
         class="image"
         @click="delImage(index)"
       >
-        <img :src="image" class="image-img" />
+        <img :src="image + '?imageMogr2/strip'" class="image-img" />
         <button class="clean image-close">
           X
         </button>

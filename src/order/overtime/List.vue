@@ -16,8 +16,8 @@
             <div class="" v-for="item in scope.row.pics" :key="item">
               <el-image
                 style="width: 100px; height: 100px;margin-right: 10px;margin-bottom: 10px;border-radius: 4px;"
-                :src="item"
-                :preview-src-list="[item]"
+                :src="item + '?imageMogr2/strip'"
+                :preview-src-list="[item + '?imageMogr2/strip']"
               />
             </div>
             <div
