@@ -69,7 +69,11 @@
                 :file-list="fileList"
                 :on-success="uploadSuccess"
               >
-                <el-button v-if="type === 1" type="primary">
+                <el-button
+                  v-if="type === 1"
+                  type="primary"
+                  @click="upload(item)"
+                >
                   上传Pdf
                 </el-button>
               </el-upload>
@@ -89,12 +93,15 @@
                 查看上传发票PDF
               </el-button>
               <el-upload
-                :before-upload="upload(item)"
                 :action="uploadImgApi"
                 :file-list="fileList"
                 :on-success="uploadSuccess"
               >
-                <el-button v-if="type === 2" type="primary">
+                <el-button
+                  v-if="type === 2"
+                  type="primary"
+                  @click="upload(item)"
+                >
                   修改上传文件
                 </el-button>
               </el-upload>
@@ -187,6 +194,7 @@ export default {
     },
     uploadSuccess(res) {
       console.log('success', res.data.pic);
+      console.log(this.invoiceId);
       seeFetch('finance/receipt/upload', {
         invoiceId: this.invoiceId,
         pdfUrl: res.data.pic,
