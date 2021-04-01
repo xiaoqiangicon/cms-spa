@@ -123,6 +123,7 @@ export default {
         { id: 29, name: '自在说瀑布流广告-回答之间' },
         { id: 30, name: 'SaaS广告位-支付完成页面' },
         { id: 31, name: 'SaaS广告位-我的订单详情' },
+        { id: 32, name: '微信消息推送' },
         { id: 0, name: '其他运营位' },
       ],
       type: '',
