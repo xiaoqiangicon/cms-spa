@@ -36,6 +36,12 @@
           </div>
         </template>
       </el-table-column>
+      <el-table-column
+        prop="remark"
+        label="处理备注"
+        v-if="type === 1"
+        :align="'center'"
+      />
       <el-table-column prop="add_time" label="下单时间" :align="'center'" />
       <el-table-column prop="order_id" label="订单ID" :align="'center'" />
       <el-table-column label="操作" :align="'center'">
