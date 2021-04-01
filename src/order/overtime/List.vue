@@ -36,6 +36,12 @@
           </div>
         </template>
       </el-table-column>
+      <el-table-column
+        prop="remark"
+        label="处理备注"
+        v-if="type === 1"
+        :align="'center'"
+      />
       <el-table-column prop="add_time" label="下单时间" :align="'center'" />
       <el-table-column prop="order_id" label="订单ID" :align="'center'" />
       <el-table-column label="操作" :align="'center'">
@@ -43,6 +49,9 @@
           <div class="detail">
             <el-button size="small" @click="toDetail(scope.row)">
               订单详情
+            </el-button>
+            <el-button size="small" @click="revoke(scope.row)">
+              撤回
             </el-button>
           </div>
         </template>
@@ -71,7 +80,9 @@
 <script>
 import Detail from './Detail';
 import VideoPlayer from 'com/video/VideoPlayer.vue';
+import seeFetch from 'see-fetch';
 
+let isRevoking = !1;
 export default {
   name: 'List',
   data() {
@@ -128,6 +139,26 @@ export default {
     toDetail(row) {
       this.detail = row;
       this.dialogVisible = !0;
+    },
+    revoke(row) {
+      this.$confirm('确定要撤回吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          if (isRevoking) return;
+          isRevoking = !0;
+          seeFetch('order/overtime/revoke', {
+            orderId: row.order_id,
+          }).then(res => {
+            isRevoking = !1;
+            if (!res.success) return;
+
+            window.location.reload();
+          });
+        })
+        .catch(() => {});
     },
     pageChange(page) {
       this.$emit('changePage', page);
