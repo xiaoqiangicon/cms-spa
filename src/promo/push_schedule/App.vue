@@ -73,8 +73,8 @@
         </el-table-column>
         <el-table-column min-width="60px" label="状态">
           <template slot-scope="scope">
-            <span v-if="scope.row.isShow === 1">已发布</span>
-            <span v-else>待发布</span>
+            <span v-if="scope.row.isShow === 1">已推送</span>
+            <span v-else>待推送</span>
           </template>
         </el-table-column>
         <el-table-column min-width="70px" label="操作">
@@ -136,7 +136,10 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="推送时间：" :label-width="labelWidthSize">
+          <el-form-item
+            label="定时发布/推送时间："
+            :label-width="labelWidthSize"
+          >
             <el-date-picker
               v-model="scheduleData.pushTime"
               type="datetime"
@@ -298,6 +301,10 @@ export default {
         '定时发布进展动态仅支持：佛事项目。\n请自行确定推送和发布时间流程，若设置推送请注意项目与项目之间保持推送时间的间隔，避免过度打扰到用户。\n注意：1.“未到发布时间”前提交的内容都可修改编辑，包括但不限于推送的控制、文案修改和图片替换等。\n2.过了“设定发布时间”则只能修改文案、图片或直接删除。',
       searchScheduleCommodityList: [],
       searchScheduleCommodityId: 0,
+      curUploadVideo: {
+        uploading: !1,
+        progress: 0,
+      },
     };
   },
   components: {
@@ -335,7 +342,11 @@ export default {
     //展示编辑、新增弹窗
     showDiaLog(scheduleJSON, type) {
       var data = JSON.stringify(scheduleJSON);
-      this.pushTimeDisabled = false;
+      if (this.listType == 3) {
+        this.pushTimeDisabled = true;
+      } else {
+        this.pushTimeDisabled = false;
+      }
       this.commodityIdDisabled = false;
       this.urlTypeDisabled = false;
       this.isNeedPushDisabled = false;
@@ -565,7 +576,7 @@ export default {
     },
     handleUploadVideoSuccess(res) {
       console.log('handleUploadVideoSuccess');
-      this.detail.videos.push(res.data.pic);
+      this.scheduleData.video.push(res.data.pic);
       this.curUploadVideo = {
         uploading: !1,
         progress: 0,
