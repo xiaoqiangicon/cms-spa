@@ -71,6 +71,15 @@
         </el-upload>
       </div>
     </div>
+    <div class="row" v-if="type === 0">
+      <div class="row-left">处理备注</div>
+      <el-input
+        type="textarea"
+        :rows="3"
+        :resize="'none'"
+        v-model="remark"
+      ></el-input>
+    </div>
     <div class="save" v-if="type === 0">
       <el-button @click="save" type="primary">设为已处理</el-button>
     </div>
@@ -106,6 +115,7 @@ export default {
       },
       videoPlayerSrc: '',
       playerVisible: !1,
+      remark: '',
     };
   },
   computed: {
@@ -202,6 +212,7 @@ export default {
         orderId: this.detail.order_id,
         picUrl,
         videoUrl,
+        remark: this.remark,
       }).then(res => {
         Notification({
           type: 'success',
