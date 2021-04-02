@@ -412,6 +412,10 @@ export default {
       var isShow = this.scheduleData.isShow;
       var type = this.listType;
       // console.log(pushTime instanceof Date);
+      if (commodityId == 0) {
+        alert('请选择佛事之后再保存内容');
+        return;
+      }
       console.log(pushTime);
       if (pushTime instanceof Date) {
         if (
