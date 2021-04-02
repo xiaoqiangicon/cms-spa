@@ -1,6 +1,6 @@
 <template>
   <div class="contain">
-    <el-table :data="list" style="width: 100%">
+    <el-table :data="list" style="width: 100%" v-loading="isRevoking">
       <el-table-column prop="name" label="佛事名称" :align="'center'" />
       <el-table-column prop="templeName" label="订单寺院" :align="'center'" />
       <el-table-column prop="price" label="金额" :align="'center'" />
@@ -50,7 +50,11 @@
             <el-button size="small" @click="toDetail(scope.row)">
               订单详情
             </el-button>
-            <el-button size="small" @click="revoke(scope.row)">
+            <el-button
+              size="small"
+              @click="revoke(scope.row)"
+              v-if="type === 0"
+            >
               撤回
             </el-button>
           </div>
@@ -82,7 +86,6 @@ import Detail from './Detail';
 import VideoPlayer from 'com/video/VideoPlayer.vue';
 import seeFetch from 'see-fetch';
 
-let isRevoking = !1;
 export default {
   name: 'List',
   data() {
@@ -92,6 +95,7 @@ export default {
       videoPlayerSrc:
         'https://pic.zizaihome.com/6e33a93e-8457-4e9c-8dd1-62e993c7ca83.mp4',
       playerVisible: !1,
+      isRevoking: !1,
     };
   },
   props: {
@@ -141,18 +145,19 @@ export default {
       this.dialogVisible = !0;
     },
     revoke(row) {
+      if (this.isRevoking) return;
       this.$confirm('确定要撤回吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
       })
         .then(() => {
-          if (isRevoking) return;
-          isRevoking = !0;
+          if (this.isRevoking) return;
+          this.isRevoking = !0;
           seeFetch('order/overtime/revoke', {
             orderId: row.order_id,
           }).then(res => {
-            isRevoking = !1;
+            this.isRevoking = !1;
             if (!res.success) return;
 
             window.location.reload();
