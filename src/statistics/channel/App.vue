@@ -167,6 +167,8 @@ export default {
         { id: 33, name: '硬件' },
         { id: 34, name: 'APP-PUSH' },
         { id: 35, name: '企业微信' },
+        { id: 36, name: '广告-小喇叭跑马灯' },
+        { id: 37, name: '广告-版本广告' },
         { id: 0, name: '其他运营位' },
       ],
       isNew: false, //  是否是创建新的渠道
