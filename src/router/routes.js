@@ -216,6 +216,12 @@ export default [
         meta: { title: '绑定佛事列表 / 详情', noCache: true },
         hidden: !0,
       },
+      {
+        path: 'pushSchedule',
+        component: () => import('../promo/push_schedule/App'),
+        name: 'promo-pushSchedule',
+        meta: { title: '佛事进展', noCache: true },
+      },
     ],
   },
   {
