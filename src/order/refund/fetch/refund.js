@@ -10,3 +10,9 @@ seeFetch.config('order/refund/refund', {
     '/order/refund/mock/refund',
   ],
 });
+
+seeFetch.config('order/quashRefundOrder', {
+  method: ['post'],
+  stringify: [!0],
+  url: ['/order/quashRefundOrder'],
+});
