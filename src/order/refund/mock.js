@@ -53,7 +53,7 @@ export const refundOrderList = {
         : '',
     isFinish: 0,
     isChanzai: 0,
-    orderNo: 12341234123,
+    orderNo: '12341234123',
     type: 2,
     posiscript: [],
     refundMessage: [

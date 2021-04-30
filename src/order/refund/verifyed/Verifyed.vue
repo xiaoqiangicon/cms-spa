@@ -66,6 +66,13 @@
                 <el-button size="small" @click="toDetail(item)">
                   订单详情
                 </el-button>
+                <el-button
+                  size="small"
+                  @click="showquashRefundOrderNDialog(item.row.orderNo)"
+                  style="margin-left:0px"
+                >
+                  撤销退款
+                </el-button>
               </div>
             </template>
           </el-table-column>
@@ -119,6 +126,27 @@
         />
       </div>
     </el-dialog>
+    <el-dialog
+      title="撤销订单"
+      :visible.sync="quashRefundOrderNDialogTableVisible"
+    >
+      <el-input
+        type="textarea"
+        placeholder="取消退款说明"
+        v-model="quashRefundContent"
+        maxlength="300"
+        show-word-limit
+      >
+      </el-input>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="quashRefundOrderNDialogTableVisible = false"
+          >取 消</el-button
+        >
+        <el-button type="primary" @click="quashRefundOrder()"
+          >确认撤销</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -139,6 +167,9 @@ export default {
       dialogVisible: !1,
       rowData: {},
       detailDialog: !1,
+      quashRefundContent: '',
+      quashRefundOrderNo: '',
+      quashRefundOrderNDialogTableVisible: false,
     };
   },
   created() {
@@ -168,6 +199,15 @@ export default {
         this.list = res.data;
 
         window.scrollTo(0, 0);
+      });
+    },
+    quashRefundOrder() {
+      seeFetch('order/quashRefundOrder', {
+        message: this.quashRefundContent,
+        orderNo: this.quashRefundOrderNo,
+      }).then(res => {
+        this.quashRefundOrderNDialogTableVisible = false;
+        this.fetchList();
       });
     },
     pageChange(page) {
@@ -207,6 +247,11 @@ export default {
         this.dialogVisible = !1;
         this.detailDialog = !1;
       }
+    },
+    showquashRefundOrderNDialog(orderNo) {
+      this.quashRefundOrderNDialogTableVisible = true;
+      this.quashRefundOrderNo = orderNo;
+      this.quashRefundContent = '';
     },
   },
 };
