@@ -169,6 +169,7 @@ export default {
         { id: 35, name: '企业微信' },
         { id: 36, name: '广告-小喇叭跑马灯' },
         { id: 37, name: '广告-版本广告' },
+        { id: 38, name: '法会推荐' },
         { id: 0, name: '其他运营位' },
       ],
       isNew: false, //  是否是创建新的渠道
