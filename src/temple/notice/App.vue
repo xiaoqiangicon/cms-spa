@@ -49,6 +49,14 @@
 
     <el-card style="margin-top: 20px;">
       <h2>通知历史</h2>
+      <el-input
+        v-model="listParams.content"
+        placeholder="关键词内容搜索"
+        size="small"
+        style="width: 320px;margin-bottom: 20px;"
+      >
+        <el-button slot="append" icon="el-icon-search" @click="doSearch" />
+      </el-input>
       <el-table
         v-loading="historyLoading"
         :data="historyList"
@@ -93,6 +101,7 @@ export default {
       listParams: {
         pageNumber: 1,
         pageSize: 20,
+        content: '',
       },
       allTempleLoading: true,
       allTempleList: [],
@@ -206,6 +215,10 @@ export default {
           });
         }
       });
+    },
+    doSearch() {
+      this.listParams.pageNumber = 1;
+      this.getHistoryList();
     },
   },
 };
