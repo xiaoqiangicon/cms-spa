@@ -363,6 +363,14 @@
           <el-table-column prop="profit" label="营收金额（元）" />
         </el-table>
       </div>
+      <!-- 超时订单 -->
+      <div v-else-if="filterType === 14" class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="commodityName" label="佛事名称" />
+          <el-table-column prop="amount" label="佛事金额（元）" />
+          <el-table-column prop="profit" label="营收金额（元）" />
+        </el-table>
+      </div>
       <!-- 执行款（非营收） -->
       <div v-else-if="filterType === -1" class="body">
         <el-table v-loading="loading" :data="list" style="width: 100%">
