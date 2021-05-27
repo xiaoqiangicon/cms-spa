@@ -351,8 +351,14 @@ export default {
       this.urlTypeDisabled = false;
       this.isNeedPushDisabled = false;
       if (scheduleJSON == null) {
+        let oDate = new Date();
+        let fullYeal = oDate.getFullYear(),
+          month = oDate.getMonth() + 1,
+          day = oDate.getDate();
         this.scheduleData.commodityId = '请选择';
-        this.scheduleData.pushTime = new Date();
+        this.scheduleData.pushTime = new Date(
+          `${fullYeal}-${month}-${day} 9:00:00`
+        );
         this.scheduleData.content = '';
         this.scheduleData.isNeedPush = 1;
         this.scheduleData.url = '';
@@ -419,7 +425,7 @@ export default {
       console.log(pushTime);
       if (pushTime instanceof Date) {
         if (
-          pushTime.getHours() < new Date().getHours() &&
+          new Date(pushTime).getTime() < new Date().getTime() &&
           isNeedPush == 1 &&
           isShow == 0 &&
           type != 3
