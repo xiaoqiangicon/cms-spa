@@ -149,9 +149,199 @@
               <el-input v-model="scope.row.price" placeholder="" />
             </template>
           </el-table-column>
+          <el-table-column label="打印机设置" :align="'center'">
+            <template slot-scope="scope">
+              <span @click="setPrint(scope.row)">设置</span>
+            </template>
+          </el-table-column>
         </el-table>
       </el-card>
     </div>
+    <!-- 打印机设置 -->
+    <el-dialog
+      title="小票打印设置"
+      :visible="printerDialogVisible"
+      :show-close="false"
+      width="600px"
+    >
+      <el-form label-width="130px" size="medium">
+        <el-form-item label="选择打印机：">
+          <el-select
+            v-model="printerId"
+            placeholder="请选择"
+            style="width: 250px;"
+            @change="onChangeSelectPrinter"
+          >
+            <el-option
+              v-for="(item, index) in printerList"
+              :key="index"
+              :label="item.address"
+              :value="item.id"
+              :disabled="!item.online"
+              v-if="item.type === 1"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="选择项：" v-if="printerId !== null && !1">
+          <el-checkbox-group
+            v-model="isSelectGuiGe"
+            @change="onChangePrinterSelectGuiGe"
+          >
+            <el-checkbox
+              v-for="(item, index) in [1]"
+              :label="index"
+              :key="index"
+              >{{ currentSubItem.name || '未命名选择项' }}</el-checkbox
+            >
+          </el-checkbox-group>
+        </el-form-item>
+        <el-form-item
+          label="打印联数："
+          v-if="printerId !== null && currentSubItem.printerType === 0"
+        >
+          <el-select
+            v-model="currentSubItem.continuousPrintNum"
+            placeholder="请选择"
+            style="width: 250px;"
+          >
+            <el-option
+              v-for="n in 5"
+              :key="n"
+              :label="n + '联'"
+              :value="n"
+              :disabled="n === 1 && currentSubItem.qrcodePrint === 2"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <!-- 隔联打印需打印联数 > 1 -->
+        <el-form-item
+          label="二维码："
+          v-if="printerId !== null && currentSubItem.printerType === 0"
+        >
+          <el-radio v-model="currentSubItem.qrcodePrint" :label="1"
+            >全部打印</el-radio
+          >
+          <el-radio
+            v-model="currentSubItem.qrcodePrint"
+            :label="2"
+            :disabled="currentSubItem.continuousPrintNum === 1"
+            >隔联打印</el-radio
+          >
+          <el-radio v-model="currentSubItem.qrcodePrint" :label="3"
+            >不打印</el-radio
+          >
+          <p class="mg-b-0">
+            二维码使用于内部工作流程处理，假如要把小票给客户，请选择“隔联打印”，可以打出无二维码的一联，将该联给客户。
+          </p>
+        </el-form-item>
+        <el-form-item
+          label="电话号码："
+          v-if="printerId !== null && currentSubItem.printerType === 0"
+        >
+          <el-radio v-model="currentSubItem.isPrintMobile" :label="1"
+            >打印</el-radio
+          >
+          <el-radio v-model="currentSubItem.isPrintMobile" :label="0"
+            >不打印</el-radio
+          >
+          <p class="mg-b-0">
+            如果不希望透露功德主的联系方式，可以选择不打印电话号码。
+          </p>
+        </el-form-item>
+        <el-form-item
+          label="二维码："
+          v-if="printerId !== null && currentSubItem.printerType === 1"
+        >
+          <el-radio v-model="currentSubItem.qrcodePrint" :label="1"
+            >打印</el-radio
+          >
+          <el-radio v-model="currentSubItem.qrcodePrint" :label="2"
+            >不打印</el-radio
+          >
+          <p class="mg-b-0">
+            二维码适用于扫码对此订单进行拍照或者拍摄视频，为用户进行反馈。
+          </p>
+        </el-form-item>
+        <el-form-item
+          label="印章效果："
+          v-if="printerId !== null && currentSubItem.printerType === 1"
+        >
+          <div style="display: flex;">
+            <el-radio
+              class="seal-radio"
+              :label="1"
+              v-model="currentSubItem.sealType"
+            >
+              <div class="seal-radio-wrap">
+                <div class="seal1-img">
+                  <img
+                    class="seal1"
+                    src="https://pic.zizaihome.com/3bc20e17-64cd-4b4a-a9da-67e490271447.png"
+                    alt=""
+                  />
+                </div>
+                <span class="strong">不打印</span>
+              </div>
+            </el-radio>
+            <el-radio
+              class="seal-radio"
+              :label="2"
+              v-model="currentSubItem.sealType"
+            >
+              <div class="seal-radio-wrap">
+                <div class="seal2-img">
+                  <img
+                    class="seal2"
+                    src="https://pic.zizaihome.com/9c4ac595-24cb-4d4e-9525-f4cc1e96bfc9.png"
+                    alt=""
+                  />
+                </div>
+                <span class="strong">万字印</span>
+              </div>
+            </el-radio>
+            <el-radio
+              class="seal-radio"
+              :label="3"
+              v-model="currentSubItem.sealType"
+            >
+              <div class="seal-radio-wrap">
+                <div class="seal3-img">
+                  <img
+                    class="seal3"
+                    src="https://pic.zizaihome.com/bbf60ebf-06ba-475a-9274-5a982deabe66.png"
+                    alt=""
+                  />
+                </div>
+                <span class="strong">三宝印</span>
+              </div>
+            </el-radio>
+          </div>
+        </el-form-item>
+        <el-form-item
+          label="打印字体："
+          v-if="printerId !== null && currentSubItem.printerType === 1"
+        >
+          <el-select
+            v-model="currentSubItem.fontType"
+            placeholder="请选择"
+            style="width: 250px;"
+          >
+            <el-option :label="'默认字体'" :value="0"> </el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="handlePrinterDialogCancel">取消</el-button>
+        <el-button
+          type="primary"
+          size="small"
+          @click="handlePrinterDialogConfirm"
+          >好 的</el-button
+        >
+      </span>
+    </el-dialog>
     <Add
       :visible="addDialogVisible"
       :sub-list="subList"
@@ -189,6 +379,16 @@ export default {
 
       subId: null, // 当前选中的组合项
       tableData: [], // {templeId, buddhistSelecte, buddhistId, subSelect, subId, price}
+
+      // 打印机设置
+      printerDialogVisible: !1,
+      printerId: '',
+      printerList: [],
+      currentSubItem: {}, // 点击设置打印机时的行
+      cloneCurrentSubItem: {}, // 复制的选中行
+
+      currentPrinterItem: {},
+      isSelectGuiGe: !0, // 是否选中规格，默认选中
     };
   },
   created() {
@@ -277,37 +477,59 @@ export default {
       const origin = this.mergeSubList.find(item => item.id === curSubId);
       const promiseAry = [];
 
-      origin.subList.forEach(({ templeId, buddhistId, subId, price }) => {
-        const resItem = {
+      origin.subList.forEach(
+        ({
           templeId,
           buddhistId,
           subId,
           price,
-          buddhistSelect: [],
-          subSelect: [],
-        };
+          printerId,
+          printerType = 1,
+          sealType = 1,
+          fontType = 0,
+          qrcode_print,
+          continuousPrintNum = 1,
+          isPrintMobile = 0,
+        }) => {
+          const resItem = {
+            templeId,
+            buddhistId,
+            subId,
+            price,
+            buddhistSelect: [],
+            subSelect: [],
 
-        const getData = new Promise(resolve => {
-          if (this.templeBuddhistMap[templeId] === undefined) {
-            resolve(this.getBuddhistList(templeId));
-          } else {
-            resolve(this.templeBuddhistMap[templeId]);
-          }
-        });
+            printerId: printerId || '',
+            printerType,
+            sealType,
+            fontType,
+            qrcodePrint: qrcode_print || 1,
+            continuousPrintNum,
+            isPrintMobile,
+          };
 
-        const handleData = () =>
-          getData.then(data => {
-            resItem.buddhistSelect = data;
-            // 本地模拟数据的时候这里报错会导致下边的语句不执行, 因此添加判断语句
-            const findItem = data.find(item => item.id === buddhistId);
-            if (findItem) {
-              resItem.subSelect = findItem.subList;
+          const getData = new Promise(resolve => {
+            if (this.templeBuddhistMap[templeId] === undefined) {
+              resolve(this.getBuddhistList(templeId));
+            } else {
+              resolve(this.templeBuddhistMap[templeId]);
             }
-            return resItem;
           });
 
-        promiseAry.push(handleData());
-      });
+          const handleData = () =>
+            getData.then(data => {
+              resItem.buddhistSelect = data;
+              // 本地模拟数据的时候这里报错会导致下边的语句不执行, 因此添加判断语句
+              const findItem = data.find(item => item.id === buddhistId);
+              if (findItem) {
+                resItem.subSelect = findItem.subList;
+              }
+              return resItem;
+            });
+
+          promiseAry.push(handleData());
+        }
+      );
 
       Promise.all(promiseAry).then(res => {
         /* eslint-disable */
@@ -321,24 +543,47 @@ export default {
       // 将当前的 tableData 转化为 submitData
       const { tableData, subId: curSubId } = this;
       const params = { subId: curSubId, mergeList: [] };
-      tableData.forEach(({ templeId, buddhistId, subId, price, subSelect }) => {
-        if (templeId) {
-          let name = '';
-          subSelect.forEach(item => {
-            if (item.id === subId) {
-              name = item.name;
-              return;
-            }
-          });
-          params.mergeList.push({
-            templeId,
-            commodityId: buddhistId,
-            subdivideId: subId,
-            price: parseFloat(price),
-            name,
-          });
+      tableData.forEach(
+        ({
+          templeId,
+          buddhistId,
+          subId,
+          price,
+          subSelect,
+          printerId = 0,
+          printerType,
+          sealType,
+          qrcodePrint,
+          fontType,
+          continuousPrintNum,
+          isPrintMobile,
+        }) => {
+          if (templeId) {
+            let name = '';
+            subSelect.forEach(item => {
+              if (item.id === subId) {
+                name = item.name;
+                return;
+              }
+            });
+            params.mergeList.push({
+              templeId,
+              commodityId: buddhistId,
+              subdivideId: subId,
+              price: parseFloat(price),
+              name,
+              // 打印机参数
+              printerId: printerId || 0,
+              printerType,
+              sealType,
+              qrcode_print: qrcodePrint,
+              fontType,
+              continuousPrintNum,
+              isPrintMobile,
+            });
+          }
         }
-      });
+      );
 
       return params;
     },
@@ -365,6 +610,16 @@ export default {
         scope.row.buddhistSelect = data;
         return data;
       });
+
+      // 改变寺院时，重置打印机
+      console.log('change', this.cloneCurrentSubItem);
+      this.currentSubItem.printerId = this.cloneCurrentSubItem.printerId;
+      this.currentSubItem.printerType = this.cloneCurrentSubItem.printerType;
+      this.currentSubItem.sealType = this.cloneCurrentSubItem.sealType;
+      this.currentSubItem.fontType = this.cloneCurrentSubItem.fontType;
+      this.currentSubItem.qrcodePrint = this.cloneCurrentSubItem.qrcodePrint;
+      this.currentSubItem.continuousPrintNum = this.cloneCurrentSubItem.continuousPrintNum;
+      this.currentSubItem.isPrintMobile = this.cloneCurrentSubItem.isPrintMobile;
     },
     handleChangeRowBuddhist(scope) {
       const { buddhistId, buddhistSelect } = scope.row;
@@ -472,6 +727,51 @@ export default {
         })
         .catch(() => {});
     },
+    // 设置打印机
+    setPrint(row) {
+      const { templeId } = row;
+      this.currentSubItem = row;
+      this.cloneCurrentSubItem = { ...row };
+      console.log(this.currentSubItem, 'setprint');
+      this.printerDialogVisible = !0;
+
+      // 获取打印机列表
+      seeFetch('promo/transfer_set/getPrinterList', { templeId }).then(res => {
+        this.printerList = res.data;
+        this.printerId = this.currentSubItem.printerId;
+      });
+    },
+    onChangeSelectPrinter() {
+      this.printerList.forEach(item => {
+        if (item.id === this.printerId) {
+          this.currentPrinterItem = item;
+          this.currentSubItem.printerId = item.id;
+          this.currentSubItem.printerType = item.type;
+        }
+      });
+
+      console.log(this.printerId, this.currentPrinterItem, 'current printer');
+    },
+    onChangePrinterSelectGuiGe() {},
+    handlePrinterDialogCancel() {
+      this.currentSubItem.printerId = this.cloneCurrentSubItem.printerId;
+      this.currentSubItem.printerType = this.cloneCurrentSubItem.printerType;
+      this.currentSubItem.sealType = this.cloneCurrentSubItem.sealType;
+      this.currentSubItem.fontType = this.cloneCurrentSubItem.fontType;
+      this.currentSubItem.qrcodePrint = this.cloneCurrentSubItem.qrcodePrint;
+      this.currentSubItem.continuousPrintNum = this.cloneCurrentSubItem.continuousPrintNum;
+      this.currentSubItem.isPrintMobile = this.cloneCurrentSubItem.isPrintMobile;
+      this.printerDialogVisible = !1;
+    },
+    handlePrinterDialogConfirm() {
+      if (!this.isSelectGuiGe) {
+        this.handlePrinterDialogCancel();
+        return;
+      }
+      const params = this.createSubmitData();
+      console.log('params', params, this.transferTempleList);
+      this.printerDialogVisible = !1;
+    },
   },
 };
 </script>
@@ -556,6 +856,19 @@ export default {
         border-bottom: 2px solid #ebeef5;
       }
     }
+  }
+}
+.seal-radio {
+  display: flex;
+  align-items: center;
+  .seal1 {
+    height: 50px;
+    margin-bottom: 10px;
+  }
+  .seal3,
+  .seal2 {
+    width: 50px;
+    margin-bottom: 10px;
   }
 }
 </style>
