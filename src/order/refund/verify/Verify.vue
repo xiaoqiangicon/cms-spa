@@ -145,6 +145,8 @@
       :before-close="hideDialog"
       width="600px"
     >
+      <div class="row">用户昵称：{{ rowData.nickName }}</div>
+      <div class="row">用户手机号码：{{ rowData.mobile }}</div>
       <div class="row">订单类型：{{ rowData.orderTypeStr }}</div>
       <div class="row">订单ID：{{ rowData.orderNo }}</div>
       <div class="row">外部订单号：{{ rowData.wxTransactionId }}</div>
@@ -190,6 +192,7 @@ import Upload from '../../../com/upload/Upload';
 export default {
   data() {
     return {
+      refunding: !1,
       filterStartDate: '',
       filterEndDate: '',
       filterSearch: '',
@@ -265,6 +268,7 @@ export default {
       this.fetchList();
     },
     refund(rowData) {
+      if (this.refunding) return;
       if (!this.content) {
         Notification({
           title: '提示',
@@ -279,12 +283,14 @@ export default {
         });
         return;
       }
+      this.refunding = !0;
       seeFetch('order/refund/refund', {
         orderId: rowData.orderNo,
         content: this.content,
         imgs: this.uploadImages.join(','),
       }).then(res => {
         if (res.errorCode === 0) {
+          this.refunding = !1;
           this.dialogVisible = !1;
           window.location.reload();
         }

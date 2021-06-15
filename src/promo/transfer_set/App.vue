@@ -126,6 +126,11 @@
               />
             </template>
           </el-table-column>
+          <el-table-column label="打印机设置" :align="'center'">
+            <template slot-scope="scope">
+              <span @click="setPrint(scope.row)">设置</span>
+            </template>
+          </el-table-column>
           <el-table-column label="转单是否生效">
             <template slot-scope="item">
               <el-switch
@@ -192,6 +197,191 @@
         <el-button type="primary" @click="submitFuBiSet">保 存</el-button>
       </span>
     </el-dialog>
+    <!-- 打印机设置 -->
+    <el-dialog
+      title="小票打印设置"
+      :visible="printerDialogVisible"
+      :show-close="false"
+      width="600px"
+    >
+      <el-form label-width="130px" size="medium">
+        <el-form-item label="选择打印机：">
+          <el-select
+            v-model="printerId"
+            placeholder="请选择"
+            style="width: 250px;"
+            @change="onChangeSelectPrinter"
+          >
+            <el-option
+              v-for="(item, index) in printerList"
+              :key="index"
+              :label="item.address"
+              :value="item.id"
+              :disabled="!item.online"
+              v-if="item.type === 1"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="选择项：" v-if="printerId !== null">
+          <el-checkbox-group
+            v-model="isSelectGuiGe"
+            @change="onChangePrinterSelectGuiGe"
+          >
+            <el-checkbox
+              v-for="(item, index) in [1]"
+              :label="index"
+              :key="index"
+              >{{ currentSubItem.name || '未命名选择项' }}</el-checkbox
+            >
+          </el-checkbox-group>
+        </el-form-item>
+        <el-form-item
+          label="打印联数："
+          v-if="printerId !== null && currentSubItem.printerType === 0"
+        >
+          <el-select
+            v-model="currentSubItem.continuousPrintNum"
+            placeholder="请选择"
+            style="width: 250px;"
+          >
+            <el-option
+              v-for="n in 5"
+              :key="n"
+              :label="n + '联'"
+              :value="n"
+              :disabled="n === 1 && currentSubItem.qrcodePrint === 2"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <!-- 隔联打印需打印联数 > 1 -->
+        <el-form-item
+          label="二维码："
+          v-if="printerId !== null && currentSubItem.printerType === 0"
+        >
+          <el-radio v-model="currentSubItem.qrcodePrint" :label="1"
+            >全部打印</el-radio
+          >
+          <el-radio
+            v-model="currentSubItem.qrcodePrint"
+            :label="2"
+            :disabled="currentSubItem.continuousPrintNum === 1"
+            >隔联打印</el-radio
+          >
+          <el-radio v-model="currentSubItem.qrcodePrint" :label="3"
+            >不打印</el-radio
+          >
+          <p class="mg-b-0">
+            二维码使用于内部工作流程处理，假如要把小票给客户，请选择“隔联打印”，可以打出无二维码的一联，将该联给客户。
+          </p>
+        </el-form-item>
+        <el-form-item
+          label="电话号码："
+          v-if="printerId !== null && currentSubItem.printerType === 0"
+        >
+          <el-radio v-model="currentSubItem.isPrintMobile" :label="1"
+            >打印</el-radio
+          >
+          <el-radio v-model="currentSubItem.isPrintMobile" :label="0"
+            >不打印</el-radio
+          >
+          <p class="mg-b-0">
+            如果不希望透露功德主的联系方式，可以选择不打印电话号码。
+          </p>
+        </el-form-item>
+        <el-form-item
+          label="二维码："
+          v-if="printerId !== null && currentSubItem.printerType === 1"
+        >
+          <el-radio v-model="currentSubItem.qrcodePrint" :label="1"
+            >打印</el-radio
+          >
+          <el-radio v-model="currentSubItem.qrcodePrint" :label="2"
+            >不打印</el-radio
+          >
+          <p class="mg-b-0">
+            二维码适用于扫码对此订单进行拍照或者拍摄视频，为用户进行反馈。
+          </p>
+        </el-form-item>
+        <el-form-item
+          label="印章效果："
+          v-if="printerId !== null && currentSubItem.printerType === 1"
+        >
+          <div style="display: flex;">
+            <el-radio
+              class="seal-radio"
+              :label="1"
+              v-model="currentSubItem.sealType"
+            >
+              <div class="seal-radio-wrap">
+                <div class="seal1-img">
+                  <img
+                    class="seal1"
+                    src="https://pic.zizaihome.com/3bc20e17-64cd-4b4a-a9da-67e490271447.png"
+                    alt=""
+                  />
+                </div>
+                <span class="strong">不打印</span>
+              </div>
+            </el-radio>
+            <el-radio
+              class="seal-radio"
+              :label="2"
+              v-model="currentSubItem.sealType"
+            >
+              <div class="seal-radio-wrap">
+                <div class="seal2-img">
+                  <img
+                    class="seal2"
+                    src="https://pic.zizaihome.com/9c4ac595-24cb-4d4e-9525-f4cc1e96bfc9.png"
+                    alt=""
+                  />
+                </div>
+                <span class="strong">万字印</span>
+              </div>
+            </el-radio>
+            <el-radio
+              class="seal-radio"
+              :label="3"
+              v-model="currentSubItem.sealType"
+            >
+              <div class="seal-radio-wrap">
+                <div class="seal3-img">
+                  <img
+                    class="seal3"
+                    src="https://pic.zizaihome.com/bbf60ebf-06ba-475a-9274-5a982deabe66.png"
+                    alt=""
+                  />
+                </div>
+                <span class="strong">三宝印</span>
+              </div>
+            </el-radio>
+          </div>
+        </el-form-item>
+        <el-form-item
+          label="打印字体："
+          v-if="printerId !== null && currentSubItem.printerType === 1"
+        >
+          <el-select
+            v-model="currentSubItem.fontType"
+            placeholder="请选择"
+            style="width: 250px;"
+          >
+            <el-option :label="'默认字体'" :value="0"> </el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="handlePrinterDialogCancel">取消</el-button>
+        <el-button
+          type="primary"
+          size="small"
+          @click="handlePrinterDialogConfirm"
+          >好 的</el-button
+        >
+      </span>
+    </el-dialog>
     <!-- DialogAdd -->
     <Add
       :visible="dialogAddVisible"
@@ -235,6 +425,16 @@ export default {
       templeId: 1,
 
       tableData: [],
+
+      // 打印机设置
+      printerDialogVisible: !1,
+      printerId: '',
+      printerList: [],
+      currentSubItem: {}, // 点击设置打印机时的行
+      cloneCurrentSubItem: {}, // 复制的选中行
+
+      currentPrinterItem: {},
+      isSelectGuiGe: !0, // 是否选中规格，默认选中
     };
   },
   created() {
@@ -261,6 +461,7 @@ export default {
       this.getTempleList();
       this.getTransferTempleList(() => {
         const { transferTempleList } = this;
+        console.log('init', transferTempleList);
         if (transferTempleList.length) {
           this.templeId = transferTempleList[0].id;
           this.tableData = transferTempleList[0].subList;
@@ -330,6 +531,16 @@ export default {
           sub.transferRate = transferRate;
 
           sub.takeEffect = findSub.takeEffect;
+
+          // 服务器已设置打印机
+          // this.printerId = findSub.printerId || '';
+          sub.printerId = findSub.printerId || '';
+          sub.printerType = findSub.printerType || 1;
+          sub.sealType = findSub.sealType || 1;
+          sub.qrcodePrint = findSub.qrcodePrint || 1;
+          sub.fontType = findSub.fontType || 0;
+          sub.continuousPrintNum = findSub.continuousPrintNum || 1;
+          sub.isPrintMobile = findSub.isPrintMobile || 0;
         } else {
           sub.selected = false;
 
@@ -337,6 +548,14 @@ export default {
           sub.transferPrice = 0;
           sub.transferRate = 0;
           sub.takeEffect = 0;
+          // 补齐设置打印机
+          sub.printerId = '';
+          sub.printerType = 1;
+          sub.sealType = 1;
+          sub.qrcodePrint = 1;
+          sub.fontType = 0;
+          sub.continuousPrintNum = 1;
+          sub.isPrintMobile = 0;
         }
       });
       return res;
@@ -421,6 +640,51 @@ export default {
         this.curSubItem.takeEffect = 0;
       });
     },
+    // 设置打印机
+    setPrint(row) {
+      this.currentSubItem = row;
+      this.cloneCurrentSubItem = { ...row };
+      console.log(this.currentSubItem, 'setprint');
+      this.printerDialogVisible = !0;
+      // 获取打印机列表
+      seeFetch('promo/transfer_set/getPrinterList', {
+        templeId: this.templeId,
+      }).then(res => {
+        this.printerList = res.data;
+        this.printerId = this.currentSubItem.printerId;
+      });
+    },
+    onChangeSelectPrinter() {
+      this.printerList.forEach(item => {
+        if (item.id === this.printerId) {
+          this.currentPrinterItem = item;
+          this.currentSubItem.printerId = item.id;
+          this.currentSubItem.printerType = item.type;
+        }
+      });
+
+      console.log(this.printerId, this.currentPrinterItem, 'current printer');
+    },
+    onChangePrinterSelectGuiGe() {},
+    handlePrinterDialogCancel() {
+      this.currentSubItem.printerId = this.cloneCurrentSubItem.printerId;
+      this.currentSubItem.printerType = this.cloneCurrentSubItem.printerType;
+      this.currentSubItem.sealType = this.cloneCurrentSubItem.sealType;
+      this.currentSubItem.fontType = this.cloneCurrentSubItem.fontType;
+      this.currentSubItem.qrcodePrint = this.cloneCurrentSubItem.qrcodePrint;
+      this.currentSubItem.continuousPrintNum = this.cloneCurrentSubItem.continuousPrintNum;
+      this.currentSubItem.isPrintMobile = this.cloneCurrentSubItem.isPrintMobile;
+      this.printerDialogVisible = !1;
+    },
+    handlePrinterDialogConfirm() {
+      if (!this.isSelectGuiGe) {
+        this.handlePrinterDialogCancel();
+        return;
+      }
+      const params = this.createSubmitData();
+      console.log('params', params, this.transferTempleList);
+      this.printerDialogVisible = !1;
+    },
     // 生成上传数据
     // 处理本地的transferTempleList [{id, subList: [{}]}] 数据并上传
     // 本地 subList {id, name, price, transferPrice, transferRate}
@@ -442,6 +706,14 @@ export default {
                 transferPrice: sub.price <= 0 ? 0 : sub.transferPrice,
                 transferRate: sub.transferRate,
                 isDel: 0,
+
+                printerId: sub.printerId,
+                printerType: sub.printerType,
+                sealType: sub.sealType,
+                qrcodePrint: sub.qrcodePrint,
+                fontType: sub.fontType,
+                continuousPrintNum: sub.continuousPrintNum,
+                isPrintMobile: sub.isPrintMobile,
               };
 
               res.subList.push(newItem);
@@ -469,12 +741,28 @@ export default {
               const newItem = {
                 id: sub.id,
                 isDel: 1,
+
+                printerId: sub.printerId,
+                printerType: sub.printerType,
+                sealType: sub.sealType,
+                qrcodePrint: sub.qrcodePrint,
+                fontType: sub.fontType,
+                continuousPrintNum: sub.continuousPrintNum,
+                isPrintMobile: sub.isPrintMobile,
               };
               res.subList.push(newItem);
             } else if (item.isDel) {
               const newItem = {
                 id: sub.id,
                 isDel: 1,
+
+                printerId: sub.printerId,
+                printerType: sub.printerType,
+                sealType: sub.sealType,
+                qrcodePrint: sub.qrcodePrint,
+                fontType: sub.fontType,
+                continuousPrintNum: sub.continuousPrintNum,
+                isPrintMobile: sub.isPrintMobile,
               };
               res.subList.push(newItem);
             }
@@ -656,6 +944,20 @@ export default {
       flex: 3;
       margin-left: 20px;
     }
+  }
+}
+
+.seal-radio {
+  display: flex;
+  align-items: center;
+  .seal1 {
+    height: 50px;
+    margin-bottom: 10px;
+  }
+  .seal3,
+  .seal2 {
+    width: 50px;
+    margin-bottom: 10px;
   }
 }
 </style>

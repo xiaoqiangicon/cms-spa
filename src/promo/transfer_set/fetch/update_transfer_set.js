@@ -28,6 +28,14 @@ const pre = params => {
       price: sub.transferPrice,
       percent: sub.transferRate,
       isDel: sub.isDel,
+
+      printerId: sub.printerId || 0,
+      printerType: sub.printerType,
+      sealType: sub.sealType,
+      qrcode_print: sub.qrcodePrint,
+      fontType: sub.fontType,
+      continuousPrintNum: sub.continuousPrintNum,
+      isPrintMobile: sub.isPrintMobile,
     })),
     isDel: item.isDel,
   }));
