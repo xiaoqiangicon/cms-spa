@@ -222,6 +222,12 @@ export default [
         name: 'promo-pushSchedule',
         meta: { title: '佛事进展', noCache: true },
       },
+      {
+        path: 'wxMenu',
+        component: () => import('../promo/wx_menu/App'),
+        name: 'promo-wxMenu',
+        meta: { title: '公众号菜单', noCache: true },
+      },
     ],
   },
   {

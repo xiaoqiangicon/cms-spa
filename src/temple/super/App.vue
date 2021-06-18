@@ -212,10 +212,13 @@ export default {
     // 根据id返回对应绑定寺院信息
     getTempleInfo(ids) {
       if (ids && ids.length && this.allTempleList.length) {
+        let bindTemples = ids.split(',');
         if (ids.indexOf('-1') !== -1) {
           return [...this.allTempleList];
         }
-        return this.allTempleList.filter(item => ids.includes(`${item.id}`));
+        return this.allTempleList.filter(
+          item => bindTemples.indexOf(`${item.id}`) >= 0
+        );
       }
       return [];
     },

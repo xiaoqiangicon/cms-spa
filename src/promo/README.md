@@ -9,3 +9,4 @@
 - ci 慈光计划页面
 - topic 专题页
 - topic_edit 专题编辑页
+- wx_set 微信公众号菜单设置

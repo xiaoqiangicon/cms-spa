@@ -124,6 +124,10 @@
     "title": "运营事件 >>> 佛事进展"
   },
   {
+    "key": "promo-wxMenu",
+    "title": "运营事件 >>> 公众号菜单"
+  },
+  {
     "key": "temple-notice",
     "title": "寺院管理 >>> 寺院通知"
   },
