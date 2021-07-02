@@ -32,6 +32,7 @@ const pre = params => {
       printerId: sub.printerId || 0,
       printerType: sub.printerType,
       sealType: sub.sealType,
+      sealTypeBottom: sub.sealTypeBottom,
       qrcode_print: sub.qrcodePrint,
       fontType: sub.fontType,
       continuousPrintNum: sub.continuousPrintNum,

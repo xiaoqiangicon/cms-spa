@@ -348,7 +348,7 @@
         "component": true,
         "name": "temple-super",
         "meta": {
-          "title": "超级访问",
+          "title": "大区权限管理",
           "noCache": true
         }
       },

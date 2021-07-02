@@ -313,6 +313,7 @@ export default {
       this.isEditSubMenu = type;
       this.subMenuKey = subKey; // 记录编辑的二级菜单的下标
       this.menuKey = key; // 记录一级菜单的下标
+      if (!this.cloneSubMenu.type) this.cloneSubMenu.type = 'view';
     },
     saveSubEditMenu() {
       if (this.isEditSubMenu) {

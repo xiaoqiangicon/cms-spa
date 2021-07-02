@@ -265,7 +265,7 @@
           </p>
         </el-form-item>
         <el-form-item
-          label="印章效果："
+          label="印章效果(顶部)："
           v-if="printerId !== null && currentSubItem.printerType === 1"
         >
           <div style="display: flex;">
@@ -311,6 +311,93 @@
                   <img
                     class="seal3"
                     src="https://pic.zizaihome.com/bbf60ebf-06ba-475a-9274-5a982deabe66.png"
+                    alt=""
+                  />
+                </div>
+                <span class="strong">三宝印</span>
+              </div>
+            </el-radio>
+            <el-radio
+              class="seal-radio"
+              :label="4"
+              v-model="currentSubItem.sealType"
+            >
+              <div class="seal-radio-wrap">
+                <div class="seal3-img">
+                  <img
+                    class="seal3"
+                    src="https://pic.zizaihome.com/fe82f688-4472-4cb1-a895-19acdfa81997.png"
+                    alt=""
+                  />
+                </div>
+                <span class="strong">三宝印</span>
+              </div>
+            </el-radio>
+          </div>
+        </el-form-item>
+        <el-form-item
+          label="印章效果(底部)："
+          v-if="printerId !== null && currentSubItem.printerType === 1"
+        >
+          <div style="display: flex;">
+            <el-radio
+              class="seal-radio"
+              :label="1"
+              v-model="currentSubItem.sealTypeBottom"
+            >
+              <div class="seal-radio-wrap">
+                <div class="seal1-img">
+                  <img
+                    class="seal1"
+                    src="https://pic.zizaihome.com/3bc20e17-64cd-4b4a-a9da-67e490271447.png"
+                    alt=""
+                  />
+                </div>
+                <span class="strong">不打印</span>
+              </div>
+            </el-radio>
+            <el-radio
+              class="seal-radio"
+              :label="2"
+              v-model="currentSubItem.sealTypeBottom"
+            >
+              <div class="seal-radio-wrap">
+                <div class="seal2-img">
+                  <img
+                    class="seal2"
+                    src="https://pic.zizaihome.com/9c4ac595-24cb-4d4e-9525-f4cc1e96bfc9.png"
+                    alt=""
+                  />
+                </div>
+                <span class="strong">万字印</span>
+              </div>
+            </el-radio>
+            <el-radio
+              class="seal-radio"
+              :label="3"
+              v-model="currentSubItem.sealTypeBottom"
+            >
+              <div class="seal-radio-wrap">
+                <div class="seal3-img">
+                  <img
+                    class="seal3"
+                    src="https://pic.zizaihome.com/bbf60ebf-06ba-475a-9274-5a982deabe66.png"
+                    alt=""
+                  />
+                </div>
+                <span class="strong">三宝印</span>
+              </div>
+            </el-radio>
+            <el-radio
+              class="seal-radio"
+              :label="4"
+              v-model="currentSubItem.sealTypeBottom"
+            >
+              <div class="seal-radio-wrap">
+                <div class="seal3-img">
+                  <img
+                    class="seal3"
+                    src="https://pic.zizaihome.com/fe82f688-4472-4cb1-a895-19acdfa81997.png"
                     alt=""
                   />
                 </div>
@@ -485,7 +572,8 @@ export default {
           price,
           printerId,
           printerType = 1,
-          sealType = 1,
+          sealType = 2,
+          sealTypeBottom = 3,
           fontType = 0,
           qrcode_print,
           continuousPrintNum = 1,
@@ -502,6 +590,7 @@ export default {
             printerId: printerId || '',
             printerType,
             sealType,
+            sealTypeBottom,
             fontType,
             qrcodePrint: qrcode_print || 1,
             continuousPrintNum,
@@ -553,6 +642,7 @@ export default {
           printerId = 0,
           printerType,
           sealType,
+          sealTypeBottom,
           qrcodePrint,
           fontType,
           continuousPrintNum,
@@ -576,6 +666,7 @@ export default {
               printerId: printerId || 0,
               printerType,
               sealType,
+              sealTypeBottom,
               qrcode_print: qrcodePrint,
               fontType,
               continuousPrintNum,
@@ -616,6 +707,7 @@ export default {
       this.currentSubItem.printerId = this.cloneCurrentSubItem.printerId;
       this.currentSubItem.printerType = this.cloneCurrentSubItem.printerType;
       this.currentSubItem.sealType = this.cloneCurrentSubItem.sealType;
+      this.currentSubItem.sealTypeBottom = this.cloneCurrentSubItem.sealTypeBottom;
       this.currentSubItem.fontType = this.cloneCurrentSubItem.fontType;
       this.currentSubItem.qrcodePrint = this.cloneCurrentSubItem.qrcodePrint;
       this.currentSubItem.continuousPrintNum = this.cloneCurrentSubItem.continuousPrintNum;
@@ -757,6 +849,7 @@ export default {
       this.currentSubItem.printerId = this.cloneCurrentSubItem.printerId;
       this.currentSubItem.printerType = this.cloneCurrentSubItem.printerType;
       this.currentSubItem.sealType = this.cloneCurrentSubItem.sealType;
+      this.currentSubItem.sealTypeBottom = this.cloneCurrentSubItem.sealTypeBottom;
       this.currentSubItem.fontType = this.cloneCurrentSubItem.fontType;
       this.currentSubItem.qrcodePrint = this.cloneCurrentSubItem.qrcodePrint;
       this.currentSubItem.continuousPrintNum = this.cloneCurrentSubItem.continuousPrintNum;
