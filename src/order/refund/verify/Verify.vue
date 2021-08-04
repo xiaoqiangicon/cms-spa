@@ -93,6 +93,11 @@
                   订单详情
                 </el-button>
               </div>
+              <div class="detail">
+                <el-button size="small" @click="cancelRefund(item)">
+                  取消退款
+                </el-button>
+              </div>
               <div>
                 <el-button size="small" type="danger" @click="showRefund(item)">
                   同意退款
@@ -180,6 +185,24 @@
         />
       </div>
     </el-dialog>
+    <el-dialog title="取消退款" :visible.sync="cancelRefundVisible">
+      <el-input
+        type="textarea"
+        placeholder="取消退款说明"
+        v-model="cancelRefundContent"
+        maxlength="300"
+        :rows="4"
+        show-word-limit
+        resize="none"
+      >
+      </el-input>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="cancelRefundVisible = false">取 消</el-button>
+        <el-button type="primary" @click="cacelRefundOrder"
+          >确认取消退款</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -216,6 +239,9 @@ export default {
         { name: '西南' },
         { name: '西北' },
       ],
+
+      cancelRefundVisible: !1,
+      cancelRefundContent: '',
     };
   },
   components: {
@@ -315,6 +341,28 @@ export default {
         this.dialogVisible = !1;
         this.detailDialog = !1;
       }
+    },
+    cancelRefund(item) {
+      this.rowData = item.row;
+      this.cancelRefundVisible = !0;
+    },
+    cacelRefundOrder() {
+      seeFetch('order/refund/cancelRefund', {
+        orderId: this.rowData.orderNo,
+        reason: this.cancelRefundContent,
+      }).then(res => {
+        if (res.success) {
+          this.cancelRefundContent = '';
+          this.cancelRefundVisible = !1;
+          window.location.reload();
+        } else {
+          this.cancelRefundVisible = !1;
+          Notification({
+            title: '提示',
+            message: '取消退款失败',
+          });
+        }
+      });
     },
   },
 };
