@@ -55,7 +55,20 @@
       <el-table-column prop="buddhistName" label="推广状态" min-width="120">
         <template slot-scope="scope">
           <template v-if="!scope.row.isFinish">
-            <span style="color: #67C23A;">进行中</span>
+            <span style="color: #67C23A;">{{
+              scope.row.status === 0
+                ? '进行中'
+                : scope.row.status === 1
+                ? '待审核'
+                : '进行中；修改项需审核'
+            }}</span>
+            <div
+              class="verify"
+              v-if="scope.row.status !== 0 && scope.row.isManager === 1"
+              @click="handleClickVerify(scope.row)"
+            >
+              确认通过
+            </div>
             <div
               :style="{
                 color: scope.row.isPickUpCommodity ? '#409EFF' : '#F97658',
@@ -95,7 +108,12 @@
         label="推广生效时间"
         :align="'center'"
       />
-      <el-table-column prop="updateUser" label="最后编辑人" :align="'center'" />
+      <el-table-column
+        prop="updateUser"
+        label="最后编辑人"
+        :align="'center'"
+        v-if="!1"
+      />
       <el-table-column v-if="!1" label="分享福币" :align="'center'">
         <template slot="header">
           分享福币
@@ -120,6 +138,16 @@
             <el-button
               type="text"
               size="small"
+              @click="handleClickDel(scope.row)"
+              v-if="scope.row.status === 1"
+            >
+              删除
+            </el-button>
+          </div>
+          <div v-if="scope.row.status !== 1">
+            <el-button
+              type="text"
+              size="small"
               @click="handleClickWithdraw(scope.row)"
             >
               结束推广
@@ -131,7 +159,7 @@
               size="small"
               @click="handleClickEdit(scope.row)"
             >
-              推广编辑
+              推广修改
             </el-button>
           </div>
           <div>
@@ -139,6 +167,7 @@
               type="text"
               size="small"
               @click="handleClickRecord(scope.row)"
+              v-if="scope.row.status !== 1"
             >
               记录
             </el-button>
@@ -166,14 +195,15 @@
       "
     >
       <el-table :data="recordList" style="width: 100%">
-        <el-table-column prop="startTime" label="生效时间" align="left" />
+        <el-table-column prop="startTime" label="审核时间" align="left" />
         <el-table-column prop="rate" label="服务费用" align="center">
           <template slot-scope="scope">
             {{ Number(100 * scope.row.rate).toFixed(2) }}%
           </template>
         </el-table-column>
+        <el-table-column prop="verifyName" label="审核人" align="center" />
         <el-table-column prop="updateTime" label="编辑时间" align="center" />
-        <el-table-column prop="updateUser" label="编辑用户" align="right" />
+        <el-table-column prop="updateUser" label="申请用户" align="right" />
       </el-table>
     </el-dialog>
     <!-- 提现 -->
@@ -463,6 +493,34 @@ export default {
         return res.data;
       });
     },
+    handleClickVerify(row) {
+      const { templeId, buddhistId } = row;
+      this.$confirm('确定通过此条佛事推广吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(() => {
+        seeFetch('promo/index/buddhist/verify', { templeId, buddhistId }).then(
+          res => {
+            if (res.success) {
+              Notification({
+                type: 'success',
+                title: '提示',
+                message: '审核成功',
+              });
+
+              this.getList();
+            } else {
+              Notification({
+                type: 'success',
+                title: '提示',
+                message: '审核失败',
+              });
+            }
+          }
+        );
+      });
+    },
     withdraw() {
       const { templeId, buddhistId } = this.curItem;
       return seeFetch('promo/index/buddhist/withdraw', {
@@ -479,6 +537,36 @@ export default {
         }
 
         return res.data;
+      });
+    },
+    handleClickDel(row) {
+      this.$confirm('此操作将删除此条佛事推广, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(() => {
+        const { templeId, buddhistId } = row;
+        seeFetch('promo/index/buddhist/withdraw', {
+          templeId,
+          buddhistId,
+          status: -1,
+        }).then(res => {
+          if (res.success) {
+            Notification({
+              type: 'success',
+              title: '提示',
+              message: '删除成功',
+            });
+
+            this.getList();
+          } else {
+            Notification({
+              type: 'success',
+              title: '提示',
+              message: '删除失败',
+            });
+          }
+        });
       });
     },
     update() {
@@ -691,5 +779,18 @@ export default {
   .title {
     flex-basis: 100px;
   }
+}
+.verify {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 0 4px;
+  margin-bottom: 4px;
+  color: rgb(64, 158, 255);
+  border: 1px solid rgb(64, 158, 255);
+  text-align: center;
+  border-radius: 4px;
+  height: 30px;
+  line-height: 30px;
+  cursor: pointer;
 }
 </style>
