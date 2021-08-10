@@ -228,6 +228,12 @@ export default [
         name: 'promo-wxMenu',
         meta: { title: '公众号菜单', noCache: true },
       },
+      {
+        path: 'jxcjProgress',
+        component: () => import('../promo/jxcj_progress/index.vue'),
+        name: 'promo-jxcjProgress',
+        meta: { title: '静心抄经进展发布', noCache: true },
+      },
     ],
   },
   {

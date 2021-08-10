@@ -1,5 +1,5 @@
 import { Notification } from 'element-ui';
-import request from '../../request';
+import request from '../../utils/request';
 import { handleListReqParams, handleListReqResponse } from './utils';
 
 export default {
