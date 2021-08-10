@@ -346,13 +346,19 @@ export default [
         path: 'income-stat',
         component: () => import('../finance/income-stat/App.vue'),
         name: 'finance-income-stat',
-        meta: { title: '营收统计', noCache: true },
+        meta: { title: '营管-营收统计', noCache: true },
       },
       {
         path: 'income',
         name: 'finance-income',
         component: () => import('../finance/income/App.vue'),
         meta: { title: '营收管理', noCache: true },
+      },
+      {
+        path: 'ziying',
+        name: 'finance-ziying',
+        component: () => import('../finance/ziYing/App.vue'),
+        meta: { title: '自营佛事', noCache: true },
       },
       {
         path: 'record',
