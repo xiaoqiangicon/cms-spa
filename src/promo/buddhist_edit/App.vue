@@ -135,6 +135,7 @@
             value-format="yyyy-MM-dd HH:mm:ss"
             type="datetime"
             placeholder="选择日期时间"
+            :disabled="!0"
           />
         </div>
       </div>
@@ -217,14 +218,14 @@ export default {
         return;
       }
 
-      if (new Date(startTime).getTime() < new Date().getTime()) {
-        Notification({
-          type: 'error',
-          title: '提示',
-          message: '生效时间不能在此刻时间之前',
-        });
-        return;
-      }
+      // if (new Date(startTime).getTime() < new Date().getTime()) {
+      //   Notification({
+      //     type: 'error',
+      //     title: '提示',
+      //     message: '生效时间不能在此刻时间之前',
+      //   });
+      //   return;
+      // }
 
       seeFetch('promo/buddhist_edit/update_buddhist_set', {
         templeId,

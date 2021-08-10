@@ -5,3 +5,4 @@ import './get_record_list';
 import './withdraw';
 import './update';
 import './update_buddhist_set';
+import './verify';

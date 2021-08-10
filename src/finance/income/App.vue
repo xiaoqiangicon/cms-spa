@@ -11,7 +11,7 @@
         <el-tab-pane v-if="!1" label="推广佛事" name="third">
           <fo-shi />
         </el-tab-pane>
-        <el-tab-pane label="自营佛事" name="fourth">
+        <el-tab-pane label="自营佛事" name="fourth" v-if="!1">
           <zi-ying />
         </el-tab-pane>
         <el-tab-pane label="日行一善模块" name="fifth">
