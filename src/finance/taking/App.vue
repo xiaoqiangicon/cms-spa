@@ -19,19 +19,19 @@
           size="small"
           class="fl-right"
           plain
-          :type="showType === 2 ? 'primary' : 'default'"
-          @click="changeShowType(2)"
+          :type="showType === 1 ? 'primary' : 'default'"
+          @click="changeShowType(1)"
         >
-          项目汇总
+          每月详情
         </el-button>
         <el-button
           size="small"
           class="fl-right mg-r-10"
           plain
-          :type="showType === 1 ? 'primary' : 'default'"
-          @click="changeShowType(1)"
+          :type="showType === 2 ? 'primary' : 'default'"
+          @click="changeShowType(2)"
         >
-          时间汇总
+          项目汇总
         </el-button>
       </div>
       <div class="content mg-t-20">
@@ -56,10 +56,10 @@
                 <div class="cell">
                   金额
                 </div>
-                <div class="cell">
+                <div class="cell" v-if="!1">
                   增值服务费
                 </div>
-                <div class="cell">
+                <div class="cell" v-if="!1">
                   支付渠道手续费
                 </div>
               </div>
@@ -85,14 +85,14 @@
                   {{ order.count }}
                 </div>
                 <div class="cell">¥{{ order.amount }}</div>
-                <div class="cell">
+                <div class="cell" v-if="!1">
                   {{
                     order.increaseCharge
                       ? '-¥' + order.increaseCharge
                       : '无服务费'
                   }}
                 </div>
-                <div class="cell">-¥{{ order.channelCharge }}</div>
+                <div class="cell" v-if="!1">-¥{{ order.channelCharge }}</div>
               </div>
             </div>
           </div>
@@ -134,7 +134,7 @@
           </el-table-column>
         </el-table>
       </div>
-      <el-card class="mg-t-20">
+      <el-card class="mg-t-20" v-if="showType !== 1">
         <div slot="header" class="clearfix">
           <span>提现计算</span>
         </div>
@@ -199,7 +199,10 @@
           </div>
         </div>
       </el-card>
-      <el-card v-if="remarks && remarks.length" class="mg-t-20">
+      <el-card
+        v-if="remarks && remarks.length && showType !== 1"
+        class="mg-t-20"
+      >
         <div slot="header" class="tips-header">
           <div class="header-left">
             <span>提现注意事项</span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -224,7 +227,7 @@
           <span>{{ remark.content }}</span>
         </div>
       </el-card>
-      <el-card class="mg-t-20">
+      <el-card class="mg-t-20" v-if="showType !== 1">
         <div slot="header" class="clearfix">
           <span>{{ templeName }}账户信息</span>
         </div>
@@ -372,7 +375,7 @@ export default {
     return {
       loading: !0,
       // 展示类型 || 1：按时间展示，2：按项目展示
-      showType: 1,
+      showType: 2,
       dateItems: [],
       // 总金额
       totalAmount: 0,
