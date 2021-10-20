@@ -98,11 +98,18 @@
           style="margin-left: 10px; width: 80%;"
           placeholder="请选择或搜索寺院名称"
         >
+          <!--<el-option-->
+          <!--v-for="item in bindTempleList"-->
+          <!--:key="item.templeId"-->
+          <!--:label="item.name"-->
+          <!--:value="item.templeId"-->
+          <!--:disabled="dialogAdmin.templeId == item.templeId ? true : false"-->
+          <!--/>-->
           <el-option
-            v-for="item in bindTempleList"
-            :key="item.templeId"
+            v-for="item in allTempleList"
+            :key="item.id + ''"
             :label="item.name"
-            :value="item.templeId"
+            :value="item.id + ''"
             :disabled="dialogAdmin.templeId == item.templeId ? true : false"
           />
         </el-select>

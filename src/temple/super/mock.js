@@ -17,7 +17,7 @@ export const getAdmin = {
       name: 'name',
       templeId: 1,
       area: '华东1,华南',
-      otherTempleIds: '5591,5642',
+      otherTempleIds: '5591,5642,1,3',
       bindTempleIds: '1,4,6',
     })),
     templeList: {
