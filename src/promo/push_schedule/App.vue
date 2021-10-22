@@ -486,6 +486,10 @@ export default {
         video,
         type,
       }).then(res => {
+        if (res.errorCode === -1) {
+          alert(res.msg);
+          return;
+        }
         this.dialogVisible = false;
         this.refresh();
       });

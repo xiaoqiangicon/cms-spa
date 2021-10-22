@@ -70,6 +70,7 @@
                   size="small"
                   @click="showquashRefundOrderNDialog(item.row.orderNo)"
                   style="margin-left:0px"
+                  v-if="!1"
                 >
                   撤销退款
                 </el-button>
