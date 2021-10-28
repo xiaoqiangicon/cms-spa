@@ -19,7 +19,7 @@
         <div
           :class="{
             'btn-item': !0,
-            'active-btn': activeSetting.type === item.type,
+            'active-btn': activeSetting.id === item.id,
           }"
           v-for="(item, key) in list"
           :key="key"
@@ -78,7 +78,15 @@
             :key="subKey"
           >
             <span class="sub-menu-name">{{ sub.name }}</span>
-            <span class="sub-menu-url">跳转网页链接：{{ sub.url }}</span>
+            <span class="sub-menu-url">{{
+              sub.redirectType === 1
+                ? `跳转h5链接：${sub.url}`
+                : sub.redirectType === 2
+                ? `跳转公众号文章ID：${sub.article_id}`
+                : sub.redirectType === 3
+                ? `跳转抄经小程序页面：${sub.pagepath}`
+                : `跳转h5链接：${sub.url}`
+            }}</span>
             <div>
               <el-button
                 type="primary"
@@ -120,8 +128,54 @@
         <span>二级菜单名称</span>
         <el-input v-model="cloneSubMenu.name" autocomplete="off" />
       </div>
-      <div class="edit-row">
-        <span>跳转网页链接</span>
+      <div class="redirect-type-row">
+        <el-button
+          :type="cloneSubMenu.redirectType === 1 ? 'primary' : 'default'"
+          @click="changeRedirectType(1)"
+          >跳转h5链接</el-button
+        >
+        <el-button
+          :type="cloneSubMenu.redirectType === 2 ? 'primary' : 'default'"
+          @click="changeRedirectType(2)"
+          >跳转公众号文章</el-button
+        >
+        <el-button
+          :type="cloneSubMenu.redirectType === 3 ? 'primary' : 'default'"
+          @click="changeRedirectType(3)"
+          >跳转抄经小程序</el-button
+        >
+      </div>
+      <div class="edit-row" v-if="cloneSubMenu.redirectType === 1">
+        <span>跳转h5链接</span>
+        <el-input v-model="cloneSubMenu.url" autocomplete="off" />
+      </div>
+      <div class="edit-row" v-if="cloneSubMenu.redirectType === 2">
+        <span>公众号文章,填写ID</span>
+        <el-input
+          v-model="cloneSubMenu.article_id"
+          autocomplete="off"
+          type="number"
+          @input="
+            () => {
+              this.$forceUpdate();
+            }
+          "
+        />
+      </div>
+      <div class="edit-row" v-if="cloneSubMenu.redirectType === 3">
+        <span>跳转小程序页面（询问开发）</span>
+        <el-input
+          v-model="cloneSubMenu.pagepath"
+          autocomplete="off"
+          @input="
+            () => {
+              this.$forceUpdate();
+            }
+          "
+        />
+        <span style="margin-top: 10px;"
+          >备用跳转链接（用户未使用新版微信时跳转）</span
+        >
         <el-input v-model="cloneSubMenu.url" autocomplete="off" />
       </div>
       <div slot="footer" class="dialog-footer">
@@ -314,8 +368,56 @@ export default {
       this.subMenuKey = subKey; // 记录编辑的二级菜单的下标
       this.menuKey = key; // 记录一级菜单的下标
       if (!this.cloneSubMenu.type) this.cloneSubMenu.type = 'view';
+      if (!this.cloneSubMenu.redirectType) this.cloneSubMenu.redirectType = 1; // 1h5 2公众号文章 3跳转小程序
+    },
+    changeRedirectType(type) {
+      if (type === 1) {
+        this.cloneSubMenu.type = 'view';
+        this.cloneSubMenu.redirectType = 1;
+        this.cloneSubMenu.article_id = '';
+        this.cloneSubMenu.pagepath = '';
+        this.cloneSubMenu.appid = '';
+      } else if (type === 2) {
+        this.cloneSubMenu.type = 'article_id';
+        this.cloneSubMenu.redirectType = 2;
+        this.cloneSubMenu.pagepath = '';
+        this.cloneSubMenu.appid = '';
+        this.cloneSubMenu.url = '';
+      } else if (type === 3) {
+        this.cloneSubMenu.type = 'miniprogram';
+        this.cloneSubMenu.redirectType = 3;
+        this.cloneSubMenu.article_id = '';
+        this.cloneSubMenu.pagepath = '';
+        this.cloneSubMenu.appid = 'wx6adb6feee35a0077';
+      }
+      this.$forceUpdate();
+    },
+    validateSubSave(subMenu) {
+      if (subMenu.redirectType === 1 && !subMenu.url) {
+        this.$message({
+          message: '请填写跳转链接',
+          type: 'error',
+        });
+        return false;
+      }
+      if (subMenu.redirectType === 2 && !subMenu.article_id) {
+        this.$message({
+          message: '请填写公众号文章ID',
+          type: 'error',
+        });
+        return false;
+      }
+      if (subMenu.redirectType === 3 && (!subMenu.pagepath || !subMenu.url)) {
+        this.$message({
+          message: '请填写小程序页面和备选链接',
+          type: 'error',
+        });
+        return false;
+      }
+      return true;
     },
     saveSubEditMenu() {
+      if (!this.validateSubSave(this.cloneSubMenu)) return;
       if (this.isEditSubMenu) {
         this.activeSetting.menuJson.menu.button[this.menuKey].sub_button[
           this.subMenuKey
@@ -325,7 +427,7 @@ export default {
           this.cloneSubMenu
         );
       }
-
+      console.log(this.activeSetting, 'save');
       seeFetch('promo/wx_menu/edit', { ...this.activeSetting }).then(res => {
         this.dialogEditSubMenuVisible = !1;
         this.$message({
@@ -512,5 +614,8 @@ export default {
   span {
     margin-bottom: 10px;
   }
+}
+.redirect-type-row {
+  margin: 20px 0 10px 0;
 }
 </style>
