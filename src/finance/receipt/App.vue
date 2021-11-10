@@ -17,6 +17,9 @@
         <p class="tips-item">
           4、申请过程中请注意保证信息的正确性，因为信息填写错误导致的发票开具、将不能重开
         </p>
+        <p class="tips-item">
+          5、开票金额由系统自动生成已经提现的订单且三个月内的订单金额
+        </p>
       </div>
       <div class="status">
         <div
