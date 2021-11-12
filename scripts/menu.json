@@ -1255,5 +1255,41 @@
         }
       }
     ]
+  },
+  {
+    "path": "/tool",
+    "component": true,
+    "name": "tool",
+    "meta": {
+      "title": "工具",
+      "icon": "fa-circle",
+      "noCache": true
+    },
+    "children": [
+      {
+        "path": "image",
+        "name": "tool-image",
+        "component": true,
+        "meta": { "title": "上传图片", "noCache": true }
+      },
+      {
+        "path": "file",
+        "name": "tool-file",
+        "component": true,
+        "meta": { "title": "上传文件", "noCache": true }
+      },
+      {
+        "path": "open-install-url",
+        "name": "tool-open-install-url",
+        "component": true,
+        "meta": { "title": "生成 OpenInstall 链接", "noCache": true }
+      },
+      {
+        "path": "open-short-link",
+        "name": "tool-open-short-link",
+        "component": true,
+        "meta": { "title": "生成短链接", "noCache": true }
+      }
+    ]
   }
 ]

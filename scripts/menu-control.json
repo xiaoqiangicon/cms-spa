@@ -478,5 +478,21 @@
   {
     "key": "oprule-treat",
     "title": "用户管理 >>> 运营策略"
+  },
+  {
+    "key": "tool-image",
+    "title": "工具 >>> 上传图片"
+  },
+  {
+    "key": "tool-file",
+    "title": "工具 >>> 上传文件"
+  },
+  {
+    "key": "tool-open-install-url",
+    "title": "工具 >>> 生成 OpenInstall 链接"
+  },
+  {
+    "key": "tool-open-short-link",
+    "title": "工具 >>> 生成短链接"
   }
 ]

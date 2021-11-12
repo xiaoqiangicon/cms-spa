@@ -971,4 +971,39 @@ export default [
       },
     ],
   },
+  {
+    path: '/tool',
+    name: 'tool',
+    component: Layout,
+    meta: {
+      title: '常用工具',
+      icon: 'fa-circle',
+    },
+    children: [
+      {
+        path: '/tool/image',
+        component: () => import('../tool/upload/image/App'),
+        name: 'tool-image',
+        meta: { title: '上传图片', noCache: true },
+      },
+      {
+        path: '/tool/file',
+        component: () => import('../tool/upload/file/App'),
+        name: 'tool-file',
+        meta: { title: '上传文件', noCache: true },
+      },
+      {
+        path: '/tool/open-install-url',
+        component: () => import('../tool/link/open-install-url/App'),
+        name: 'tool-open-install-url',
+        meta: { title: '生成 OpenInstall 链接', noCache: true },
+      },
+      {
+        path: '/tool/open-short-link',
+        component: () => import('../tool/link/short-link/App'),
+        name: 'tool-open-short-link',
+        meta: { title: '生成短链接', noCache: true },
+      },
+    ],
+  },
 ];
