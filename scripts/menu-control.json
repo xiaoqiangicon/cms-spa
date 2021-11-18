@@ -494,5 +494,13 @@
   {
     "key": "tool-open-short-link",
     "title": "工具 >>> 生成短链接"
+  },
+  {
+    "key": "work-manage",
+    "title": "业务管理 >>> 项目管理"
+  },
+  {
+    "key": "work-edit",
+    "title": "业务管理 >>> 添加 / 编辑项目"
   }
 ]

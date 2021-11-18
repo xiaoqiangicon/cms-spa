@@ -1291,5 +1291,33 @@
         "meta": { "title": "生成短链接", "noCache": true }
       }
     ]
+  },
+  {
+    "path": "/work",
+    "component": true,
+    "name": "work",
+    "meta": {
+      "title": "业务管理",
+      "icon": "fa-circle",
+      "noCache": true
+    },
+    "children": [
+      {
+        "path": "manage",
+        "name": "work-manage",
+        "component": true,
+        "meta": { "title": "项目管理", "noCache": true }
+      },
+      {
+        "path": "edit/:id",
+        "component": true,
+        "name": "work-edit",
+        "meta": {
+          "title": "添加 / 编辑项目",
+          "noCache": true
+        },
+        "hidden": true
+      }
+    ]
   }
 ]

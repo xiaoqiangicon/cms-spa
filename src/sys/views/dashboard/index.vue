@@ -66,7 +66,8 @@ const options = {
 export default {
   name: 'Dashboard',
   mounted() {
-    window.particlesJS('particles-js', options);
+    // 去掉首页动画
+    // window.particlesJS('particles-js', options);
 
     // 从其他页面返回的时候会不显示
     setTimeout(() => {

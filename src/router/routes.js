@@ -237,6 +237,30 @@ export default [
     ],
   },
   {
+    path: '/work',
+    name: 'work',
+    component: Layout,
+    meta: {
+      title: '业务管理',
+      icon: 'fa-circle',
+    },
+    children: [
+      {
+        path: 'manage',
+        component: () => import('../work/manage/App'),
+        name: 'work-manage',
+        meta: { title: '项目管理', noCache: true },
+      },
+      {
+        path: 'edit/:id',
+        component: () => import('../work/edit/App.vue'),
+        name: 'work-edit',
+        meta: { title: '添加 / 编辑项目', noCache: true },
+        hidden: !0,
+      },
+    ],
+  },
+  {
     path: '/temple',
     component: Layout,
     redirect: '/temple/super',
