@@ -110,6 +110,7 @@
               </div>
             </template>
           </el-table-column>
+          <el-table-column prop="area" label="大区" />
           <el-table-column prop="statusText" label="状态" />
           <el-table-column prop="typeText" label="类型" />
           <el-table-column prop="amount" label="金额" />
