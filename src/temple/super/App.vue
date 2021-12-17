@@ -186,23 +186,25 @@ export default {
         that.tableLoading = false;
       });
       // 获取寺院列表
-      seeFetch('temple/super/templeList', { isTest: 1, verify: -1 }).then(
-        listRes => {
-          if (!listRes.success) {
-            Notification({
-              title: '提示',
-              message: listRes.message,
-            });
-            return;
-          }
-          /* eslint no-param-reassign: "error" */
-          this.allTempleList = listRes.data.map(item => {
-            item.id = String(item.id);
-            item.name = `${item.id} - ${item.name}`;
-            return item;
+      seeFetch('temple/super/templeList', {
+        isTest: 1,
+        verify: -1,
+        all: 1,
+      }).then(listRes => {
+        if (!listRes.success) {
+          Notification({
+            title: '提示',
+            message: listRes.message,
           });
+          return;
         }
-      );
+        /* eslint no-param-reassign: "error" */
+        this.allTempleList = listRes.data.map(item => {
+          item.id = String(item.id);
+          item.name = `${item.id} - ${item.name}`;
+          return item;
+        });
+      });
       // 获取可绑定的cms账号
       seeFetch('temple/super/getAccountList', {}).then(res => {
         if (res.success) {

@@ -1,0 +1,12 @@
+import './list';
+import './tagList';
+import './auth';
+import './updateTag';
+import './managerList';
+import './delManager';
+import './userList';
+import './unlock';
+import './allowOp';
+import './close';
+import './templeUpdate';
+import './userSave';

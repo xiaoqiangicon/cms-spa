@@ -1,21 +1,28 @@
 <template>
   <div>
-    <div class="dp-inline-block">
+    <div class="dp-inline-block upload-container">
       <div
         v-for="(image, index) in images"
         :key="image"
-        class="image"
+        class="image upload-image-content"
         @click="delImage(index)"
       >
-        <img :src="image + '?imageMogr2/strip'" class="image-img" />
+        <img
+          :src="image + '?imageMogr2/strip'"
+          class="image-img upload-image"
+        />
         <button class="clean image-close">
           X
         </button>
       </div>
-      <div v-show="!hideUpload" ref="upload" class="image cs-pointer">
+      <div
+        v-show="!hideUpload"
+        ref="upload"
+        class="image cs-pointer upload-icon-container"
+      >
         <img
           class="image-img"
-          src="https://pic.zizaihome.com/0f919be8-308e-11e8-b78b-00163e0c001e.png"
+          src="http://imgs.zizaihome.com/0f919be8-308e-11e8-b78b-00163e0c001e.png"
         />
       </div>
     </div>

@@ -97,22 +97,26 @@
       </span>
     </el-dialog>
     <el-dialog title="新增子项目" :visible.sync="addDialogVisible" width="40%">
-      <el-select
-        v-model="contents"
-        v-loading="!buddhistList.length"
-        filterable
-        multiple
-        placeholder="请填写关键词和ID搜索"
-        style="width: 70%;"
-        value-key="label"
-      >
-        <el-option
-          v-for="item in buddhistList"
-          :key="item.label"
-          :label="item.label"
-          :value="item"
-        />
-      </el-select>
+      <div>
+        <el-input
+          v-model="searchCommodity"
+          style="width: 80%;"
+          type="number"
+          @mousewheel.native.prevent
+          placeholder="请输入子项目id查找选择"
+        ></el-input>
+        <el-button style="width: 15%;" @click="addCommodity">查找</el-button>
+      </div>
+      <div class="commodity-list">
+        <el-tag
+          closable
+          v-for="(item, key) in contents"
+          :key="item.id"
+          @close="delCommodity(key)"
+          style="margin: 10px 10px 0 0"
+          >{{ item.label }}</el-tag
+        >
+      </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="addConfirm">确认添加</el-button>
       </span>
@@ -172,11 +176,13 @@ export default {
       contents: [], // 选择新增的子项目
       pid: '', // 转交的项目id
       saveLoading: !1,
+      searchCommodity: '', // 搜索子项目id
+      commodityList: [], // 选中的
     };
   },
   created() {
     this.id = parseInt(this.$route.params.id, 10);
-    this.getNameList();
+    // this.getNameList();
     this.getManagerList();
     if (this.id) {
       this.getDetail();
@@ -244,6 +250,27 @@ export default {
           });
         }
       });
+    },
+    addCommodity() {
+      let { searchCommodity } = this;
+      if (!searchCommodity) return;
+
+      seeFetch('work/edit/getCommodity', { commodityId: searchCommodity }).then(
+        res => {
+          this.searchCommodity = '';
+          if (res.success) {
+            this.contents.push(res.data);
+          } else {
+            Notification({
+              title: '提示',
+              message: res.msg,
+            });
+          }
+        }
+      );
+    },
+    delCommodity(key) {
+      this.contents.splice(key, 1);
     },
     deliver(row) {
       this.deliverDialogVisible = !0;
@@ -324,6 +351,13 @@ export default {
       // this.getNameList();  太卡了，直接放在create里面请求
     },
     addConfirm() {
+      if (!this.contents.length) {
+        Notification({
+          title: '提示',
+          message: '请至少添加一个子项目',
+        });
+        return;
+      }
       if (!this.id) {
         this.list = [...this.list, ...this.contents]; // 新建时须把刚加的显示出来
         this.addDialogVisible = !1;
@@ -396,6 +430,22 @@ export default {
 <style>
 .el-input--small .el-input__inner {
   height: 36px !important;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  -o-appearance: none !important;
+  -ms-appearance: none !important;
+  appearance: none !important;
+  margin: 0;
+}
+input[type='number'] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  -o-appearance: textfield;
+  -ms-appearance: textfield;
+  appearance: textfield;
 }
 </style>
 

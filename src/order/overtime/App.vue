@@ -117,12 +117,14 @@ export default {
       });
     },
     fetchTempleList() {
-      seeFetch('order/overtime/templeList', { isTest: 0, verify: -1 }).then(
-        res => {
-          this.templeList = res.data;
-          this.loading = !1;
-        }
-      );
+      seeFetch('order/overtime/templeList', {
+        isTest: 0,
+        verify: -1,
+        all: 1,
+      }).then(res => {
+        this.templeList = res.data;
+        this.loading = !1;
+      });
     },
     importOrder() {
       let templeId = this.templeId;
