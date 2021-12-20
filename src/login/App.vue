@@ -109,8 +109,9 @@ export default {
   created() {
     if (urlParams.isFromFS) {
       window.location.replace(
-        'https://open.feishu.cn/open-apis/authen/v1/user_auth_page_beta?app_id=cli_9f72b88be769900d&redirect_uri=http%3A%2F%2Fcms.miaoyan.org%2FfeishuLogin&state='
+        'https://open.feishu.cn/open-apis/authen/v1/index?app_id=cli_9f72b88be769900d&redirect_uri=http%3A%2F%2Fcms.miaoyan.org%2FfeishuLogin&state='
       );
+      window.h5sdk.error(error => console.log(error));
     }
     this.getValidateImg();
   },

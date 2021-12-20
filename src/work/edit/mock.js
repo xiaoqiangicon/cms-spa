@@ -121,3 +121,9 @@ export const managerList = {
     },
   ],
 };
+
+export const getCommodity = {
+  errorCode: 0,
+  msg: '',
+  data: { id: 123, name: '佛事名' },
+};

@@ -280,19 +280,22 @@ export default [
         meta: { title: '寺院通知', noCache: true },
       },
       {
-        path: '/temple/verify',
+        path: 'verify',
         name: 'temple-verify',
-        meta: { title: '寺院审核' },
+        component: () => import('../temple/verify/App.vue'),
+        meta: { title: '寺院审核', noCache: true },
       },
       {
-        path: '/temple/certification',
+        path: 'list',
         name: 'temple-certification',
-        meta: { title: '寺院列表' },
+        component: () => import('../temple/temple-list/App.vue'),
+        meta: { title: '寺院列表', noCache: true },
       },
       {
-        path: '/finance/verifyIndex',
+        path: 'financeVerify',
         name: 'finance-verifyIndex',
-        meta: { title: '善款资料审核' },
+        component: () => import('../temple/finance-verify/App.vue'),
+        meta: { title: '善款资料审核', noCache: true },
       },
       {
         path: 'comment',
