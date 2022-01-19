@@ -420,6 +420,27 @@ export default [
     ],
   },
   {
+    path: '/purchase',
+    component: Layout,
+    name: 'purchase',
+    meta: { title: '采购管理', icon: 'fa-circle', noCache: true },
+    children: [
+      {
+        path: '/purchase/info',
+        component: () => import('../purchase/info/App.vue'),
+        name: 'purchase-info',
+        meta: { title: '采购信息', noCache: true },
+      },
+      {
+        path: '/purchase/info/:id',
+        component: () => import('../purchase/enter/App.vue'),
+        name: 'purchase-info-id',
+        meta: { title: '采购信息录入', noCache: true },
+        hidden: !0,
+      },
+    ],
+  },
+  {
     path: '/cooperation',
     component: Layout,
     name: 'cooperation',

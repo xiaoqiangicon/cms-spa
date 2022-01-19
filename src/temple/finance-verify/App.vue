@@ -34,7 +34,7 @@
         <el-table-column
           min-width="60px"
           prop="id"
-          label="寺院id"
+          label="Id"
           :align="'center'"
         />
         <el-table-column
@@ -159,11 +159,11 @@ export default {
       this.detail = row;
     },
     verify() {
-      let { id, type } = this.detail;
+      let { id } = this.detail;
       seeFetch('/temple/financeVerify/verify', {
         templeBankId: id,
         examineMessage: '',
-        type,
+        type: 1,
       }).then(res => {
         if (res.success) {
           this.detailDialog = !1;
@@ -191,11 +191,11 @@ export default {
           alert('请输入审核不通过原因');
           return;
         }
-        let { id, type } = this.detail;
+        let { id } = this.detail;
         seeFetch('/temple/financeVerify/verify', {
           templeBankId: id,
           examineMessage: value,
-          type,
+          type: 2,
         }).then(res => {
           if (res.success) {
             this.detailDialog = !1;

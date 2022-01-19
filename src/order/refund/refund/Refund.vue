@@ -2,6 +2,7 @@
   <el-card>
     <div>
       <el-date-picker
+        v-if="!1"
         v-model="filterStartDate"
         align="right"
         type="date"
@@ -12,6 +13,7 @@
         @change="doSearch"
       />
       <el-date-picker
+        v-if="!1"
         v-model="filterEndDate"
         align="right"
         type="date"
@@ -21,6 +23,14 @@
         style="width: 200px;"
         @change="doSearch"
       />
+      <el-input
+        v-model="filterWxTransactionId"
+        placeholder="外部订单号搜索"
+        size="small"
+        style="width: 250px"
+      >
+        <el-button slot="append" icon="el-icon-search" @click="doSearch" />
+      </el-input>
       <el-input
         v-model="filterSearch"
         placeholder="善缘号搜索"
@@ -92,6 +102,7 @@ export default {
       filterStartDate: '',
       filterEndDate: '',
       filterSearch: '',
+      filterWxTransactionId: '',
       loading: !0,
       page: 1,
       total: 0,
@@ -109,6 +120,7 @@ export default {
         startDate: this.filterStartDate,
         endDate: this.filterEndDate,
         search: this.filterSearch,
+        wxTransactionId: this.filterWxTransactionId,
         page: this.page,
       }).then(res => {
         if (!res.success) {

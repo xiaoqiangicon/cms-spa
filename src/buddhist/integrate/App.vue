@@ -162,6 +162,7 @@ export default {
         isTest: -1,
         tagId: 0,
         verify: -1,
+        all: 1,
       }).then(res => {
         if (!res.success) {
           Notification({

@@ -29,7 +29,7 @@
         style="width: 100%"
       >
         <el-table-column label="项目名称" prop="name" :align="'center'" />
-        <el-table-column label="包含子项目" :align="'center'">
+        <el-table-column label="包含子项目" :align="'center'" :width="300">
           <template slot-scope="scope">
             <div
               style="display: flex;align-items: center;justify-content: center;"
@@ -37,7 +37,7 @@
               <div class="blue-icon" style="margin: 0 6px 0 0;">
                 {{ scope.row.contentIdNum }}个
               </div>
-              <div>
+              <div style="display: flex; flex-wrap: wrap;">
                 <p
                   style="margin: 0;"
                   v-for="(item, key) in scope.row.contentIdList
@@ -45,7 +45,7 @@
                     : []"
                   :key="key"
                 >
-                  {{ item }}
+                  {{ item }}{{ item ? '，' : '' }}
                 </p>
               </div>
             </div>

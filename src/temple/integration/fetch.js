@@ -16,6 +16,7 @@ const preHandle = req => {
   req.isTest = -1;
   req.tagId = 0;
   req.verify = -1;
+  req.all = 1;
 };
 
 // 获取寺院列表

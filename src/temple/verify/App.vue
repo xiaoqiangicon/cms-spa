@@ -30,8 +30,8 @@
           @change="onChangeDatePicker"
         />
         <div style="display: flex;align-items: center;">
-          <span style="display: inline-block; width: 100px;">佛事名搜索</span>
-          <el-input placeholder="请输入佛事名" v-model="content"></el-input>
+          <span style="display: inline-block; width: 100px;">寺院名搜索</span>
+          <el-input placeholder="请输入寺院名" v-model="content"></el-input>
         </div>
       </div>
 
