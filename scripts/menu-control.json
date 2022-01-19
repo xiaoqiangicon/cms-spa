@@ -220,6 +220,14 @@
     "title": "善款中心 >>> 用户提现申请"
   },
   {
+    "key": "purchase-info",
+    "title": "采购管理 >>> 采购信息"
+  },
+  {
+    "key": "purchase-info-id",
+    "title": "采购管理 >>> 采购信息录入"
+  },
+  {
     "key": "cooperation-projectManage",
     "title": "第三方项目 >>> 项目管理"
   },
