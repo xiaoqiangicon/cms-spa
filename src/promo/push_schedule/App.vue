@@ -71,10 +71,10 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column min-width="60px" label="状态">
+        <el-table-column min-width="60px" label="是否展示">
           <template slot-scope="scope">
-            <span v-if="scope.row.isShow === 1">已推送</span>
-            <span v-else>待推送</span>
+            <span v-if="scope.row.isShow === 1">是</span>
+            <span v-else>否</span>
           </template>
         </el-table-column>
         <el-table-column min-width="70px" label="操作">
