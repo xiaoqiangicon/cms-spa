@@ -100,7 +100,10 @@
       <el-table-column prop="templeName" label="寺院名称" />
       <el-table-column label="推广服务费" :align="'center'">
         <template slot-scope="scope">
-          {{ Number(100 * scope.row.rate).toFixed(2) }}%
+          <p>{{ '当前' + Number(100 * scope.row.rate).toFixed(2) }}%</p>
+          <p v-if="scope.row.status !== 0">
+            {{ '审核' + Number(100 * scope.row.verifyRate).toFixed(2) }}%
+          </p>
         </template>
       </el-table-column>
       <el-table-column
