@@ -82,7 +82,7 @@
         </el-table-column>
       </el-table>
     </el-card>
-    <el-dialog title="编辑" :visible.sync="dialogVisible" width="40%">
+    <el-dialog title="编辑" :visible.sync="dialogVisible" width="50%">
       <div class="express">
         <p class="row-title" style="margin-top: 0;">物流单号</p>
         <div class="express-info">
@@ -141,7 +141,7 @@
         </el-select>
         <div class="consignee-info" v-if="form.templeType !== 3">
           <div class="consignee-top">
-            <div class="consignee-row">
+            <div class="consignee-row" style="margin-right: 10px;">
               <p class="consignee-row-title">收件人姓名</p>
               <el-input v-model="form.receiverName"></el-input>
             </div>
@@ -181,7 +181,7 @@
             </el-select>
           </el-input>
           <div
-            clas="purchase"
+            class="purchase"
             v-for="(item, key) in form.purchasingList"
             :key="key"
           >
@@ -194,11 +194,11 @@
             <el-input
               class="purchase-item"
               v-model="item.money"
-              style="width: 18%"
+              style="width: 18%;margin-left: 5px;"
               placeholder="金额(元)"
               type="number"
             ></el-input
-            ><span>元</span>
+            ><span style="margin: 10px 5px 0;">元</span>
             <el-input
               class="purchase-item"
               v-model="item.num"
@@ -209,7 +209,7 @@
             <el-select
               v-model="item.unit"
               placeholder="请选择"
-              style="width: 16%"
+              style="width: 16%;margin: 10px 5px 0;"
               filterable
             >
               <el-option
@@ -219,6 +219,9 @@
                 :value="item"
               />
             </el-select>
+            <el-button style="margin-top: 10px;" @click="delPurchase(key)"
+              >删除</el-button
+            >
           </div>
           <el-button class="add-purchase" type="primary" @click="addPurchase"
             >添加物品</el-button
@@ -437,6 +440,16 @@ export default {
     changeTemple(templeInfo) {
       this.form.templeName = templeInfo.temple_name;
       this.form.templeId = templeInfo.id;
+
+      seeFetch('purchase/enter/templeContent', {
+        templeId: templeInfo.id,
+      }).then(res => {
+        if (res.success) {
+          this.form.receiverName = res.data.receiverName;
+          this.form.receiverPhone = res.data.receiverName;
+          this.form.receiverAddress = res.data.receiverAddress;
+        }
+      });
     },
     addPurchase() {
       this.form.purchasingList.push({
@@ -445,6 +458,9 @@ export default {
         num: '',
         unit: '',
       });
+    },
+    delPurchase(index) {
+      this.form.purchasingList.splice(index, 1);
     },
     validate() {
       if (!this.form.expressNo) {
@@ -565,6 +581,7 @@ p {
 }
 .purchase {
   display: flex;
+  align-items: center;
 }
 .express-status {
   margin-top: 8px;
