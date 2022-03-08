@@ -316,6 +316,10 @@
     "title": "订单管理 >>> 寺院监控"
   },
   {
+    "key": "order-templeOrder",
+    "title": "订单管理 >>> 寺院订单"
+  },
+  {
     "key": "order-statisticsDetail",
     "title": "订单管理 >>> 订单查询"
   },
