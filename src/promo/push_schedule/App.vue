@@ -43,6 +43,12 @@
             <span v-else>不推送</span>
           </template>
         </el-table-column>
+        <el-table-column min-width="60px" label="单位名称">
+          <template slot-scope="scope">
+            <p style="margin: 0 0 10px 0;">{{ scope.row.templeId }}</p>
+            <p style="margin: 0;">{{ scope.row.templeName }}</p>
+          </template>
+        </el-table-column>
         <el-table-column
           min-width="80px"
           prop="commodityName"

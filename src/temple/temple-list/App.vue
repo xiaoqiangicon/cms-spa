@@ -108,7 +108,10 @@
           :align="'center'"
         >
           <template slot-scope="scope">
-            <div @click="showInviteManager(scope.row)">
+            <div
+              @click="showInviteManager(scope.row)"
+              style="color: #409eff; cursor: pointer;"
+            >
               <div>
                 <span
                   class="manager"
@@ -152,6 +155,9 @@
                 运营事件已关闭
               </div>
               <div class="set" @click="showUnlock(scope.row)">账号解冻</div>
+              <div class="set" @click="handleClickRemind(scope.row)">
+                转单通知
+              </div>
             </div>
           </template>
         </el-table-column>
@@ -165,6 +171,11 @@
       layout="prev, pager, next"
       style="margin-top: 40px"
       @current-change="pageChange"
+    />
+    <DialogRemind
+      :temple-id="curTempleId"
+      :visible="dialogRemindVisible"
+      @updateVisible="updateDialogRemindVisible"
     />
     <el-dialog title="资料信息" :visible.sync="detailDialogVisible">
       <el-form :model="detail" ref="form" label-position="'right'">

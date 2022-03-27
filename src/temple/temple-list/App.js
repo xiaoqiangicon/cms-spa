@@ -3,6 +3,7 @@ import seeFetch from 'see-fetch';
 import './fetch/index.js';
 import QRCode from '../../../../pro-com/src/libs-es5/qrcode';
 import Upload from '../../com/upload/Upload';
+import DialogRemind from './DialogRemind';
 
 export default {
   name: 'APP',
@@ -12,6 +13,9 @@ export default {
       name: '', // 寺院名称搜索，模糊搜索
       filterTest: '1', // 1 过滤测试寺院 0不过滤测试寺院
       status: 0, // 0 未认证 1 已认证
+      curTempleId: '', // 当前的寺院id
+      dialogRemindVisible: !1, // 转单通知dialog
+
       tagId: '', // 标签筛选
       list: [], // 列表
       tagList: [], // 标签列表
@@ -110,6 +114,7 @@ export default {
   },
   components: {
     Upload,
+    DialogRemind,
   },
   watch: {
     name(newVal) {
@@ -390,6 +395,14 @@ export default {
           }
         );
       });
+    },
+    handleClickRemind(row) {
+      const { id } = row;
+      this.curTempleId = id;
+      this.dialogRemindVisible = !0;
+    },
+    updateDialogRemindVisible(visible) {
+      this.dialogRemindVisible = visible;
     },
     pageChange(page) {
       this.pageNo = page;

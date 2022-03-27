@@ -34,9 +34,7 @@
             }
           "
         >
-          <template slot-scope="scope">
-            {{ scope.row.days }}天前
-          </template>
+          <template slot-scope="scope"> {{ scope.row.days }}天前 </template>
         </el-table-column>
         <el-table-column
           prop="count"
@@ -89,8 +87,8 @@ export default {
   name: 'App',
   data() {
     return {
-      verify: 0,
-      isTest: 0,
+      verify: 1,
+      isTest: 1,
       list: [],
       loading: !1,
     };

@@ -10,3 +10,5 @@ import './allowOp';
 import './close';
 import './templeUpdate';
 import './userSave';
+import './get_manager_list';
+import './update_manager_list';
