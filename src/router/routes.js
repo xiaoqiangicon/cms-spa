@@ -620,14 +620,29 @@ export default [
     meta: { title: '订单管理', icon: 'fa-circle', noCache: true },
     children: [
       {
-        path: '/order/templeOrderList',
+        path: 'watch',
+        component: () => import('../order/watch/App.vue'),
         name: 'order-templeOrderList',
-        meta: { title: '寺院监控' },
+        meta: {
+          title: '寺院订单',
+          noCache: true,
+        },
       },
       {
-        path: '/orderManage/statisticsDetail',
+        path: '/temple-order',
+        component: () => import('../order/temple-order/App.vue'),
+        name: 'order-templeOrder',
+        meta: { title: '寺院订单详情', noCache: true },
+        hidden: !0,
+      },
+      {
+        path: 'search',
+        component: () => import('../order/search/App.vue'),
         name: 'order-statisticsDetail',
-        meta: { title: '订单查询' },
+        meta: {
+          title: '订单查询',
+          noCache: true,
+        },
       },
       {
         path: 'overtime',
@@ -998,17 +1013,17 @@ export default [
   {
     path: '/oprule',
     name: 'oprule',
+    component: Layout,
     meta: {
       title: '用户管理',
       icon: 'fa-circle',
     },
     children: [
       {
+        path: '/oprule/user',
+        component: () => import('../user/group/App.vue'),
         name: 'oprule-group',
-        path: '/oprule/group',
-        meta: {
-          title: '用户分群',
-        },
+        meta: { title: '用户分群', noCache: true },
       },
       {
         name: 'oprule-treat',

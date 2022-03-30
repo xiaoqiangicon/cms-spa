@@ -817,17 +817,30 @@
     },
     "children": [
       {
-        "path": "/order/templeOrderList",
+        "path": "watch",
+        "component": true,
         "name": "order-templeOrderList",
         "meta": {
-          "title": "寺院监控"
+          "title": "寺院订单",
+          "noCache": true
         }
       },
       {
-        "path": "/orderManage/statisticsDetail",
+        "path": "temple-order",
+        "component": true,
+        "name": "order-templeOrder",
+        "meta": {
+          "title": "寺院订单详情",
+          "noCache": true
+        }
+      },
+      {
+        "path": "search",
+        "component": true,
         "name": "order-statisticsDetail",
         "meta": {
-          "title": "订单查询"
+          "title": "订单查询",
+          "noCache": true
         }
       },
       {
@@ -1242,7 +1255,7 @@
     "children": [
       {
         "name": "oprule-group",
-        "path": "/oprule/group",
+        "path": "/oprule/user",
         "meta": {
           "title": "用户分群"
         }

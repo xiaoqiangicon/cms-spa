@@ -141,22 +141,26 @@
           </div>
           <hr />
           <div class="detail-item">
-            <span>手机号码：</span><span>{{ detail.name }}</span>
+            <span>手机号码：</span><span>{{ detail.mobile }}</span>
           </div>
           <hr />
           <div class="detail-item">
             <span>注册人：</span
-            ><span data-ele="registrant">{{ detail.name }}</span>
+            ><span data-ele="registrant">{{ detail.registrant }}</span>
           </div>
           <hr />
           <div class="detail-item">
             <span>手机号码：</span
-            ><span data-ele="registrant-mobile">{{ detail.name }}</span>
+            ><span data-ele="registrant-mobile">{{
+              detail.registrantMobile
+            }}</span>
           </div>
           <hr />
           <div class="detail-item">
             <span>寺院来源：</span
-            ><span data-ele="source">{{ detail.name }}</span>
+            ><span data-ele="source">{{
+              detail.registrSource && detail.registrSource.substring(1)
+            }}</span>
           </div>
           <hr />
         </el-tab-pane>
@@ -447,6 +451,11 @@ export default {
           this.detail = res.data;
           console.log(res.data, 'detail');
           this.dialogVisible = !0;
+          this.uploadRegister = [res.data.placeNoPic];
+          this.uploadOther = [res.data.otherCertificatePic];
+          this.uploadCard = [res.data.idCardPic];
+          this.uploadCooperate = [res.data.certificatePic];
+          this.uploadAccount = [res.data.bankPic];
         } else {
           Notification({
             title: '提示',
