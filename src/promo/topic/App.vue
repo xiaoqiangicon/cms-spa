@@ -21,6 +21,7 @@
           stripe
           style="width: 100%"
         >
+          <el-table-column prop="id" label="专题ID" />
           <el-table-column prop="title" label="专题名称" />
           <el-table-column
             prop="addTime"
