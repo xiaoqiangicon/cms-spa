@@ -775,10 +775,16 @@ export default [
     name: 'buddhist',
     meta: { title: '佛事管理', icon: 'fa-circle', noCache: true },
     children: [
+      // {
+      //   name: 'buddhist-verify',
+      //   path: '/buddhist/verify',
+      //   meta: { title: '佛事审核' },
+      // },
       {
+        path: 'buddhist/verify',
         name: 'buddhist-verify',
-        path: '/buddhist/verify',
-        meta: { title: '佛事审核' },
+        component: () => import('../buddhist/verify/App.vue'),
+        meta: { title: '佛事审核', noCache: true },
       },
       {
         name: 'buddhist-template',

@@ -44,6 +44,7 @@ import masterProject from '../master/project/state';
 
 // 佛事管理
 import buddhistIntegrate from '../buddhist/integrate/state';
+import buddhistVerify from '../buddhist/verify/state';
 
 // 胜乐账户人员管理
 import slPromoStaff from '../sl-promo/staff/state';
@@ -98,6 +99,7 @@ const store = new Vuex.Store({
 
     // 佛事管理
     buddhistIntegrate,
+    buddhistVerify,
 
     // 胜乐账户人员管理
     slPromoStaff,

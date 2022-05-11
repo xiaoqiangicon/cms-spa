@@ -1,0 +1,14 @@
+import './cacheList';
+import './changeAuth';
+import './getCommodityNameList';
+import './getGroupList';
+import './getManager';
+import './getTempleList';
+import './getTempleNameList';
+import './setIsPrivate';
+import './setManager';
+import './updateHandlingFee';
+import './updatePromotionSubdivide';
+import './updateWebsite';
+import './getCommoditySubivideList';
+import './addAndUpdateSubdividePer';
