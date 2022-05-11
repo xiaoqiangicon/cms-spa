@@ -151,6 +151,7 @@
           <el-option label="增值服务 - 实景探寺" :value="2" />
           <el-option label="增值服务 - 微供奉" :value="3" />
           <el-option label="法师祈福" :value="5" />
+          <el-option label="提现打赏" :value="6" />
           <el-option label="分销推广" :value="7" />
           <el-option label="文章打赏" :value="8" />
           <el-option label="千寺祈福" :value="9" />
@@ -280,6 +281,13 @@
           <el-table-column prop="orderCount" label="完成订单数量" />
           <el-table-column prop="amount" label="订单金额（元）" />
           <el-table-column prop="faShiProfit" label="法师收益金额（元）" />
+          <el-table-column prop="profit" label="营收金额（元）" />
+        </el-table>
+      </div>
+      <!-- 提现打赏 -->
+      <div v-else-if="filterType === 6" class="body">
+        <el-table v-loading="loading" :data="list" style="width: 100%">
+          <el-table-column prop="templeName" label="寺院名称" />
           <el-table-column prop="profit" label="营收金额（元）" />
         </el-table>
       </div>
