@@ -35,6 +35,7 @@ export default {
       refundVisible: !1,
       content: '',
       uploadImages: [],
+      isRefunding: false,
     };
   },
   components: {
@@ -187,6 +188,8 @@ export default {
       this.dialogVisble = !1;
     },
     refund() {
+      if (this.isRefunding) return;
+      this.isRefunding = true;
       seeFetch('order/search/refund', {
         orderId: this.detail.orderNo,
         content: this.content,
@@ -200,6 +203,7 @@ export default {
         } else {
           alert('出错了');
         }
+        this.isRefunding = false;
       });
     },
     setOvertimeOrder() {

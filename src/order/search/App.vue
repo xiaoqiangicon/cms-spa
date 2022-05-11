@@ -275,7 +275,9 @@
           <Upload :images="uploadImages" :multiple="!0" />
         </div>
         <div class="">
-          <el-button type="primary" @click="refund">确定</el-button>
+          <el-button type="primary" @click="refund" :loading="isRefunding"
+            >确定</el-button
+          >
           <el-button>取消</el-button>
         </div>
       </el-dialog>
