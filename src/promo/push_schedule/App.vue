@@ -254,6 +254,7 @@
 </template>
 
 <script>
+import { Notification } from 'element-ui';
 import seeFetch from 'see-fetch';
 import './fetch';
 import Upload from 'com/upload/Upload';
