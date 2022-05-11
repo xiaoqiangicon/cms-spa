@@ -130,6 +130,7 @@ export default {
     addRegiTimeFil() {
       this.detail.registerTime = '';
       this.detail.registerType = 0;
+      this.$forceUpdate();
     },
     delRegiTimeFil() {
       this.detail.registerTime = '';
@@ -308,7 +309,7 @@ export default {
 
         this.detail.userList.forEach(user => {
           if (user.id) {
-            default_userId += user.id;
+            default_userId = default_userId + user.id + ',';
           }
         });
         this.detail.default_userId = default_userId;

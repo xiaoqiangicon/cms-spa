@@ -3,6 +3,7 @@
     <el-card>
       <div class="header">
         <el-select
+          style="width: 50%"
           v-model="detail"
           size="small"
           placeholder="请选择用户分群"
@@ -13,7 +14,7 @@
           <el-option
             v-for="item in list"
             :key="item.id"
-            :label="item.name"
+            :label="item.name + '（' + item.total + '人）'"
             :value="item"
           />
         </el-select>
