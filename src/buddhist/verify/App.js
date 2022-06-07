@@ -211,6 +211,11 @@ export default {
       this.id = item.id;
       this.managerDialog = !0;
     },
+    toWxDetail(row) {
+      window.open(
+        `https://wx.zizaihome.com/commodity/commodityAuth?commodityId=${row.id}`
+      );
+    },
     showSub(item) {
       if (!item.isManager || !item.subList.length) {
         item.subIdList = [];

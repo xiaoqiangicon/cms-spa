@@ -62,12 +62,13 @@
           label="修改时间"
           :align="'center'"
         />
-        <el-table-column
-          min-width="100px"
-          prop="name"
-          label="佛事标题"
-          :align="'center'"
-        />
+        <el-table-column label="佛事标题" :align="'center'">
+          <template slot-scope="scope">
+            <div class="set" @click="toWxDetail(scope.row)">
+              {{ scope.row.name }}
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column
           width="80px"
           prop="templeId"
