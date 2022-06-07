@@ -1,99 +1,239 @@
 <template>
   <div class="container">
     <el-card>
-      <div class="tips-box">
-        <p class="tips-item">1.需要统计请在渠道统计给长连接增加参数</p>
-        <p class="tips-item">
-          2.需要Openinistall穿透在Openinistall后台转换长连接
-        </p>
-        <p class="tips-item">
-          3.此功能仅限把长链接转换为短网址：短信、私域流量等地方使用
-        </p>
-        <p class="tips-item">
-          4.此页面不记录已生成的短链，请用飞书文档或飞书笔记规范记录已经投放出去的链接内容。
-        </p>
-        <p class="tips-item">
-          5.请使用时注意相关渠道的规则，防止短链接被使用渠道封禁。
-        </p>
+      <div class="filter">
+        <div class="filter-left">
+          <el-input v-model="content" placeholder="支持搜索标题和链接"
+            ><el-button slot="append" icon="el-icon-search" @click="refresh"
+          /></el-input>
+          <el-select
+            v-model="type"
+            placeholder="渠道类型"
+            @change="refresh"
+            style="margin-left: 20px;"
+          >
+            <el-option label="线下活动" :value="1" />
+            <el-option label="短信群发" :value="2" />
+            <el-option label="专题页" :value="3" />
+          </el-select>
+        </div>
+        <div class="filter-right">
+          <el-button type="primary" @click="modify">添加</el-button>
+        </div>
       </div>
-      <span class="l-hg-32"> 打开链接 </span>&nbsp;&nbsp;&nbsp;&nbsp;
-      <el-input
-        v-model="openUrl"
-        size="small"
-        style="width: 500px;"
-      /><br /><br />
-      <span class="l-hg-32"> 微信内部链接 </span>&nbsp;&nbsp;&nbsp;&nbsp;
-      <span ref="link">{{ shortLink }}</span
-      ><br /><br />
-      <span class="l-hg-32"> 短信外部链接 </span>&nbsp;&nbsp;&nbsp;&nbsp;
-      <span ref="wxLink">{{ wxLink }}</span
-      ><br /><br />
-      <span class="l-hg-32"> 直接弹起规格链接 </span>&nbsp;&nbsp;&nbsp;&nbsp;
-      <span ref="showActionLink">{{ showActionLink }}</span
-      ><br /><br />
-      <el-button size="small" @click="make"> 生成链接 </el-button
-      >&nbsp;&nbsp;&nbsp;&nbsp;
-      <el-button v-if="shortLink" size="small" @click="copy(1)">
-        复制内部链接 </el-button
-      >&nbsp;&nbsp;&nbsp;&nbsp;
-      <el-button v-if="wxLink" size="small" @click="copy(2)">
-        复制外部链接
-      </el-button>
-      <el-button v-if="showActionLink" size="small" @click="copy(3)">
-        复制直接弹起规格链接
-      </el-button>
+      <el-table v-loading="loading" :data="list" class="table">
+        <el-table-column prop="title" label="短链标题" />
+        <el-table-column prop="typeText" label="渠道类型" />
+        <el-table-column prop="originUrl" label="原链接" />
+        <el-table-column prop="url" label="微信短链" />
+        <el-table-column prop="sms_url" label="短信短链" />
+        <el-table-column label="二维码" :align="'center'">
+          <template slot-scope="scope">
+            <span class="cur-pointer" @click="showCode(scope.row)">查看</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="createDate" label="创建时间" />
+        <el-table-column label="修改记录" :align="'center'">
+          <template slot-scope="scope">
+            <span
+              v-if="scope.row.editLog && scope.row.editLog.length"
+              class="cur-pointer"
+              @click="clickLogHistory(scope.row)"
+              >查看</span
+            >
+            <span v-else>无</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="生效时间" :align="'center'">
+          <template slot-scope="scope">
+            <span class="cur-pointer" @click="modify(scope.row)">编辑</span>
+            <span class="del" @click="delUrl(scope.row)">删除</span>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        :total="total"
+        :current-page="pageNo"
+        :page-size="pageSize"
+        background
+        layout="prev, pager, next"
+        style="margin-top: 40px"
+        @current-change="pageChange"
+      />
     </el-card>
+    <el-dialog title="修改记录" :visible.sync="modifyLogVisible" width="30%">
+      <el-table :data="historyLog" class="table">
+        <el-table-column prop="url" label="原链接" />
+        <el-table-column prop="time" label="修改时间" />
+        <el-table-column prop="editor" label="修改人" />
+      </el-table>
+    </el-dialog>
+    <el-dialog
+      :title="detail.id ? '编辑短链' : '添加短链'"
+      :visible.sync="modifyDialogVisible"
+      width="30%"
+    >
+      <div class="row">
+        <span class="row-left">标题：</span>
+        <el-input v-model="detail.title" :disabled="detail.id"></el-input>
+      </div>
+      <p class="row-tips">仅用于备份和内部管理，无其他含义。</p>
+      <div class="row">
+        <span class="row-left">渠道类型：</span>
+        <el-select
+          v-model="detail.type"
+          placeholder="渠道类型"
+          :disabled="detail.id"
+        >
+          <el-option label="线下活动" :value="1" />
+          <el-option label="短信群发" :value="2" />
+          <el-option label="专题页" :value="3" />
+        </el-select>
+      </div>
+      <p class="row-tips">仅用于备份和内部管理，无其他含义</p>
+      <div class="row">
+        <span class="row-left">原链接：</span>
+        <el-input v-model="detail.originUrl"></el-input>
+      </div>
+      <p class="row-tips">
+        1.需要统计请在渠道统计给长链接增加参数<br />2.需要OpenInstall穿透在OpenInstall后台转换长链接<br />3.请使用时注意相关渠道的规则，防止短链被使用渠道封禁。<br />4.多次修改链接，可在修改记录中查看
+      </p>
+      <el-button type="primary" @click="save" class="save-btn">保存</el-button>
+    </el-dialog>
+    <el-dialog title="微信二维码" :visible.sync="qrCodeVisible" width="30%">
+      <div class="qrcode" ref="qrCodeBox"></div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import '../../fetch/index.js';
+import './fetch/index.js';
 import seeFetch from 'see-fetch';
-import { makeTranPageLink } from '../../../../../pro-com/src/open-install';
+import QRCode from '../../../../../pro-com/src/libs-es5/qrcode';
+import { Notification } from 'element-ui';
 
 export default {
   name: 'App',
   data() {
     return {
-      openUrl: '',
-      shortLink: '',
-      wxLink: '',
-      showActionLink: '',
+      loading: false,
+      content: '',
+      type: '',
+      total: 0,
+      pageSize: 25,
+      pageNo: 1,
+      list: [],
+      modifyLogVisible: false, // 修改记录
+      historyLog: [],
+      qrCodeVisible: false,
+      modifyDialogVisible: false, // 修改
+      detail: {},
     };
   },
+  created() {
+    this.getList();
+  },
   methods: {
-    make() {
-      seeFetch('getShortUrl', { url: this.openUrl }).then(res => {
+    getList() {
+      seeFetch('getShortUrlPage', {
+        title: this.content,
+        type: this.type,
+        pageSize: this.pageSize,
+        pageNo: this.pageNo,
+      }).then(res => {
         if (res.errorCode === 0) {
-          this.shortLink = res.data.url;
-          this.wxLink = res.data.outsideUrl;
-          let openUrlArr = this.openUrl.split('?');
-          this.showActionLink =
-            openUrlArr[0] + '?' + 'isShowAction=1&' + openUrlArr[1];
+          this.list = res.data.list;
+          this.total = res.data.total;
         }
       });
     },
-    copy(type) {
-      const { link: linkEl, showActionLink: showActionLinkEl } = this.$refs;
-      const { wxLink: wxLinkEl } = this.$refs;
-      const selection = window.getSelection();
-
-      if (selection.rangeCount > 0) {
-        selection.removeAllRanges();
+    delUrl(row) {
+      this.$confirm(`确定要删除${row.title}吗？`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(() => {
+        seeFetch('delUrl', { id: row.id }).then(res => {
+          if (res.errorCode === 0) {
+            Notification({
+              title: '提示',
+              message: '删除成功',
+            });
+            this.getList();
+          } else {
+            Notification({
+              title: '提示',
+              message: '删除失败',
+            });
+          }
+        });
+      });
+    },
+    clickLogHistory(row) {
+      this.historyLog = row.editLog;
+      this.modifyLogVisible = true;
+    },
+    showCode(row) {
+      this.qrCodeVisible = true;
+      this.$nextTick(() => {
+        const { qrCodeBox } = this.$refs;
+        qrCodeBox.innerHTML = '';
+        // eslint-disable-next-line no-new
+        new QRCode(qrCodeBox, {
+          text: row.url,
+          width: 258,
+          height: 258,
+        });
+      });
+    },
+    modify(row) {
+      if (row.id) this.detail = { ...row };
+      else this.detail = {};
+      this.modifyDialogVisible = true;
+    },
+    save() {
+      let url = '';
+      let params = {};
+      if (!this.detail.title || !this.detail.type || !this.detail.originUrl) {
+        Notification({
+          title: '提示',
+          message: '请填写所有信息',
+        });
+        return;
       }
-
-      const range = window.document.createRange();
-      if (type === 1) {
-        range.selectNode(linkEl);
-      } else if (type === 2) {
-        range.selectNode(wxLinkEl);
+      if (this.detail.id) {
+        url = 'editUrl';
+        params.id = this.detail.id;
+        params.url = this.detail.originUrl;
       } else {
-        range.selectNode(showActionLinkEl);
+        url = 'addUrl';
+        params.title = this.detail.title;
+        params.url = this.detail.originUrl;
+        params.type = this.detail.type;
       }
-
-      selection.addRange(range);
-
-      window.document.execCommand('copy');
+      seeFetch(url, params).then(res => {
+        if (res.errorCode === 0) {
+          Notification({
+            title: '提示',
+            message: '保存成功',
+          });
+          this.getList();
+          this.modifyDialogVisible = false;
+        } else {
+          Notification({
+            title: '提示',
+            message: '保存失败',
+          });
+        }
+      });
+    },
+    refresh() {
+      this.pageNo = 1;
+      this.getList();
+    },
+    pageChange(page) {
+      this.pageNo = page;
+      this.getList();
     },
   },
 };
@@ -104,11 +244,45 @@ export default {
   width: 100%;
   padding: 40px 20px;
 }
-.tips-box {
-  width: 600px;
-  padding: 0px 30px;
-  margin-bottom: 40px;
-  border: 1px solid #409eff;
-  border-radius: 6px;
+
+.filter {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.filter-left {
+  display: flex;
+}
+.cur-pointer {
+  color: #409eff;
+  cursor: pointer;
+}
+.del {
+  margin-left: 6px;
+  color: #f60;
+  cursor: pointer;
+}
+
+.qrcode img {
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+.row-left {
+  flex-shrink: 0;
+  margin-right: 5px;
+  color: #333;
+}
+.row-tips {
+  margin: 5px 0 20px 0;
+  color: #999;
+}
+
+.save-btn {
+  display: block;
+  margin: 0 auto;
 }
 </style>

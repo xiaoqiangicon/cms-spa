@@ -296,7 +296,6 @@ export default {
         seeFetch('/temple/list/close', { templeId: row.id }).then(res => {
           if (res.success) {
             this.showSuccess();
-            this.getList();
           } else {
             this.showError(res.msg);
           }
@@ -409,6 +408,7 @@ export default {
       this.getList();
     },
     showSuccess() {
+      this.getList();
       Notification({
         title: '提示',
         type: 'success',
