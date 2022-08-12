@@ -2,6 +2,455 @@
   "msg": "",
   "errorCode": 0,
   "data": {
-    "menu": [{ "key": "ling-edit", "title": "" }]
+    "menu": [
+      {
+        "key": "promo-wxMenu",
+        "title": "运营事件 >>> 公众号菜单"
+      },
+      {
+        "key": "ling-index",
+        "title": "要灵灵管理 >>> 礼品管理"
+      },
+      {
+        "key": "ling-edit",
+        "title": "要灵灵管理 >>> 礼品添加 / 编辑"
+      },
+      {
+        "key": "ling-exchange",
+        "title": "要灵灵管理 >>> 兑奖管理"
+      },
+      {
+        "key": "ling-gift",
+        "title": "要灵灵管理 >>> 暴富奖品"
+      },
+      {
+        "key": "ling-send",
+        "title": "要灵灵管理 >>> 暴富发奖"
+      },
+      {
+        "key": "ling-bubble",
+        "title": "要灵灵管理 >>> 气泡广告"
+      },
+      {
+        "key": "ling-entry",
+        "title": "要灵灵管理 >>> 许愿入口"
+      },
+      {
+        "key": "ling-fate",
+        "title": "要灵灵管理 >>> 好运攻略"
+      },
+      {
+        "key": "wish-marker",
+        "title": "要灵灵管理 >>> 祈福牌管理"
+      },
+      {
+        "key": "ling-face",
+        "title": "要灵灵管理 >>> 互动发言"
+      },
+      {
+        "key": "fubi-index",
+        "title": "福币分销 >>> 福币商城"
+      },
+      {
+        "key": "promo-index",
+        "title": "运营事件 >>> 事件管理"
+      },
+      {
+        "key": "promo-index-transfer-list",
+        "title": "运营事件 >>> 事件管理 / 转单列表"
+      },
+      {
+        "key": "promo-statistics",
+        "title": "运营事件 >>> 转单统计"
+      },
+      {
+        "key": "promo-ci",
+        "title": "运营事件 >>> 慈光计划"
+      },
+      {
+        "key": "promo-topic",
+        "title": "运营事件 >>> 专题管理"
+      },
+      {
+        "key": "promo-topicEdit",
+        "title": "运营事件 >>> 专题列表 / 编辑专题"
+      },
+      {
+        "key": "promo-topicEdit2",
+        "title": "运营事件 >>> 专题列表 / 编辑专题 / 编辑组件"
+      },
+      {
+        "key": "promo-topicCreate",
+        "title": "运营事件 >>> 专题列表 / 新建专题"
+      },
+      {
+        "key": "event-thousand",
+        "title": "运营事件 >>> 千寺祈福"
+      },
+      {
+        "key": "goods-index",
+        "title": "运营事件 >>> 自在好物"
+      },
+      {
+        "key": "promo-transferSet",
+        "title": "运营事件 >>> 转单系统 / 转单设置"
+      },
+      {
+        "key": "promo-mergeSet",
+        "title": "运营事件 >>> 转单系统 / 组合设置"
+      },
+      {
+        "key": "promo-buddhistEdit",
+        "title": "运营事件 >>> 推广佛事 / 推广编辑"
+      },
+      {
+        "key": "promo-fubiRecord",
+        "title": "运营事件 >>> 福币分享 / 记录"
+      },
+      {
+        "key": "promo-pay-pop",
+        "title": "运营事件 >>> 支付弹窗设置"
+      },
+      {
+        "key": "promo-projectManage",
+        "title": "运营事件 >>> 第三方项目管理"
+      },
+      {
+        "key": "promo-projectManage-id",
+        "title": "运营事件 >>> 第三方项目管理 / 绑定佛事列表"
+      },
+      {
+        "key": "promo-projectManage-id-id",
+        "title": "运营事件 >>> 绑定佛事列表 / 详情"
+      },
+      {
+        "key": "temple-super",
+        "title": "寺院管理 >>> 超级访问"
+      },
+      {
+        "key": "temple-notice",
+        "title": "寺院管理 >>> 寺院通知"
+      },
+      {
+        "key": "temple-verify",
+        "title": "寺院管理 >>> 寺院审核"
+      },
+      {
+        "key": "temple-certification",
+        "title": "寺院管理 >>> 寺院列表"
+      },
+      {
+        "key": "finance-verifyIndex",
+        "title": "寺院管理 >>> 善款资料审核"
+      },
+      {
+        "key": "temple-comment",
+        "title": "寺院管理 >>> 评价管理"
+      },
+      {
+        "key": "temple-integral-task",
+        "title": "寺院管理 >>> 积分任务"
+      },
+      {
+        "key": "temple-integrate",
+        "title": "寺院管理 >>> 积分记录"
+      },
+      {
+        "key": "temple-integration",
+        "title": "寺院管理 >>> 寺院积分"
+      },
+      {
+        "key": "finance-pending",
+        "title": "善款中心 >>> 待处理事项"
+      },
+      {
+        "key": "finance-refund",
+        "title": "善款中心 >>> 退款列表"
+      },
+      {
+        "key": "finance-taking",
+        "title": "善款中心 >>> 提现账单详情"
+      },
+      {
+        "key": "finance-stat",
+        "title": "善款中心 >>> 善款统计"
+      },
+      {
+        "key": "finance-summary",
+        "title": "善款中心 >>> 善款明细"
+      },
+      {
+        "key": "finance-special",
+        "title": "善款中心 >>> 特殊提现"
+      },
+      {
+        "key": "finance-receipt",
+        "title": "善款中心 >>> 发票管理"
+      },
+      {
+        "key": "finance-income-stat",
+        "title": "善款中心 >>> 营收统计"
+      },
+      {
+        "key": "finance-income",
+        "title": "善款中心 >>> 营收管理"
+      },
+      {
+        "key": "finance-record",
+        "title": "善款中心 >>> 人工记账"
+      },
+      {
+        "key": "finance-remark",
+        "title": "善款中心 >>> 提醒备注"
+      },
+      {
+        "key": "finance-trade-stat",
+        "title": "善款中心 >>> 交易统计"
+      },
+      {
+        "key": "finance-pickup",
+        "title": "善款中心 >>> 提现管理"
+      },
+      {
+        "key": "qu-article",
+        "title": "趣头条管理 >>> 订阅文章列表"
+      },
+      {
+        "key": "qu-material",
+        "title": "趣头条管理 >>> 素材库"
+      },
+      {
+        "key": "qu-source",
+        "title": "趣头条管理 >>> 订阅源管理"
+      },
+      {
+        "key": "order-templeOrderList",
+        "title": "订单管理 >>> 寺院监控"
+      },
+      {
+        "key": "order-statisticsDetail",
+        "title": "订单管理 >>> 订单查询"
+      },
+      {
+        "key": "order-refund",
+        "title": "订单管理 >>> 退款记录"
+      },
+      {
+        "key": "stat-sum",
+        "title": "数据统计 >>> 数据汇总"
+      },
+      {
+        "key": "stat-statisticsIndex",
+        "title": "数据统计 >>> 分析报表"
+      },
+      {
+        "key": "stat-statisticsIndex-module",
+        "title": "数据统计 >>> 模块数据"
+      },
+      {
+        "key": "stat-templeIndex",
+        "title": "数据统计 >>> 寺院数据"
+      },
+      {
+        "key": "stat-buddishData",
+        "title": "数据统计 >>> 佛事数据"
+      },
+      {
+        "key": "stat-promoIndex",
+        "title": "数据统计 >>> 推广数据"
+      },
+      {
+        "key": "stat-channel",
+        "title": "数据统计 >>> 渠道统计"
+      },
+      {
+        "key": "stat-detail",
+        "title": "数据统计 >>> 渠道统计详情"
+      },
+      {
+        "key": "wish-project",
+        "title": "法师模块 >>> 加持项目"
+      },
+      {
+        "key": "wish-edit",
+        "title": "法师模块 >>> 编辑项目"
+      },
+      {
+        "key": "wish-support-manege",
+        "title": "法师模块 >>> 法师订单"
+      },
+      {
+        "key": "wish-plus",
+        "title": "法师模块 >>> 加持订单"
+      },
+      {
+        "key": "wish-master",
+        "title": "法师模块 >>> 法师管理"
+      },
+      {
+        "key": "wish-index",
+        "title": "法师模块 >>> 心愿管理"
+      },
+      {
+        "key": "wish-return",
+        "title": "法师模块 >>> 还愿管理"
+      },
+      {
+        "key": "wish-verify",
+        "title": "法师模块 >>> 寺院认证"
+      },
+      {
+        "key": "wish-template",
+        "title": "法师模块 >>> 经咒落地页管理"
+      },
+      {
+        "key": "buddhist-verify",
+        "title": "佛事管理 >>> 佛事审核"
+      },
+      {
+        "key": "buddhist-template",
+        "title": "佛事管理 >>> 佛事模板"
+      },
+      {
+        "key": "buddhist-classification",
+        "title": "佛事管理 >>> 佛事分类"
+      },
+      {
+        "key": "buddhist-tag",
+        "title": "佛事管理 >>> 佛事标签"
+      },
+      {
+        "key": "buddhist-promote",
+        "title": "佛事管理 >>> 创作者推广库"
+      },
+      {
+        "key": "ad-buddhist",
+        "title": "广告管理 >>> 佛事推荐"
+      },
+      {
+        "key": "ad-system-popup",
+        "title": "广告管理 >>> 系统广告"
+      },
+      {
+        "key": "buddha-manage",
+        "title": "供奉管理 >>> 供奉列表"
+      },
+      {
+        "key": "region-manage",
+        "title": "供奉管理 >>> 区域列表"
+      },
+      {
+        "key": "volunteer-manage",
+        "title": "义工管理 >>> 复制弘法寺义工表单"
+      },
+      {
+        "key": "help-center",
+        "title": "帮助中心 >>> 设置帮助中心内容"
+      },
+      {
+        "key": "images_manage-index",
+        "title": "图片管理 >>> 系统图片管理"
+      },
+      {
+        "key": "images_manage-icon",
+        "title": "图片管理 >>> 系统图标管理"
+      },
+      {
+        "key": "machine-list",
+        "title": "寺院硬件 >>> 满福屏管理"
+      },
+      {
+        "key": "machine-bottomBgList",
+        "title": "寺院硬件 >>> 底部电子海报背景"
+      },
+      {
+        "key": "statistics-diagram",
+        "title": "寺院硬件 >>> 客流统计"
+      },
+      {
+        "key": "camera-manage",
+        "title": "寺院硬件 >>> 摄像头管理"
+      },
+      {
+        "key": "buddhism-language",
+        "title": "佛语日签 >>> 佛语日签列表"
+      },
+      {
+        "key": "vr-musicIndex",
+        "title": "实境礼佛 >>> 音乐管理"
+      },
+      {
+        "key": "oprule-group",
+        "title": "用户管理 >>> 用户分群"
+      },
+      {
+        "key": "oprule-treat",
+        "title": "用户管理 >>> 运营策略"
+      },
+      {
+        "key": "creator-personnel",
+        "title": "创作者管理 >>> 人员管理"
+      },
+      {
+        "key": "hardware-manage",
+        "title": "寺院硬件 >>> 设备管理"
+      },
+      {
+        "key": "temple-board",
+        "title": "寺院管理 >>> 大看板"
+      },
+      {
+        "key": "promo-pushSchedule",
+        "title": "运营事件 >>> 佛事进展"
+      },
+      {
+        "key": "order-overtime",
+        "title": "订单管理 >>> 超时订单"
+      },
+      {
+        "key": "promo-jxcjProgress",
+        "title": "运营事件 >>> 静心抄经进展发布"
+      },
+      {
+        "key": "tool-file",
+        "title": "工具 >>> 上传文件"
+      },
+      {
+        "key": "tool-image",
+        "title": "工具 >>> 上传图片"
+      },
+      {
+        "key": "tool-open-install-url",
+        "title": "工具 >>> 生成 OpenInstall 链接"
+      },
+      {
+        "key": "tool-open-short-link",
+        "title": "工具 >>> 生成短链接"
+      },
+      {
+        "key": "work-manage",
+        "title": "业务管理 >>> 项目管理"
+      },
+      {
+        "key": "work-edit",
+        "title": "业务管理 >>> 添加 / 编辑项目"
+      },
+      {
+        "key": "purchase-info",
+        "title": "采购管理 >>> 采购信息"
+      },
+      {
+        "key": "purchase-info-id",
+        "title": "采购管理 >>> 采购信息录入"
+      },
+      {
+        "key": "order-templeOrder",
+        "title": "订单管理 >>> 寺院订单"
+      },
+      {
+        "key": "buddhist-order",
+        "title": "佛事管理 >>> 佛事订单审核"
+      }
+    ]
   }
 }

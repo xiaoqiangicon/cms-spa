@@ -1035,6 +1035,13 @@
         }
       },
       {
+        "name": "buddhist-order",
+        "path": "/buddhist/order",
+        "meta": {
+          "title": "佛事订单审核"
+        }
+      },
+      {
         "name": "buddhist-template",
         "path": "/buddhist/template",
         "meta": {

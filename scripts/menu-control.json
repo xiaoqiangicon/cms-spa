@@ -404,6 +404,10 @@
     "title": "佛事管理 >>> 佛事审核"
   },
   {
+    "key": "buddhist-order",
+    "title": "佛事管理 >>> 佛事订单审核"
+  },
+  {
     "key": "buddhist-template",
     "title": "佛事管理 >>> 佛事模板"
   },

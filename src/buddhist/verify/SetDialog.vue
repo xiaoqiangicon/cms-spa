@@ -22,7 +22,7 @@
             若在APP祈福列表中希望用户点击可跳转到活动落地页，<br />
             请在此处填写活动落地页的地址，默认为空不修改跳转。
           </div>
-          <div class="row">
+          <div class="row" v-if="false">
             <span class="row-left">适用环境选择</span>
             <el-select v-model="isOnlyChanzai">
               <el-option :value="0" label="全平台"></el-option>
@@ -30,7 +30,7 @@
               <el-option :value="2" label="只在SAAS"></el-option>
             </el-select>
           </div>
-          <div class="tips">
+          <div class="tips" v-if="false">
             用于控制当前佛事在APP环境是否可以对外分享，默认可分享。
           </div>
           <div class="row">

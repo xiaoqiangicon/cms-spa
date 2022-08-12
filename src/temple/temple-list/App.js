@@ -254,6 +254,7 @@ export default {
         name,
         placeNo,
         province,
+        netServiceNo,
       } = this.detail;
       let placeNoPic = this.uploadRegister[0] || '';
       let certificatePic = this.uploadCooperate[0] || '';
@@ -273,6 +274,7 @@ export default {
         mobile,
         name,
         placeNo,
+        netServiceNo,
         province,
         placeNoPic,
         certificatePic,

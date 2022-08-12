@@ -12,3 +12,4 @@ import './updatePromotionSubdivide';
 import './updateWebsite';
 import './getCommoditySubivideList';
 import './addAndUpdateSubdividePer';
+import './setShelves';

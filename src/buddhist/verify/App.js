@@ -52,6 +52,8 @@ export default {
     SetDialog,
   },
   created() {
+    const { commodity } = this.$route.query;
+    if (commodity) this.commodityId = parseInt(commodity, 10);
     this.getList();
     this.getTempleList();
     this.getCommodityList();
@@ -166,7 +168,7 @@ export default {
               this.getList();
               this.showManagerDialog(row);
             } else {
-              this.showMsg('出错了~', 'error');
+              this.showMsg(res.msg, 'error');
             }
           }
         );
@@ -210,6 +212,54 @@ export default {
     showManagerDialog(item) {
       this.id = item.id;
       this.managerDialog = !0;
+    },
+    beforeHandleCommand(row, type, command) {
+      return {
+        id: row.id,
+        type,
+        status: command,
+      };
+    },
+    handleSetShelves(command) {
+      let { id, type, status } = command;
+      console.log(id, type, status);
+      if (status) {
+        this.$confirm(`将可通过${type}查看该佛事，是否确认操作`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        }).then(() => {
+          this.setShelves(id, type, status);
+        });
+      } else {
+        this.$confirm(
+          `屏蔽后将无法在${type}内打开该佛事，是否确认操作`,
+          '提示',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+          }
+        ).then(() => {
+          this.setShelves(id, type, status);
+        });
+      }
+    },
+    setShelves(id, type, status) {
+      let params = { id };
+      if (type === 'APP') {
+        params.app = status;
+      } else {
+        params.saas = status;
+      }
+      seeFetch('/buddhist/verify/setShelves', params).then(res => {
+        if (res.success) {
+          this.showMsg('修改成功');
+          this.getList();
+        } else {
+          this.showMsg(res.msg, 'error');
+        }
+      });
     },
     toWxDetail(row) {
       window.open(

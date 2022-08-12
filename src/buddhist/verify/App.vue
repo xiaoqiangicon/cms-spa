@@ -79,7 +79,9 @@
         <el-table-column label="状态" width="100px" :align="'center'">
           <template slot-scope="scope">
             <div>
-              <div>{{ scope.row.isEnd === 1 ? '已结束' : '未结束' }}</div>
+              <div :class="{ 'special-text': scope.row.is_end === 1 }">
+                {{ scope.row.is_end === 1 ? '已结束' : '未结束' }}
+              </div>
             </div>
           </template>
         </el-table-column>
@@ -129,10 +131,92 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="100px" :align="'center'">
+        <el-table-column label="操作" width="140px" :align="'center'">
           <template slot-scope="scope">
             <div>
-              <el-button @click="showSet(scope.row)">设置</el-button>
+              <el-button class="set-btn" @click="showSet(scope.row)"
+                >设置</el-button
+              >
+              <el-dropdown trigger="click" @command="handleSetShelves">
+                <span
+                  :class="[
+                    'el-button',
+                    scope.row.isOnlyChanzai === 1 ||
+                    scope.row.isOnlyChanzai === 0
+                      ? 'el-button--primary'
+                      : 'el-button--danger',
+                    'el-button--medium',
+                    'set-btn',
+                  ]"
+                >
+                  APP{{
+                    scope.row.isOnlyChanzai === 1 ||
+                    scope.row.isOnlyChanzai === 0
+                      ? '上架'
+                      : '屏蔽'
+                  }}<i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item
+                    :disabled="
+                      scope.row.isOnlyChanzai === 2 ||
+                        scope.row.isOnlyChanzai === -1
+                    "
+                    :command="beforeHandleCommand(scope.row, 'APP', 0)"
+                    >屏蔽</el-dropdown-item
+                  >
+                  <el-dropdown-item
+                    :disabled="
+                      scope.row.isOnlyChanzai === 1 ||
+                        scope.row.isOnlyChanzai === 0
+                    "
+                    :command="beforeHandleCommand(scope.row, 'APP', 1)"
+                    >上架</el-dropdown-item
+                  >
+                </el-dropdown-menu>
+              </el-dropdown>
+              <el-dropdown
+                trigger="click"
+                @command="handleSetShelves"
+                type="primary"
+              >
+                <span
+                  :class="[
+                    'el-button',
+                    scope.row.isOnlyChanzai === 2 ||
+                    scope.row.isOnlyChanzai === 0
+                      ? 'el-button--primary'
+                      : 'el-button--danger',
+                    'el-button--medium',
+                    'set-btn',
+                  ]"
+                >
+                  SAAS{{
+                    scope.row.isOnlyChanzai === 2 ||
+                    scope.row.isOnlyChanzai === 0
+                      ? '上架'
+                      : '屏蔽'
+                  }}<i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item
+                    :disabled="
+                      scope.row.isOnlyChanzai === 1 ||
+                        scope.row.isOnlyChanzai === -1
+                    "
+                    :command="beforeHandleCommand(scope.row, 'SAAS', 0)"
+                    >屏蔽</el-dropdown-item
+                  >
+                  <el-dropdown-item
+                    :disabled="
+                      scope.row.isOnlyChanzai === 2 ||
+                        scope.row.isOnlyChanzai === 0
+                    "
+                    :command="beforeHandleCommand(scope.row, 'SAAS', 1)"
+                    >上架</el-dropdown-item
+                  >
+                </el-dropdown-menu>
+              </el-dropdown>
             </div>
           </template>
         </el-table-column>
@@ -210,6 +294,10 @@
   margin-top: 10px;
   margin-left: 0;
 }
+
+>>> .el-dropdown-menu__item {
+  width: 126px;
+}
 </style>
 
 <style lang="less" scoped>
@@ -234,6 +322,11 @@
 .set {
   cursor: pointer;
   color: #409eff;
+}
+
+.set-btn {
+  width: 126px;
+  margin-bottom: 10px;
 }
 .green {
   color: #409eff;
@@ -262,6 +355,9 @@
 .manager-avatar {
   width: 100px;
   height: 100px;
+}
+.special-text {
+  color: #f56c6c;
 }
 
 .active-avatar {

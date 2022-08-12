@@ -344,6 +344,7 @@
             inactive-color="#ff4949"
             active-text="推广中可提现"
             inactive-text="推广中不可提"
+            @change="changeSwitch"
           />
           <div>可控制进行中的推广佛事，在saas后台寺院能否进行提现操作</div>
         </el-form-item>
@@ -362,6 +363,7 @@
 import './fetch/index';
 import seeFetch from 'see-fetch';
 import { Notification } from 'element-ui';
+import share from '../../../share';
 
 export default {
   name: 'Buddhist',
@@ -594,6 +596,28 @@ export default {
       });
     },
     handleClickWithdraw(rowData) {
+      let menuList = share.permissionInfo.menu || [];
+      let promoIndexMenu = menuList.filter(menu => {
+        return menu.key === 'promo-index';
+      });
+      // 需要判断是否有权限
+      promoIndexMenu = promoIndexMenu[0];
+      let hasRight = false;
+      if (promoIndexMenu && promoIndexMenu.permissions) {
+        promoIndexMenu.permissions.forEach(permission => {
+          if (permission.key === 'permission-promo-commodity-end') {
+            hasRight = true;
+          }
+        });
+      }
+      if (!hasRight) {
+        Notification({
+          type: 'error',
+          title: '提示',
+          message: '请先去bi系统申请权限',
+        });
+        return;
+      }
       this.curItem = rowData;
       this.dialogWithdrawVisible = !0;
     },
@@ -636,6 +660,30 @@ export default {
       this.getRecordList().then(() => {
         this.dialogRecordVisible = !0;
       });
+    },
+    changeSwitch(newVal) {
+      let menuList = share.permissionInfo.menu || [];
+      let promoIndexMenu = menuList.filter(menu => {
+        return menu.key === 'promo-index';
+      });
+      // 需要判断是否有权限
+      promoIndexMenu = promoIndexMenu[0];
+      let hasRight = false;
+      if (promoIndexMenu && promoIndexMenu.permissions) {
+        promoIndexMenu.permissions.forEach(permission => {
+          if (permission.key === 'permission-promo-commodity-withdraw') {
+            hasRight = true;
+          }
+        });
+      }
+      if (!hasRight) {
+        Notification({
+          type: 'error',
+          title: '提示',
+          message: '请先去bi系统申请权限',
+        });
+        this.curItem.isPickUpCommodity = !newVal;
+      }
     },
     updateBuddhistCanCash() {
       const { templeId, buddhistId, isPickUpCommodity } = this.curItem;

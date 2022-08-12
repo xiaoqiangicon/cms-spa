@@ -182,6 +182,9 @@
         <el-form-item label="登记编号">
           <el-input v-model="detail.placeNo"></el-input>
         </el-form-item>
+        <el-form-item label="互联网宗教信息服务许可证">
+          <el-input v-model="detail.netServiceNo"></el-input>
+        </el-form-item>
         <el-form-item label="寺院地址">
           <el-input v-model="detail.address"></el-input>
         </el-form-item>

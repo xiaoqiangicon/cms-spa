@@ -787,10 +787,22 @@ export default [
         meta: { title: '佛事审核', noCache: true },
       },
       {
+        path: 'buddhist/order',
+        name: 'buddhist-order',
+        component: () => import('../buddhist/order/App.vue'),
+        meta: { title: '佛事订单审核', noCache: true },
+      },
+      {
         name: 'buddhist-template',
         path: '/buddhist/template',
         meta: { title: '佛事模板' },
       },
+      // {
+      //   path: 'buddhist/classification',
+      //   name: 'buddhist-classification',
+      //   component: () => import('../buddhist/classify/App.vue'),
+      //   meta: { title: '佛事分类', noCache: true },
+      // },
       {
         name: 'buddhist-classification',
         path: '/buddhist/classification',
@@ -800,6 +812,25 @@ export default [
         name: 'buddhist-tag',
         path: '/buddhist/tag',
         meta: { title: '佛事标签' },
+      },
+      // {
+      //   path: 'buddhist/tag',
+      //   name: 'buddhist-tag',
+      //   component: () => import('../buddhist/tag/App.vue'),
+      //   meta: { title: '佛事标签', noCache: true },
+      // },
+      {
+        path: 'buddhist/coupon',
+        name: 'buddhist-coupon',
+        component: () => import('../buddhist/coupon/App.vue'),
+        meta: { title: '福券管理', noCache: true },
+      },
+      {
+        path: 'buddhist/coupon-detail',
+        name: 'buddhist-coupon-detail',
+        component: () => import('../buddhist/coupon-detail/App.vue'),
+        meta: { title: '福券编辑', noCache: true },
+        hidden: !0,
       },
       {
         path: 'buddhist/promote',
