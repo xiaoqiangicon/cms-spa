@@ -43,7 +43,12 @@
     </div>
     <div class="body">
       <el-table v-loading="loading" :data="list" style="width: 100%">
-        <el-table-column prop="fromTypeText" label="来源" :align="'center'" />
+        <el-table-column label="来源" :align="'center'">
+          <template slot-scope="scope">
+            <div>{{ scope.row.fromTypeText }}</div>
+            <div>发起账户：{{ scope.row.refundName }}</div>
+          </template>
+        </el-table-column>
         <el-table-column prop="title" label="佛事名称" :align="'center'" />
         <el-table-column
           prop="subdivideName"

@@ -154,7 +154,9 @@
               >
                 运营事件已关闭
               </div>
-              <div class="set" @click="showUnlock(scope.row)">账号解冻</div>
+              <div class="set" @click="showUnlock(scope.row)" v-if="false">
+                账号解冻
+              </div>
               <div class="set" @click="handleClickRemind(scope.row)">
                 转单通知
               </div>

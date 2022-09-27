@@ -52,12 +52,12 @@
                 v-model="scope.row.commodityType"
                 @change="changeRowType(scope.row)"
               >
-                <el-option value="0" label="无"></el-option>
-                <el-option value="1" label="祈福牌位"></el-option>
-                <el-option value="2" label="往生牌位"></el-option>
-                <el-option value="3" label="供佛佛像"></el-option>
-                <el-option value="4" label="供光明灯"></el-option>
-                <el-option value="5" label="预约开光"></el-option>
+                <el-option :value="0" label="无"></el-option>
+                <el-option :value="1" label="祈福牌位"></el-option>
+                <el-option :value="2" label="往生牌位"></el-option>
+                <el-option :value="3" label="供佛佛像"></el-option>
+                <el-option :value="4" label="供光明灯"></el-option>
+                <el-option :value="5" label="预约开光"></el-option>
               </el-select>
             </div>
           </template>

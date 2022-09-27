@@ -42,15 +42,16 @@
         v-if="type === 1"
         :align="'center'"
       />
-      <el-table-column prop="add_time" label="下单时间" :align="'center'" />
-      <el-table-column prop="order_id" label="订单ID" :align="'center'" />
+      <el-table-column prop="pay_time" label="下单时间" :align="'center'" />
+      <el-table-column prop="orderNo" label="订单ID" :align="'center'" />
       <el-table-column label="操作" :align="'center'">
         <template slot-scope="scope">
           <div class="detail">
-            <el-button size="small" @click="toDetail(scope.row)">
+            <el-button size="small" type="primary" @click="toDetail(scope.row)">
               订单详情
             </el-button>
             <el-button
+              type="danger"
               size="small"
               @click="revoke(scope.row)"
               v-if="type === 0"

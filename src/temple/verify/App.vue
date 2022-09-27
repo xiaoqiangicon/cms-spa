@@ -125,6 +125,11 @@
           </div>
           <hr />
           <div class="detail-item">
+            <span>互联网宗教信息服务许可证：</span
+            ><span>{{ detail.netServiceNo }}</span>
+          </div>
+          <hr />
+          <div class="detail-item">
             <span>省份：</span><span>{{ detail.province }}</span>
           </div>
           <hr />

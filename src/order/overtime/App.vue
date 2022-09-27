@@ -1,33 +1,46 @@
 <template>
   <div class="container">
-    <div class="search">
-      <div class="" style="margin-right: 30px;">
-        <span>寺院订单导入</span>
-        <el-select
-          filterable
-          v-model="templeId"
-          placeholder="导入寺院超时订单"
-          v-loading="loading"
-        >
-          <el-option
-            v-for="item in templeList"
-            :key="item.id"
-            :value="item.id"
-            :label="item.name"
-          />
-        </el-select>
-        <el-button type="primary" @click="importOrder" v-loading="importLoading"
-          >导入</el-button
-        >
+    <div class="header">
+      <div class="search">
+        <div class="" style="margin-right: 30px;">
+          <span>寺院订单导入</span>
+          <el-select
+            filterable
+            v-model="templeId"
+            placeholder="导入寺院超时订单"
+            v-loading="loading"
+          >
+            <el-option
+              v-for="item in templeList"
+              :key="item.id"
+              :value="item.id"
+              :label="item.name"
+            />
+          </el-select>
+          <el-button
+            type="primary"
+            @click="importOrder"
+            v-loading="importLoading"
+            >导入</el-button
+          >
+        </div>
+        <span>佛事搜索</span>
+        <el-input v-model="searchCommodityName">
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="search"
+          ></el-button>
+        </el-input>
       </div>
-      <span>佛事搜索</span>
-      <el-input v-model="searchCommodityName">
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="search"
-        ></el-button>
-      </el-input>
+      <div class="tips">
+        <p class="tips-item">
+          1.单独导入某个订单请去“订单查询”功能，查询订单后点击导入到此列表。
+        </p>
+        <p class="tips-item">
+          2.此列表“导入功能”仅支持某个寺院下全部订单的导入，请谨慎操作。
+        </p>
+      </div>
     </div>
     <el-tabs v-model="activeName" type="border-card">
       <el-tab-pane label="未处理" name="notDispose">
@@ -180,6 +193,13 @@ export default {
   width: 100%;
   padding: 40px 20px;
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
 .search {
   display: flex;
   align-items: center;
@@ -188,5 +208,14 @@ export default {
     flex-shrink: 0;
     margin-right: 20px;
   }
+}
+.tips {
+  padding: 10px 10px;
+  border: 1px solid #409eff;
+  border-radius: 6px;
+  color: #409eff;
+}
+.tips-item {
+  margin: 0;
 }
 </style>

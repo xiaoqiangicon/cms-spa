@@ -798,7 +798,7 @@ export default [
         meta: { title: '佛事模板' },
       },
       // {
-      //   path: 'buddhist/classification',
+      //   path: 'classification',
       //   name: 'buddhist-classification',
       //   component: () => import('../buddhist/classify/App.vue'),
       //   meta: { title: '佛事分类', noCache: true },
@@ -814,24 +814,11 @@ export default [
         meta: { title: '佛事标签' },
       },
       // {
-      //   path: 'buddhist/tag',
+      //   path: 'tag',
       //   name: 'buddhist-tag',
       //   component: () => import('../buddhist/tag/App.vue'),
       //   meta: { title: '佛事标签', noCache: true },
       // },
-      {
-        path: 'buddhist/coupon',
-        name: 'buddhist-coupon',
-        component: () => import('../buddhist/coupon/App.vue'),
-        meta: { title: '福券管理', noCache: true },
-      },
-      {
-        path: 'buddhist/coupon-detail',
-        name: 'buddhist-coupon-detail',
-        component: () => import('../buddhist/coupon-detail/App.vue'),
-        meta: { title: '福券编辑', noCache: true },
-        hidden: !0,
-      },
       {
         path: 'buddhist/promote',
         component: () => import('../buddhist/promote/App.vue'),
@@ -1016,20 +1003,40 @@ export default [
   {
     path: '/buddhism',
     name: 'buddhism',
+    component: Layout,
     meta: {
       title: '佛语日签',
       icon: 'fa-circle',
     },
     children: [
       {
-        name: 'buddhism-language',
         path: '/buddhism/language',
+        name: 'buddhism-language',
+        component: () => import('../bookmark/index/App.vue'),
         meta: {
-          title: '佛语日签列表',
+          title: '佛语日签',
+          noCache: true,
         },
       },
     ],
   },
+  // {
+  //   path: '/buddhism',
+  //   name: 'buddhism',
+  //   meta: {
+  //     title: '佛语日签',
+  //     icon: 'fa-circle',
+  //   },
+  //   children: [
+  //     {
+  //       name: 'buddhism-language',
+  //       path: '/buddhism/language',
+  //       meta: {
+  //         title: '佛语日签列表',
+  //       },
+  //     },
+  //   ],
+  // },
   {
     path: '/vr',
     name: 'vr',
